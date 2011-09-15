@@ -1,0 +1,145 @@
+<ehcache updateCheck="false">
+
+    <diskStore path="ehcache.disk.store.dir"/>
+
+
+    <!--Default Cache configuration. These will applied to caches programmatically created through
+        the CacheManager.
+
+        The following attributes are required:
+
+        maxElementsInMemory            - Sets the maximum number of objects that will be created in memory
+        eternal                        - Sets whether elements are eternal. If eternal,  timeouts are ignored and the
+                                         element is never expired.
+        overflowToDisk                 - Sets whether elements can overflow to disk when the in-memory cache
+                                         has reached the maxInMemory limit.
+
+        The following attributes are optional:
+        timeToIdleSeconds              - Sets the time to idle for an element before it expires.
+                                         i.e. The maximum amount of time between accesses before an element expires
+                                         Is only used if the element is not eternal.
+                                         Optional attribute. A value of 0 means that an Element can idle for infinity.
+                                         The default value is 0.
+        timeToLiveSeconds              - Sets the time to live for an element before it expires.
+                                         i.e. The maximum time between creation time and when an element expires.
+                                         Is only used if the element is not eternal.
+                                         Optional attribute. A value of 0 means that and Element can live for infinity.
+                                         The default value is 0.
+        diskPersistent                 - Whether the disk store persists between restarts of the Virtual Machine.
+                                         The default value is false.
+        diskExpiryThreadIntervalSeconds- The number of seconds between runs of the disk expiry thread. The default value
+                                         is 120 seconds.
+        -->
+        
+<!--      <cacheManagerPeerListenerFactory class="org.terracotta.ehcachedx.monitor.probe.ProbePeerListenerFactory"-->
+<!--    	 properties="monitorAddress=localhost, monitorPort=9889, memoryMeasurement=true"/>-->
+
+    <defaultCache
+        maxElementsInMemory="2000"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>
+        
+    <!-- save space reading permission, it is using in searching result filter.  -->
+	<!--  KEY: username  VALUE:com.edgenius.core.model.User  Owner:UserServiceImpl  -->
+	<cache name="userCache"
+		   maxElementsInMemory="500"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>
+        
+    <!-- save space reading permission, it is using in searching result filter.  -->
+	<!--  KEY: spaceUname or PRIVATE_spaceUname  VALUE:List<String>(user or role name) or Boolean  Owner:SecurityServiceImpl   -->
+	<cache name="spaceReadingCache"
+		   maxElementsInMemory="3000"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>
+
+	<!-- page reading permission, page permission is "forbidden" style, so it won't have many -->
+	<!--  KEY: pageUuid VALUE:List<String>(user or role name)  Owner:SecurityServiceImpl -->
+	<cache name="pageReadingCache"
+		   maxElementsInMemory="1000"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>		        
+
+ 	<!-- For system method intercepter privilege validation, it contains instance, space and page level privilege -->	
+ 	<!--  KEY: resourceName VALUE: List<Policy> Owner:com.edgenius.wiki.security.service.PolicyCache -->	           
+	<cache name="policyCache"
+		   maxElementsInMemory="3000"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>		           
+		   
+	<!--  For page tree, navigator, only contain page uuid, title, spaceUname etc. very basic information -->
+ 	<!--  KEY: spaceUname VALUE: List<Page>, page only has  uid, pageUuid, title, parent.uid and level. Owner:PageServiceImpl   -->	           
+	<cache name="pageTreeCache"
+ 		maxElementsInMemory="200"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>
+		   
+	<!--  for space / page tag. Useful in suggestion box -->
+	<!--  Key:spaceUname or SharedConstants.SYSTEM_SPACEUNAME(instance level),  Value:Map<String,Integer> tagName/tagAmount. Owner:TagServiceImpl -->
+	<cache name="tagCache"
+		   maxElementsInMemory="500"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>		   
+		           
+	<!--  for login retry cache, it saved login time, period per user. Useful in captcha reqired service -->
+	<!-- Key:userName Value:LoginRetryObject(last time, retry count),  Owner:CaptchaReqiredFilterServiceImpl -->
+	<cache name="loginTimesCache"
+		   maxElementsInMemory="2000"
+        eternal="false"
+        overflowToDisk="true"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>		   
+		           
+	<!--  for theme, every time page render, will read theme, so put it into cache as well -->
+	<!-- KEY:themeName VALUE:theme XML string content Owner:ThemServiceImpl -->
+	<cache name="themeCache"
+		   maxElementsInMemory="200"
+		eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="7200"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>
+		   
+	<!-- page editing cache - to remember a user editing a page and warning others who want to edit same page -->
+	<!-- KEY:pageUuid VALUE:time(long value) Owner:PageServiceImpl  -->
+	<cache name="pageEditingCache"
+		  maxElementsInMemory="100"
+        eternal="false"
+        overflowToDisk="true"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="3600"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"/>		      		   
+    <!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for how to configure caching for your objects -->
+</ehcache>

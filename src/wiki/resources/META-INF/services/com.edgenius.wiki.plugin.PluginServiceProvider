@@ -1,0 +1,4 @@
+calendarService=com.edgenius.wiki.ext.calendar.service.CalendarService
+todoService=com.edgenius.wiki.ext.todo.service.TodoService
+tabsService=com.edgenius.wiki.ext.tabs.TabsService
+shareService=com.edgenius.wiki.ext.macro.ShareService

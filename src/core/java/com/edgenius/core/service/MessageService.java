@@ -1,0 +1,72 @@
+/* 
+ * =============================================================
+ * Copyright (C) 2007-2011 Edgenius (http://www.edgenius.com)
+ * =============================================================
+ * License Information: http://www.edgenius.com/licensing/edgenius/2.0/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2.0
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ *
+ * http://www.gnu.org/licenses/gpl.txt
+ *  
+ * ****************************************************************
+ */
+package com.edgenius.core.service;
+
+import org.springframework.context.MessageSource;
+
+/**
+ * @author Dapeng.Ni
+ */
+public interface MessageService {
+	
+	String SERVICE_NAME = "messageService";
+
+	/**
+	 * Set <code>MessageSource</code> from spring IoC. 
+	 * @param messageSource
+	 */
+	public abstract void setMessageSource(MessageSource messageSource);
+
+	/**
+	 * @see org.springframework.context.support.MessageSourceAccessor#getMessage(java.lang.String)
+	 * @param key
+	 * @return
+	 */
+	public abstract String getMessage(String key);
+
+	/**
+	 * Same with getMessage(key, new String[]{arg})
+	 * @param key
+	 * @param arg
+	 * @return
+	 */
+	public abstract String getMessage(String key, String arg);
+	/**
+	 * @see org.springframework.context.support.MessageSourceAccessor#getMessage(java.lang.String, java.lang.Object[])
+	 * @param key
+	 * @param args
+	 * @return
+	 */
+	public abstract String getMessage(String key, Object[] args);
+
+	/**
+	 * @see org.springframework.context.support.MessageSourceAccessor#getMessage(java.lang.String, java.lang.Object[], java.lang.String)
+	 * @param key
+	 * @param args
+	 * @param defaultMessage
+	 * @return
+	 */
+	public abstract String getMessage(String key, Object[] args, String defaultMessage);
+
+}

@@ -1,0 +1,46 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:pg='urn:import:com.edgenius.wiki.gwt.client.page.widgets'
+    xmlns:render='urn:import:com.edgenius.wiki.gwt.client.render'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'>
+    
+  <ui:with field='res' type='com.edgenius.wiki.gwt.client.widgets.IconBundle'/>
+  <ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages'/>
+
+   <g:VerticalPanel>
+   <!-- 
+   		<my:MessageWidget ui:field="message"/>
+   		<my:MessageWidget ui:field="diffMessage"/>
+    -->
+		<g:HTMLPanel>
+			<table>
+				<tr>
+					<td><g:Label ui:field="title"/></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><pg:TagsPanel ui:field="tags"/></td>
+					<td><pg:PrettyUrlButton ui:field="pUrlBtn"/><pg:AttachmentButton ui:field="attachmentBtn"/></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<g:FlowPanel>
+							<render:WikiRenderPanel ui:field="contentPanel"/>
+							<render:WikiRenderPanel ui:field="sidebarRender"/>
+							<g:VerticalPanel ui:field="sidebarPanel"/>
+						</g:FlowPanel>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<pg:FavoriteButton ui:field="favorite"/>
+						<pg:WatchButton ui:field="watch"/>
+						<pg:RSSFeedButton ui:field="rssFeedBtn"/>
+						<pg:ExportButton ui:field="exportBtn"/>
+					</td>
+				</tr>
+				
+			</table>
+		</g:HTMLPanel>   		
+   </g:VerticalPanel>
+</ui:UiBinder>

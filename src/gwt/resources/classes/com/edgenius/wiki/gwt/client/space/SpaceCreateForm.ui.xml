@@ -1,0 +1,77 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'
+    xmlns:sp='urn:import:com.edgenius.wiki.gwt.client.space'>
+    
+  <ui:with field='res' type='com.edgenius.wiki.gwt.client.widgets.IconBundle'/>
+  <ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages'/>
+	<ui:style field='style'>
+	 	.lbtn{
+	 		white-space: nowrap;
+	 		width:130px;
+	 		float:right;
+	 	}
+	 </ui:style>
+
+		<g:VerticalPanel>
+		<my:MessageWidget ui:field="message"/>
+  		<g:HorizontalPanel>
+  			<g:FormPanel ui:field="form" styleName="normal-form" method="post"> 	
+			  	<g:HTMLPanel width="100%" >
+			  		<table><tr><td>
+				  	<g:HTMLPanel styleName="spaceinfo">
+				  		<table class="space-create-table">
+				  			<tr>
+				  				<td><g:Label styleName="form-label" text="{i18n.name}*"/></td>
+				  				<td>
+				  					<my:FormTextBox ui:field="name" tabIndex="1" styleName="form-input" focus="true"/>
+				  				</td>
+				  			</tr>
+				  			<tr>
+				  				<td><g:Label styleName="form-label" text="{i18n.space_uname}*"/></td>
+				  				<td>
+				  					<my:FormTextBox ui:field="unixname" tabIndex="2" styleName="form-input"/>
+				  				</td>
+				  			</tr>
+				  			<tr>
+				  				<td><g:Label styleName="form-label" text="{i18n.description}*"/></td>
+				  				<td>
+				  					<my:FormTextArea ui:field="desc" tabIndex="3" styleName="form-textarea"/>
+				  				</td>
+				  			</tr>
+				  			<tr>
+				  				<td><g:Label styleName="form-label" text="{i18n.tags}"/></td>
+				  				<td><my:TagSuggestBox ui:field="tagsEditBox" type="2" tabIndex="4" styleName="form-input" /></td>
+				  			</tr>
+				  			<tr>
+				  				<td><g:Label styleName="form-label" text="{i18n.privateK}"/></td>
+				  				<td>
+				  					<g:CheckBox ui:field="privateBox" tabIndex="5"/>
+				  					<g:Image ui:field="helpOnPrivate" resource="{res.help}"/>
+				  				</td>
+				  			</tr>
+<!--							<tr>-->
+<!--				  				<td><g:Label styleName="form-label" text="{i18n.linked_blog}"/></td>-->
+<!--				  				<td>-->
+				  					<g:CheckBox ui:field="linkBlogs" tabIndex="6"/>
+				  					<g:Image ui:field="helpOnLinkBlog" resource="{res.help}"/>
+<!--				  				</td>-->
+<!--				  			</tr>		  			-->
+				  		</table>
+				  		<!-- Separator table for style purpose -->
+				  		<table width="100%">
+				  			<tr><td align="center"><sp:ThemeListPanel ui:field="themeListPanel"/></td></tr>
+				  		</table>
+					</g:HTMLPanel>
+					</td><td valign="top">
+						<g:FlowPanel ui:field="blogsDeck">
+							<g:VerticalPanel ui:field="blogsForm"/>
+							<g:Button ui:field="addBlog" text="{i18n.link_more_blogs}"  styleName="{style.lbtn}"/>
+						</g:FlowPanel>
+					</td></tr></table>
+				</g:HTMLPanel>
+			</g:FormPanel>
+		</g:HorizontalPanel>
+		</g:VerticalPanel>  
+
+</ui:UiBinder>  

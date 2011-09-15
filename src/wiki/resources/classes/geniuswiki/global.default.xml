@@ -1,0 +1,43 @@
+<!--This is default value of Global properties: The reason has this file is, while publish package, this allow installer to assign value 
+ Global.xml (override)  Global.derfult.xml (override) Global.class file -->
+<com.edgenius.core.GlobalSetting>
+  <defaultNotifyMail>notify@geniuswiki.com</defaultNotifyMail>
+  <defaultReceiverMailAddress>feedback@geniuswiki.com</defaultReceiverMailAddress>
+  <ccToSystemAdmin>true</ccToSystemAdmin>
+  <systemTitle>Diversify your website</systemTitle>
+  <defaultDirection>LEFT</defaultDirection>
+  <defaultLanguage>en</defaultLanguage>
+  <defaultCountry>AU</defaultCountry>
+  <defaultTimeZone>GMT</defaultTimeZone>
+  <defaultLoginKey>username</defaultLoginKey>
+  <publicSearchEngineAllow>true</publicSearchEngineAllow>
+  <hostProtocol>http://</hostProtocol>
+  <hostName>localhost</hostName>
+  <contextPath></contextPath>
+  <hostPort>8080</hostPort>
+  <spaceQuota>209715200</spaceQuota>
+  <encryptPassword>true</encryptPassword>
+  <encryptAlgorithm>MD5</encryptAlgorithm>
+  <delayRemoveSpaceHours>48</delayRemoveSpaceHours>
+  <enableAdminPermControl>false</enableAdminPermControl>
+  <delayOfflineSyncMinutes>30</delayOfflineSyncMinutes>
+  <registerMethod>signup</registerMethod>
+  <maintainJobCron>0 0 3 * * ?</maintainJobCron>
+  <commentsNotifierCron>0 0 23 * * ?</commentsNotifierCron>
+  <maxCommentsNotifyPerDay>2</maxCommentsNotifyPerDay>
+  <autoFixLinks>3</autoFixLinks>
+  <adsense>disabled</adsense>
+  <textnut>disabled</textnut>
+  <skin>default</skin>
+  <webservice>disabled</webservice>
+  <webserviceAuthenticaton>basic</webserviceAuthenticaton>
+  <restservice>disabled</restservice>
+  <restserviceAuthenticaton>basic</restserviceAuthenticaton>
+  <suppress></suppress>
+  <detectLocaleFromRequest>false</detectLocaleFromRequest>
+  <versionCheck>true</versionCheck>
+  <versionCheckCron>0 0 2 * * ?</versionCheckCron>
+  <purgeDaysOldActivityLog>365</purgeDaysOldActivityLog>
+  <twitterOauthConsumerKey></twitterOauthConsumerKey>
+  <twitterOauthConsumerSecret></twitterOauthConsumerSecret>
+</com.edgenius.core.GlobalSetting>

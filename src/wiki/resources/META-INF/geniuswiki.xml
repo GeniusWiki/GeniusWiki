@@ -1,0 +1,12 @@
+<Context path="/geniuswiki" debug="99" reloadable="true"
+    antiJARLocking="true" antiResourceLocking="false" docBase="D:\x_dev\workspace\Edgenius\dev\">
+
+    <!--Resource name="jdbc/paradise" auth="Container" type="javax.sql.DataSource"
+              maxActive="100" maxIdle="30" maxWait="10000"
+              driverClassName="com.mysql.jdbc.Driver"
+              username="steveneo_test" password="" 
+              url="jdbc:mysql://localhost/steveneo_test?autoReconnect=true&useUnicode=true&amp;characterEncoding=utf-8"
+              defaultAutoCommit="true" removeAbandoned="true" 
+              removeAbandonedTimeout="60" logAbandoned="true"/-->
+</Context>
+	

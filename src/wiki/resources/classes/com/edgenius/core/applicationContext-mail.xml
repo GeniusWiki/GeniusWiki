@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+ <beans>
+ 
+ 	<!--  ===================================================================================  -->
+	<!--  JMS Message definition  -->
+	<!--  ===================================================================================  -->
+	<bean id="mailListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="mailDestination"/>
+		<property name="messageListener">
+			<bean class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+				<constructor-arg>
+					<bean class="com.edgenius.core.service.impl.MailMQConsumer">
+						<property name="mailEngine" ref="mailEngine"/>
+					</bean>
+				</constructor-arg>
+				<property name="defaultListenerMethod" value="sendEmail"/>
+			</bean>
+		</property>
+	</bean>
+
+	<!--  ===================================================================================  -->
+	<!--  Mail definition  -->
+	<!--  ===================================================================================  -->
+	<!-- The mail service doesn't thru MQ  -->
+	<bean id="mailSender" class="com.edgenius.core.service.impl.JavaMailSenderImpl">
+		<property name="host" value="${mail.smtp.host}"/>
+		<property name="mailPort" value="${mail.smtp.port}"/>
+		<property name="username" value="${mail.smtp.username}"/>
+		<property name="password" value="${mail.smtp.password}"/>
+		<property name="mailProperties" value="${mail.smtp.properties}"/>
+		
+		<property name="mailSession">
+			<bean class="com.edgenius.core.service.impl.NullableJndiObjectFactoryBean">
+				  <property name="jndiName" value="${mail.smtp.jndi}"/>
+			</bean>
+		</property>
+		
+	</bean>
+	
+	<bean id="mailTemplateEngine" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/templates/mail"/>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--  ===================================================================================  -->
+	<!--  MAIL Service: directly use engin or use Message queue service                        -->
+	<!--  ===================================================================================  -->
+	<!-- The mail service use Message QUEUE -->
+	<bean id="mailService" class="com.edgenius.core.service.impl.MailMQProducer">
+		<property name="template" ref="mailJmsTemplate"/>
+		<property name="destination" ref="mailDestination"/>
+	</bean>
+	
+	<!--  The mail service directly use mail sender  -->
+	<bean id="mailEngine" class="com.edgenius.core.service.impl.MailEngineService">
+		<property name="mailTemplateEngine" ref="mailTemplateEngine"/>
+		<property name="mailSender" ref="mailSender"/>
+	</bean>
+	
+ </beans>

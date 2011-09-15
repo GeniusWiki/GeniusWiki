@@ -1,0 +1,13 @@
+==============
+text [view>new title] abc [view >new title] 123 [my view > some others old world]
+--------------
+text [view>old world] abc [view > old world] 123 [my view > some others old world]
+==============
+text2 [view>new title@source] abc [view > old world@target] 123 [my view > some others old world]
+--------------
+text2 [view>old world@source] abc [view > old world@target] 123 [my view > some others old world]
+==============
+text1 [view>new title#123] abc [view >new title#123@source] 123 [my view > some others old world]
+--------------
+text1 [view>old world#123] abc [view > old world#123@source] 123 [my view > some others old world]
+==============

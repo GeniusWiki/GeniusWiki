@@ -1,0 +1,49 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        
+        <mapping class="com.edgenius.core.model.Resource"/>
+        <mapping class="com.edgenius.core.model.Permission"/>
+        
+        <mapping class="com.edgenius.core.model.CrWorkspace"/>
+        <mapping class="com.edgenius.core.model.CrFileNode"/>
+       	
+        <mapping class="com.edgenius.core.model.Role"/>
+        <mapping class="com.edgenius.core.model.Configuration"/>
+        <mapping class="com.edgenius.core.model.User"/>
+        
+       	<mapping class="com.edgenius.wiki.model.Space"/> 
+       	<mapping class="com.edgenius.wiki.model.Page"/> 
+       	<mapping class="com.edgenius.wiki.model.Draft"/> 
+       	<mapping class="com.edgenius.wiki.model.History"/> 
+       	<mapping class="com.edgenius.wiki.model.PageContent"/> 
+       	<mapping class="com.edgenius.wiki.model.DraftContent"/> 
+       	<mapping class="com.edgenius.wiki.model.HistoryContent"/> 
+       	<mapping class="com.edgenius.wiki.model.PageComment"/> 
+       	<mapping class="com.edgenius.wiki.model.UserPageMark"/> 
+       	<mapping class="com.edgenius.wiki.model.PageLink"/> 
+       	<mapping class="com.edgenius.wiki.model.PageProgress"/> 
+       	<mapping class="com.edgenius.wiki.model.PageTag"/> 
+       	<mapping class="com.edgenius.wiki.model.SpaceTag"/>
+       	
+       	<mapping class="com.edgenius.wiki.model.Template"/>
+       	
+       	<mapping class="com.edgenius.wiki.model.ActivityLog"/>
+       	 
+       	<mapping class="com.edgenius.wiki.model.Friend"/>
+       	<mapping class="com.edgenius.wiki.model.Widget"/>
+       	<mapping class="com.edgenius.wiki.model.Invitation"/>
+       	
+        <mapping class="com.edgenius.wiki.model.Notification"/>
+        
+        <mapping class="com.edgenius.wiki.ext.calendar.model.Calendar"/>
+        <mapping class="com.edgenius.wiki.ext.calendar.model.CalendarEvent"/>
+
+        <mapping class="com.edgenius.wiki.ext.todo.model.Todo"/>
+        <mapping class="com.edgenius.wiki.ext.todo.model.TodoItem"/>
+
+    </session-factory>
+   
+</hibernate-configuration>

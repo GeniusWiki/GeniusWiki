@@ -1,0 +1,1 @@
+GeniusWiki - Your friend ${user.fullname} invited you!

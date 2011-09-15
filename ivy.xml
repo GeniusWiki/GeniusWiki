@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?xml-stylesheet type="text/xsl" href="http://www.jayasoft.fr/org/ivyrep/ivy-doc.xsl"?>
+<ivy-module version="1.0">
+	<info organisation="com.edgenius" module="geniuswiki" revision="1.0">
+		<license name="Edgenius license" url="http://www.edgenius.com/licenses" />
+	</info>
+	<configurations>
+		<conf name="deploy" description="default configuration" />
+		
+		<conf name="database" description="for all databases for testing purpose" />
+		
+		<!-- Source, Javadoc, Hibernate Tools (Ant), Servlet API  -->
+		<conf name="dev" extends="deploy,database" description="Get source code and javadoc file as well" />
+		
+		<!-- non java stuff, ie, tinyMCE javascript widget -->
+		<conf name="nonjava" description="Get non java stuff" />
+		<conf name="standalone" description="Get libraries which are required by standalone pacakge" />
+		
+		<!-- Below conf only for publication usage. -->
+			<conf name="core" description="core" />
+			<conf name="wiki" description="wiki" />
+			<conf name="ext" description="ext" />
+			<conf name="integration" description="integration" />
+			<conf name="gwtserver" description="gwtserver" />
+			
+			<conf name="restmodel" description="restmodel" />
+			
+	</configurations>
+	
+	 <publications>
+    	<artifact name="geniuswiki-core" type="jar"  conf="core" ext="jar"/>
+    	<artifact name="geniuswiki-wiki" type="jar"  conf="wiki" ext="jar"/>
+    	<artifact name="geniuswiki-ext" type="jar"  conf="ext" ext="jar"/>
+    	<artifact name="geniuswiki-integration" type="jar"  conf="integration" ext="jar"/>
+    	<artifact name="geniuswiki-gwtserver" type="jar"  conf="gwtserver" ext="jar"/>
+    	
+    	<!-- This jar is overlapped with geniuswiki-integration.jar. It is used by GShell only and not suppose to pack into GW production release WAR. -->
+    	<artifact name="geniuswiki-integration-rest-model" type="jar"  conf="restmodel" ext="jar"/>
+    	
+    </publications>
+    
+	<dependencies>
+	
+		<dependency org="com.edgenius" name="libs" rev="3.0" changing="true" conf="deploy->license, highlight; dev->license, highlight" />
+		
+		<dependency org="google" name="gwt" rev="2.4" conf="deploy->default;dev->compile" />
+		<dependency org="google" name="gwt-gears" rev="1.3.0"	conf="dev->default" />
+		<!-- 2415
+		<dependency org="org/gwtwidgets" name="gwtwidgets" rev="0.1.4" conf="deploy->server;dev->server-source"/>
+		<dependency org="net/mygwt" name="mygwt" rev="0.4.3"	conf="dev->default" />
+		<dependency org="com/gwtext" name="gwtext" rev="0.9.3"	conf="dev->default" />
+		<dependency org="google" name="rocket" rev="0.28"	conf="dev->default" />
+		 -->
+		<!--  Useless for deploy, only for GWT compile -->
+		<dependency org="com/allen_sauer" name="gwt-dnd" rev="3.1.1" conf="dev->default"/>
+		<!--  some GWT classes shared to server side which need this LOG API -->
+		<dependency org="com/allen_sauer" name="gwt-log" rev="3.1.3" conf="deploy->default;dev->default;"/>
+		
+		<dependency org="net/sf/ehcache" name="ehcache-core" rev="2.3.2" conf="deploy->default;dev->default"/>
+		
+		<dependency org="org/hibernate" name="hibernate" rev="3.6.1"   conf="deploy->default;" />
+		<dependency org="org/hibernate" name="hibernate-tools" rev="3.2.4.ga"	conf="dev->default;" />
+		<!-- 
+		<dependency org="org/hibernate" name="hibernate-annotations" rev="3.4.0.ga"	conf="deploy->default;dev->default" />
+		 -->
+		<!-- use spring-modules instead.
+		<dependency org="org/hibernate" name="hibernate-search" rev="3.0.0.b3"	conf="deploy->default;dev->source" />
+		<dependency org="org" name="compass" rev="1.2.m3"	conf="deploy->default;dev->source" />
+		 -->
+		<dependency org="org/springframework" name="spring-modules" rev="0.9"	conf="deploy->lucene;dev->lucene-source" />
+		<!-- 3.0.2.RELEASE  -->
+		<dependency org="org/springframework" name="spring" rev="2.5.6" conf="deploy->default;dev->source,test" /> 
+		<dependency org="org/springframework" name="security" rev="2.0.4"	conf="deploy->default;dev->source" />
+		
+		
+		<dependency org="javax" name="mail" rev="1.4" conf="deploy->default" />
+		<dependency org="javax" name="jstl" rev="1.1.2" conf="deploy->default" />
+		
+		<dependency org="javax" name="servlet-api" rev="2.4" conf="dev->default" />
+		<dependency org="javax" name="jsp-api" rev="2.0" conf="dev->default" />
+		<!--  jms API javax.jsm.Queue etc. -->
+		<dependency org="apache/geronimo" name="geronimo-jms_1.1_spec" rev="1.1.1"  conf="deploy->default"/>
+	
+		
+		<dependency org="com/octo" name="jcaptcha" rev="1.0-rc6"	conf="deploy->default" />
+		
+		<dependency org="org/tuckey" name="urlrewrite" rev="3.2.0" conf="deploy->default;dev->source" />
+		
+		<!--  Quartz ALL package  -->
+		<dependency org="thoughtworks" name="xstream" rev="1.3.1" conf="deploy->default;dev->source" />
+		
+		<dependency org="org/opensymphony" name="quartz" rev="1.8.4" conf="deploy->default" />
+		<!--  NO USE since 31/05/2007
+		<dependency org="org/opensymphony" name="sitemesh" rev="2.2.1" conf="deploy->default" />
+		 -->
+		<!--  I don't do upgrade as new version break code - not remember exactly, the problems are getRequest() etc methods -->
+		<dependency org="apache" name="struts2" rev="2.2.1" conf="deploy->default;dev->source" />
+		<!-- NO USE  
+		<dependency org="org" name="displaytag" rev="1.1.1" conf="deploy->export;dev->export" />
+		 -->
+		<!--  need wait Spring Modules project come back or just replace that,  otherwise, no 3.0.0 above support -->
+        <dependency org="apache/lucene" name="lucene" rev="2.9.0" conf="deploy->default;dev->default"/>
+        <dependency org="apache/lucene" name="contrib" rev="2.9.0" conf="deploy->highlighter;dev->highlighter"/>
+        <!--  highlighter depends on memeoy, but to make things easy, just put it here -->
+        <dependency org="apache/lucene" name="contrib" rev="2.9.0" conf="deploy->memory;dev->memory"/>
+		
+		<dependency org="apache" name="jackrabbit" rev="1.4" conf="deploy->extractor;dev->extractor" />
+		<!-- 
+		<dependency org="apache" name="log4j" rev="1.2.14" conf="deploy->default;dev->default"/>
+		 -->
+		<dependency org="org" name="slf4j" rev="1.6.1" conf="deploy->default;dev->default"/>
+		<dependency org="ch/qos" name="logback" rev="0.9.28" conf="deploy->default;dev->default"/>
+		
+		<dependency org="apache" name="commons-io" rev="2.0.1" conf="deploy->default;dev->default"/>
+		<dependency org="apache" name="commons-codec" rev="1.3" conf="deploy->default;dev->default"/>
+		<dependency org="apache" name="commons-fileupload" rev="1.2.1" conf="deploy->default;dev->default"/>
+		<dependency org="apache" name="commons-dbcp" rev="1.3" conf="deploy->default;dev->default" />
+		<dependency org="apache" name="commons-pool" rev="1.5.4" conf="deploy->default;dev->source" />
+		<dependency org="apache" name="commons-beanutils" rev="1.7" conf="deploy->default;dev->default" />
+		<dependency org="apache" name="commons-lang" rev="2.4" conf="deploy->default;dev->source"/>
+		<dependency org="apache" name="activemq" rev="5.4.0" conf="deploy->core;dev->core"/>
+
+		<!--  Web service  -->		
+		<dependency org="apache" name="cxf" rev="2.3.0" conf="deploy->default;dev->source"/>
+		<dependency org="com/sun" name="jersey" rev="1.7" conf="deploy->server,json;dev->server,json"/>
+		
+		<dependency org="freemarker" name="freemarker" rev="2.3.16" conf="deploy->default"/>
+		<dependency org="database/driver" name="mysql" rev="5.1.12" conf="deploy->default"/>
+		<dependency org="database/driver" name="postgresql" rev="9.0-801.jdbc4" conf="deploy->default"/>
+		
+		<!-- 
+		<dependency org="database/driver" name="hsqldb" rev="5.0.5" conf="deploy->default"/>
+		 -->
+		
+		<dependency org="google" name="gson" rev="1.4" conf="deploy->default"/>
+
+		<!--  for pdf export -->
+		<dependency org="org/jtidy" name="jtidy" rev="r7" conf="deploy->default"/>
+		<dependency org="apache" name="xalan" rev="2.7.1" conf="deploy->default"/>
+		<dependency org="org/xhtmlrender" name="xhtmlrender" rev="r8p2" conf="deploy->default"/>
+		<dependency org="com/lowagie" name="itext" rev="2.0.4" conf="deploy->default"/>
+		
+		<!--  this library only use for wiki, but currently, there is no special conf for wiki part -->
+		<dependency org="org/suigeneris" name="jrcs" rev="0.3.0" conf="deploy->all"/>
+		<!--  finally remove radeox dependecise on 23/07
+		<dependency org="org/radeox" name="radeox" rev="1.0b3" conf="deploy->default;dev->source"/>
+		 -->
+		<dependency org="com/sun" name="rome" rev="1.0RC1" conf="deploy->default;dev->source"/>
+		<dependency org="com/sun" name="rome-fetcher" rev="0.9" conf="deploy->default;dev->default"/>
+
+		
+		<dependency org="nonjava" name="tinymce" rev="3.4.5" conf="nonjava->default"/>
+		<dependency org="nonjava" name="dp_syntaxhighlighter" rev="1.5.1" conf="nonjava->default"/>
+		
+		<!--  don't maintain by ivy, directly copy to target directory
+		<dependency org="nonjava" name="jquery" rev="1.3.2" conf="nonjava->default"/>
+		<dependency org="nonjava" name="jquery-lightbox" rev="0.5" conf="nonjava->default"/>
+		<dependency org="nonjava" name="jquery-tooltip" rev="1.3" conf="nonjava->default"/>
+		 -->
+		
+		<!--  For text nut CSS parser to convert TextNut CSS into embedded style  -->
+		<dependency org="com/steadystate" name="cssparser" rev="0.9.5" conf="deploy->default;dev->default"/>
+		<dependency org="org/w3c/css" name="sac" rev="1.3" conf="deploy->default;dev->default"/>
+		<dependency org="com/dd-plist" name="dd-plist" rev="r7" conf="deploy->default;dev->default"/>
+		
+		
+		<!--  facebook java api -->
+		<dependency org="com/facebook" name="java-api" rev="1.7.2" conf="deploy->default"/>
+		<dependency org="google" name="gdata" rev="1.41.1" conf="deploy->blogger;dev->blogger"/>
+        
+		<!--  Only for dev  -->
+		<dependency org="net/sf" name="ant-contrib" rev="1.0b3" conf="dev->default"/>
+		
+		<dependency org="apache" name="xmlrpc" rev="3.1.2"  conf="deploy->client"/>
+		
+		<!--  Only for test  -->
+		<dependency org="org" name="unitils" rev="3.1" conf="dev->default"/>
+		<!-- 4.8.2 is not compatible with spring 2.5.x, so use 4.4 instead -->
+		<dependency org="org" name="junit" rev="4.4" conf="dev->default"/>
+		<dependency org="org" name="easymock" rev="2.5.2" conf="dev->classextension"/>
+		
+		<!--  Only for database test -->
+		<!-- hsqldb 1.9.0-rc4 uses jdk6 compiled! -->
+		<dependency org="org/hsqldb" name="hsqldb" rev="1.8.0-10" conf="database->default"/>
+		<dependency org="database/driver" name="oracle" rev="10g2" conf="database->default"/>
+		<dependency org="database/driver" name="db2" rev="4.0.100" conf="database->default"/>
+		
+		
+		<!--  Only required for JDK1.5 - 1.6 can be removed  -->
+		<dependency org="javax/jaxb" name="jaxb-api" rev="2.1"  conf="deploy->default"/>
+		<dependency org="javax/jaxb" name="jaxb-impl" rev="2.1.12"  conf="deploy->default"/>
+		<dependency org="javax/jaxws" name="jaxws-api" rev="2.2"  conf="deploy->default"/>
+		
+	
+		<!--  Only for publish  -->
+		<dependency org="standalone" name="tomcat" rev="6.0.20" conf="standalone->default"/>
+<!--		<dependency org="standalone" name="yajsw" rev="beta-10.1" conf="standalone->default"/>-->
+	</dependencies>
+</ivy-module>

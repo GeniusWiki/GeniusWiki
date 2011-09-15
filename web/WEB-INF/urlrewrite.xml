@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite
+ PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+ "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+ <!--  warning: It CAN NOT have same directory name under web root match from URL, for example, directory signin etc.
+	Tomcat will automatically tail "/" in URL, this cause "forward" doesn't work as its target URL becomes like "/signin/signin.do/"  
+-->
+<!-- decoding-using=null to ensure / % + &  works -->
+<urlrewrite decode-using="null">
+	<!-- ====================== This is temporary URL for old URL page/page.do? ======================== -->
+	<!-- meaningURL /page/spaceUname/pageTitle -->
+	<!-- <rule>
+		<from>^/page/page.do(.*)$</from>
+		<to type="redirect" last="true">/</to>
+	</rule> -->
+	<!-- ====================== PAGE URL ======================== -->
+	<rule>
+		<!-- meaningURL /page/spaceUname/pageTitle -->
+		<from>^/page/([^/]+)/([^/]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?s=$1&amp;p=$2</to>
+	</rule>
+	<rule>
+		<!-- meaningURL with anchor /page/spaceUname/pageTitle/anchor -->
+		<from>^/page/([^/]+)/([^/]+)/([^/]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?s=$1&amp;p=$2&amp;a=$3</to>
+	</rule>
+	<rule>
+		<!--  meaning URL space only /page/spaceUname -->
+		<from>^/page/([^/]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?s=$1</to>
+	</rule>
+	<rule>
+		<!-- dashboard /page or /page?page=5 (view model, pagination) -->
+		<from>^/page(?:(\?.*)|(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do</to>
+	</rule>
+	<!-- ====================== Tiny PAGE URL ======================== -->
+	<rule>
+		<!-- tinyURL /p/pageUUID  (36) is for compatible with old page UUID  -->
+		<from>^/p/(\w{8}|[\w-]{36})(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?u=$1</to>
+	</rule>
+	<rule>
+		<!-- tinyURL with anchor /p/pageUUID/anchor -->
+		<from>^/p/(\w{8}|[\w-]{36})/([\w\d- ]+)(?:(?:/$)|$)</from>
+		<to type="forward">/pages/pages.do?u=$1&amp;a=$2</to>
+	</rule>
+
+	<!-- ====================== RSS FEED URL ======================== -->
+	<rule>
+		<from>^/feed/([^/]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/feed.do?s=$1</to>
+	</rule>
+	<!-- ====================== View URL ======================== -->
+	<rule>
+		<!-- page and space -->
+		<from>^/view/([^/]+)/([^/]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?s=$1&amp;p=$2&amp;r=true</to>
+	</rule>
+	<rule>
+		<!-- space and page with anchor -->
+		<from>^/view/([^/]+)/([^/]+)/([^/]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?s=$1&amp;p=$2&amp;a=$3&amp;r=true</to>
+	</rule>
+	<rule>
+		<!--  space only - view page list -->
+		<from>^/view/([^/]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?s=$1&amp;r=true</to>
+	</rule>
+	<rule>
+		<!-- dashboard -->
+		<from>^/view(?:(\?.*)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?r=true</to>
+	</rule>
+	<!-- ====================== Tiny View URL ======================== -->
+	<rule>
+		<!-- tinyURL   -->
+		<from>^/v/(\w{8}|[\w-]{36})(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?u=$1&amp;r=true</to>
+	</rule>
+	<rule>
+		<!-- tinyURL with anchor -->
+		<from>^/v/(\w{8}|[\w-]{36})/([\w\d- ]+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?u=$1&amp;a=$2&amp;r=true</to>
+	</rule>
+	
+	<!-- ====================== Tiny View Space URL ======================== -->
+	<rule>
+		<from>^/s/(\d+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?suid=$1</to>
+	</rule>
+	<rule>
+		<from>^/vs/(\d+)(?:(?:/$)|$)</from>
+		<to type="forward" last="true">/pages/pages.do?suid=$1&amp;r=true</to>
+	</rule>
+	
+	<!-- ====================== signin & system admin URL ======================== -->
+	<rule>
+		<!--login   -->
+		<from>^/signin(?:$)</from>
+		<to type="forward" last="true">/login/login.do</to>
+	</rule>
+	<rule>
+		<!--login   -->
+		<from>^/register(?:$)</from>
+		<to type="forward" last="true">/login/login.do?register=true</to>
+	</rule>
+	<rule>
+		<!-- system admin   -->
+		<from>^/sysadmin(?:$)</from>
+		<to type="forward" last="true">/instance/admin.do</to>
+	</rule>
+
+
+</urlrewrite>

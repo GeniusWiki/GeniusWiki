@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
+	default-autowire="byName">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+	<bean id="wsSpaceService" class="com.edgenius.wiki.integration.webservice.impl.WsSpaceServiceImpl">
+	</bean>
+	<bean id="wsUserService" class="com.edgenius.wiki.integration.webservice.impl.WsUserServiceImpl">
+	</bean>
+	<bean id="wsDashboardService" class="com.edgenius.wiki.integration.webservice.impl.WsDashboardServiceImpl">
+	</bean>
+	
+	<!--Basic Authentication Interceptor -->
+	<bean id="wsSecurityInterceptor" class="com.edgenius.wiki.integration.webservice.impl.WsSecurityInterceptor">
+	</bean>
+ 
+   <jaxws:endpoint id="userWebService" address="/UserWebService" implementor="#wsUserService">
+   	   <jaxws:inInterceptors><ref bean="wsSecurityInterceptor"/></jaxws:inInterceptors>
+   </jaxws:endpoint>
+   <jaxws:endpoint id="spaceWebService" address="/SpaceWebService" implementor="#wsSpaceService">
+   	   <jaxws:inInterceptors><ref bean="wsSecurityInterceptor"/></jaxws:inInterceptors>
+   </jaxws:endpoint>  
+   <jaxws:endpoint id="dashboardWebService" address="/DashboardWebService" implementor="#wsDashboardService">
+   	   <jaxws:inInterceptors><ref bean="wsSecurityInterceptor"/></jaxws:inInterceptors>
+   </jaxws:endpoint>  
+   
+</beans>
+

@@ -1,0 +1,1 @@
+欢迎注册GeniusWiki！

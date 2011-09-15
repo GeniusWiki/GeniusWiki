@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Theme">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="version" type="xs:decimal"/>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="title" type="xs:string"/>
+				<xs:element name="description"/>
+				<xs:element name="author"/>
+				<xs:element name="category">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="blog"/>
+							<xs:enumeration value="wiki"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="displaySequenceNumber" type="xs:integer" minOccurs="0"/>
+				<xs:element name="previewImageName" default="preview.png" minOccurs="0"/>
+				<xs:element name="largeLogo" default="logo.png" minOccurs="0"/>
+				<xs:element name="smallLogo" default="small-logo.png" minOccurs="0"/>
+				<xs:element name="updateDate" type="xs:string" minOccurs="0"/>
+				<xs:element name="status" type="xs:string" minOccurs="0"/>
+				<xs:sequence minOccurs="0">
+					<xs:element name="pageThemes">
+						<xs:complexType>
+							<xs:sequence minOccurs="0" maxOccurs="2">
+								<xs:element name="PageTheme">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="scope">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="home"/>
+														<xs:enumeration value="any"/>
+														<xs:enumeration value=""/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="welcome" minOccurs="0"/>
+											<xs:element name="bodyMarkup" minOccurs="0"/>
+											<xs:element name="spaceMenuMarkup" minOccurs="0"/>
+											<xs:element name="sidebarMarkup" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

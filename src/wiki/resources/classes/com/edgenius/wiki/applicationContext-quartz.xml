@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-autowire="byName" default-lazy-init="true">
+	
+	<bean id="scheduler" class="com.edgenius.wiki.service.impl.SchedulerFactoryBean" destroy-method="destroy">
+		<property name="applicationContextSchedulerContextKey">
+			<value>applicationContext</value>
+  		</property>
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.jobStore.class">org.springframework.scheduling.quartz.LocalDataSourceJobStore</prop>
+				<prop key="org.quartz.jobStore.driverDelegateClass">${quartz.jobstore.driver}</prop>
+				<prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
+				<prop key="org.quartz.jobStore.tablePrefix">@TOKEN.TABLE.PREFIX@QRTZ_</prop>
+			</props>
+		</property>
+		<property name="dataSource">
+			<ref bean="quartzDataSource" />
+		</property>
+		<!--If there are misfire job, immediately start may cause deadlock with apache CXF initialise process. I found this deadlock on 
+		Version check job when getting NotificaitionBean.  Below setting may minor (or eliminate?) the deadlock chance.  -->
+		<property name="startupDelay" value="90" />
+	</bean>
+	
+	<bean id="removeSpaceJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass">
+			<value>com.edgenius.wiki.quartz.RemoveSpaceJob</value>
+		</property>
+	</bean>
+	
+	<bean id="maintainJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass">
+			<value>com.edgenius.wiki.quartz.MaintainJob</value>
+		</property>
+	</bean>
+	
+	<bean id="backupJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass">
+			<value>com.edgenius.wiki.quartz.BackupJob</value>
+		</property>
+	</bean>
+	
+	<bean id="versionCheckJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass">
+			<value>com.edgenius.wiki.quartz.VersionCheckJob</value>
+		</property>
+	</bean>
+	
+	<bean id="commentNotifyJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass">
+			<value>com.edgenius.wiki.quartz.PageCommentNotifyJob</value>
+		</property>
+	</bean>
+	
+	<bean id="removeSpaceJobInvoker" class="com.edgenius.wiki.quartz.RemoveSpaceJobInvoker">
+	</bean>
+	<bean id="maintainJobInvoker" class="com.edgenius.wiki.quartz.MaintainJobInvoker">
+	</bean>
+	<bean id="versionCheckJobInvoker" class="com.edgenius.wiki.quartz.VersionCheckJobInvoker">
+	</bean>
+	<bean id="backupJobInvoker" class="com.edgenius.wiki.quartz.BackupJobInvoker">
+	</bean>
+	<bean id="pageCommentNotifyJobInvoker" class="com.edgenius.wiki.quartz.PageCommentNotifyJobInvoker">
+	</bean>
+
+</beans>

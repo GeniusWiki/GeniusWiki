@@ -1,0 +1,58 @@
+#content {
+	display: block;
+	background-color: #fff;
+	border-color: #A0A0A0;
+	border-style: solid;
+	border-width: 1px;
+	/** This is different with other: margin top needs to substract #header height **/
+	margin: 5px 25px 25px 25px;
+	padding: 10px;
+}
+
+.dlg-top-left{
+	background-color:#EAF3FE;
+	background-image: none;
+	vertial-align:middle;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/dlg/dlg_top_left.png', sizingMethod='scale');
+}
+.dlg-top-right{
+	background-color:#EAF3FE;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/dlg/dlg_top_right.png", sizingMethod="scale");
+}
+.dlg-bottom-left{
+	background-color:#fff;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/dlg/dlg_bottom_left", sizingMethod="scale");
+}
+.dlg-bottom-right{
+	background-color:#fff;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/dlg/dlg_bottom_right.png", sizingMethod="scale");
+}
+.dlg-border-top{
+	background-color:#EAF3FE;
+	background-image: none;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/dlg/dlg_top.png", sizingMethod="scale");
+	padding-top:8px;
+}
+
+.dlg-border-bottom{
+	background-color:#fff;
+	background-image: none;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/dlg/dlg_bottom.png", sizingMethod="scale");
+}
+.dlg-border-left{
+	background-color:#fff;
+	background-image: none;
+	background-repeat: repeat-y;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/dlg/dlg_left.png", sizingMethod="scale");
+}
+.dlg-border-right{
+	background-color:#fff;
+	background-image: none;
+	background-repeat: repeat-y;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/dlg/dlg_right.png", sizingMethod="scale");
+}

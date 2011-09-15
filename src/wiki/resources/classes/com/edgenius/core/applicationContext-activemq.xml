@@ -1,0 +1,106 @@
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:amq="http://activemq.apache.org/schema/core"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+
+	<!--  ActiveMQ connectionFactory  -->
+	<!-- 
+	<amq:connectionFactory id="jmsConnectionFactory" brokerURL="vm://localhost"/>
+	 -->
+	<amq:connectionFactory id="jmsConnectionFactory" brokerURL="tcp://${mq.server.url}?wireFormat.maxInactivityDuration=0"/>
+
+
+	<!--  Spring JmsTemplate config -->
+	<bean id="mailJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="pageJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="commentJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="spaceJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="userJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="roleJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="pageTagJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="spaceTagJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="attachmentJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="widgetJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
+
+
+	<!--  ActiveMQ destinations  -->
+	<amq:queue name="rssDestination" physicalName="edg.rss${geniuswiki.instance.id}"/>
+	<amq:queue name="notifyDestination" physicalName="edg.notify${geniuswiki.instance.id}"/>
+	<amq:queue name="mailDestination" physicalName="edg.mail${geniuswiki.instance.id}"/>
+	
+	<amq:queue name="pageIndexDestination" physicalName="edg.lpage${geniuswiki.instance.id}"/>
+	<amq:queue name="commentIndexDestination" physicalName="edg.lcomment${geniuswiki.instance.id}"/>
+	<amq:queue name="spaceIndexDestination" physicalName="edg.lspace${geniuswiki.instance.id}"/>
+	<amq:queue name="userIndexDestination" physicalName="edg.luser${geniuswiki.instance.id}"/>
+	<amq:queue name="roleIndexDestination" physicalName="edg.lrole${geniuswiki.instance.id}"/>
+	<amq:queue name="pageTagIndexDestination" physicalName="edg.lptag${geniuswiki.instance.id}"/>
+	<amq:queue name="spaceTagIndexDestination" physicalName="edg.lstag${geniuswiki.instance.id}"/>
+	<amq:queue name="attachmentIndexDestination" physicalName="edg.lattach${geniuswiki.instance.id}"/>
+	<amq:queue name="widgetIndexDestination" physicalName="edg.lwidget${geniuswiki.instance.id}"/>
+	
+	
+</beans>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	   default-autowire="byName" default-lazy-init="true">
+	
+    <bean id="calendarDAO" class="com.edgenius.wiki.ext.calendar.dao.hibernate.CalendarDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="calendarEventDAO" class="com.edgenius.wiki.ext.calendar.dao.hibernate.CalendarEventDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="todoDAO" class="com.edgenius.wiki.ext.todo.dao.hibernate.TodoDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="todoItemDAO" class="com.edgenius.wiki.ext.todo.dao.hibernate.TodoItemDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+  
+</beans>

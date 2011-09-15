@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation">
+			<value>classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/ehcache.xml</value>
+		</property>
+	</bean>
+	
+	<bean id="cacheService" class="com.edgenius.core.service.impl.CacheServiceImpl">
+		<property name="availableCache">
+			<list>
+				<ref local="policyCacheContainer"/>
+				
+				<ref local="spaceReadingCache"/>
+				<ref local="pageReadingCache"/>
+				
+				<ref local="pageTreeCache"/>
+				
+				<ref local="loginTimesCache"/>
+				<ref local="tagCache"/>
+				<ref local="userCache"/>
+				
+				<ref local="themeCache"/>
+				
+				<ref local="pageEditingCache"/>
+				
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="tagCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="tagCache"/>
+	</bean>
+	
+	<bean id="userCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="userCache"/>
+	</bean>
+	
+	<!--  Save spaceUname=roles/users list who have reading permission -->
+	<bean id="spaceReadingCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="spaceReadingCache"/>
+	</bean>
+	<!--  Save pageUuid=roles/users list who have reading permission: Note, page permission is forbidden list
+		it means only users/roles who has NO permission will appear in list. This list will work together with its space permission.
+	 -->
+	<bean id="pageReadingCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="pageReadingCache"/>
+	</bean>
+	
+	<bean id="pageTreeCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean" >
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="pageTreeCache"/>
+	</bean>
+		
+	<bean id="policyCacheContainer" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="policyCache"/>
+	</bean>
+	<bean id="loginTimesCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="loginTimesCache"/>
+	</bean>
+	
+	<bean id="themeCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="themeCache"/>
+	</bean>
+	
+	<bean id="pageEditingCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="cacheManager"/>
+		<property name="cacheName" value="pageEditingCache"/>
+	</bean>
+
+</beans>

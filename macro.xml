@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="macro" basedir="."	xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+	<!-- =====================================================  -->
+	<!--                 gwt      Macro                         -->
+	<!-- =====================================================  -->
+	<macrodef name="processTestResources">
+		<attribute name="phase" default="dev" />
+		<attribute name="module" default="wiki"/>
+		<sequential>
+			<if>
+				<or>
+					<equals arg1="@{phase}" arg2="dev" />
+				</or>
+				<then>
+					<var name="var.target.dir" value="${dev.dir}/WEB-INF/classes" />
+					<var name="var.dataroot.dir" value="${dev.dir}/geniuswiki-test-root/" />
+					<var name="var.overwrite" value="false" />
+				</then>
+				<else>
+					<var name="var.target.dir" value="${build.dir}/test/server/classes" />
+					<var name="var.dataroot.dir" value="${build.dir}/test/geniuswiki-test-root/" />
+					<var name="var.overwrite" value="true" />
+				</else>
+			</if>
+			<copy todir="${var.target.dir}" failonerror="false">
+				<fileset dir="${test.dir}/@{module}/resources/classes">
+					<include name="**/*" />
+				</fileset>
+			</copy>
+			<copy todir="${var.target.dir}/testcase"  failonerror="false">
+				<fileset dir="${test.dir}/@{module}/resources/testcase">
+					<include name="**/*" />
+				</fileset>
+			</copy>
+			<!-- Copy theme and skin xml for themeService starting. -->
+			<copy todir="${var.target.dir}/skins"  failonerror="false">
+				<fileset dir="${web.dir}/skins/">
+					<include name="**/*.xml" />
+					<exclude name=".svn/**"/>
+				</fileset>
+			</copy>
+			<copy todir="${var.target.dir}/themes"  failonerror="false">
+				<fileset dir="${web.dir}/themes/">
+					<include name="**/*.xml" />
+					<exclude name=".svn/**"/>
+				</fileset>
+			</copy>
+
+			<copy todir="${var.target.dir}/geniuswiki-test"  failonerror="false">
+				<fileset dir="${test.dir}/@{module}/resources/geniuswiki-test"/>
+				<filterset>
+					<filter token="TOKEN.GLOBAL.TEST.DATA.ROOT" value="file://${basedir}/${var.dataroot.dir}" />
+				 </filterset>		
+			</copy>
+			
+			<!-- for window file separator -->
+			<replaceregexp  file="${var.target.dir}/geniuswiki-test/geniuswiki-test.properties" flags="g"
+				match="\\"
+                replace="/"/>
+			<replaceregexp  file="${var.target.dir}/geniuswiki-test/geniuswiki-test-webcontext.properties" flags="g"
+				match="\\"
+                replace="/"/>
+
+
+			<copy todir="${var.dataroot.dir}/" overwrite="${var.overwrite}"  failonerror="false">
+				<fileset dir="${test.dir}/@{module}/resources/instance">
+					<include name="**/*" />
+				</fileset>
+				<filterset refid="properties.variables" />
+			</copy>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="copyWebResource">
+		<!--  dev/deploy -->
+		<attribute name="phase" default="dev" />
+		<sequential>
+			<if>
+				<or>
+					<equals arg1="@{phase}" arg2="deploy" />
+				</or>
+				<then>
+					<var name="var.target.dir" value="${build.dir}/web" />
+					<var name="var.gwt.debug.token" value="" />
+				</then>
+				<else>
+					<var name="var.target.dir" value="${dev.dir}" />
+					<var name="var.gwt.debug.token" value="code," />
+				</else>
+			</if>
+			
+			<!--  copy web contents which need use filter replacement -->
+			<copy todir="${var.target.dir}">
+				<fileset dir="${web.dir}">
+					<include name="**/*.jsp" />
+					<include name="**/web.xml" />
+				</fileset>
+				<filterset refid="properties.variables" />
+				<filterset>
+				    <filter token="TOKEN.GWT.DEBUG.TINYMCE.CODE" value="${var.gwt.debug.token}"/>
+					<filter token="TOKEN.TINYMCE.PLUGIN" value="${tinymce.plugin}"/>
+				 </filterset>
+			</copy>
+			
+			<!--  copy all web contents except those already copied by filter replacement -->
+			<copy todir="${var.target.dir}">
+				<fileset dir="${web.dir}">
+					<exclude name="**/*.jsp" />
+					<exclude name="**/web.xml" />
+					<exclude name="**/*.orig" />
+				</fileset>
+			</copy>
+			<!--  The /WEB-INF/templates/mail/ directory uses sub-directory for i18n ftl template, so merge them now -->
+			<copy todir="${var.target.dir}/WEB-INF/templates/mail/" flatten="true">
+				<fileset dir="${var.target.dir}/WEB-INF/templates/mail/i18n/"  includes="**/*.ftl" />
+			</copy>
+			<delete dir="${var.target.dir}/WEB-INF/templates/mail/i18n/"/>
+			
+			<copy todir="${var.target.dir}/WEB-INF/lib">
+				<fileset dir="${lib.dir}/deploy">
+					<include name="**/*.jar" />
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>		
+		
+	<macrodef name="copyNonjava">
+		<!--  dev/deploy -->
+		<attribute name="phase" default="dev" />
+		<sequential>
+			<if>
+				<or>
+					<equals arg1="@{phase}" arg2="deploy" />
+				</or>
+				<then>
+					<var name="var.target.dir" value="${build.dir}/web" />
+				</then>
+				<else>
+					<var name="var.target.dir" value="${dev.dir}" />
+				</else>
+			</if>
+			<!--  unzip TinyMCE to widgets directory !!!must call unzip before next copy task: 
+					as override is need from web/widgets/tiny_mce/plugins/table -->
+			<unzip dest="${var.target.dir}/widgets/tiny_mce">
+			   <fileset dir="${lib.dir}/nonjava">
+			        <include name="tinymce*.zip"/>
+			    </fileset>
+			</unzip>
+			<echo level="info">${var.target.dir}/widgets/tiny_mce/plugins</echo>
+			<!-- delete unnecessary plugin directories from unziped tinyMCE library -->
+			<delete includeemptydirs="true">
+				<fileset dir="${var.target.dir}/widgets/tiny_mce/plugins">
+					<exclude name="${tinymce.plugin.1}/**"/>
+					<exclude name="${tinymce.plugin.2}/**"/>
+					<exclude name="${tinymce.plugin.3}/**"/>
+					<exclude name="${tinymce.plugin.4}/**"/>
+					<exclude name="wb*/**"/>
+				</fileset>
+			</delete>
+
+			<unzip dest="${var.target.dir}/widgets/dp_syntaxhighlighter">
+			   <fileset dir="${lib.dir}/nonjava">
+			        <include name="dp_syntaxhighlighter*.zip"/>
+			    </fileset>
+			</unzip>
+			
+			<unzip dest="${var.target.dir}/widgets/jquery">
+			   <fileset dir="${lib.dir}/nonjava">
+			        <include name="jquery*.zip"/>
+			    </fileset>
+			</unzip>
+				
+			<copy todir="${var.target.dir}" overwrite="true">
+				<fileset dir="${web.dir}">
+					<include name="widgets/**" />
+				</fileset>
+			</copy>		
+			<delete verbose="true">
+				<fileset dir="${var.target.dir}/widgets/tiny_mce/plugins" >
+					<include name="**/*.orig"/>
+					<include name="**/*_src.js"/>
+					<include name="**/*.txt"/>
+				</fileset>
+			</delete>			
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="compile-gwtserver">
+		<attribute name="module" default="gwt"/>
+		<!--  web/lib -->
+		<attribute name="type" default="lib" />
+		<!--  dev/deploy -->
+		<attribute name="phase" default="dev" />
+
+		<sequential>
+			<echo>Compiling @{module} server interface ...</echo>
+			<inner.init.variables phase="@{phase}" module="@{module}" />
+			<mkdir dir="${build.dir}/${app.name.lowcase}-@{module}server/classes" />
+			<javac sourcepath="" srcdir="${src.dir}/@{module}/java" 
+				destdir="${build.dir}/${app.name.lowcase}-@{module}server/classes" debug="${compile.debug}"
+				source="${javac.source}" target="${javac.target}" verbose="false"
+				classpath="${depends.classpath}"
+				classpathref="compile.classpath">
+			    <include name="com/edgenius/wiki/gwt/client/server/*.java"/>
+			    <include name="com/edgenius/wiki/gwt/client/server/utils/*.java"/>
+			    <include name="com/edgenius/wiki/gwt/client/model/*.java"/>
+			    <include name="com/edgenius/wiki/gwt/client/html/*.java"/>
+			    <include name="com/edgenius/wiki/gwt/client/i18n/*.java"/>
+			</javac>
+		</sequential>
+	</macrodef>
+	<macrodef name="java2wsdl">
+		<attribute name="wsdl.name"/>
+		<attribute name="wsdl.class"/>
+
+		<sequential>
+			<echo>Generating WSDL from java ...</echo>
+			<mkdir dir="${build.dir}/${app.name.lowcase}-integration/wsdl" />
+			 <java classname="org.apache.cxf.tools.java2ws.JavaToWS" fork="true" 
+			 	classpath="${depends.classpath}" classpathref="compile.classpath"> 
+		         <arg value="-wsdl"/>
+		         <arg value="-o"/>
+		         <arg value="${build.dir}/${app.name.lowcase}-integration/wsdl/@{wsdl.name}"/>
+		         <arg value="@{wsdl.class}"/>
+		      </java>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="gwtInit">
+		<attribute name="phase" default="dev"/>
+		<attribute name="module" default="gwt"/>
+		<attribute name="userAgent" default=""/>
+		<sequential>
+			<tool.prepare.dir dir="${build.dir}/@{module}"/>
+			
+			<if>
+				<equals arg1="@{phase}" arg2="dev" />
+				<then>
+					<if>
+						<equals arg1="@{userAgent}" arg2="" />
+						<then>
+							<filterset id="compile.gwt.debug">
+								<filter token="TOKEN.GWT.DEBUG" value="DEBUG" />
+								<!-- show HTML code only in debug mode -->
+								<filter token="TOKEN.GWT.DEBUG.PROPERTIES.S" value="" />
+								<filter token="TOKEN.GWT.DEBUG.PROPERTIES.E" value="" />
+								
+								<filter token="TOKEN.GWT.MINI.DEBUG.PROPERTIES.S" value="&lt;!--" />
+								<filter token="TOKEN.GWT.MINI.DEBUG.PROPERTIES.E" value="--&gt;" />
+								
+								<filter token="TOKEN.GWT.DEPLOY.ONLY.S" value="&lt;!--" />
+								<filter token="TOKEN.GWT.DEPLOY.ONLY.E" value="--&gt;" />
+								<filter token="TOKEN.GEARS.SITE.VERSION" value="${gears.site.version}" />
+							</filterset>
+						</then>
+						<else>
+							<filterset id="compile.gwt.debug">
+								<filter token="TOKEN.GWT.DEBUG" value="DEBUG" />
+								<!-- show HTML code only in debug mode -->
+								<filter token="TOKEN.GWT.DEBUG.PROPERTIES.S" value="" />
+								<filter token="TOKEN.GWT.DEBUG.PROPERTIES.E" value="" />
+								
+								<filter token="TOKEN.GWT.MINI.DEBUG.PROPERTIES.S" value="" />
+								<filter token="TOKEN.GWT.MINI.DEBUG.PROPERTIES.E" value="" />
+								<filter token="TOKEN.GWT.MINI.DEBUG.AGENT" value="@{userAgent}" />
+								
+								<filter token="TOKEN.GWT.DEPLOY.ONLY.S" value="&lt;!--" />
+								<filter token="TOKEN.GWT.DEPLOY.ONLY.E" value="--&gt;" />
+								<filter token="TOKEN.GEARS.SITE.VERSION" value="${gears.site.version}" />
+							</filterset>
+							
+						</else>
+					</if>
+				</then>
+				<else>
+					<filterset id="compile.gwt.debug">
+						<filter token="TOKEN.GWT.DEBUG" value="OFF" />
+						<filter token="TOKEN.GWT.DEBUG.PROPERTIES.S" value="&lt;!--" />
+						<filter token="TOKEN.GWT.DEBUG.PROPERTIES.E" value="--&gt;" />
+						
+						<filter token="TOKEN.GWT.MINI.DEBUG.PROPERTIES.S" value="&lt;!--" />
+						<filter token="TOKEN.GWT.MINI.DEBUG.PROPERTIES.E" value="--&gt;" />
+						
+						<filter token="TOKEN.GWT.DEPLOY.ONLY.S" value="" />
+						<filter token="TOKEN.GWT.DEPLOY.ONLY.E" value="" />
+						<filter token="TOKEN.GEARS.SITE.VERSION" value="${gears.site.version}" />
+					</filterset>
+				</else>
+			</if>
+			
+			<!-- Copy resource file to build/gwt/resources directory -->
+			<copy todir="${build.dir}/@{module}/resources"  verbose="true">
+				<fileset dir="${src.dir}/@{module}/resources/classes">
+					<include name="**/*" />
+				</fileset>
+				<filterset refid="compile.gwt.debug" />
+			</copy>
+	
+			<!-- Copy i18n properties file to build/gwt/resources directory -->
+			<copy todir="${build.dir}/@{module}/resources/${gwt.i18n.package.path}">
+				<fileset dir="${src.dir}/@{module}/resources/i18n">
+					<include name="*.properties"/>
+				</fileset>
+			</copy>
+			
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="gwtCompile">
+		<attribute name="phase" default="dev"/>
+		<attribute name="module" default="gwt"/>
+		<attribute name="options" default=""/>
+		<attribute name="gwt.application"  default=""/>
+		<sequential>
+			<tool.prepare.dir dir="${build.dir}/@{module}/classes"/>
+			
+			<mkdir dir="${build.dir}/@{module}"/>
+		    <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+		      <classpath>
+		      	<pathelement path="${build.dir}/@{module}/resources"/>
+		      	<pathelement path="${src.dir}/@{module}/java"/>
+				<path refid="compile.classpath"/>
+		      </classpath>
+		      <jvmarg value="-Xss56M"/>
+		      <jvmarg value="-Xmx512M"/>
+		      <arg line="-war ${build.dir}/@{module}/classes"/>
+		      <arg line="-extra ${build.dir}/@{module}-report/"/>
+		      <arg line="-style OBF"/>
+		      <arg line="@{options}"/>
+		      <arg line="com.edgenius.wiki.gwt.@{gwt.application}"/>
+		    </java>
+			
+		</sequential>
+	</macrodef>
+	<macrodef name="gwtPublish" description="copy gwt compiled files to target folder">
+		<attribute name="module" default="gwt"/>
+		<attribute name="gwt.application" />
+		<attribute name="phase" default="dev" />
+		
+		<sequential>
+					
+			<inner.init.variables phase="@{phase}"/>
+			<var name="gwt.target.dir" value="${var.build.dir}/@{gwt.application}"/>
+			
+			<echo level="info">Cleaning gwt target directories</echo>
+			<available file="${gwt.target.dir}" property="gwt.target.existed" />
+			<if>
+				<or>
+					<isset property="gwt.target.existed" />
+				</or>
+				<then>
+					<delete dir="${gwt.target.dir}" />
+					<mkdir dir="${gwt.target.dir}" />
+				</then>
+				<else>
+					<mkdir dir="${gwt.target.dir}" />
+				</else>
+			</if>
+
+			<echo level="info">Copy files to gwt target directories</echo>
+			<copy todir="${gwt.target.dir}">
+				<fileset dir="${build.dir}/@{module}/classes/@{gwt.application}/">
+					<include name="**" />
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="gwtI18n">
+		<attribute name="module" default="gwt"/>
+		<attribute name="lang" default=""/>
+		<sequential>
+			<copy todir="${build.dir}/@{module}/resources/${gwt.i18n.package.path}">
+				<fileset dir="${src.dir}/@{module}/resources/i18n">
+					<include name="*.properties"/>
+				</fileset>
+			</copy>
+			
+			<path id="gwt.path">
+				<pathelement location="${src.dir}/@{module}/java"/>
+				<pathelement location="${build.dir}/@{module}/resources"/>
+				<path refid="compile.classpath"/>
+			</path>
+			
+			<java classname="com.google.gwt.i18n.tools.I18NSync" classpathref="gwt.path" failonerror="true">
+				<arg value="${gwt.i18n.package}.Messages@{lang}"/>
+			</java>
+			<java classname="com.google.gwt.i18n.tools.I18NSync" classpathref="gwt.path" failonerror="true">
+				<arg value="-createMessages"/>
+				<arg value="${gwt.i18n.package}.ParamsMessages@{lang}"/>
+			</java>
+			
+			<copy todir="${src.dir}/@{module}/java/${gwt.i18n.package.path}">
+				<fileset dir="${build.dir}/@{module}/resources/${gwt.i18n.package.path}">
+					<include name="*.java"/>
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="copyMetaSQL" description="copy install sqls to META-INF/meta/someDB">
+		<attribute name="phase" default="dev" />
+		<attribute name="type" default="mysql" />
+		
+		<sequential>
+			<if>
+				<equals arg1="@{phase}" arg2="dev" />
+				<then>
+					<copyDBMetaSQL dest="${dev.dir}/WEB-INF/classes/META-INF/meta"   type="@{type}"/>
+				</then>
+				<else>
+					<copyDBMetaSQL dest="${build.dir}/wiki/classes/META-INF/meta"  type="@{type}"/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>			
+	
+	<macrodef name="copyDBMetaSQL" description="copy gwt compiled files to target folder">
+		<attribute name="dest"/>
+		<attribute name="type" default="mysql" />
+		
+		<sequential>
+			<var name="toSqlDir" value="@{dest}/@{type}"/>
+			<mkdir dir="${toSqlDir}"/>
+			<copy todir="${toSqlDir}"  verbose="true">
+				<fileset dir="${metadata.dir}/database/@{type}">
+					<include name="*-quartz.sql" />
+					<include name="*-init-tables.sql" />
+				</fileset>
+				<!-- replace table prefix token -->
+				<filterset refid="properties.variables" />
+			</copy>
+			<if>
+				<equals arg1="@{type}" arg2="oracle9i" />
+				<then>
+					<!--	This is dirty fix for Oracle, change long type to clob type -->
+					<!--	http://opensource.atlassian.com/projects/hibernate/browse/HHH-6066 -->
+					<echo> Replace Oracle long with clob type... </echo>
+					<replace file="${build.dir}/model/@{type}.ddl">
+					  <replacetoken> long</replacetoken>
+					  <replacevalue> clob</replacevalue>
+					</replace>
+				</then>
+			</if>
+			
+			<copy todir="${toSqlDir}"  verbose="true">
+				<fileset dir="${build.dir}/model/">
+					<include name="@{type}*.ddl" />
+				</fileset>
+			</copy>
+			<copy todir="${toSqlDir}"  verbose="true">
+				<fileset dir="${metadata.dir}/database/@{type}">
+					<include name="*-create-db.sql" />
+				</fileset>
+				<!-- keep all original tokens!-->
+			</copy>
+		</sequential>
+	</macrodef>	
+</project>

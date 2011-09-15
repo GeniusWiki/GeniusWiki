@@ -1,0 +1,62 @@
+GeniusWiki can be installed on most popular Java web server and database. A setup wizard has step by step installation to guide users installation. There is no need of professional knowledge in Java. 
+
+COMPATIBLE MATRIX:
+------------------------------------
+Java:
+	Java 5+
+Web server:
+	Tomcat 5.5+
+	Websphere 6.1+
+	JBoss4.x
+	Weblogic 9.2+
+	Jetty 6.x +
+	Glassfish 
+	Jboss web
+Database:	
+	MySQL 4+
+	Posgresql 8+
+	Oracle 9i+
+	DB2 8+
+
+
+INSTALL GUIDE on TOMCAT and MYSQL
+------------------------------------
+Prerequisite:
+* Java 5+
+* Tomcat 5+ 
+* MySQL 4+
+
+First, download Tomcat from http://tomcat.apache.org. To start Tomcat, two OS environment variables are needed, CATALINA_OPTS and CATALINA_HOME. CATALINA_OPTS is for Tomcat memory requirement. We recommend set XMX to 256M. In Windows, it is from "My Computer" -> "Properties" -> "Advanced"->"Environment variables". In Unix systems, run shell "export CATALINA_OPTS='-Xms256M -Xmx512M'".  CATALINA_HOME is for the Tomcat installation directory. Your setting may like this:
+Windows:
+--------
+CATALINA_OPTS=-Xms128M -Xmx256M
+CATALINA_HOME=c:\web\tomcat
+
+Unix:
+--------
+export CATALINA_OPTS="-Xms128M -Xmx256M"
+export CATALINA_HOME=/usr/local/tomcat
+
+After tomcat download, go thru these steps:
+* Unzip Tomcat zip (or tar) file into the directory in CATALINA_HOME assigned.
+* Copy geniuswiki.war into {TOMCAT}/webapps/
+* Start Tomcat, the geniuswiki.war is unpacked automatically.
+* Access http://localhost:8080/geniuswiki
+* Follow the setup wizard to complete the installation.
+
+Upgrade
+------------------------------------
+GeniusWiki upgrade is quite easy. Delete old GeniusWiki code from web server and deploy new geniuswiki.war, then start web server. In the setup wizard page, input the original data root directory, then upgrade wizard will ask if users want to upgrade or not. Simply click "Yes, please upgrade". That is all!
+
+Database driver
+------------------------------------
+GeniusWiki supports MySQL, PostgreSQL, Oracle9i+ and DB2. MySQL and PosgreSQL database drivers are already included in the release package. For Oracle, please use 10G driver or above only, download from here [Open link in another window] .
+Please copy ojdbc14.jar to {TOMCAT_INSTALL_PATH}/lib directory(6.x) or {TOMCAT_INSTALL_PATH}/shared/lib(5.5.x) and restart tomcat. DB2 driver installation is similar with Oracle.
+
+TROUBLESHOOTING
+------------------------------------
+* The deployment package should be exploded mode on any web server as GeniusWiki will try to update data root information to geniuswiki.properties file under /WEB-INF/classes/geniuswiki/
+* Otherwise, set Java system properties "geniuswiki.data.root", for example, add option on Java start command line "-Dgeniuswiki.data.root=/var/mydata/geniuswiki". 
+
+If you face any problems, please send mail to feedback@geniuswiki.com.
+

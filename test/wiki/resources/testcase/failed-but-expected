@@ -1,0 +1,7 @@
+==============  Embedded reference content
+
+--------------
+{toc}
+h2. This is {toc} header 
+==============  if user does not have create page permission, this link convert to pure text link, then it won't convert back to markup
+[my link>not exist page]

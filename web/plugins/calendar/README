@@ -1,0 +1,17 @@
+- update jquery.calendar.js
+
+Add below to  quickAdd() after line $(document.body).append(tempquickAddHanler); before line  buddle = $("#bbit-cal-buddle");
+
+                //NDPNDP
+                $(".textbox-fill-input").bind("blur",function(e){
+            		gwtShortcutKeyCapture(true);
+                });
+                $(".textbox-fill-input").bind("focus",function(e){
+            		gwtShortcutKeyCapture(false);
+                });
+                //NDPNDP
+A bug:                
+ if (!DateAdd || typeof (DateDiff) != "function") {
+ 
+To:
+ if (!DateAdd || typeof (DateAdd) != "function") {

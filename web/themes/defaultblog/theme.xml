@@ -1,0 +1,43 @@
+<Theme>
+  <version>1</version>
+  <name>defaultblog</name>
+  <title>Default Blog</title>
+  <description>Default Blog Theme</description>
+  <author>Edgenius</author>
+  <category>blog</category>
+  <displaySequenceNumber>1</displaySequenceNumber>
+  <previewImageName>preview.png</previewImageName>
+  <largeLogo>logo.png</largeLogo>
+  <smallLogo>small-logo.png</smallLogo>
+  <updateDate>2008-09-23 10:40:36.328 EDT</updateDate>
+  <pageThemes>
+      <PageTheme>
+        <scope>home</scope>
+        <welcome>This is your Blog space home page. Using &quot;Create&quot; button to create your first post. For more help, press &quot;F1&quot;.</welcome>
+        <bodyMarkup>{blog:count=10}{page-attribute:attachment=no|tag=no|creator=no|modifier=no|comment=no|history=no|edit=no|under_tab_bar=no}{$BODY}</bodyMarkup>
+        <spaceMenuMarkup>
+		{menu}
+		</spaceMenuMarkup>
+        <sidebarMarkup><![CDATA[{panel:title=Share|background-color:#fff}
+{sharethis}
+{panel}]]>
+        </sidebarMarkup>
+      </PageTheme>
+      <PageTheme>
+        <scope>any</scope>
+        <!--Default body-->
+		<!--<bodyMarkup>{$BODY}</bodyMarkup>-->
+		<spaceMenuMarkup>
+		{menu}
+		</spaceMenuMarkup>
+        <sidebarMarkup><![CDATA[{panel:title=Authors|background-color:#fff}
+{pageinfo:type=creator}
+{pageinfo:type=modifier}
+{panel}
+{panel:title=Share|background-color:#fff}
+{sharethis}
+{panel}]]>
+		</sidebarMarkup>
+      </PageTheme>
+  </pageThemes>
+</Theme>

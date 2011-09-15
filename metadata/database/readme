@@ -1,0 +1,7 @@
+This directory files are used for installation wizard to create database(only mysql), import initial data and create Quartz tables.
+All files may have Ant Token that will be replace during packaging. 
+
+Note for Quartz SQL:
+Quartz is for mysql innoDB
+Quartz is for postgreSQL8
+Quartz is for db2-v8

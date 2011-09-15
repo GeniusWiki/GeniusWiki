@@ -1,0 +1,18 @@
+.macroTabs{
+	width:100%;
+	border-bottom:1px solid #AAAAAA;
+	border-left:1px solid #AAAAAA;
+	border-right:1px solid #AAAAAA;
+}
+.macroTabs .macroTabName{
+	font-weight:bold;
+	border-bottom:1px solid #3a9aec;
+	border-top:1px solid #3a9aec;
+	font-size:14px;
+    height: 26px;
+	text-align:center;
+	padding-top:5px;
+}
+.macroTabs .macroTab{
+	padding:4px;
+}

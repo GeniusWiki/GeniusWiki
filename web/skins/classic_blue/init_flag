@@ -1,0 +1,6 @@
+This is just flag file to tell system:
+1) When system starting, this skin directory will be zipped and put into {DataRoot}/data/skins/ directory.
+2) Then system will execute install process, i.e., copy default skin, explode zip from {DataRoot}/data/skins/ directory.
+
+This process is good for skins release with application package. Release package doesn't need to duplicated default skin. 
+User also can download skin zip correctly without redundant files.

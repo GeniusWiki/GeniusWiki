@@ -1,0 +1,1 @@
+alter table EDG_PAGE_LINKS CHANGE COLUMN COUNT LINK_COUNT integer;

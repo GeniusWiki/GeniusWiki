@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	   default-lazy-init="true">
+	  <!--  IMPORTANT: CAN NOT add default-autowire="byName" attribute in this XML. It seems import some unexpected 
+	  property into IndexListenerContainer, to lead it ActiveMQ Session Task can not be stop normally -->
+	   
+	<!--  ===================================================================================  -->
+	<!--  JMS Message definition : For thread safe problem, each Index has an independent  MQ Listner -->
+	<!--  And these listenerContainer will use default concurrentConsumers as 1 to force message handle in single thread -->
+	<!--  ===================================================================================  -->
+	<bean id="textExtractorService" class="com.edgenius.wiki.search.service.TextExtractorService">
+		<property name="repositoryService" ref="repositoryService"/>
+		<property name="extractors">
+            <list>
+            	<!-- 9 extractors -->
+                <value>org.apache.jackrabbit.extractor.MsWordTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.MsPowerPointTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.MsExcelTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.RTFTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.PdfTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.OpenOfficeTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.HTMLTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.XMLTextExtractor</value>
+                <value>org.apache.jackrabbit.extractor.PlainTextExtractor</value>
+            </list>
+        </property>
+	</bean>
+	<bean id="indexMessageAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<bean class="com.edgenius.wiki.search.interceptor.IndexMQConsumer">
+				<property name="indexService" ref="indexService"/>
+				<property name="securityService" ref="securityService"/>
+				<property name="userReadingService" ref="userReadingService"/>
+				<property name="pageDAO" ref="pageDAO"/>
+				<property name="spaceDAO" ref="spaceDAO"/>
+				<property name="commentDAO" ref="commentDAO"/>
+				<property name="pageTagDAO" ref="pageTagDAO"/>
+				<property name="spaceTagDAO" ref="spaceTagDAO"/>
+				<property name="widgetDAO" ref="widgetDAO"/>
+				<property name="roleDAO" ref="roleDAO"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="rssMessageAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<bean class="com.edgenius.wiki.rss.RSSMQConsumer">
+				<property name="rssService" ref="rssService"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="notifyMessageAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<bean class="com.edgenius.wiki.service.impl.NotifyMQConsumer" autowire="byName">
+				<property name="mailEngine" ref="mailEngine"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<!-- not good place to mix RSS and Index Listener  -->
+	<bean id="rssListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false"  depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="rssDestination"/>
+		<property name="messageListener" ref="rssMessageAdapter"/>
+	</bean>
+	<bean id="notifyListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false"  depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="notifyDestination"/>
+		<property name="messageListener" ref="notifyMessageAdapter"/>
+	</bean>
+	
+	<bean id="pageIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false"  depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="pageIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="commentIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false"  depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="commentIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="spaceIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="spaceIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="userIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="userIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="roleIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="roleIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="pageTagIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="pageTagIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="spaceTagIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="spaceTagIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="attachmentIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="attachmentIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<bean id="widgetIndexListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" lazy-init="false" depends-on="activeMQBroker">
+	  	<property name="concurrentConsumers" value="1" />
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="destination" ref="widgetIndexDestination"/>
+		<property name="messageListener" ref="indexMessageAdapter"/>
+	</bean>
+	<!--  ===================================================================================  -->
+	<!--  Search Bean definition -->
+	<!--  ===================================================================================  -->
+
+	
+  	<!--  Directory Factory service -->  	
+	<bean id="pageFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/pages"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="commentFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/comments"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="spaceFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/spaces"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="userFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/users"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="roleFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/roles"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="pageTagFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/pagetags"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="spaceTagFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/spacetags"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="attachmentFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/attachments"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	<bean id="widgetFsDirectory" class="com.edgenius.wiki.search.service.FSDirectoryFactoryBean">
+	    <property name="location" value="${geniuswiki.data.root}data/index/widgets"/>
+	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
+	</bean>
+	
+	<!-- IndexFactory -->
+	<bean id="pageIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="pageFsDirectory"/>
+	</bean>
+	<bean id="commentIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="commentFsDirectory"/>
+	</bean>
+	<bean id="spaceIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="spaceFsDirectory"/>
+	</bean>
+	<bean id="userIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="userFsDirectory"/>
+	</bean>
+	<bean id="roleIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="roleFsDirectory"/>
+	</bean>
+	<bean id="pageTagIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="pageTagFsDirectory"/>
+	</bean>
+	<bean id="spaceTagIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="spaceTagFsDirectory"/>
+	</bean>
+	<bean id="attachmentIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="attachmentFsDirectory"/>
+	</bean>
+	<bean id="widgetIndexFactory" class="com.edgenius.wiki.search.service.SimpleIndexFactoryBean">
+	    <property name="directory" ref="widgetFsDirectory"/>
+	</bean>
+	
+	<!-- Search Factory -->
+	<bean id="searcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+		<property name="directories">
+			<list>
+				<ref local="pageFsDirectory"/>
+				<ref local="commentFsDirectory"/>
+				<ref local="spaceFsDirectory"/>
+				<ref local="userFsDirectory"/>
+				<ref local="pageTagFsDirectory"/>
+				<ref local="spaceTagFsDirectory"/>
+				<ref local="attachmentFsDirectory"/>
+				<ref local="widgetFsDirectory"/>
+				<!-- role is not in common search
+				<ref local="roleFsDirectory"/>
+				 -->
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="widgetSpaceSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+		<property name="directories">
+			<list>
+				<ref local="spaceFsDirectory"/>
+				<ref local="widgetFsDirectory"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!--  NOTE
+	org.springmodules.lucene.search.factory.SingleSearcherFactory has problem when a new index added. It won't immediately return 
+	new result but still get back old results. I don't have time to investigate, anyway, use ParallelMultipleSearcherFactory instead.
+	 -->
+	<bean id="spaceSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+		<property name="directories">
+			<list>
+				<ref local="spaceFsDirectory"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="userSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+		<property name="directories">
+			<list>
+				<ref local="userFsDirectory"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="roleSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+		<property name="directories">
+			<list>
+				<ref local="roleFsDirectory"/>
+				<!-- Space also has its role -->
+				<ref local="spaceFsDirectory"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="attachmentSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+		<property name="directories">
+			<list>
+				<ref local="attachmentFsDirectory"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- RSS Service -->
+	<bean id="rssService" class="com.edgenius.wiki.rss.RSSServiceImpl" autowire="byName">
+		<!-- relative directory to WebRoot -->
+		<property name="rssRoot" value="${geniuswiki.data.root}data/rss"/>
+	</bean>
+	
+  	<!--  Index/Search Service: autowire="byName" in order to import DAO stuffs -->
+	<bean id="indexService" class="com.edgenius.wiki.search.service.IndexServiceImpl" autowire="byName" 
+				init-method="initOptimizeJob">
+		<!--  there is assumption here: all index, locks must under first level sub directory and 
+		there is not 2nd level directories as well; This assumption is for rebuild index while doing cleanIndex() -->
+	 	<property name="indexRoot" value="${geniuswiki.data.root}data/index/"/>
+	 	
+	 	<property name="pageIndexFactory" ref="pageIndexFactory"/>
+	 	<property name="commentIndexFactory" ref="commentIndexFactory"/>
+	 	<property name="spaceIndexFactory" ref="spaceIndexFactory"/>
+	 	<property name="userIndexFactory" ref="userIndexFactory"/>
+	 	<property name="roleIndexFactory" ref="roleIndexFactory"/>
+	 	<property name="pageTagIndexFactory" ref="pageTagIndexFactory"/>
+	 	<property name="spaceTagIndexFactory" ref="spaceTagIndexFactory"/>
+	 	<property name="attachmentIndexFactory" ref="attachmentIndexFactory"/>
+	 	<property name="widgetIndexFactory" ref="widgetIndexFactory"/>
+	 	<!-- For attachment meta data update -->
+	 	<property name="attachmentSearchService" ref="attachmentSearchService"/>
+	 	<!-- For attachment file data extract -->
+	 	<property name="textExtractorService" ref="textExtractorService"/>
+  	</bean>
+  	
+    <bean id="searchService" class="com.edgenius.wiki.search.service.SearchServiceImpl">
+	 	<property name="searcherFactory" ref="searcherFactory"/>
+	 	<property name="securityService" ref="securityService"/>
+	 	<property name="userReadingService" ref="userReadingService"/>
+	    <property name="analyzer">
+	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
+	    </property>
+  	</bean>
+  	
+    <bean id="spaceSearchService" class="com.edgenius.wiki.search.service.SpaceSearchServiceImpl">
+	 	<property name="searcherFactory" ref="spaceSearcherFactory"/>
+	 	<property name="securityService" ref="securityService"/>
+	    <property name="analyzer">
+	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
+	    </property>
+  	</bean>
+  	
+    <bean id="widgetSpaceSearchService" class="com.edgenius.wiki.search.service.WidgetSpaceSearchServiceImpl">
+	 	<property name="searcherFactory" ref="widgetSpaceSearcherFactory"/>
+	 	<property name="securityService" ref="securityService"/>
+	    <property name="analyzer">
+	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
+	    </property>
+  	</bean>
+  	
+    <bean id="userSearchService" class="com.edgenius.wiki.search.service.UserSearchServiceImpl">
+	 	<property name="searcherFactory" ref="userSearcherFactory"/>
+	 	<property name="securityService" ref="securityService"/>
+	    <property name="analyzer">
+	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
+	    </property>
+  	</bean>
+  	
+    <bean id="roleSearchService" class="com.edgenius.wiki.search.service.RoleSearchServiceImpl">
+	 	<property name="searcherFactory" ref="roleSearcherFactory"/>
+	 	<property name="securityService" ref="securityService"/>
+	    <property name="analyzer">
+	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
+	    </property>
+  	</bean>
+  	
+    <bean id="attachmentSearchService" class="com.edgenius.wiki.search.service.AttachmentSearchServiceImpl">
+	 	<property name="searcherFactory" ref="attachmentSearcherFactory"/>
+	 	<property name="securityService" ref="securityService"/>
+	    <property name="analyzer">
+	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
+	    </property>
+  	</bean>
+  	
+  	<!--  The intercepter for index: They are JMS Message Producer to send message to com.edgenius.wiki.service.impl.IndexMQConsumer -->
+    <bean id="pageIndexInterceptor" class="com.edgenius.wiki.search.interceptor.PageIndexInterceptor">
+    	<property name="jmsTemplate" ref="pageJmsTemplate"/>
+		<property name="queue" ref="pageIndexDestination"/>
+		<property name="rssQueue" ref="rssDestination"/>
+		<property name="notifyQueue" ref="notifyDestination"/>
+	</bean>
+    <bean id="commentIndexInterceptor" class="com.edgenius.wiki.search.interceptor.CommentIndexInterceptor">
+    	<property name="jmsTemplate" ref="commentJmsTemplate"/>
+		<property name="queue" ref="commentIndexDestination"/>
+		<property name="notifyQueue" ref="notifyDestination"/>
+		<property name="commentDAO" ref="commentDAO"/>
+	</bean>
+    <bean id="spaceIndexInterceptor" class="com.edgenius.wiki.search.interceptor.SpaceIndexInterceptor">
+    	<property name="jmsTemplate" ref="spaceJmsTemplate"/>
+		<property name="queue" ref="spaceIndexDestination"/>
+		<property name="rssQueue" ref="rssDestination"/>
+		<property name="notifyQueue" ref="notifyDestination"/>
+	</bean>
+    <bean id="pageTagIndexInterceptor" class="com.edgenius.wiki.search.interceptor.TagIndexInterceptor">
+    	<property name="jmsTemplate" ref="pageTagJmsTemplate"/>
+		<property name="queue" ref="pageTagIndexDestination"/>
+	</bean>
+    <bean id="spaceTagIndexInterceptor" class="com.edgenius.wiki.search.interceptor.TagIndexInterceptor">
+    	<property name="jmsTemplate" ref="spaceTagJmsTemplate"/>
+		<property name="queue" ref="spaceTagIndexDestination"/>
+	</bean>
+    <bean id="userIndexInterceptor" class="com.edgenius.wiki.search.interceptor.UserIndexInterceptor">
+    	<property name="jmsTemplate" ref="userJmsTemplate"/>
+		<property name="queue" ref="userIndexDestination"/>
+	</bean>
+    <bean id="roleIndexInterceptor" class="com.edgenius.wiki.search.interceptor.RoleIndexInterceptor">
+    	<property name="jmsTemplate" ref="roleJmsTemplate"/>
+		<property name="queue" ref="roleIndexDestination"/>
+	</bean>
+    <bean id="attachmentIndexInterceptor" class="com.edgenius.wiki.search.interceptor.AttachmentIndexInterceptor">
+    	<property name="jmsTemplate" ref="attachmentJmsTemplate"/>
+		<property name="queue" ref="attachmentIndexDestination"/>
+	</bean>
+	
+    <bean id="widgetIndexInterceptor" class="com.edgenius.wiki.search.interceptor.WidgetIndexInterceptor">
+    	<property name="jmsTemplate" ref="widgetJmsTemplate"/>
+		<property name="queue" ref="widgetIndexDestination"/>
+	</bean>
+	
+
+	
+	<aop:config proxy-target-class="true">
+		<aop:advisor advice-ref="pageIndexInterceptor" order="10" pointcut="execution(* *..wiki.service.PageService.savePage(..))"/>
+		
+		<aop:advisor advice-ref="pageIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.copy(..))"/>
+		<aop:advisor advice-ref="pageIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.move(..))"/>
+		<aop:advisor advice-ref="pageIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.removePage(..))"/>
+		<aop:advisor advice-ref="pageIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.restorePage(..))"/>
+		<aop:advisor advice-ref="pageIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.restoreHistory(..))"/>
+		<aop:advisor advice-ref="pageIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.SpaceService.saveHomepage(..))"/>
+		
+		<aop:advisor advice-ref="commentIndexInterceptor" order="10"  pointcut="execution(* *..wiki.service.CommentService.createComment(..))"/>
+		<aop:advisor advice-ref="commentIndexInterceptor" order="10" pointcut="execution(* *..wiki.service.CommentService.removePageComments(..))"/>
+		<aop:advisor advice-ref="commentIndexInterceptor" order="10" pointcut="execution(* *..wiki.service.CommentService.sendDailyCommentNotify(..))"/>
+		
+		<aop:advisor advice-ref="spaceIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.SpaceService.saveHomepage(..))"/>
+		<aop:advisor advice-ref="spaceIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.SpaceService.updateSpace(..))"/>
+		<aop:advisor advice-ref="spaceIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.SpaceService.uploadLogo(..))"/>
+		<aop:advisor advice-ref="spaceIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.SpaceService.removeSpace(..))"/>
+		<!--  this method only for send email notify rather than update Index -->
+		<aop:advisor advice-ref="spaceIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.SpaceService.removeSpaceInDelay(..))"/>
+		
+		<aop:advisor advice-ref="pageTagIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.TagService.saveUpdatePageTag(..))"/>
+		<aop:advisor advice-ref="pageTagIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.TagService.internalSavePageTag(..))"/>
+		
+		<aop:advisor advice-ref="spaceTagIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.TagService.saveUpdateSpaceTag(..))"/>
+		
+		<!--  interceptor PageServer/SpaceService rather than Repository, which is called inside other service.
+			If we interceptor Repository, then Transaction will be happen after entire enclose method finish, this means
+			IndexInterceptor will happen before transaction commit, it is unexpected case!
+		 -->
+		<aop:advisor advice-ref="attachmentIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.uploadAttachments(..))"/>
+		<aop:advisor advice-ref="attachmentIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.removeAttachment(..))"/>
+		<aop:advisor advice-ref="attachmentIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.updateAttachmentMetaData(..))"/>
+		<aop:advisor advice-ref="attachmentIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.copy(..))"/>
+		<aop:advisor advice-ref="attachmentIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.PageService.move(..))"/>
+		<aop:advisor advice-ref="attachmentIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.SpaceService.removeSpace(..))"/>
+		
+		<aop:advisor advice-ref="userIndexInterceptor"  order="10"  pointcut="execution(* *..core.service.UserService.saveUser(..))"/>
+		<aop:advisor advice-ref="userIndexInterceptor"  order="10"  pointcut="execution(* *..core.service.UserService.updateUserWithIndex(..))"/>
+		<aop:advisor advice-ref="userIndexInterceptor"  order="10"  pointcut="execution(* *..core.service.UserService.removeUser(..))"/>
+		
+		<aop:advisor advice-ref="roleIndexInterceptor"  order="10"  pointcut="execution(* *..core.service.RoleService.createRole(..))"/>
+		
+		<aop:advisor advice-ref="widgetIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.WidgetService.saveOrUpdateWidget(..))"/>
+		<aop:advisor advice-ref="widgetIndexInterceptor"  order="10"  pointcut="execution(* *..wiki.service.WidgetService.removeWidget(..))"/>
+		
+	</aop:config>
+	
+</beans>

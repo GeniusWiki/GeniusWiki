@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GeniusWiki" basedir="." default="package"  xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+	<mkdir dir="lib/dev"/>
+	<macrodef name="preinstall">
+	   <sequential >
+			<echo message="installing global.xml..." />
+			<get src="http://repo.edgenius.com/ivyrep/script/global-2.5.xml"
+				dest="lib/global.xml"
+				usetimestamp="true" 
+	   			ignoreerrors="true"/>
+			<echo message="installing global-macro.xml..." />
+			<get src="http://repo.edgenius.com/ivyrep/script/global-macro-2.5.xml"
+				dest="lib/global-macro.xml"
+				usetimestamp="true" 
+	   			ignoreerrors="true"/>
+			<echo message="installing ivyconf-public.xml..." />
+			<get src="http://repo.edgenius.com/ivyrep/ivyconf-public.xml"
+				dest="lib/ivyconf-public.xml"
+				usetimestamp="true" 
+	   			ignoreerrors="true"/>
+	   </sequential>
+	</macrodef>
+	<preinstall/>
+	<available file="lib/global.xml" property="global.xml.present" />
+	
+	<import file="database-token.xml" />
+	
+	<!-- import global properties (app settings, classpath, jar file locations) -->
+	<import file="lib/global.xml" />
+	<import file="lib/global-macro.xml" />
+	<!-- import project owned properties: must after global.xml so that overwrite can occurs correctly -->
+	<import file="properties.xml" />
+	<import file="macro.xml" />
+	
+    <!-- Taskdefs -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="compile.classpath"/>
+	<tstamp>
+	      <format property="build.id" pattern="yyyyMMdd"/>
+	 </tstamp>
+	
+	<filterset id="properties.variables">
+		
+		<filter token="TOKEN.NOW.DATE" value="${build.id}" />
+		<filter token="TOKEN.MQ.SERVRE.EMBEDDED" value="${mq.server.embedded}" />
+		<filter token="TOKEN.MQ.SERVRE.URL" value="${mq.server.url}" />
+		
+		<filter token="TOKEN.COMPANY.NAME" value="${company.name}" />
+		<filter token="TOKEN.COMPANY.WEBSITE" value="${company.website}" />		
+		<filter token="TOKEN.APP.NAME" value="${app.name}" />
+		<filter token="TOKEN.APP.NAME.LOWCASE" value="${app.name.lowcase}" />
+		<filter token="TOKEN.APP.VERSION" value="${app.version}" />
+		<filter token="TOKEN.COPYRIGHT.YEAR" value="${copyright.year}" />
+		
+		<filter token="TOKEN.CORE.LANG.PACKAGE" value="${core.properties.package}" />
+		<filter token="TOKEN.WIKI.LANG.PACKAGE" value="${wiki.properties.package}" />
+		<filter token="TOKEN.EXT.LANG.PACKAGE" value="${ext.properties.package}" />
+		<filter token="TOKEN.CORE.LANG.PACKAGE.PATH" value="${core.properties.package.path}" />
+		<filter token="TOKEN.WIKI.LANG.PACKAGE.PATH" value="${wiki.properties.package.path}" />
+		<filter token="TOKEN.EXT.LANG.PACKAGE.PATH" value="${ext.properties.package.path}" />	
+		
+		<filter token="TOKEN.LOG.ROOT" value="${geniuswiki.log.dir}" />
+		
+		<filter token="TOKEN.SHELL.URL" value="${shell.url}" />
+		
+	
+		<filter token="TOKEN.DATABASE.SCHEMA" value="${database.schema.mysql}" />
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.mysql}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.mysql}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.mysql}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.mysql}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.mysql}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.mysql}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+		
+		<filter token="TOKEN.MAIL.HOST" value="${mail.host}" />
+		<filter token="TOKEN.MAIL.HOST.PORT" value="${mail.host.port}" />
+		<filter token="TOKEN.MAIL.USERNAME" value="${mail.username}" />
+		<filter token="TOKEN.MAIL.PASSWORD" value="${mail.password}" />
+		
+		<filter token="TOKEN.GLOBAL.DATA.ROOT" value="${global.data.root}" />
+
+		<filter token="TOKEN.BUILD.ID" value="${build.id}" />
+		<filter token="TOKEN.SITE.VERSION" value="${site.version}" />
+		<filter token="TOKEN.GEARS.DB.VERSION" value="${gears.db.version}" />
+		<filter token="TOKEN.GEARS.MAIN.DB.VERSION" value="${gears.main.db.version}" />
+		
+	</filterset>
+	
+	<!-- =====================================================  -->
+	<!--                 Main tasks: Compile, Build etc         -->
+	<!-- =====================================================  -->
+	<target name="prepare" description="Prepare">
+		<prepare/>
+	</target>
+	
+
+	<target name="compile" depends="prepare" description="Build war/jar file to target">
+		
+		<echo>Compile module core...</echo>
+		<compile module="core" phase="deploy"/>
+		
+		<echo>Compile module server-side gwt ...</echo>
+		<depends module="core"/>
+		<compile-gwtserver phase="deploy" />
+		
+		<echo>Compile module wiki...</echo>
+		
+		<depends module="core"/>
+		<depends module="gwtserver"/>
+		<compile module="wiki" phase="deploy"/>
+		<depends module="wiki"/>
+		<compile module="ext" phase="deploy"/>
+		<compile module="integration" phase="deploy"/>
+	
+	</target>
+	
+	<target name="package" depends="build" description="Build standalone zip file"> <!-- depends="build" -->
+		<property name="std.dir" value="${build.dir}/${app.name.lowcase}-standalone" />
+		<property name="prd.dir" value="${build.dir}/${app.name.lowcase}-production" />
+		<property name="integration.dir" value="${build.dir}/${app.name.lowcase}-integration" />
+		<mkdir dir="${prd.dir}"/>
+		<mkdir dir="${std.dir}"/>
+		<mkdir dir="${std.dir}/${app.name.lowcase}"/>
+		<mkdir dir="${std.dir}/${app.name.lowcase}/temp"/>
+		<mkdir dir="${std.dir}/${app.name.lowcase}/webapps"/>
+		<mkdir dir="${std.dir}/${app.name.lowcase}/webapps/ROOT"/>
+		<mkdir dir="${std.dir}/data"/>
+		<mkdir dir="${std.dir}/database"/>
+		<mkdir dir="${std.dir}/bin"/>
+		<mkdir dir="${integration.dir}"/>
+		
+		
+		<!-- standalone version pre-task: Tomcat and HSQL -->
+		<unzip dest="${std.dir}/${app.name.lowcase}/webapps/ROOT" src="${target.dir}/${app.name.lowcase}.war"/>
+		<unzip dest="${std.dir}/tomcat">
+			<fileset dir="${lib.dir}/standalone">
+				<include name="tomcat-*.zip"/>
+			</fileset>
+		</unzip>
+		
+		<copy todir="${std.dir}/${app.name.lowcase}/webapps/ROOT/WEB-INF/lib">
+			<fileset dir="${lib.dir}/database">
+				<include name="**/hsqldb*" />
+			</fileset>
+		</copy>	
+		
+		<copy todir="${std.dir}/${app.name.lowcase}/conf">
+			<fileset dir="${std.dir}/tomcat/conf">
+				<include name="**" />
+			</fileset>
+		</copy>
+		
+		<!--  Copy logback.xml to bin/logback-test.xml for silence install use -->
+		<copy tofile="${std.dir}/bin/logback-test.xml" file="${src.dir}/wiki/resources/classes/logback.xml">
+			<filterset refid="properties.variables" />
+		</copy>
+		
+		<!-- Copy release documents: For standalone, must after tomcat unzip, as here need overwrite server.xml -->
+		<copy todir="${std.dir}" verbose="true" overwrite="true">
+			<fileset dir="${metadata.dir}/release/standalone" includes="**/*" />
+			<fileset dir="${metadata.dir}/release/all/" includes="**/*" />
+		</copy>
+		<copy todir="${prd.dir}" overwrite="true">
+			<fileset dir="${metadata.dir}/release/installation/" includes="**/*"/>
+			<fileset dir="${metadata.dir}/release/all/" includes="**/*" />
+		</copy>
+		<copy todir="${integration.dir}" overwrite="true">
+			<fileset dir="${metadata.dir}/release/integration/" includes="**/*"/>
+			<fileset dir="${metadata.dir}/release/all/" includes="**/*" />
+		</copy>
+		
+		<!-- ============================================ -->
+		<!-- standalone version zip package -->
+		
+		<delete dir="${std.dir}/tomcat/work"/>
+		<delete dir="${std.dir}/tomcat/webapps"/>
+		<delete dir="${std.dir}/tomcat/temp"/>
+		<delete dir="${std.dir}/tomcat/conf"/>
+		<delete dir="${std.dir}/tomcat/logs"/>
+		<zip destfile="${target.dir}/${app.name.lowcase}-standalone-${app.version}.zip">
+			<zipfileset dir="${std.dir}" excludes="bin/*.sh,tomcat/bin/*.sh" prefix="${app.name.lowcase}-standalone"/>
+			<zipfileset dir="${std.dir}" includes="bin/*.sh,tomcat/bin/*.sh" filemode="755" prefix="${app.name.lowcase}-standalone"/>
+		</zip>
+		
+		<!-- ============================================ -->
+		<!-- production version zip package -->
+		<checksum file="${target.dir}/${app.name.lowcase}.war" forceOverwrite="yes"/>
+		<move file="${target.dir}/${app.name.lowcase}.war.MD5" todir="${prd.dir}"/>
+		<copy file="${build.dir}/${app.name.lowcase}-wiki/classes/geniuswiki/version.properties" tofile="${prd.dir}/VERSION"/>
+		<zip destfile="${target.dir}/${app.name.lowcase}-${app.version}.zip">
+			<zipfileset dir="${prd.dir}" prefix="${app.name.lowcase}"/>
+			<zipfileset dir="${target.dir}" includes="${app.name.lowcase}.war" prefix="${app.name.lowcase}"/>
+		</zip>
+		
+		<!-- ============================================ -->
+		<!-- integration client zip package -->
+		<zip destfile="${target.dir}/${app.name.lowcase}-integration-client-${app.version}.zip">
+			<zipfileset dir="${integration.dir}" prefix="${app.name.lowcase}-integration-client"/>
+			<zipfileset dir="${target.dir}" includes="${app.name.lowcase}-integration-client.jar" prefix="${app.name.lowcase}-integration-client"/>
+		</zip>
+		
+		<copy file="${build.dir}/${app.name.lowcase}-wiki/classes/geniuswiki/version.properties" tofile="${target.dir}/version.properties"/>
+	</target>
+	
+	<target name="build" depends="compile, db.gen-all-ddls" description="Build war/jar file to target">
+		<prepare.target.dir/>
+		<copyMetaSQL phase="deploy" type="mysql"/>
+		<copyMetaSQL phase="deploy" type="postgresql"/>
+		<copyMetaSQL phase="deploy" type="db2"/>
+		<copyMetaSQL phase="deploy" type="oracle9i"/>
+		<copyMetaSQL phase="deploy" type="hsqldb"/>
+		<copyMetaSQL phase="deploy" type="sqlserver"/>
+		
+		<processResources module="core" phase="deploy"/>
+		<processResources module="wiki" phase="deploy"/>
+		<processResources module="ext" phase="deploy"/>
+		<processResources module="integration" phase="deploy"/>
+   				
+		<package module="core" type="lib"/>
+		<package module="ext" type="lib"/>
+		<package module="integration" type="lib"/>
+		<package module="gwtserver" type="lib"/>
+
+		<!--  also package wiki but skips all non class files -->
+		<jar destfile="${build.dir}/${app.name.lowcase}-wiki/${app.name.lowcase}-wiki.jar">
+			<manifest>
+		        <attribute name="Implementation-Vendor" value="${company.name}"/>
+		        <attribute name="Implementation-Version" value="${app.version}"/> 
+		    </manifest>
+			<metainf dir="${build.dir}/${app.name.lowcase}-wiki/classes/META-INF" includes="**/*.*" />
+			<fileset dir="${build.dir}/${app.name.lowcase}-wiki/classes">
+				<include name="**/*.class" />
+			</fileset>
+		</jar>
+		
+		<copyNonjava phase="deploy"/>
+		<!--  after non java copy is done -->
+		<copyWebResource phase="deploy"/>
+		
+		<copy file="${build.dir}/${app.name.lowcase}-core/${app.name.lowcase}-core.jar" tofile="${build.dir}/web/WEB-INF/lib/${app.name.lowcase}-core.jar"/>
+		<copy file="${build.dir}/${app.name.lowcase}-wiki/${app.name.lowcase}-wiki.jar" tofile="${build.dir}/web/WEB-INF/lib/${app.name.lowcase}-wiki.jar"/>
+		<copy file="${build.dir}/${app.name.lowcase}-ext/${app.name.lowcase}-ext.jar" tofile="${build.dir}/web/WEB-INF/lib/${app.name.lowcase}-ext.jar"/>
+		<copy file="${build.dir}/${app.name.lowcase}-integration/${app.name.lowcase}-integration.jar" tofile="${build.dir}/web/WEB-INF/lib/${app.name.lowcase}-integration.jar"/>
+		<copy file="${build.dir}/${app.name.lowcase}-gwtserver/${app.name.lowcase}-gwtserver.jar" tofile="${build.dir}/web/WEB-INF/lib/${app.name.lowcase}-gwtserver.jar"/>
+		
+		<gwtInit phase="deploy"/>
+		
+		<gwtCompile module="gwt" phase="deploy" gwt.application="gwtlogin"/>
+		<gwtPublish phase="deploy" gwt.application="gwtlogin"/>
+		<move todir="${build.dir}/web/gwtlogin">
+			<fileset dir="${build.dir}/gwtlogin"/>
+		</move>
+		
+		<gwtCompile module="gwt" phase="deploy" gwt.application="gwtpage"/>
+		<gwtPublish phase="deploy" gwt.application="gwtpage"/>
+		<move todir="${build.dir}/web/gwtpage">
+			<fileset dir="${build.dir}/gwtpage"/>
+		</move>
+
+		<gwtCompile module="gwt" phase="deploy" gwt.application="gwtadmin"/>
+		<gwtPublish phase="deploy" gwt.application="gwtadmin"/>
+		<move todir="${build.dir}/web/gwtadmin">
+			<fileset dir="${build.dir}/gwtadmin"/>
+		</move>
+		
+		<!--  move exclude classes, logback-dev.xml to another directory - they already package into xxx-wiki.jar -->
+		<copy todir="${build.dir}/${app.name.lowcase}-wiki/war" includeEmptyDirs="false">
+			<fileset dir="${build.dir}/${app.name.lowcase}-wiki/classes" >
+				<exclude name="**/logback-dev.xml" />
+			 	<!-- wiki class  also package as jar file, so skip them-->
+				<exclude name="**/*.class" />
+				<exclude name="META-INF/**" />
+			</fileset>
+		</copy>
+		
+		<war destfile="${target.dir}/${app.name.lowcase}.war"
+			compress="true" webxml="${build.dir}/web/WEB-INF/web.xml">
+			<manifest>
+		        <attribute name="Implementation-Vendor" value="${company.name}"/>
+		        <attribute name="Implementation-Version" value="${app.version}"/> 
+		    </manifest>
+			<classes dir="${build.dir}/${app.name.lowcase}-wiki/war" />
+			<!--  this inlcude all static content, web.xml and libs -->
+			<fileset dir="${build.dir}/web"/>
+		</war>
+
+		<!--  integration client jar file -->
+		<depends module="integration"/>
+		<java2wsdl wsdl.name="SpaceService.wsdl" wsdl.class="com.edgenius.wiki.integration.webservice.WsSpaceService"/>
+		<java2wsdl wsdl.name="UserService.wsdl" wsdl.class="com.edgenius.wiki.integration.webservice.WsUserService"/>
+		<java2wsdl wsdl.name="DashboardService.wsdl" wsdl.class="com.edgenius.wiki.integration.webservice.WsDashboardService"/>
+		
+		<jar destfile="${build.dir}/${app.name.lowcase}-integration/${app.name.lowcase}-integration-client.jar">
+			<manifest>
+		        <attribute name="Implementation-Vendor" value="${company.name}"/>
+		        <attribute name="Implementation-Version" value="${app.version}"/> 
+		    </manifest>
+			<metainf dir="${build.dir}/${app.name.lowcase}-integration/wsdl" includes="**/*.*" />
+			<fileset dir="${build.dir}/${app.name.lowcase}-integration/classes">
+				<include name="**/integration/*.class" />
+				<include name="**/integration/client/*.class" />
+			</fileset>
+		</jar>
+		<copy todir="${target.dir}" file="${build.dir}/${app.name.lowcase}-integration/${app.name.lowcase}-integration-client.jar"/>
+	</target>
+
+
+	<!-- =====================================================  -->
+	<!--                 Hibernate Tool tasks / SQL tasks       -->
+	<!-- =====================================================  -->
+
+	<target name="db.gen-all-ddls" depends="compile" description="Generate DDL to Doc/Models directory">
+		<depends module="core"/>
+		<depends module="wiki"/>
+		<depends module="ext"/>
+		<!-- 
+		<annotation2DDL schema="test" properties="db.properties.text" export="false"/>
+		 -->
+		<annotation2DDL schema="sqlserver" properties="db.properties.sqlserver" export="false"/>
+		<annotation2DDL schema="mysql" properties="db.properties.mysql" export="false"/>
+		<annotation2DDL schema="postgresql" properties="db.properties.postgresql" export="false"/>
+		<annotation2DDL schema="oracle9i" properties="db.properties.oracle9i" export="false"/>
+		<annotation2DDL schema="db2" properties="db.properties.db2" export="false"/>
+		<annotation2DDL schema="hsqldb" properties="db.properties.hsqldb" export="false"/>
+		
+		<echo>All DDL generated</echo>
+	</target>
+	
+	<target name="db.reset-tables" depends="compile" description="Drop old tables and create new one">
+		<depends module="core"/>
+		<depends module="wiki"/>
+		<depends module="ext"/>
+		<annotation2DDL schema="mysql" properties="db.properties.mysql" export="true"/>
+	</target>
+	
+
+	<target name="db.reset-database" description="create database ">
+            <echo>Creating (${database.schema}) database</echo>
+            <sequential>
+            	<delete dir="${build.dir}/resources/meta"/>
+            	<mkdir dir="${build.dir}/resources/meta"/>
+            	<copy todir="${build.dir}/resources/meta">
+					<fileset dir="${metadata.dir}/database/${database.schema}">
+						<include name="${database.schema}-create*.sql" />
+					</fileset>
+					<filterset refid="properties.variables" />
+            	</copy>
+	            <sql
+	                driver="${database.driver.class}"
+	                url="${database.admin.url}"
+	                userid="${database.admin.username}"
+	                password="${database.admin.password}"
+	            	autocommit="true"
+	                classpathref="compile.classpath">
+	                <fileset dir="${build.dir}/resources/meta">
+	                    <include name="${database.schema}-create*.sql"/>
+	                </fileset>
+	            </sql>
+             </sequential>
+    </target>
+	
+    <target name="db.load-init-data" description="init database ">
+            <echo>Creating (${database.schema}) database</echo>
+            <sequential>
+	           	<delete dir="${build.dir}/resources/meta"/>
+	           	<mkdir dir="${build.dir}/resources/meta"/>
+	           	<copy todir="${build.dir}/resources/meta">
+					<fileset dir="${metadata.dir}/database/${database.schema}">
+						<include name="${database.schema}-init*.sql" />
+						<include name="${database.schema}-quartz*.sql" />
+					</fileset>
+					<filterset refid="properties.variables" />
+	           	</copy>            
+    	        <sql
+	                driver="${database.driver.class}"
+	                url="${database.url}"
+	                userid="${database.admin.username}"
+	                password="${database.admin.password}"
+	                classpathref="compile.classpath">
+	                <fileset dir="${build.dir}/resources/meta">
+	                    <include name="${database.schema}-init*.sql"/>
+						<include name="${database.schema}-quartz*.sql" />
+	                </fileset>
+	            </sql>
+             </sequential>
+    </target> 
+	<target name="db.load-sample-data" description="init database ">
+            <echo>Creating (${database.schema}) database</echo>
+            <sequential>
+	           	<delete dir="${build.dir}/resources/meta"/>
+	           	<mkdir dir="${build.dir}/resources/meta"/>
+	           	<copy todir="${build.dir}/resources/meta">
+					<fileset dir="${metadata.dir}/database/${database.schema}">
+						<include name="${database.schema}-sample*.sql" />
+					</fileset>
+					<filterset refid="properties.variables" />
+	           	</copy>            
+    	        <sql
+	                driver="${database.driver.class}"
+	                url="${database.url}"
+	                userid="${database.admin.username}"
+	                password="${database.admin.password}"
+	                classpathref="compile.classpath">
+	                <fileset dir="${build.dir}/resources/meta">
+	                   <include name="${database.schema}-sample*.sql" />           
+	                </fileset>
+	            </sql>
+             </sequential>
+    </target>
+
+	<!-- =====================================================  -->
+	<!--                 Test Task  		                  -->
+	<!-- =====================================================  -->
+	<target name="test.runall"  depends="compile, test.reset-test-data"  description="run all unit test">
+		<prepare.reports.dir report="junit-report"/>
+		<!-- All test class except these class inside Package "com/edgenius/test/" and Folder "test/sandboxx/java" -->
+		<mkdir dir="${build.dir}/test/server/classes"/>
+		<mkdir dir="${build.dir}/test/client/classes"/>
+		<mkdir dir="${reports.dir}/junit-report/raw"/>
+		<mkdir dir="${reports.dir}/junit-report/html"/>
+
+		<processResources module="core" phase="deploy"/>
+		<processResources module="wiki" phase="deploy"/>
+		<processResources module="ext" phase="deploy"/>
+		<processResources module="integration" phase="deploy"/>
+		
+		<depends module="core"/>
+		<depends module="gwtserver"/>
+		<depends module="wiki"/>
+		<depends module="ext"/>
+		<depends module="test/server"/>
+		
+		<processTestResources module="core" phase="build"/>
+		<processTestResources module="gwt" phase="build"/>
+		<processTestResources module="wiki" phase="build"/>
+		<!-- ==================================================================== -->
+		<!-- Non-gwt-client test -->
+		<!-- ==================================================================== -->
+		<!-- Compile UNIT test classes -->
+		<javac destdir="${build.dir}/test/server/classes" debug="${compile.debug}"
+			source="${javac.source}" target="${javac.target}" verbose="false"
+			classpath="${depends.classpath}"
+			classpathref="compile.classpath">
+				<src path="${test.dir}"/>
+			    <exclude name="sandbox/**"/>
+			    <exclude name="gwtclient/**"/>
+		</javac>
+		
+	   <junit printsummary="true" showoutput="yes" filtertrace="yes" timeout="300000" fork="yes">
+	   	  <formatter type="xml" usefile="true"/>
+	      <batchtest todir="${reports.dir}/junit-report/raw">
+	        <fileset dir="${build.dir}/test/server/classes">
+	        	 <include name="**/*.class"/>
+	        	 <exclude name="com/edgenius/test/*.class"/>
+	        	 <!-- inner class -->
+	        	 <exclude name="**/*$?.class"/>
+	        </fileset>
+	      </batchtest>
+	      <classpath path="${depends.classpath}" />
+		  <!-- For mail template classpath finder -->
+	      <classpath path="web/WEB-INF" />
+	      <classpath refid="compile.classpath" />
+	    </junit>
+		
+		<!-- ==================================================================== -->
+		<!-- Gwt-client test -->
+		<!-- ==================================================================== -->
+		<!-- as GWT test also need compiled GWT client java class, so here compile gwt classes. Note, they won't deploy with other class-->
+		<mkdir dir="${build.dir}/gwtclient/classes"/>
+		<javac srcdir="${src.dir}/gwt/java"	destdir="${build.dir}/gwtclient/classes" debug="${compile.debug}"
+			source="${javac.source}" target="${javac.target}" verbose="false"
+			classpath="${depends.classpath}"
+			classpathref="compile.classpath">
+			<include name="**/*.java"/>
+		</javac>
+		
+		
+		<!-- Compile UNIT test classes -->
+		<depends module="gwtclient"/>
+		<javac destdir="${build.dir}/test/client/classes" debug="${compile.debug}"
+			source="${javac.source}" target="${javac.target}" verbose="false"
+			classpath="${depends.classpath}"
+			classpathref="compile.classpath">
+				<src path="${test.dir}"/>
+			    <include name="gwtclient/**"/>
+		</javac>
+		
+		
+		<!-- GWT client code resources -->	    	
+		<gwtInit phase="deploy"/>
+		
+		<path id="gwtclient.test.classpath">
+		    <!-- For gwtpage.gwt.xml etc -->
+			<pathelement path="${build.dir}/gwt/resources"/>
+			<!--  classes -->
+	      	<pathelement path="${build.dir}/gwtclient/classes"/>
+	      	<pathelement path="${build.dir}/test/client/classes"/>
+	      	<!--  source -->
+	      	<pathelement path="${src.dir}/gwt/java"/>
+	      	<pathelement path="${test.dir}/gwtclient/java"/>
+	      	<!--  lib -->
+	 		<fileset dir="${lib.dir}/dev/">
+	            <include name="gwt-*.jar"/>
+	            <include name="junit*.jar"/>
+	        </fileset>
+    	</path>
+		
+	   <junit printsummary="true" showoutput="yes" filtertrace="yes" timeout="300000" fork="yes">
+   	      <jvmarg line="-Xmx256m" />
+   	      <sysproperty key="gwt.args" value="-prod -logLevel WARN -out ${build.dir}/test/www-test" />
+   	      <sysproperty key="java.awt.headless" value="true" />
+	   	   <formatter type="xml" usefile="true"/>
+		   <classpath refid="gwtclient.test.classpath" />
+		   <!-- when compile, it needs XStream in BlogCategory.class -->
+		   <classpath refid="compile.classpath" />
+	       <batchtest todir="${reports.dir}/junit-report/raw">
+		        <fileset dir="${build.dir}/test/client/classes">
+		        	 <include name="**/*.class"/>
+		        </fileset>
+	       </batchtest>
+	    </junit>
+	
+		<!-- ==================================================================== -->
+		<!-- Finally test report -->
+		<!-- ==================================================================== -->
+		<junitreport todir="${reports.dir}/junit-report/html">
+			<fileset dir="${reports.dir}/junit-report/raw">
+				<include name="*.xml"/>
+			</fileset>
+			<report format="frames" todir="${reports.dir}/junit-report/html"/>
+		</junitreport>
+	</target>
+
+
+	<target name="test.reset-test-data" depends="compile" description="Drop old tables and create new one">
+        <echo>Creating (${database.schema}) database</echo>
+        <sequential>
+        	<delete dir="${build.dir}/resources/meta"/>
+        	<mkdir dir="${build.dir}/resources/meta"/>
+        	<copy todir="${build.dir}/resources/meta">
+				<fileset dir="${metadata.dir}/database/${database.schema.test}">
+					<include name="${database.schema.test}-create*.sql" />
+				</fileset>
+				<filterset refid="db.properties.test" />
+        	</copy>
+            <sql
+                driver="${database.driver.class.test}"
+                url="${database.admin.url.test}"
+                userid="${database.admin.username.test}"
+                password="${database.admin.password.test}"
+            	autocommit="true"
+                classpathref="compile.classpath">
+                <fileset dir="${build.dir}/resources/meta">
+                    <include name="${database.schema.test}-create*.sql"/>
+                </fileset>
+            </sql>
+         </sequential>
+		
+		<echo>Create tables....</echo>
+		<depends module="core"/>
+		<depends module="wiki"/>
+		<depends module="ext"/>
+		<annotation2DDL schema="test" properties="db.properties.test" export="true"/>
+		
+		
+		 <echo>Loading test data.....</echo>
+        <sequential>
+           	<delete dir="${build.dir}/resources/meta"/>
+           	<mkdir dir="${build.dir}/resources/meta"/>
+           	<copy todir="${build.dir}/resources/meta">
+				<fileset dir="${metadata.dir}/database/${database.schema.test}">
+				   <include name="${database.schema.test}-sample*.sql"/>
+                   <include name="${database.schema.test}-init*.sql"/>
+					<include name="${database.schema.test}-test*.sql" />
+					<include name="${database.schema.test}-quartz*.sql" />
+				</fileset>
+				<filterset refid="db.properties.test" />
+           	</copy>            
+	        <sql
+                driver="${database.driver.class.test}"
+                url="${database.url.test}"
+                userid="${database.admin.username.test}"
+                password="${database.admin.password.test}"
+                classpathref="compile.classpath">
+                <fileset dir="${build.dir}/resources/meta">
+                   <include name="${database.schema.test}-sample*.sql"/>
+                   <include name="${database.schema.test}-init*.sql"/>
+                   <include name="${database.schema.test}-test*.sql" />         
+					<include name="${database.schema.test}-quartz*.sql" />
+                </fileset>
+            </sql>
+         </sequential>
+	</target>
+	<!-- =====================================================  -->
+	<!--                 IVY Task Encapsulate                   -->
+	<!-- =====================================================  -->
+	<target name="ivy.retrieve" description="retrieve the dependency artifacts">
+		<delete dir="${dev.dir}/WEB-INF/lib"/>
+		<ivyRetrieve phase="nonjava"/>
+		<ivyRetrieve phase="deploy"/>
+		<ivyRetrieve phase="dev"/>
+		<ivyRetrieve phase="database"/>
+		<ivyRetrieve phase="standalone"/>
+
+	</target>
+	
+
+	<target name="ivy.report" description="generates the ivy report">
+		<prepare.reports.dir report="ivyreport"/>
+		<ivyResolve phase="dev"/>
+		<ivy:report todir="${reports.dir}/ivyreport" />
+		<ivyResolve phase="deploy"/>
+		<ivy:report todir="${reports.dir}/ivyreport" />
+	</target>
+	
+	<!-- Internal target is not suppose run by others -->
+	<target name="ivy.publish" >
+			<!--  This model needs to compile and pack separatedly here. -->
+			<echo>Compile module of Integration REST model ...</echo>
+			<!-- Only compile REST model classes and suppose no dependencies, clean that build directory first -->
+			<delete dir="${build.dir}/${app.name.lowcase}-integration-rest-model/classes" failonerror="YES"/>
+			<mkdir dir="${build.dir}/${app.name.lowcase}-integration-rest-model/classes"/>
+			<javac destdir="${build.dir}/${app.name.lowcase}-integration-rest-model/classes" debug="${compile.debug}"
+				source="${javac.source}" target="${javac.target}" verbose="false">
+				<src path="${src.dir}/integration/java/"/>
+				<include name="com/edgenius/wiki/integration/rest/model/*.java"/>
+			</javac>
+			
+			<echo>Pack module of Integration REST model ...</echo>
+			<package module="integration-rest-model" type="lib"/>
+			<rename src="${build.dir}/${app.name.lowcase}-integration-rest-model/${app.name.lowcase}-integration.jar" 
+					dest="${build.dir}/${app.name.lowcase}-integration-rest-model/${app.name.lowcase}-integration-rest-model.jar"/>
+			
+			
+			<ivyPublishLocal module="geniuswiki" />
+		</target>
+	<!-- =====================================================  -->
+	<!--                Task used in development: in dev folder -->
+	<!-- =====================================================  -->
+	
+	<target name="dev.duplicate-nonjava" description="Copy all non java resource to dev">
+		<copyNonjava phase="dev"/>
+	</target>
+	
+	<target name="dev.duplicate-files" description="Copy all reasources , lib files to dev corresponding directory and ready for Eclipse hotdeploy">
+		<!-- For efficient reason, I just assume db.gen-all-dll already done -->
+		<copyMetaSQL phase="dev" type="mysql"/>
+		<copyMetaSQL phase="dev" type="postgresql"/>
+		<copyMetaSQL phase="dev" type="db2"/>
+		<copyMetaSQL phase="dev" type="oracle9i"/>
+		<copyMetaSQL phase="dev" type="hsqldb"/>
+		<copyMetaSQL phase="dev" type="sqlserver"/>
+
+		<processResources module="core" phase="dev"/>
+		<processResources module="wiki" phase="dev"/>
+		<processResources module="ext" phase="dev"/>
+		
+		<copyWebResource phase="dev"/>
+		
+		<!-- user dev model logback configuration file -->
+		<move tofile="${dev.dir}/WEB-INF/classes/logback.xml" file="${dev.dir}/WEB-INF/classes/logback-dev.xml" overwrite="true"/>
+		
+		<!--  copy test use data -->
+		<processTestResources module="wiki" phase="dev"/>
+		<processTestResources module="core" phase="dev"/>
+
+	</target>
+	
+	<target name="dev.clean-dev" description="Clean all file except classes file, which generated by Eclipse">
+		<delete includeEmptyDirs="true">
+			<fileset dir="${dev.dir}">
+				<exclude name="**/*.class" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<!--  Very Important:  To run this task, you must set jvm parameter : -Xmx512M -->
+	<target name="dev.gwt.publish.mini" 
+			description="Compile GWT for best time save. Only for specified browser with SOYC report - report not copy to target directory">
+		<!-- ie6,ie8,gecko,gecko1_8,safari,opera -->
+		<gwtInit phase="dev" userAgent="safari"/>
+		
+		<gwtCompile module="gwt" phase="dev" gwt.application="gwtpage" options="-soyc -draftCompile"/>
+		<gwtPublish phase="dev" gwt.application="gwtpage"/>
+		
+		<gwtCompile module="gwt" phase="dev" gwt.application="gwtlogin" options="-soyc -draftCompile"/>
+		<gwtPublish phase="dev" gwt.application="gwtlogin"/>
+
+		<gwtCompile module="gwt" phase="dev" gwt.application="gwtadmin" options="-soyc -draftCompile"/>
+		<gwtPublish phase="dev" gwt.application="gwtadmin"/>
+		
+		<!-- expand URL automatically: only for debug purpose: need not restart tomcat after compile GWT -->
+		<echo level="info">Expanding URLs to offline configuration files... </echo>
+		<echo level="warning">Limitation: Expanded Web context is assumed to blank. Restart server to fix if web context is not blank</echo>
+	   <java classname="com.edgenius.wiki.service.impl.SettingServiceImpl" classpathref="compile.classpath">
+         <classpath>
+           <pathelement path="${dev.dir}/WEB-INF/classes"/>
+         </classpath>
+       </java>
+	</target>
+
+	<target name="dev.gwt.publish" description="Compile GWT without SOYC for all browsers and publish">
+		<gwtInit phase="dev"/>
+				
+		<gwtCompile module="gwt" phase="dev" gwt.application="gwtpage"/>
+		<gwtPublish phase="dev" gwt.application="gwtpage"/>
+		
+		<gwtCompile module="gwt" phase="dev" gwt.application="gwtlogin"/>
+		<gwtPublish phase="dev" gwt.application="gwtlogin"/>
+
+		<gwtCompile module="gwt" phase="dev" gwt.application="gwtadmin"/>
+		<gwtPublish phase="dev" gwt.application="gwtadmin"/>
+		
+		<!-- expand URL automatically: only for debug purpose: need not restart tomcat after compile GWT -->
+		<echo level="info">Expanding URLs to offline configuration files... </echo>
+		<echo level="warning">Limitation: Expanded Web context is assumed to blank. Restart server to fix if web context is not blank</echo>
+	   <java classname="com.edgenius.wiki.service.impl.SettingServiceImpl" classpathref="compile.classpath">
+         <classpath>
+           <pathelement path="${dev.dir}/WEB-INF/classes"/>
+         </classpath>
+       </java>
+	</target>
+	
+	<target name="dev.gwt.i18n" description="Referesh i18n message java file according to latest i18n properties files">
+		<gwtI18n module="gwt"/>
+	</target>
+	
+	
+</project>

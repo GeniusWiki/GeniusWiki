@@ -1,0 +1,29 @@
+.macroTodo .todoPanel{
+	width:100%;
+	border:1px solid #AAAAAA;
+	overflow: hidden;	
+}
+.macroTodo .todoHeader{
+	font-weight:bold;
+	border-bottom:1px solid #3a9aec;
+	font-size:14px;
+    height: 26px;
+	text-align:center;
+	padding-top:5px;
+}
+
+.macroTodo .todoItem{
+	border-top:1px solid #F0F0F0;
+	padding: 4px;
+	clear: both;
+	display:block;
+}
+
+.macroTodo .todoItem .todoSubject{
+	float:left;
+	padding: 4px;
+}
+.macroTodo .todoItem .todoStatus{
+	float:right;
+	font-size: 80%;
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+    
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	    <property name="mappings">
+	      <map>
+	        <entry key="/page.rpcs" value-ref="pageController"/>
+	        <entry key="/tag.rpcs" value-ref="tagController"/>
+	        <entry key="/comment.rpcs" value-ref="commentController"/>
+	        <entry key="/portal.rpcs" value-ref="portalController"/>
+	        <entry key="/space.rpcs" value-ref="spaceController"/>
+	        <entry key="/security.rpcs" value-ref="securityController"/>
+	        <entry key="/search.rpcs" value-ref="searchController"/>
+	        <entry key="/helper.rpcs" value-ref="helperController"/>
+	        <entry key="/notification.rpcs" value-ref="notificationController"/>
+	        <entry key="/plugin.rpcs" value-ref="pluginController"/>
+	        <entry key="/theme.rpcs" value-ref="themeController"/>
+	        <entry key="/offline.rpcs" value-ref="offlineController"/>
+	        <entry key="/template.rpcs" value-ref="templateController"/>
+	      </map>
+	    </property>
+
+  </bean>
+
+  <bean id="pageController" class="com.edgenius.wiki.gwt.server.PageControllerImpl">
+  </bean>
+  <bean id="tagController" class="com.edgenius.wiki.gwt.server.TagControllerImpl">
+  </bean>
+  
+  <bean id="commentController" class="com.edgenius.wiki.gwt.server.CommentControllerImpl">
+  </bean>
+  <bean id="portalController" class="com.edgenius.wiki.gwt.server.PortalControllerImpl">
+  </bean>
+  <bean id="securityController" class="com.edgenius.wiki.gwt.server.SecurityControllerImpl">
+  </bean>
+  <bean id="spaceController" class="com.edgenius.wiki.gwt.server.SpaceControllerImpl">
+  </bean>
+
+  <bean id="searchController" class="com.edgenius.wiki.gwt.server.SearchControllerImpl">
+  </bean>
+  
+  <bean id="helperController" class="com.edgenius.wiki.gwt.server.HelperControllerImpl">
+  </bean>
+  
+  <bean id="notificationController" class="com.edgenius.wiki.gwt.server.NotificationControllerImpl">
+  </bean>
+  
+  <bean id="themeController" class="com.edgenius.wiki.gwt.server.ThemeControllerImpl">
+  </bean>
+  
+  <bean id="pluginController" class="com.edgenius.wiki.gwt.server.PluginControllerImpl">
+  </bean>
+  
+  <bean id="offlineController" class="com.edgenius.wiki.gwt.server.OfflineControllerImpl">
+  </bean>
+  
+  <bean id="templateController" class="com.edgenius.wiki.gwt.server.TemplateControllerImpl">
+  </bean>
+  
+</beans>
+  
+

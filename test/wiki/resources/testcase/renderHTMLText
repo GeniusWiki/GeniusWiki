@@ -1,0 +1,102 @@
+REM Markup render to Native HTML
+==============
+<table class="macroTable" style="border-color:foo;background-color:foo;width:200;height:100;border-width:10px;"><tr><th style='border-color:foo;border-width:10px'>foo</th></tr><tr><td style='border-color:foo;border-width:10px'>foo</td></tr></table>
+--------------
+{table:hastitle=yes|bgcolor=foo|bordercolor=foo|borderwidth=10|width=200|height=100}
+{cell}foo{cell}
+{rowdiv}
+{cell}foo{cell}
+{table}
+==============
+<table class="macroGrid" style="width:100%;border-width:0px;" cellpadding="5" cellspacing="5"><tr><td width='50%' >abc</td><td width='50%' >test</td></tr></table>
+--------------
+{grid}
+{cell}abc{cell}{cell}test{cell}
+{grid}
+==============
+<div class="macroPanel" aid="panel"><div aid="panelTitle" class="title">Hello world<div class="macroPanelExpander" name="$$DD1$$"></div></div><div aid="panelContent" class="content" id="$$DD1$$"><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>This is <br />panel test<br /></div></div>
+--------------
+{panel:title=Hello world}
+This is 
+panel test
+{panel}
+==============
+<div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a href ='http://localhost:8080/'>This is header </a></p>
+</div><br /><div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a href ='http://localhost:8080/'>This is header </a></p>
+</div><br /><h2 id="HeaderAnchor0">This is header </h2>
+--------------
+{toc}
+{toc}
+h2. This is header 
+==============
+<div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a href ='http://localhost:8080/'>This is <span style="font-family:arial,helvetica,sans-serif;">Here comes a new page</span> header </a></p>
+</div><br /><h2 id="HeaderAnchor0">This is <span style="font-family:arial,helvetica,sans-serif;">Here comes a new page</span> header </h2>
+--------------
+{toc}
+h2. This is {font:font=arial,helvetica,sans-serif}Here comes a new page{font} header 
+==============
+<div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a href ='http://localhost:8080/'>correct header</a></p>
+<p style="text-indent:30px"><b>2 </b><a href ='http://localhost:8080/'>my url <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="http://localhost:8080/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a> test</a></p>
+<p style="text-indent:30px"><b>3 </b><a href ='http://localhost:8080/'><span style="font-family:arial,helvetica,sans-serif;">Here comes a new page</span> </a></p>
+<p style="text-indent:30px"><b>4 </b><a href ='http://localhost:8080/'>normal header</a></p>
+</div><br /><h2 id="HeaderAnchor0">correct header</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1">my url <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="http://localhost:8080/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a> test</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor2"><span style="font-family:arial,helvetica,sans-serif;">Here comes a new page</span> </h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor3">normal header</h2>
+--------------
+{toc}
+h2. correct header
+h2. my url http://foo.com test
+h2. {font:font=arial,helvetica,sans-serif}Here comes a new page{font} 
+h2. normal header
+==============
+<table class="macroTable"><tr><th>head1</th><th>header2</th></tr><tr class="odd"><td>com1</td><td><div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p>No heading found</p></div></td></tr></table>
+--------------
+||head1||header2
+|com1|{toc}
+==============
+<h2 id="HeaderAnchor0">my url <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="http://localhost:8080/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></h2>
+--------------
+h2. my url http://foo.com
+==============
+<table class="macroTable" style="border-color:#121212;background-color:#afafaf;border-width:1px;"><tr><th style='border-color:#121212;border-width:1px'><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c11<br /></th><th style='border-color:#121212;border-width:1px'><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c12<br /></th></tr><tr><td style='border-color:#121212;border-width:1px'><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c21<br /></td><td style='border-color:#121212;border-width:1px'><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c22<br /></td></tr></table>
+--------------
+{table:hasTitle=yes|borderWidth=1|borderColor=#121212|bgColor=#afafaf}
+{cell}
+c11
+{cell}
+{cell}
+c12
+{cell}
+{rowdiv}
+{cell}
+c21
+{cell}
+{cell}
+c22
+{cell}
+{table}
+==============
+<table class="macroTable"><tr><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c11<br /></td><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c12<br /></td></tr><tr><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c21<br /></td><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>c22<br /></td></tr></table>
+--------------
+{table}
+{cell}
+c11
+{cell}
+{cell}
+c12
+{cell}
+{rowdiv}
+{cell}
+c21
+{cell}
+{cell}
+c22
+{cell}
+{table}
+==============
+<a href ='http://localhost:8080/page/test+space/link1'>view</a>
+-------------- 
+[view>link1@test space]
+==============
+<img aid="norender" title="Link is broken" class="renderExtLinkImg" src="http://localhost:8080/skins/default/render/link/brokenlink.png"><a href ='http://localhost:8080/page/non-exist+space/link1'>view</a>
+-------------- 
+[view>link1@non-exist space]
+==============

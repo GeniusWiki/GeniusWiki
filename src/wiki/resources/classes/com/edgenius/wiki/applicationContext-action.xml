@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName">
+	<!-- 
+    <bean id="actionMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	    <property name="mappings">
+	      <map>
+	        <entry key="/page.do" value-ref="pageController"/>
+	        <entry key="/comment.rpcs" value-ref="commentController"/>
+	        <entry key="/home.rpcs" value-ref="homeController"/>
+	        <entry key="/space.rpcs" value-ref="spaceController"/>
+	        <entry key="/instance.rpcs" value-ref="instanceController"/>
+	        <entry key="/security.rpcs" value-ref="securityController"/>
+	        <entry key="/search.rpcs" value-ref="searchController"/>
+	        <entry key="/helper.rpcs" value-ref="helperController"/>
+	      </map>
+	    </property>
+  </bean>
+	 -->
+	 
+	 <!--  VREY IMPORTANT: All action must be  singleton="false", otherwise, at least RSS won't work. page.do?s=space&p=page will 
+	 redir to page.do, if singleton model, the redirect will keep original space and page value then browser report cycle redir error!-->
+  	<bean id="inviteAction" class="com.edgenius.wiki.webapp.action.InviteAction" scope="prototype">
+    </bean>
+	<bean id="userAction" class="com.edgenius.wiki.webapp.action.UserAction" scope="prototype">
+    </bean>
+    
+	<bean id="loginAction" class="com.edgenius.wiki.webapp.action.LoginAction" scope="prototype">
+    </bean>
+
+	<bean id="pageAction" class="com.edgenius.wiki.webapp.action.PageAction" scope="prototype">
+    </bean>
+    
+	<bean id="spaceAction" class="com.edgenius.wiki.webapp.action.SpaceAction" scope="prototype">
+    </bean>
+    
+	<bean id="instanceAction" class="com.edgenius.wiki.webapp.action.InstanceAction" scope="prototype">
+    </bean>
+
+	<bean id="printAction" class="com.edgenius.wiki.webapp.action.PrintAction" scope="prototype">
+    </bean>
+	<bean id="captchaImageAction" class="com.edgenius.wiki.webapp.action.CaptchaImageCreateAction" scope="prototype">
+    </bean>
+	<bean id="rssFeedAction" class="com.edgenius.wiki.webapp.action.RSSFeedAction" scope="prototype">
+    </bean>
+
+	<!--  admin functions -->
+	<bean id="generalAdminAction" class="com.edgenius.wiki.webapp.admin.action.GeneralAdminAction" scope="prototype">
+    </bean>
+	<bean id="spaceAdminAction" class="com.edgenius.wiki.webapp.admin.action.SpaceAdminAction" scope="prototype">
+    </bean>
+	<bean id="userAdminAction" class="com.edgenius.wiki.webapp.admin.action.UserAdminAction" scope="prototype">
+    </bean>
+	<bean id="advanceAdminAction" class="com.edgenius.wiki.webapp.admin.action.AdvanceAdminAction" scope="prototype">
+    </bean>
+	<bean id="roleAdminAction" class="com.edgenius.wiki.webapp.admin.action.RoleAdminAction" scope="prototype">
+    </bean>
+    
+	<bean id="installAction" class="com.edgenius.wiki.webapp.admin.action.InstallAction" scope="prototype">
+    </bean>
+	<bean id="backupAction" class="com.edgenius.wiki.webapp.admin.action.BackupAction" scope="prototype">
+    </bean>
+	<bean id="themeAction" class="com.edgenius.wiki.webapp.admin.action.ThemeAction" scope="prototype">
+    </bean>
+    
+</beans>
+

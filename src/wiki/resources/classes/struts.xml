@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    	
+    <package name="global" extends="struts-default">
+    	<!-- Never use <result name="*"> !!!
+    	This causes serious issue - action method "return null" will execute error.jsp!!!
+    	So it makes lots unexpected exception, such as Captcha not working as GZIPResponser execute 2 times and second time throw exception.
+	   	<global-results>
+			<result name="*">/error.jsp</result>
+		</global-results>
+    	 -->
+    	 
+ 		<interceptors>  
+            <interceptor name="suppressInterceptor"  class="com.edgenius.wiki.webapp.admin.action.SuppressInterceptor" />  
+  
+            <interceptor-stack name="fullstack">  
+                <interceptor-ref name="defaultStack" />  
+                <interceptor-ref name="suppressInterceptor" />  
+            </interceptor-stack>  
+        </interceptors>  
+        <default-interceptor-ref name="fullstack" />      	 
+	   	<global-results>
+			<result name="error">/error.jsp</result>
+		</global-results>
+	</package>	
+	
+    <package name="default" extends="global">
+    	<default-interceptor-ref name="basicStack"/>
+
+ 		<action name="print" class="printAction">
+ 			 <result name="error">/WEB-INF/pages/error.jsp?e=p</result> 
+ 			 <result name="success">/WEB-INF/pages/print.jsp</result> 
+        </action> 
+ 		<action name="feed" class="rssFeedAction">
+			 <result name="error">/WEB-INF/pages/error.jsp?e=f</result> 
+        </action> 
+ 		<action name="captcha" class="captchaImageAction">
+        </action> 
+    	 <action name="invite" class="inviteAction"> 
+             <result name="friendship">/WEB-INF/pages/friendship.jsp</result> 
+             <result name="invitation">/WEB-INF/pages/invitation.jsp</result> 
+        </action>
+    </package>
+    
+    
+    <package name="signin" extends="global" namespace="/login">
+  		<default-interceptor-ref name="basicStack"/>
+ 		<action name="login" class="loginAction">
+ 			 <result name="success">/login.jsp</result> 
+        </action> 
+    </package>
+
+    <package name="user" extends="global" namespace="/user">
+    	<action name="admin" class="userAction" method="admin"> 
+ 			 <result name="success">/user/admin.jsp</result> 
+        </action>
+    	<action name="portrait" class="userAction" method="portrait"> 
+ 			 <result name="success">dummy.jsp</result> 
+        </action>
+    </package>
+    
+    <package name="pages" extends="global" namespace="/pages">
+    	 <action name="pages" class="pageAction" method="view"> 
+            <result name="success">/pages.jsp</result> 
+            <result name="sehome">/WEB-INF/pages/view/dashboard.jsp</result> 
+            <result name="sespace">/WEB-INF/pages/view/spaceview.jsp</result> 
+            <result name="sepage">/WEB-INF/pages/view/pageview.jsp</result>
+        </action>
+    </package>
+    
+    <package name="space" extends="global" namespace="/space">
+    	 <action name="logo" class="spaceAction" method="logo"> 
+    		  <result name="success">dummy.jsp</result> 
+        </action>
+    	 <action name="admin" class="spaceAction"> 
+    	 	<result name="error">/WEB-INF/pages/error.jsp?e=s</result>
+    		<result name="setting">/WEB-INF/pages/space/setting.jsp</result>
+    		<result name="shell">/WEB-INF/pages/space/shell.jsp</result>
+        </action>
+    </package>
+    
+    <package name="install" extends="global" namespace="/install">
+    	 <action name="install" class="installAction" > 
+    		  <result name="success">dummy.jsp</result> 
+        </action>
+    </package>
+        
+    <package name="instance" extends="global" namespace="/instance">
+        <action name="admin" class="instanceAction" method="admin"> 
+            <result name="success">/admin.jsp</result> 
+        </action> 
+        
+        <action name="backup" class="backupAction"> 
+            <result name="success">/WEB-INF/pages/admin/backup.jsp</result> 
+        </action>
+        <action name="theme" class="themeAction"> 
+            <result name="themes">/WEB-INF/pages/admin/themes.jsp</result> 
+            <result name="skins">/WEB-INF/pages/admin/skins.jsp</result> 
+        </action>
+         
+        <action name="uploadlogo" class="com.opensymphony.xwork2.ActionSupport"> 
+            <result name="success" type="dispatcher">/WEB-INF/pages/admin/upload.jsp</result>
+        </action> 
+        <action name="general" class="generalAdminAction"> 
+            <result name="success">/WEB-INF/pages/admin/general.jsp</result> 
+            <result name="uploadDone">/WEB-INF/pages/admin/upload.jsp?done=true</result> 
+        </action> 
+        <action name="advance" class="advanceAdminAction"> 
+            <result name="success">/WEB-INF/pages/admin/advance.jsp</result> 
+            <result name="message">/WEB-INF/pages/admin/message.jsp</result> 
+        </action> 
+        <action name="roles" class="roleAdminAction" method="list"> 
+            <result name="success">/WEB-INF/pages/admin/roles.jsp</result> 
+            <result name="list">/WEB-INF/pages/admin/rolelist.jsp</result>
+            <result name="detail">/WEB-INF/pages/admin/roledetail.jsp</result> 
+        </action> 
+        <action name="spaces" class="spaceAdminAction" method="list"> 
+            <result name="success">/WEB-INF/pages/admin/spaces.jsp</result> 
+            <result name="list">/WEB-INF/pages/admin/spacelist.jsp</result> 
+            <result name="detail">/WEB-INF/pages/admin/spacedetail.jsp</result> 
+            <result name="func">/WEB-INF/pages/admin/spacefunc.jsp</result> 
+            <result name="quota">/WEB-INF/pages/admin/spacequota.jsp</result> 
+        </action> 
+        <action name="users" class="userAdminAction" method="list"> 
+            <result name="success">/WEB-INF/pages/admin/users.jsp</result> 
+            <result name="list">/WEB-INF/pages/admin/userlist.jsp</result> 
+            <result name="detail">/WEB-INF/pages/admin/userdetail.jsp</result> 
+            <result name="func">/WEB-INF/pages/admin/userfunc.jsp</result> 
+        </action> 
+    </package>
+
+    <package name="extension" extends="global" namespace="/ext">
+        <action name="calendar" class="calendarAction"> 
+           <result name="success">dummy.jsp</result> 
+        </action> 
+        <action name="todo" class="todoAction"> 
+           <result name="success">dummy.jsp</result> 
+        </action> 
+    </package>
+</struts>
+
+

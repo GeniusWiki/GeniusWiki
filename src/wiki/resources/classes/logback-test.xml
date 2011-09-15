@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This is used when system initial loaded and is replaced by logback.xml when geniuswiki.log.dir is decided. See LogListener.java -->
+<configuration>
+	
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d{ISO8601} [%-5p][%c] -- %m%n</Pattern>
+    </layout>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+  </appender>
+  
+  <logger name="com.edgenius" level="DEBUG"/>
+  
+  <logger name="com.opensymphony.xwork2.ognl" level="ERROR">
+    <appender-ref ref="console"/>
+  </logger>
+  
+  <logger name="org.hibernate" level="INFO" additivity="false">
+    <appender-ref ref="console"/>
+  </logger>
+  
+  <logger name="com.edgenius.core.util.AuditLogger" level="DEBUG"  additivity="false">
+    <appender-ref ref="console"/>
+  </logger>
+  
+  <root level="INFO">
+    <appender-ref ref="console"/>
+  </root>
+  
+</configuration>

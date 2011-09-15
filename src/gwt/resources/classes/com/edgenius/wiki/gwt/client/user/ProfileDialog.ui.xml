@@ -1,0 +1,54 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'
+    xmlns:ur='urn:import:com.edgenius.wiki.gwt.client.user'>
+    
+    <ui:with field='res' type='com.edgenius.wiki.gwt.client.widgets.IconBundle'/>
+    <ui:style field='style'>
+	 	.fullname{
+	 		font-weight:bold;
+	 		text-align:center;
+	 		font-size:14px;
+	 		line-height:20px;
+	 	}
+	 	.busydiv{
+	 		text-align:center;
+	 		margin:10px 0 10px 0;
+	 		width:100%;
+	 	}
+ 	</ui:style>
+ 	<g:DeckPanel ui:field="deck">
+ 		<g:HTMLPanel styleName="{style.busydiv}">
+ 			<g:Image resource="{res.loadingBar}"/>
+ 		</g:HTMLPanel>
+		<g:HTMLPanel width="100%" >
+			<table width="100%" height="100%">
+				<tr>
+					<td width="326px" valign="top">
+						<table width="100%" height="100%">
+							<tr><td align="center"><div class="{style.fullname}"><g:Label ui:field="fullname"/></div></td></tr>
+							<tr><td align="center"><div style="align:center"><g:SimplePanel ui:field="portrait"/></div></td></tr>
+							<tr><td><ur:ContactPanel ui:field="contacts"/></td></tr>
+						</table>
+					</td>
+					<td><div class="vertical-sep"></div></td>
+					<td width="326px" valign="top">
+						<g:DeckPanel ui:field="editDeck">
+							<g:HTMLPanel>
+								<table  width="100%" height="100%" cellpadding="6">
+									<tr><td><my:ClickLink ui:field="profileLink"/></td></tr>
+									<tr><td><my:ClickLink ui:field="passwordLink"/></td></tr>
+									<tr><td><my:ClickLink ui:field="portraitLink"/></td></tr>
+									<tr><td><my:HintTextArea ui:field="statusText" styleName="status-input"/></td></tr>
+								</table>
+							</g:HTMLPanel>
+							<ur:ProfileForm ui:field="form1"/>
+							<ur:PasswordForm ui:field="form2"/>
+							<ur:PortraitForm ui:field="form3"/>
+						</g:DeckPanel>
+					</td>
+				</tr>
+			</table>
+		</g:HTMLPanel>
+	</g:DeckPanel>
+</ui:UiBinder>  

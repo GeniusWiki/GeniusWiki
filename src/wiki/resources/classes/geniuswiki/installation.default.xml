@@ -1,0 +1,7 @@
+<Installation>
+  <version>@TOKEN.APP.VERSION@</version>
+  <status>completed</status>
+  <instanceID>local</instanceID>
+  <instanceType>standard</instanceType>
+  <license></license>
+</Installation>

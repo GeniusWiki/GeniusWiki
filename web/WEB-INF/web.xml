@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <display-name>@TOKEN.APP.NAME@</display-name>
+
+    <!-- precompiled jsp mappings -->
+
+    <!-- Define the basename for a resource bundle for I18N -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>@TOKEN.WIKI.LANG.PACKAGE@.messages</param-value>	
+    </context-param>
+  
+    <!-- Context Configuration locations for Spring XML files -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/activemq-server.xml
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/database-jdbc.xml
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/applicationContext-*.xml
+        	classpath:@TOKEN.WIKI.LANG.PACKAGE.PATH@/applicationContext-*.xml
+			classpath:@TOKEN.EXT.LANG.PACKAGE.PATH@/applicationContext-*.xml
+		</param-value>
+    </context-param>
+    <context-param>
+        <param-name>externalBrokerServerContextConfigLocation</param-name>
+        <param-value>
+        	classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/activemq-dummy-server.xml
+        	classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/database-jdbc.xml
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/applicationContext-*.xml
+        	classpath:@TOKEN.WIKI.LANG.PACKAGE.PATH@/applicationContext-*.xml
+			classpath:@TOKEN.EXT.LANG.PACKAGE.PATH@/applicationContext-*.xml
+		</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dsContextConfigLocation</param-name>
+        <param-value>
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/activemq-server.xml
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/database-ds.xml
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/applicationContext-*.xml
+        	classpath:@TOKEN.WIKI.LANG.PACKAGE.PATH@/applicationContext-*.xml
+			classpath:@TOKEN.EXT.LANG.PACKAGE.PATH@/applicationContext-*.xml
+		</param-value>
+    </context-param>    
+    <context-param>
+        <param-name>dsExternalBrokerServerContextConfigLocation</param-name>
+        <param-value>
+        	classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/activemq-dummy-server.xml
+        	classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/database-ds.xml
+			classpath:@TOKEN.CORE.LANG.PACKAGE.PATH@/applicationContext-*.xml
+        	classpath:@TOKEN.WIKI.LANG.PACKAGE.PATH@/applicationContext-*.xml
+			classpath:@TOKEN.EXT.LANG.PACKAGE.PATH@/applicationContext-*.xml
+		</param-value>
+    </context-param>      
+    <context-param>
+        <param-name>installationContextConfigLocation</param-name>
+        <param-value>
+        	classpath:@TOKEN.WIKI.LANG.PACKAGE.PATH@/applicationContext-action.xml
+        	classpath:@TOKEN.WIKI.LANG.PACKAGE.PATH@/dummy-installation.xml
+		</param-value>
+    </context-param>
+    
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>com.edgenius.core.webapp.filter.ContextAwareDelegatingFilterProxy</filter-class>
+    </filter>
+    
+    <filter>
+        <filter-name>ajaxRedirectFilter</filter-name>
+        <filter-class>com.edgenius.core.webapp.filter.AjaxRedirectFilter</filter-class>
+    </filter>
+    
+    <filter>
+        <filter-name>seFilter</filter-name>
+        <filter-class>com.edgenius.core.webapp.filter.SEFilter</filter-class>
+    </filter>
+    
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>struts2FilterDispatcher</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+    
+    <filter>
+        <filter-name>rewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+        <init-param>
+            <param-name>logLevel</param-name>
+            <param-value>commons</param-value>
+        </init-param>
+    </filter>
+    
+	<!-- Facilitate filter -->
+    <filter>
+        <filter-name>compressionFilter</filter-name>
+        <filter-class>com.edgenius.core.webapp.filter.GZIPFilter</filter-class>
+    </filter>
+    <filter>
+	    <filter-name>localeFilter</filter-name>
+	    <filter-class>com.edgenius.core.webapp.filter.LocaleFilter</filter-class>
+    </filter>
+    <filter>
+	    <filter-name>installFilter</filter-name>
+	    <filter-class>com.edgenius.wiki.webapp.filter.InstallFilter</filter-class>
+    </filter>
+    
+        
+    <!--  must before installFilter -->
+    <filter-mapping>
+        <filter-name>localeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+   <!--  must before otherFilter -->
+   <filter-mapping>
+        <filter-name>installFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+   <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/j_spring_security_check</url-pattern>
+    </filter-mapping>
+
+    
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <!--  cannot compress GWT request, looks RPCServletUtils.java already does this, need further investigate
+    <filter-mapping>
+        <filter-name>compressionFilter</filter-name>
+        <url-pattern>*.rpcs</url-pattern>
+    </filter-mapping>
+     -->
+    
+    <filter-mapping>
+        <filter-name>compressionFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>compressionFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>compressionFilter</filter-name>
+        <url-pattern>*.js</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>compressionFilter</filter-name>
+        <url-pattern>*.css</url-pattern>
+    </filter-mapping>
+    
+    <!--  Better Before Struts and Sitemesh    -->
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/page/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/p/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/view/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/v/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/s/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/vs/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/signin/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/register/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/sysadmin/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/feed/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    
+    <!-- Must after rewrite filter for /view -> pages/pages.do?r=true -->
+    <filter-mapping>
+        <filter-name>seFilter</filter-name>
+        <url-pattern>/pages/pages.do</url-pattern>
+         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    
+    <!-- !!! Must after any filter which may create new HttpResponseWrapper --> 
+    <!-- GWTRPCServiceExporter will direct refer wrapper -->
+    <filter-mapping>
+        <filter-name>ajaxRedirectFilter</filter-name>
+        <url-pattern>*.rpcs</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>ajaxRedirectFilter</filter-name>
+        <url-pattern>/pages/upload</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>ajaxRedirectFilter</filter-name>
+        <url-pattern>/user/portrait.do</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>ajaxRedirectFilter</filter-name>
+        <url-pattern>/space/logo.do</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>struts2FilterDispatcher</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    
+
+	 <!-- !!!This listener must before any other listeners -->
+    <listener>
+        <listener-class>com.edgenius.wiki.webapp.listener.LogListener</listener-class>
+    </listener>
+	 
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+    
+    <listener>
+           <listener-class>com.edgenius.wiki.webapp.listener.StartupListener</listener-class>
+    </listener>
+
+	<servlet>
+        <servlet-name>PageAttachmentUpload</servlet-name>
+        <servlet-class>com.edgenius.wiki.webapp.servlet.UploadServlet</servlet-class>
+  	</servlet>
+
+	<servlet>
+        <servlet-name>PageLayout</servlet-name>
+        <servlet-class>com.edgenius.wiki.webapp.servlet.PageLayoutServlet</servlet-class>
+  	</servlet>  	
+	<servlet>
+        <servlet-name>Download</servlet-name>
+        <servlet-class>com.edgenius.wiki.webapp.servlet.DownloadServlet</servlet-class>
+  	</servlet>
+  	<!-- 
+	<servlet>
+    	<servlet-name>PluginAction</servlet-name>
+	    <servlet-class>com.edgenius.wiki.plugin.DispatcherServlet</servlet-class>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	<servlet>
+  		<servlet-name>Facebook</servlet-name>
+  		<servlet-class>com.edgenius.wiki.webapp.servlet.FacebookServlet</servlet-class>
+  		<init-param>
+  			<param-name>apiKey</param-name>
+  			<param-value>a5eef19ef9dd95ef4f637a513f212d15</param-value>
+  		</init-param>
+  		<init-param>
+  			<param-name>secretKey</param-name>
+  			<param-value>aded2d4abee651ff860d6098bc5663bf</param-value>
+  		</init-param>
+  	</servlet>
+  	 -->
+	<servlet>
+    	<servlet-name>GWTSpring</servlet-name>
+	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	    <init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:@TOKEN.WIKI.LANG.PACKAGE.PATH@/controller-servlet.xml</param-value>
+		</init-param>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	
+  	<servlet>
+        <servlet-name>Installation</servlet-name>
+        <servlet-class>com.edgenius.wiki.webapp.servlet.InstallServlet</servlet-class>
+  	</servlet>
+  	<servlet>
+        <servlet-name>Textnut</servlet-name>
+        <servlet-class>com.edgenius.wiki.ext.textnut.NutServlet</servlet-class>
+  	</servlet>
+
+    <servlet>
+        <servlet-name>shellValidationService</servlet-name>
+        <servlet-class>com.edgenius.wiki.integration.rest.ShellValidatorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>restService</servlet-name>
+        <servlet-class>com.edgenius.wiki.integration.rest.RestSpringServlet</servlet-class>
+    </servlet>
+  	<servlet>
+        <servlet-name>Status</servlet-name>
+        <servlet-class>com.edgenius.wiki.webapp.servlet.StatusServlet</servlet-class>
+  	</servlet>
+	<servlet>  
+		<servlet-name>WebServiceServlet</servlet-name>  
+		<servlet-class>com.edgenius.wiki.integration.servlet.WebServiceServlet</servlet-class>  
+	</servlet>  
+	<servlet-mapping>  
+		<servlet-name>WebServiceServlet</servlet-name>  
+		<url-pattern>/services/*</url-pattern>  
+	</servlet-mapping>  
+  	
+  	<servlet-mapping>
+    	<servlet-name>Status</servlet-name>
+	    <url-pattern>/status</url-pattern>
+    </servlet-mapping>
+  	
+  	<servlet-mapping>
+    	<servlet-name>Installation</servlet-name>
+	    <url-pattern>/install</url-pattern>
+    </servlet-mapping>
+  	
+	<servlet-mapping>
+    	<servlet-name>Download</servlet-name>
+	    <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+  	
+	<servlet-mapping>
+    	<servlet-name>Textnut</servlet-name>
+	    <url-pattern>/nut</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>restService</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>shellValidationService</servlet-name>
+		<url-pattern>/shellvalidate</url-pattern>
+	</servlet-mapping>
+  	
+	<servlet-mapping>
+    	<servlet-name>PageAttachmentUpload</servlet-name>
+	    <url-pattern>/pages/upload</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+    	<servlet-name>GWTSpring</servlet-name>
+	    <url-pattern>*.rpcs</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+    	<servlet-name>PageLayout</servlet-name>
+	    <url-pattern>/layout.js</url-pattern>
+    </servlet-mapping>
+    <!-- 
+	<servlet-mapping>
+    	<servlet-name>PluginAction</servlet-name>
+	    <url-pattern>*.ex</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>Facebook</servlet-name>
+	    <url-pattern>/facebook</url-pattern>
+    </servlet-mapping>
+     -->
+
+
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
+        
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/index.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+
+    
+</web-app>

@@ -1,0 +1,152 @@
+#This table content come from http://www.unicode.org/cldr/data/docs/design/formatting/zone_log.html#windows_ids
+# the format is "timezone offset | timezone ID | default flag ". Default flag is useful for same offset guess, if true, then this is has high priority
+#(GMT-12:00) International Date Line West
+1=	-12	|	Etc/GMT+12			
+#	(GMT-11:00) Midway Island, Samoa
+2=	-11	|	Pacific/Apia		
+#	(GMT-10:00) Hawaii
+3=	-10	|	Pacific/Honolulu	
+#	(GMT-09:00) Alaska
+4=	-9	|	America/Anchorage	
+#	(GMT-08:00) Pacific Time (US & Canada); Tijuana
+5=	-8	|	America/Los_Angeles	
+#	(GMT-07:00) Arizona
+6=	-7	|	America/Phoenix		
+#	(GMT-07:00) Mountain Time (US & Canada)
+7=	-7	|	America/Denver | true
+#	(GMT-07:00) Chihuahua, La Paz, Mazatlan
+8=	-7	|	America/Chihuahua	
+#	(GMT-06:00) Central America
+9=	-6	|	America/Managua		
+#	(GMT-06:00) Saskatchewan
+10=	-6	|	America/Regina		 
+#	(GMT-06:00) Guadalajara, Mexico City, Monterrey
+11=	-6	|	America/Mexico_City	 
+#	(GMT-06:00) Central Time (US & Canada)
+12=	-6	|	America/Chicago | true		 
+#	(GMT-05:00) Indiana (East)
+13=	-5	|	America/Indianapolis
+#	(GMT-05:00) Bogota, Lima, Quito 
+14=	-5	|	America/Bogota		
+#	(GMT-05:00) Eastern Time (US & Canada)
+15=	-5	|	America/New_York | true
+#	(GMT-04:00) Caracas, La Paz	
+16=	-4	|	America/Caracas	
+#	(GMT-04:00) Santiago
+17=	-4	|	America/Santiago | true 
+#	(GMT-04:00) Atlantic Time (Canada) 	
+18=	-4	|	America/Halifax	
+#	(GMT-03:30) Newfoundland
+19=	-3	|	America/St_Johns	
+#	(GMT-03:00) Buenos Aires, Georgetown
+20=	-3	|	America/Buenos_Aires
+#	(GMT-03:00) Greenland	
+21=	-3	|	America/Godthab	 | true
+#	(GMT-03:00) Brasilia
+22=	-3	|	America/Sao_Paulo	
+#	(GMT-02:00) Mid-Atlantic
+23=	-2	|	America/Noronha	
+#	(GMT-01:00) Cape Verde Is.
+24=	-1	|	Atlantic/Cape_Verde | true	
+#	(GMT-01:00) Azores
+25=	-1	|	Atlantic/Azores	
+#	(GMT) Casablanca, Monrovia
+26=	0	|	Africa/Casablanca 
+#	(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London 	
+27=	0	|	Europe/London	| true
+#	(GMT+01:00) West Central Africa 
+28=	1	|	Africa/Lagos	
+#	(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna
+29=	1	|	Europe/Berlin | true	
+#	(GMT+01:00) Brussels, Copenhagen, Madrid, Paris
+30=	1	|	Europe/Paris
+#	(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb
+31=	1	|	Europe/Sarajevo	
+#	(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague
+32=	1	|	Europe/Belgrade
+#	(GMT+02:00) Harare, Pretoria
+33=	2	|	Africa/Johannesburg	
+#	(GMT+02:00) Jerusalem
+34=	2	|	Asia/Jerusalem	
+#	(GMT+02:00) Athens, Istanbul, Minsk
+35=	2	|	Europe/Istanbul	
+#	(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius
+36=	2	|	Europe/Helsinki	| true
+#	(GMT+02:00) Cairo
+37=	2	|	Africa/Cairo	
+#	(GMT+02:00) Bucharest
+38=	2	|	Europe/Bucharest
+#	(GMT+03:00) Nairobi
+39=	3	|	Africa/Nairobi	
+#	(GMT+03:00) Kuwait, Riyadh
+40=	3	|	Asia/Riyadh	
+#	(GMT+03:00) Moscow, St. Petersburg, Volgograd
+41=	3	|	Europe/Moscow	| true
+#	(GMT+03:00) Baghdad
+42=	3	|	Asia/Baghdad	
+#	(GMT+03:30) Tehran
+43=	3.30	|	Asia/Tehran	
+#	(GMT+04:00) Abu Dhabi, Muscat
+44=	4	|	Asia/Muscat	
+#	(GMT+04:00) Baku, Tbilisi, Yerevan
+45=	4	|	Asia/Tbilisi	
+#	(GMT+04:30) Kabul
+46=	4.30	|	Asia/Kabul	
+#	(GMT+05:00) Islamabad, Karachi, Tashkent
+47=	5	|	Asia/Karachi	
+#	(GMT+05:00) Ekaterinburg
+48=	5	|	Asia/Yekaterinburg	
+#	(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi
+49=	5.30	|	Asia/Calcutta	
+#	(GMT+05:45) Kathmandu
+50=	5.45	|	Asia/Katmandu	
+#	(GMT+06:00) Sri Jayawardenepura
+51=	6	|	Asia/Colombo	| true
+#	(GMT+06:00) Astana, Dhaka
+52=	6	|	Asia/Dhaka	
+#	(GMT+06:00) Almaty, Novosibirsk
+53=	6	|	Asia/Novosibirsk
+#	(GMT+06:30) Rangoon	
+54=	6.30	|	Asia/Rangoon	
+#	(GMT+07:00) Bangkok, Hanoi, Jakarta
+55=	7	|	Asia/Bangkok	| true
+#	(GMT+07:00) Krasnoyarsk
+56=	7	|	Asia/Krasnoyarsk	
+#	(GMT+08:00) Perth
+57=	8	|	Australia/Perth	
+#	(GMT+08:00) Taipei
+58=	8	|	Asia/Taipei	
+#	(GMT+08:00) Kuala Lumpur, Singapore
+59=	8	|	Asia/Singapore	
+#	(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi 
+60=	8	|	Asia/Hong_Kong	 | true
+#	(GMT+08:00) Irkutsk, Ulaan Bataar
+61=	8	|	Asia/Irkutsk	
+#	(GMT+09:00) Osaka, Sapporo, Tokyo
+62=	9	|	Asia/Tokyo	| true
+#	(GMT+09:00) Seoul
+63=	9	|	Asia/Seoul	
+#	(GMT+09:00) Yakutsk
+64=	9	|	Asia/Yakutsk	
+#	(GMT+09:30) Darwin
+65=	9.30	|	Australia/Darwin	
+#	(GMT+09:30) Adelaide
+66=	9	|	Australia/Adelaide	
+#	(GMT+10:00) Guam, Port Moresby
+67=	10	|	Pacific/Guam	
+#	(GMT+10:00) Brisbane
+68=	10	|	Australia/Brisbane
+#	(GMT+10:00) Vladivostok	
+69=	10	|	Asia/Vladivostok	
+#	(GMT+10:00) Hobart
+70=	10	|	Australia/Hobart	
+#	(GMT+10:00) Canberra, Melbourne, Sydney 
+71=	10	|	Australia/Sydney | true
+#	(GMT+11:00) Magadan, Solomon Is., New Caledonia	
+72=	11	|	Asia/Magadan	
+#	(GMT+12:00) Fiji, Kamchatka, Marshall Is.
+73=	12	|	Pacific/Fiji	
+#	(GMT+12:00) Auckland, Wellington
+74=	12	|	Pacific/Auckland	| true
+#	(GMT+13:00) Nuku'alofa
+75=	13	|	Pacific/Tongatapu	

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	   default-autowire="byName" default-lazy-init="true">
+	   
+	   <bean id="hibernateProperties" class="com.edgenius.core.util.NonNullPropertiesFactoryBean">
+	 	  <property name="properties">
+	   		 <props>
+		       <prop key="hibernate.validator.autoregister_listeners">false</prop>
+		       <prop key="hibernate.search.autoregister_listeners">false</prop>
+		       <prop key="hibernate.default_schema">${server.db.schema}</prop>
+		       <!-- 
+		       <prop key="hibernate.show_sql">true</prop>
+		        -->
+		  	  </props>
+		  </property>
+	  </bean>
+
+	     
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="coreDS" />
+		</property>
+	   <property name="hibernateProperties">
+	       <ref local="hibernateProperties" />
+	   </property>
+
+	   <property name="annotatedClasses">
+			<list>
+		        
+		        <value>com.edgenius.core.model.User</value>
+		        <value>com.edgenius.core.model.Resource</value>
+		        <value>com.edgenius.core.model.Role</value>
+		        <value>com.edgenius.core.model.Permission</value>
+		        
+		        <value>com.edgenius.core.model.Configuration</value>
+		        
+		        <value>com.edgenius.core.model.CrWorkspace</value>
+		        <value>com.edgenius.core.model.CrFileNode</value>
+		        
+		        
+		        <!--  WIKI part  -->
+		        
+		        <value>com.edgenius.wiki.model.Space</value>
+		        <value>com.edgenius.wiki.model.Page</value>
+		        <value>com.edgenius.wiki.model.Draft</value>
+		        <value>com.edgenius.wiki.model.History</value>
+		        <value>com.edgenius.wiki.model.PageLink</value>
+		        <value>com.edgenius.wiki.model.PageContent</value>
+		        <value>com.edgenius.wiki.model.DraftContent</value>
+		        <value>com.edgenius.wiki.model.HistoryContent</value>
+		        <value>com.edgenius.wiki.model.PageProgress</value>
+		        <value>com.edgenius.wiki.model.PageComment</value>
+		        <value>com.edgenius.wiki.model.UserPageMark</value>
+		        <value>com.edgenius.wiki.model.PageTag</value>
+		        <value>com.edgenius.wiki.model.SpaceTag</value>
+		        
+		        <value>com.edgenius.wiki.model.Template</value>
+		        
+		        <value>com.edgenius.wiki.model.ActivityLog</value>
+		               	
+		        <value>com.edgenius.wiki.model.Widget</value>
+		        <value>com.edgenius.wiki.model.Friend</value>
+		        <value>com.edgenius.wiki.model.Invitation</value>
+		        <value>com.edgenius.wiki.model.Notification</value>
+		        
+		        <!--  EXT part  -->
+		        <value>com.edgenius.wiki.ext.calendar.model.Calendar</value>
+		        <value>com.edgenius.wiki.ext.calendar.model.CalendarEvent</value>
+		        
+		        <value>com.edgenius.wiki.ext.todo.model.Todo</value>
+		        <value>com.edgenius.wiki.ext.todo.model.TodoItem</value>
+			</list>
+		</property>
+	</bean>
+	    
+	<!--Hibernate TransactionManager	-->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- JTA for J2EE environments -->
+	<!-- 
+	<bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager"/>
+	-->
+	 <!-- JDBC datasource transaction
+     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  <property name="dataSource" ref="coreDS"/>
+	</bean>
+	  -->
+	  
+    <bean id="hibernateUtil" class="com.edgenius.core.dao.hibernate.HibernateUtil">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	  
+    <bean id="userDAO" class="com.edgenius.core.dao.hibernate.UserDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="roleDAO" class="com.edgenius.core.dao.hibernate.RoleDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="configurationDAO" class="com.edgenius.core.dao.hibernate.ConfigurationDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="permissionDAO" class="com.edgenius.core.dao.hibernate.PermissionDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="resourceDAO" class="com.edgenius.core.dao.hibernate.ResourceDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="crWorkspaceDAO" class="com.edgenius.core.dao.hibernate.CrWorkspaceDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="crFileNodeDAO" class="com.edgenius.core.dao.hibernate.CrFileNodeDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	
+</beans>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	   default-autowire="byName" default-lazy-init="true">
+	   
+    <bean id="systemProperty" class="com.edgenius.wiki.service.impl.SystemPropertyPlaceholderConfigurer">
+    </bean>
+	
+	<!--  initGlobal() method needs to be executed even settingService is not reference, so set lazy-init to false. -->
+  	<bean id="settingService" class="com.edgenius.wiki.service.impl.SettingServiceImpl" lazy-init="false">
+  		<property name="globalConf" value="${geniuswiki.data.root}global.xml"/>
+  		<property name="gearsConf" value="classpath:geniuswiki/gears.properties"/>
+  		<property name="offlineDBVersion" value="@TOKEN.GEARS.DB.VERSION@"/>
+  		<property name="offlineDefaultDBVersion" value="@TOKEN.GEARS.MAIN.DB.VERSION@"/>
+  		<property name="configurationDAO" ref="configurationDAO"/>
+  	</bean>
+  		  
+	<bean id="messageService" class="com.edgenius.core.service.impl.MessageServiceImpl">
+		<property name="messageSource">
+			<bean class="org.springframework.context.support.ResourceBundleMessageSource">
+				<property name="basename"><value>@TOKEN.WIKI.LANG.PACKAGE@.messages</value></property>
+			</bean>
+		</property>										
+	</bean>
+	
+    <bean id="openSessionInMethodInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<aop:config proxy-target-class="true">
+	<!--  I test in large volume data, however, page index rebuid method still throw lazyLoadingException when checking if space home page has blog macro. I use @transaction to avoid this. 
+	However, transaction is not quite necessary, and page index is possible throw transction rollback exception.  I still need investigate what is better way to achieve this -->
+<!--		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.search.service.IndexServiceImpl.rebuild*(..))"/>-->
+		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.service.impl.NotifyMQConsumer.handleMessage(..))"/>
+		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.search.interceptor.IndexMQConsumer.handleMessage(..))"/>
+		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.rss.RSSServiceImpl.createFeed(..))"/>
+		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.rss.RSSServiceImpl.remove*(..))"/>
+	</aop:config>		
+	
+	
+	<bean id="macroManager" class="com.edgenius.wiki.render.impl.MacroManagerImpl" init-method="load"/>
+	<bean id="eventContainer" class="com.edgenius.wiki.service.EventContainer"/>
+	
+	<bean id="pluginTemplateEngine" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/plugins"/>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!--  Does not auto import pageService to avoid deadloop reference -->
+	<bean id="pageService" class="com.edgenius.wiki.service.impl.PageServiceImpl">
+  	</bean>
+	<bean id="templateService" class="com.edgenius.wiki.service.impl.TemplateServiceImpl">
+  	</bean>
+  	
+	<bean id="backupService" class="com.edgenius.wiki.service.impl.BackupServiceImpl">
+		<property name="rootLocation" value="${geniuswiki.data.root}"/>
+		<property name="backupLocation" value="${geniuswiki.data.root}data/backup"/>
+		<property name="restoreLocation" value="${geniuswiki.data.root}data/restore"/>
+		<property name="repositoryLocation" value="${geniuswiki.data.root}data/repository"/>
+		<property name="rssLocation" value="${geniuswiki.data.root}data/rss"/>
+		<property name="indexLocation" value="${geniuswiki.data.root}data/index"/>
+		<property name="themeLocation" value="${geniuswiki.data.root}data/themes"/>
+		<property name="skinLocation" value="${geniuswiki.data.root}data/skins"/>
+  	</bean>
+  	
+  	<bean id="pageSavingLockInterceptor" class="com.edgenius.wiki.service.impl.PageSavingLockInterceptor">
+	</bean>
+  	<bean id="draftSavingLockInterceptor" class="com.edgenius.wiki.service.impl.DraftSavingLockInterceptor">
+	</bean>
+
+	<bean id="commentService" class="com.edgenius.wiki.service.impl.CommentServiceImpl" 
+			init-method="initCommentNotifierJob">
+  	</bean>
+  	
+	<bean id="spaceService" class="com.edgenius.wiki.service.impl.SpaceServiceImpl">
+  	</bean>
+  	
+	<bean id="themeService" class="com.edgenius.wiki.service.impl.ThemeServiceImpl" init-method="init">
+		<property name="themeResourcesRoot" value="${geniuswiki.data.root}data/themes" />
+		<property name="themeExplosionRoot" value="/themes" />
+		<property name="skinResourcesRoot" value="${geniuswiki.data.root}data/skins" />
+		<property name="skinExplosionRoot" value="/skins" />
+  	</bean>
+	<bean id="tagService" class="com.edgenius.wiki.service.impl.TagServiceImpl">
+  	</bean>
+  	 
+	<bean id="diffService" class="com.edgenius.wiki.service.impl.DiffServiceImpl">
+  	</bean>
+  	
+	<bean id="activityLog" class="com.edgenius.wiki.service.impl.ActivityLogServiceImpl">
+  	</bean>
+  	
+	<bean id="friendService" class="com.edgenius.wiki.service.impl.FriendServiceImpl">
+  	</bean>
+  	
+	<bean id="blogSyncService" class="com.edgenius.wiki.blogsync.BlogSyncServiceImpl">
+		<property name="proxies">
+			<map>
+		        <entry key="1"><bean class="com.edgenius.wiki.blogsync.WordpressProxy"/></entry>
+		        <entry key="2"><bean class="com.edgenius.wiki.blogsync.BloggerProxy"/></entry>
+	      	</map>
+		</property>
+  	</bean>
+  	
+  	
+	<bean id="widgetService" class="com.edgenius.wiki.service.impl.WidgetServiceImpl" init-method="loadWidgetTemplates">
+  	</bean>
+  	
+	<bean id="notificationService" class="com.edgenius.wiki.service.impl.NotificationServiceImpl" init-method="initScheduledJob">
+  	</bean>
+
+	<bean id="filterPipe" class="com.edgenius.wiki.render.impl.FilterPipeImpl">
+		<property name="macroManager" ref="macroManager"/>
+	</bean>
+	
+	<bean id="renderService" class="com.edgenius.wiki.service.impl.RenderServiceImpl">
+	  	<property name="renderEngine">
+  			<bean class="com.edgenius.wiki.render.impl.MarkupRenderEngineImpl" autowire="no">
+  				<constructor-arg ref="filterPipe"/>
+  				<property name="objectHandlerPool" ref="objectHandlerPool"/>
+  			</bean>
+  		</property>
+	  	<property name="richRenderEngine">
+  			<bean class="com.edgenius.wiki.render.impl.RichRenderEngineImpl" autowire="no">
+  				<constructor-arg ref="filterPipe"/>
+  			</bean>
+  		</property>
+	  	<property name="linkReplacerEngine">
+  			<bean class="com.edgenius.wiki.render.impl.LinkReplacerEngineImpl" autowire="no">
+  				<constructor-arg ref="filterPipe"/>
+  			</bean>
+  		</property>
+  	</bean>
+  	
+  	<bean id="blogService" class="com.edgenius.wiki.service.impl.BlogServiceImpl">
+  	</bean>
+  	
+  	<bean id="touchService" class="com.edgenius.wiki.service.impl.TouchServiceImpl">
+  	</bean>
+  	
+  	<bean id="pluginService" class="com.edgenius.wiki.plugin.PluginServiceImpl">
+  	</bean>
+  	<bean id="upgradeService" name="upgradeService" class="com.edgenius.wiki.installation.UpgradeServiceImpl">
+	</bean>
+  	<bean id="exportService" class="com.edgenius.wiki.service.impl.ExportServiceImpl">
+  	  	<property name="templateEngine">
+	  		<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+				<property name="templateLoaderPath" value="/WEB-INF/templates/"/>
+				<property name="freemarkerSettings">
+					<props>
+						<prop key="template_update_delay">0</prop>
+						<prop key="default_encoding">UTF-8</prop>
+						<prop key="url_escaping_charset">UTF-8</prop>						
+					</props>
+				</property>
+			</bean>
+		</property>
+  	</bean>
+  	
+	<bean id="objectHandlerPool" class="com.edgenius.wiki.render.object.ObjectHandlerPool">
+		<property name="factory">
+			<bean class="com.edgenius.wiki.render.object.ObjectHandlerFactory"/>
+		</property>
+  	</bean>
+
+	  	
+	<bean id="pluginPool" class="com.edgenius.wiki.plugin.PluginPool">
+		<property name="factory">
+			<bean class="com.edgenius.wiki.plugin.PluginPoolFactory"/>
+		</property>
+  	</bean>
+
+	  	
+	<aop:config proxy-target-class="true">
+		<aop:advisor advice-ref="pageSavingLockInterceptor" order="20" pointcut="execution(* *..wiki.service.PageService.savePage(..))"/>
+		<aop:advisor advice-ref="draftSavingLockInterceptor" order="20" pointcut="execution(* *..wiki.service.PageService.saveDraft(..))"/>
+	</aop:config>
+	
+</beans>

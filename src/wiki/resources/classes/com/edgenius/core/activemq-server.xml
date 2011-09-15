@@ -1,0 +1,35 @@
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:amq="http://activemq.apache.org/schema/core"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+        
+	<!--  embedded ActiveMQ Broker -->
+	<!-- 
+		Mysql can setup useDatabaseLock="true",this is defualt
+		HSQLDB,MSSQL plz setup useDatabaseLock="false",
+		if u setup useDatabaseLock="true",u will catch error:
+		MSSQL Error Info:FOR UPDATE clause allowed only for DECLARE CURSOR 
+		HSQLDB Error Info:FOR in statement [SELECT * FROM ACTIVEMQ_LOCK FOR UPDATE]
+
+		see http://www.nabble.com/ActiveMQ-JDBC-Persistence-with-SQL-Server-tf2022248.html#a5560296
+		
+		This dataDirectory setting looks not working... need test
+		dataDirectory="${geniuswiki.data.root}activemq-data" 
+	-->
+	<amq:broker id="activeMQBroker" useJmx="false" persistent="true" start="true" useShutdownHook="true" dataDirectory="${geniuswiki.tmp.dir}activemq-data">
+		<amq:persistenceAdapter>
+			<amq:jdbcPersistenceAdapter id="jdbcAdapter" dataSource="#coreDS" createTablesOnStartup="true" useDatabaseLock="false">
+				<amq:statements>
+					<!--  see https://issues.apache.org/activemq/browse/AMQ-533 for VARCHAR(80).  -->
+					<!--  _ACTIVEMQ_ACKS uses 3 fields as key, UTF-8 size is 1~4, I guess it is always 4 in Mysql. so 80*4*3 = 960< 1000  -->
+					<amq:statements tablePrefix="@TOKEN.TABLE.PREFIX@"	stringIdDataType ="VARCHAR(80)" msgIdDataType="VARCHAR(80)" containerNameDataType="VARCHAR(80)"/>
+				</amq:statements>
+			</amq:jdbcPersistenceAdapter>
+		</amq:persistenceAdapter>
+		<amq:transportConnectors>
+			<amq:transportConnector uri="tcp://${mq.server.url}?wireFormat.maxInactivityDuration=0"/>
+		</amq:transportConnectors>
+	</amq:broker>
+</beans>

@@ -1,0 +1,934 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>GeniusWiki markup syntax</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="GeniusWiki,markup">
+<link rel="stylesheet" type="text/css" media="all" href="styles/helper.css" />
+<link rel="stylesheet" type="text/css" media="all" href="../skins/default/styles/render.css" />
+</head>
+
+<body>
+<table>
+	<tr class="table-header">
+		<td width="45%">Markup</td>
+		<td width="55%">What does it renders</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Link:<br>
+		<br>
+		</div>
+		[View for Link] <div class="intro">or</div>
+
+		[View>My work]<div class="intro">or</div>
+		[View to anchor on extspace>My work#anchor@exteral space short name]<div class="intro">or</div>
+		[View>http://externalurl.com]<div class="intro">or</div>
+		[Contact>mailto:us@edgenius.com]<br><br>
+		<div class="intro">Download link for attachment file in current page</div>
+ 		[^attachment_file_name] <div class="intro">or</div>
+ 		[view>^attachment_file_name]
+		<br><br>
+		<div class="intro">Add back slash before any of ">", "#", "\", "^", "]" or "@". For example, <br>
+		[my view has \> and \@ character <b>></b> My link has \# character]</div>
+		</td>
+		<td>
+		<div class="intro">Rendered:<br>
+		<br>
+		</div>
+		<a href="#" onClick="alert('Go to page with title View for Link');">View for Link</a> <span class="intro">Go
+		to page with title "View for Link" </span> <br>
+		<br>
+
+		<a href="#" onClick="alert('Go
+		to My work page');">View</a> <span class="intro">Go
+		to My work page</span><br>
+		<br>
+
+		<a href="#" onClick="alert('Go to external space and locate to given anchor in My work page');">View to anchor on extspace</a>
+		<span class="intro">Go to external space and locate to given anchor in My work page</span><br>
+		<br>
+
+		<img src="../skins/default/render/link/extlink.png" class="renderExtLinkImg" title="Open link in another window"><a href="#" onClick="alert('Go to external URL');">View</a> <span class="intro">Go to external URL</span><br>
+		<br>
+
+		<img aid="norender" src="../skins/default/render/link/email.png" class="renderExtLinkImg" title="Email to"><a href="#" onClick="alert('Email to address');">Contact</a> <span class="intro">Email to address</span><br>
+		
+		<br><br>
+		<a href="#" onClick="alert('Download attached file by this specified file name in current page');">attachment_file_name</a>
+		<br><br>
+		<a href="#" onClick="alert('Download attached file by this specified file name in current page');">view</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Images:<br>
+		<br>
+		</div>
+		!attached-image.png! <div class="intro">or</div>
+		!attached-image.png|title=titleOfImage|right|large|xxx*yyy!<br>
+		<br>
+<div class="intro">The align value could be "right", "left" or "center"; 
+		the size value could be "large" or "small"; 
+		xxx is number or width and yyy is number of height;</div>
+
+		</td>
+		<td><span class="intro">Display image from page attachment list.</span><br>
+		<br>
+		
+		</td>
+	</tr>
+	<tr>
+
+		<td>
+		<div class="intro">Underline text:<br>
+		<br>
+		</div>
+		_underline_</td>
+		<td><u>underline</u></td>
+	</tr>
+	<tr>
+
+		<td>
+		<div class="intro">Crossline text:<br>
+		<br>
+		</div>
+		-cross-</td>
+		<td><s>cross</s></td>
+	</tr>
+	<tr>
+
+		<td>
+		<div class="intro">Bold text:<br>
+		<br>
+		</div>
+		*bold*</td>
+		<td><strong>bold</strong></td>
+	</tr>
+	<tr>
+
+		<td>
+		<div class="intro">Italic text:<br>
+		<br>
+		</div>
+		~Italic~</td>
+		<td><em>Italic</em></td>
+	</tr>
+	<tr>
+
+		<td>
+		<div class="intro">Superscript text:<br>
+		<br>
+		</div>
+		text^Superscript^</td>
+		<td>text<sup>superscript</sup></td>
+	</tr>
+	<tr>
+
+		<td>
+		<div class="intro">Subscript text:<br>
+		<br>
+		</div>
+		text__Subscript__</td>
+		<td>test<sub>subscript</sub></td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Heading:<br>
+		<br>
+		</div>
+		h1. Header1 <br>
+		h2. Header2 <br>
+		...<br>
+		h6. Header6<br><br>
+		<div class="intro">Heading markup automatically adds an anchor which uses heading title as name. Markup
+		[#headTitle] can locate heading.</div>
+		</td>
+		<td>
+		
+		<h1>header1</h1>
+
+		<h2>header2</h2>
+		
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Horizontal bar:<br>
+		<br>
+		</div>
+		-----</td>
+		<td><div class="intro">Render to a horizontal line, i.e., HTML tag &lt;hr&gt;</div></td>
+	</tr>
+
+	<tr>
+		<td>
+		<div class="intro">User link:<br>
+		<br>
+		</div>
+		@user login name@<br><br>
+		<div class="intro">This markup renders to a link to the user profile page.</div>
+		</td>
+		<td>
+			<img aid="norender" src="../skins/default/render/link/user.png" class="renderExtLinkImg"><a href="#" onClick="alert('Goto user profile page');">User fullname</a> <br>
+		</td>
+	</tr>
+	<tr>
+		<td>#anchorName#</td>
+		<td><div class="intro">Invisible, it adds an anchor to allow [view>link#anchorName] to locate on anchorName.</div></td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">List:<br>
+		<br>
+		</div>
+		* first<br>
+		* second<br>
+		** second 1<br>
+		** second 2<br>
+		* third
+		<div class="intro"><br>
+		Keep at least one space between markup character(*) and text.</div>
+		</td>
+		<td>
+		<ul>
+			<li>first</li>
+			<li>second</li>
+			<ul>
+				<li>second 1</li>
+				<li>second 2</li>
+			</ul>
+			<li>third</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Mixed ordered and unordered list:<br>
+		<br>
+		</div>
+		# first<br>
+		# second<br>
+		#* second 1<br>
+		#* second 2<br>
+		# third
+		<div class="intro"><br>
+		Keep at least one space between markup character(* or #) and text.</div>
+		</td>
+		<td>
+		<ol>
+			<li>first</li>
+			<li>second</li>
+			<ul>
+				<li>second 1</li>
+				<li>second 2</li>
+			</ul>
+			<li>third</li>
+		</ol>
+		
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Code with style:<br>
+		<br>
+		</div>
+		{code:source=Java}<br>
+		public class TagPiece implements Serializable{<br>
+		&nbsp;&nbsp;&nbsp; public String tagname;<br>
+		&nbsp;&nbsp;&nbsp; public int size; <br>
+		}<br>
+		{code}
+		
+		<br><br>
+		<div class="intro">Supported source:XML, VB, SQL, RUBY, PYTHON, PHP, JAVASCRIPT, JAVA, DELPHI, CSS, C#, C.</div>
+		</td>
+		<td>
+		<img src="syntax-images/code.png">
+		
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Simple table:<br>
+		<br>
+		</div>
+		||head1||head2||head1<br>
+		|rc11|r1c2|rc13<br>
+		|rc21|rc22|rc23<br>
+		</td>
+		<td>
+		<table class="macroTable">
+			<tbody>
+				<tr>
+					<th>head1</th>
+					<th>head2</th>
+					<th>head1</th>
+				</tr>
+				<tr class="odd">
+					<td>rc11</td>
+					<td>r1c2</td>
+					<td>rc13</td>
+				</tr>
+				<tr class="even">
+					<td>rc21</td>
+					<td>rc22</td>
+					<td>rc23</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		</td>
+	</tr>
+	<tr>
+		<td>
+
+		<div class="intro">Complex table:<br>
+		<br>
+		</div>
+		{table:hasTitle=yes|bgColor=#b3eb13|borderWidth=4px|borderColor=#C3C3C3}<br>
+		&nbsp;&nbsp;&nbsp; {cell}This is title1{cell}<br>
+		&nbsp;&nbsp;&nbsp; {cell}Title2{cell}<br>
+		&nbsp;&nbsp;&nbsp; {rowdiv}<br>
+		&nbsp;&nbsp;&nbsp; {cell}{align:align=center}align to center{align}{cell}<br>
+		&nbsp;&nbsp;&nbsp; {cell}<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Any text with *markup*<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; And new line<br>
+		&nbsp;&nbsp;&nbsp; {cell}<br>
+		{table}<br><br>
+		<div class="intro">A complex table which cells can include any content. Table also supports borderColor, width
+		and height attributes. For example, {table:width=528px|height=164px|borderColor=#ea1461|borderWidth=4px}</div>
+		</td>
+		<td>
+		<table class="macroTable" style="border-width: 4px; background-color: #b3eb13; border-color: #C3C3C3" border="0px">
+			<tbody>
+				<tr>
+					<th style="border-width: 4px">This is title1</th>
+					<th style="border-width: 4px">Title2</th>
+				</tr>
+				<tr>
+					<td style="border-width: 4px">
+					<p style="text-align: center;">align to center</p>
+					</td>
+					<td style="border-width: 4px">Any text with <strong>markup</strong><br />
+					And new line<br />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Grid layout:<br>
+		<br>
+		</div>
+		{grid}<br>
+		&nbsp;&nbsp;&nbsp; {cell}{panel:title=Demo1}Demo of grid layout{panel}<br>
+		&nbsp;&nbsp;&nbsp; {cell}{panel:title=Minutes of meeting1}Kick off{panel}{cell}<br>
+		&nbsp;&nbsp;&nbsp; {rowdiv}<br>
+		&nbsp;&nbsp;&nbsp; {cell}{panel:title=Demo2}Demo of grid layout row 2{panel}<br>
+		&nbsp;&nbsp;&nbsp; {cell}{panel:title=Minutes of meeting2}Kick off row 2{panel}{cell}<br>
+		{grid}<br>
+		</td>
+		<td>
+
+		<table cellspacing="5" cellpadding="5" style="border-width: 0px; width: 100%;" class="macroGrid">
+			<tbody>
+				<tr>
+					<td style="border-width: 0px"><span aid="com.edgenius.wiki.render.filter.NewlineFilter" />
+					<div class="macroPanel">
+					<div class="title" aid="panelTitle">Demo1</div>
+					<div class="content" aid="panelContent">Demo of grid layout<br />
+					</div>
+					</div>
+					<br />
+					</td>
+					<td style="border-width: 0px">
+					<div wajax="aname:com.edgenius.wiki.render.macro.PanelMacro|title:Minutes of meeting" aid="panel"
+						class="macroPanel">
+					<div class="title" aid="panelTitle">Minutes of meeting1</div>
+					<div class="content" aid="panelContent"><span aid="com.edgenius.wiki.render.filter.NewlineFilter" />Kick off<br />
+					</div>
+					</div>
+					<br />
+					</td>
+				</tr>
+				<tr>
+					<td style="border-width: 0px"><span aid="com.edgenius.wiki.render.filter.NewlineFilter" />
+					<div class="macroPanel">
+					<div class="title" aid="panelTitle">Demo2</div>
+					<div class="content" aid="panelContent">Demo of grid layout row 2<br />
+					</div>
+					</div>
+					<br />
+					</td>
+					<td style="border-width: 0px">
+					<div wajax="aname:com.edgenius.wiki.render.macro.PanelMacro|title:Minutes of meeting" aid="panel"
+						class="macroPanel">
+					<div class="title" aid="panelTitle">Minutes of meeting2</div>
+					<div class="content" aid="panelContent"><span aid="com.edgenius.wiki.render.filter.NewlineFilter" />Kick off row 2<br />
+					</div>
+					</div>
+					<br />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Panel with title:<br>
+		<br>
+		</div>
+		{panel:title=Demo}Demo of grid layout{panel}<br>
+		</td>
+		<td>
+		<div class="macroPanel">
+		<div class="title" aid="panelTitle">Demo</div>
+		<div class="content" aid="panelContent">Demo of grid layout<br />
+		</div>
+		</div>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+		<div class="intro">Preformat text:<br>
+		<br>
+		</div>
+		{pre}Original <br>format text{pre}</td>
+		<td><pre>Original <br>format text</pre></td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Attachment list in current page:<br>
+		<br>
+		</div>
+		{attach}<br>
+		<div class="intro">or</div>
+		{attach:filter=*.doc,*.txt}
+			<div class="intro"> The filter can use wildcard
+		characters, i.e., * or ?. The filter pattern can be separated by comma.</div>
+		</td>
+		<td>
+		<div class="intro">Displays attached files in current page into a table list.</div>
+		<table class="macroAttachment">
+			<tbody>
+				<tr>
+					<th>File</th>
+					<th>Author</th>
+					<th>Size</th>
+					<th>Date</th>
+					<th>Comment</th>
+				</tr>
+				<tr class="odd">
+					<td>myimage.png</td>
+					<td>user</td>
+					<td>128K</td>
+					<td>22:42 May 5</td>
+					<td>This is example of attached files</td>
+				</tr>
+			</tbody>
+		</table>
+
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Attachment list in current space:<br>
+		<br>
+		</div>
+		{repo}<br>
+		{repo:filter=*.doc,*.txt}
+			<br><br>
+				<div class="intro">The filter can use wildcard
+		characters, i.e., * or ?. The filter pattern can be separated by comma.</div>
+		</td>
+		<td>
+		<div class="intro">Displays all attached files in current space into a table list.</div>
+		<table class="macroAttachment">
+			<tbody>
+				<tr>
+					<th>File</th>
+					<th>Author</th>
+					<th>Size</th>
+					<th>Date</th>
+					<th>Comment</th>
+				</tr>
+				<tr class="odd">
+					<td>page1.png</td>
+					<td>user</td>
+					<td>128K</td>
+					<td>22:42 May 5</td>
+					<td>This is example of attached files in page 1</td>
+				</tr>
+				<tr class="even">
+					<td>page2.png</td>
+					<td>user</td>
+					<td>28K</td>
+					<td>10:30 June 15</td>
+					<td>This is example of attached files in page 2</td>
+				</tr>
+			</tbody>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Gallery:<br>
+		<br>
+		</div>
+		{gallery}<br>
+		<div class="intro">or</div>
+		{gallery:column=4|thumbsize=180*180|filter=*.jpg,*.png}
+		<br><br>
+		<div class="intro">Default supports gif, jpg, jpeg, png
+		and bmp file extension. The optional filter allows only display specified files. The filter can use wildcard
+		characters, i.e., * or ?. The filter pattern can be separated by comma.</div>
+		</td>
+		<td>
+		<div class="intro">Displays lightbox gallery from page attachments.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Image slider:<br>
+		<br>
+		</div>
+		{slider:width=920|height=320}<br>
+		!image1.jpg! <br>
+		!image2.jpg! <br>
+		!image3.jpg! <br>
+		{slider} <br>
+		<br>
+		<div class="intro">An image slide show. Please note, images must be same size and declares in slider macro as parameters. Image can not have transparent background.</div>
+		</td>
+		<td>
+		<img src="syntax-images/slider.png">
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Email to:<br>
+		<br>
+		</div>
+		mailto:user@domain.com<br>
+		</td>
+		<td><img aid="norender" src="../skins/default/render/link/email.png" class="renderExtLinkImg" title="Email to"><a href="mailto:user@domain.com">user@domain.com</a></td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">URL link:<br>
+		<br>
+		</div>
+		http://www.geniuswiki.com</td>
+		<td><img src="../skins/default/render/link/extlink.png" class="renderExtLinkImg" title="Open link in another window"><a href="http://www.geniuswiki.com">http://www.geniuswiki.com</a></td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Information message:<br>
+		<br>
+		</div>
+		{info:title=My information}<br>
+		some information<br>
+		{info}</td>
+		<td>
+		<div class="macroMessage">
+		<div class="info">
+		<div class="title">My information</div>
+		some information<br />
+		</div>
+		<div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Warning message:<br>
+		<br>
+		</div>
+		{warning:title=Optional title}<br>
+		some warning<br>
+		{warning}</td>
+		<td>
+		<div class="macroMessage">
+		<div class="warning">
+		<div class="title">Optional title</div>
+		some warning<br />
+		</div>
+		<div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Error message:<br>
+		<br>
+		</div>
+		{error}<br>
+		some error<br>
+		{error}</td>
+		<td>
+		<div class="macroMessage">
+		<div class="error">some error<br />
+		</div>
+		<div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Quote:<br>
+		<br>
+		</div>
+		{quote}<br>
+		my quote<br>
+		and more text<br>
+		{quote}</td>
+		<td>
+			<div class="render-content">
+				<blockquote>my quote<br />
+				and more text<br />
+				</blockquote>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">HTML tags:<br>
+		<br>
+		</div>
+		{html}<br>
+		&lt;strong&gt;bold1&lt;/strong&gt;<br>
+		{html}<br>
+
+		</td>
+		<td>
+		<strong>bold1<strong /><br />
+		<br>
+		<div class="intro">HTML content but Javascript is not allowed for security reason.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Table of content:<br>
+		<br>
+		</div>
+		{toc}<br>
+		<div class="intro">or</div>
+		{toc:deep=3|align=left|ordered=true}</td>
+		<td>
+		<div class="intro">Displays table of contents. It is sum up for heading markup on current page.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Author and modifier for current page:<br>
+		<br>
+		</div>
+		{pageinfo:type=creator}
+		<div class="intro">or</div>
+		<br>
+		{pageinfo:type=modifier|value=portrait}
+		<div class="intro">Type could be "creator" or "modifier". Value could be "name", "portrait", "date" or "status". Value is optional and default contains "portrait", "name" and "date".</div>
+		</td>
+		<td>
+		<div class="intro">Displays page creator or modifier information. Normally used at page side-bar. </div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Social bookmark:<br>
+		<br>
+		</div>
+		{sharethis}<br>
+		<td>
+		<div class="intro">Displays google, facebook, and twitter etc. sharing button from sharethis.com website. Important: This macro may not work if there are more than one in same page. For example, avoiding to put it into both sidebar and page main body. </div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Feedback dialogue line:<br>
+		<br>
+		</div>
+		{feedback}<br>
+		<div class="intro">or</div>
+		{feedback:title=send me feedback}</td>
+		<td>
+		<div class="intro">Displays a link which brings up a dialog box for feedback input.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Signup dialogue line:<br>
+		<br>
+		</div>
+		{signup}<br>
+		<div class="intro">or</div>
+		{signup:title=please sign up}</td>
+		<td>
+		<div class="intro">Displays a link which brings up a dialog box for user sign up.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Add comment link:<br>
+		<br>
+		</div>
+		{comment:title=input your comment}</td>
+		<td>
+		<div class="intro">Displays title as a link, which opens comment input box for page commenting.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Include other page or URL:<br>
+		<br>
+		</div>
+		{include:src=http://foo.com|width=100|height=500}
+		<div class="intro">or</div>
+		{include:src=pageTitle#pieceName@spaceKey}</td>
+		<td>
+		<div class="intro">Embed external URL with given width and height. Width and height are optional. Percent value
+		are NOT acceptable.</div>
+		<br>
+		<br>
+		<div class="intro">Embed internal page or piece of page. The URL are same with {link} macro except anchor
+		replaced by piece name. The piece name and space key are all optional. The whole page will be embedded if there is no
+		piece name given. Width and height are NOT supported. Please also refer to below {piece} macro.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Logically part in page:<br>
+		<br>
+		</div>
+		{piece:name=pieceName} some content {piece}</td>
+		<td>
+		<div class="intro">Surrounding part content of page into Piece, which is used by {include} macro. This macro is invisible and won't break any layout.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">DnD portal:<br>
+		<br>
+		</div>
+		{portal}
+		<div class="intro">or</div>
+		{portal:columns=3|showLogo=true}</td>
+		<td>
+		<div class="intro">Drag and drop portal. The optional attributes are how many columns displayed in rows and if
+		displaying the system LOGO on left upper corner of portal.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Progress bar:<br>
+		<br>
+		</div>
+		{progress:complete=50%}<br>
+		{progress:complete=50%|width=200|height=15|text=50%}</td>
+		<td>
+		<div style="width: 200px; height: 15px;" class="macroProgress">
+		<div style="background-color: rgb(0, 170, 0); width: 50%; height: 15px;" class="value"></div>
+		<div style="width: 200px; height: 15px; font-size: 9px;" class="text">50%</div>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Rating bar:<br>
+		<br>
+		</div>
+		{rating:score=3.5/5}</td>
+		<td>
+		<div class="macroRating"><img width="15" height="15" src="../skins/default/render/rating/star.png"> <img
+			width="15" height="15" src="../skins/default/render/rating/star.png"> <img width="15" height="15"
+			src="../skins/default/render/rating/star.png"> <img width="15" height="15"
+			src="../skins/default/render/rating/starhalf.png"> <img width="15" height="15"
+			src="../skins/default/render/rating/starblank.png"></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Q&amp;A:<br>
+		<br>
+		</div>
+		{qa}<br>
+		Question is here as first line.<br>
+		Then next lines are answers. This is Q&A Macro!<br>
+		{qa}</td>
+		<td>
+		<div class="macroQA">
+		<div class="question">Question is here as first line.</div>
+		<div class="answer">Then next lines are answers. This is Q&A Macro!</div>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">System logo:<br>
+		<br>
+		</div>
+		{logo}<div class="intro">or</div>
+		{logo:align=center}
+		<div class="intro">The align value could be "right", "left" or "center". Default is left. </div>
+		</td>
+		<td>
+		<div class="intro">Displays system LOGO.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Visible or invisible part base on login:<br>
+		<br>
+		</div>
+		{visible:on=logout}Only visible for anonymous users{visible}
+		<div class="intro">or</div>
+		{visible:on=login}Only visible for login users{visible}</td>
+		<td>
+		<div class="intro">Displays content according to users' login status.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Page index in current space:<br>
+			<br>
+		</div>
+		{index}<div class="intro">or</div>
+		{index:filter=*visible_wildcard*|filterOut=*invisible_wildcard*}
+		<div class="intro"> The filter can use wildcard
+			characters, i.e., * or ?. The filter pattern can be separated by comma.</div>
+		</td>
+		<td>
+		<div class="intro">Page index list in current space.</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Menu:<br>
+		<br>
+		</div>
+		{menu}
+		<div class="intro">and</div>
+		{menuitem}
+		<div class="intro">or</div>
+		{menuitem:parent=pageTitle|title=menuTitle|order=10}
+		<br><br>
+		<div class="intro">
+			{menuitem} macro is invisible element in page. Put {menuitem} into the page that you want to link in menu. The parameters are all optional: 
+			<ul>
+			<li>Parent is the parent page title. Note, it is NOT the parent menu title!</li> 
+			<li>Title is replacement if page title is not so good as menu title.</li>
+			<li>Order is numeric that sorts the same level menu item in ascending sequence. Default is zero.</li>
+			</ul> 
+			Macro {menu} will collect all {menuitem} in current space and display as a drop downn menu.<br/>
+			Menu can contain any cascade level. However, space must have at least one root level menu item, i.e., {menuitem} doesn't contain parent.<br/> 
+			Please note, in default skin, the menu macro is already put into the top of page. Normally, you don't need to put a separated {menu} macro again.  
+		</div>
+		</td>
+		<td><img src="syntax-images/menu.png"></td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">Calendar:<br>
+		<br>
+		</div>
+		{calendar:name=Work}
+		<div class="intro">or</div>
+		{calendar:name=Work|height=300|view=month}<br><br>
+		<div class="intro">View can be day, week(default) or month</div>
+		</td>
+		<td><img src="syntax-images/cal.png"></td>
+	</tr>
+	<tr>
+		<td>
+		<div class="intro">TODO list:<br>
+		<br>
+		</div>
+		{todo:name=My Work}
+		<div class="intro">or</div>
+		{todo:name=My Work|status=new,working,delete|deleteOn=delete}<br><br>
+		<div class="intro">Customized status tags and delete action tag.</div>
+		</td>
+		<td><img src="syntax-images/todo.png"></td>
+	</tr>
+	<tr>
+		<tr>
+			<td>
+			<div class="intro">Deck with tabs:<br>
+			<br>
+			</div>
+			{tabs}<br>
+			{tab:name=work}<br>
+			working one something<br>
+			{tab}<br>
+			{tab:name=life}<br>
+			life for fun<br>
+			{tab}<br>
+			{tabs}</td>
+			<td><img src="syntax-images/tabs.png">
+			<div class="intro">Any markups are able to put inside tab macro</div>
+			<div class="intro">Tabs can assign default visible tab by name. For example, {tabs:select=life}</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="intro">Emotional icons</div>
+			</td>
+			<td>
+			<table style="border: 0px #fff solid;" cellspacing="5px">
+				<tr>
+					<td style="border: 0px #fff solid;">:) <img src="../skins/default/render/emotions/smiley-smile.gif"></td>
+					<td style="border: 0px #fff solid;">:( <img src="../skins/default/render/emotions/smiley-cry.gif"></td>
+					<td style="border: 0px #fff solid;">:D <img src="../skins/default/render/emotions/smiley-laugh.gif"></td>
+					<td style="border: 0px #fff solid;">;) <img src="../skins/default/render/emotions/smiley-wink.gif"></td>
+					<td style="border: 0px #fff solid;">(y) <img src="../skins/default/render/emotions/smiley-yes.gif"></td>
+					<td style="border: 0px #fff solid;">(n) <img src="../skins/default/render/emotions/smiley-no.gif"></td>
+					<td style="border: 0px #fff solid;">(!) <img src="../skins/default/render/emotions/smiley-lightbulb.gif"></td>
+					<td style="border: 0px #fff solid;">(*) <img src="../skins/default/render/emotions/smiley-star.gif"></td>
+				</tr>
+				<tr>
+					<td style="border: 0px #fff solid;">(e) <img src="../skins/default/render/emotions/yes.png"></td>
+					<td style="border: 0px #fff solid;">(s) <img src="../skins/default/render/emotions/no.png"></td>
+					<td style="border: 0px #fff solid;">(w) <img src="../skins/default/render/emotions/warning.png"></td>
+					<td style="border: 0px #fff solid;">(c) <img src="../skins/default/render/emotions/cake.png"></td>
+					<td style="border: 0px #fff solid;">(b) <img src="../skins/default/render/emotions/bell.png"></td>
+					<td style="border: 0px #fff solid;">(a) <img src="../skins/default/render/emotions/award.png"></td>
+					<td style="border: 0px #fff solid;">(bg) <img src="../skins/default/render/emotions/bulletgreen.png"></td>
+					<td style="border: 0px #fff solid;">(br) <img src="../skins/default/render/emotions/bulletred.png"></td>
+				</tr>
+				<tr>
+					<td style="border: 0px #fff solid;">(fg) <img src="../skins/default/render/emotions/flaggreen.png"></td>
+					<td style="border: 0px #fff solid;">(fy) <img src="../skins/default/render/emotions/flagyellow.png"></td>
+					<td style="border: 0px #fff solid;">(fr) <img src="../skins/default/render/emotions/flagred.png"></td>
+					<td style="border: 0px #fff solid;">(i) <img src="../skins/default/render/emotions/idea.png"></td>
+					<td style="border: 0px #fff solid;">(f) <img src="../skins/default/render/emotions/flash.png"></td>
+					<td style="border: 0px #fff solid;">(d) <img src="../skins/default/render/emotions/dollar.png"></td>
+					<td style="border: 0px #fff solid;">(m) <img src="../skins/default/render/emotions/magnifier.png"></td>
+					<td style="border: 0px #fff solid;">(l) <img src="../skins/default/render/emotions/lock.png"></td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	<tr>
+		<td>Empty line</td>
+		<td>
+		<div class="intro">Creates a new paragraph</div>
+		</td>
+	</tr>
+		<tr>
+			<td>\X</td>
+			<td>
+			<div class="intro">Escape special character X, for example \[link\] renders to pure text [link] but not treats
+			as a link markup.</div>
+			</td>
+		</tr>
+</table>
+
+<div class="message-panel" id="warnDiv">
+<div class="warning" style="width: 95%">Macro and its parameters are case insensitive.</div>
+</div>
+
+</body>
+</html>

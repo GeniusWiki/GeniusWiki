@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+     			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
+  
+	<!-- org.springframework.web.filter.DelegatingFilterProxy requires "springSecurityFilterChain" bean, here is just dummy one for install proces
+	-->
+	<bean id="springSecurityFilterChain" class="org.springframework.security.util.FilterChainProxy">
+	     <security:filter-chain-map path-type="ant" >
+	    
+	         <security:filter-chain pattern="/**" filters="anonymousProcessingFilter"/>
+	     </security:filter-chain-map>
+	</bean>
+	
+	<bean id="anonymousProcessingFilter"
+		  class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
+		<property name="key" value="changeThis"/>
+		<property name="userAttribute" value="anonymousUser,ROLE_SYS_ANONYMOUS"/>
+	</bean>
+	
+	<!--  I try to use this server bean as indicator to tell system which application context is running... but looks not done 
+    <bean id="installIndicator" name="installIndicator" class="com.edgenius.core.Installation">
+	</bean>
+	-->
+	
+    <bean id="upgradeService" name="upgradeService" class="com.edgenius.wiki.installation.UpgradeServiceImpl">
+	</bean>
+</beans>

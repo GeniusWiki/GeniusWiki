@@ -1,0 +1,1 @@
+update EDG_CR_FILENODES set SPACE_UNAME='_geniuswiki_' where SPACE_UNAME='_wibokr_';

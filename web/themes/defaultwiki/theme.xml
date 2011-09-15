@@ -1,0 +1,48 @@
+<Theme>
+  <version>1</version>
+  <name>defaultwiki</name>
+  <title>Default Wiki</title>
+  <description>Default Wiki Theme</description>
+  <author>Edgenius</author>
+  <category>wiki</category>
+  <displaySequenceNumber>0</displaySequenceNumber>
+  <previewImageName>preview.png</previewImageName>
+  <largeLogo>logo.png</largeLogo>
+  <smallLogo>small-logo.png</smallLogo>
+  <updateDate>2008-09-23 10:40:36.264 EDT</updateDate>
+  <pageThemes>
+      <PageTheme>
+        <scope>home</scope>
+        <welcome>This is your WIKI space home page. Use &quot;Edit&quot; to edit this page, or &quot;Create&quot; button to create child page. For more help, press &quot;F1&quot;.</welcome>
+        <!--Default body-->
+		<!--<bodyMarkup>{$BODY}</bodyMarkup>-->
+		<spaceMenuMarkup>
+		{menu}
+		</spaceMenuMarkup>
+        <sidebarMarkup><![CDATA[{panel:title=Authors|background-color:#fff}
+{pageinfo:type=creator}
+{pageinfo:type=modifier}
+{panel}
+{panel:title=Share|background-color:#fff}
+{sharethis}
+{panel}]]>
+		</sidebarMarkup>        
+      </PageTheme>
+      <PageTheme>
+        <scope>any</scope>
+		<!--Default body-->
+		<!--<bodyMarkup>{$BODY}</bodyMarkup>-->
+		<spaceMenuMarkup>
+		{menu}
+		</spaceMenuMarkup>
+        <sidebarMarkup><![CDATA[{panel:title=Authors|background-color:#fff}
+{pageinfo:type=creator}
+{pageinfo:type=modifier}
+{panel}
+{panel:title=Share|background-color:#fff}
+{sharethis}
+{panel}]]>
+		</sidebarMarkup>
+      </PageTheme>
+  </pageThemes>
+</Theme>

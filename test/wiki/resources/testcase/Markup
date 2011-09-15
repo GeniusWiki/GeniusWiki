@@ -1,0 +1,481 @@
+==============
+<span aid="rendererror" hint="Please set &#91;center|left|right &#93; on align attributes." class='renderError'>{align}</span><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false">{align}
+--------------
+{align:align=abc}!image.jpg!{align}
+==============
+<ul class="star"><li>first</li></ul><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><br /><ul class="star"><li>second</li></ul><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><br /><table class="macroTable"><tr><th>head1</th><th>head2</th><th>head1</th></tr><tr class="odd"><td>rc11</td><td>r1c2</td><td>rc13</td></tr></table>
+--------------
+* first
+
+* second
+
+||head1||head2||head1||
+|rc11|r1c2|rc13|
+==============
+<span aid="rendererror" hint="User 'noexist user' not exist" class='renderError'>@noexist user@</span>
+--------------
+@noexist user@
+==============
+<img aid="norender" title="Open user profile" class="renderExtLinkImg" src="/skins/default/render/link/user.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|link:9\:5\:13\:29\:auserPopupadminadministrator/static/images/noportrait.jpg|type:7|anchor:/$CPAGE/up/admin" aid="com.edgenius.wiki.render.filter.UserFilter" href="#">administrator</a>
+--------------
+@admin@
+==============
+<span aid="rendererror" hint="Calendar must have a name, e.g., {calendar:name=work}" class='renderError'>{cal}</span>
+--------------
+{cal}
+============== //Normal link to page "^^myfile"
+<img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:^^my file|type:0" href="#">^^my file</a>
+--------------
+[\^^my file]
+============== //Normal link to page "^myfile"
+<img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:^my file|type:0" href="#">the view</a>
+--------------
+[the view>\^my file]
+==============
+<span aid="rendererror" hint="The attachment doesn't exist." class='renderError'>[the view>^my file]</span>
+--------------
+[the view>^my file]
+==============
+<span aid="rendererror" hint="The attachment doesn't exist." class='renderError'>[^my file]</span>
+--------------
+[^my file]
+============== 
+<img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:\&#62;\&#60;/b\&#62; My link has # character|type:0" href="#">my view has &#62; and &#64; character &lt;b</a>
+--------------
+[my view has \> and \@ character <b>></b> My link has \# character]
+==============
+<span style="background-color:#ffff99;"><span style="color:#f8067f;"><span style="font-family:comic sans ms,sans-serif;"><span style="font-size:medium;"><img src="http://www.impeloverseas.com/i/8.jpg"></span></span></span></span><br /><h2 id="HeaderAnchor0"><span style="font-size:large;"><span style="background-color:#ffff99;"><span style="color:#f8067f;"><span style="font-family:comic sans ms,sans-serif;">Are you looking for an international experience regarding your education?</span></span></span></span> and</h2>
+--------------
+{font:bkcolor=#ffff99}{font:color=#f8067f}{font:font=comic sans ms,sans-serif}{font:size=medium}!http://www.impeloverseas.com/i/8.jpg!{font}{font}{font}{font}
+h2. {font:size=large}{font:bkcolor=#ffff99}{font:color=#f8067f}{font:font=comic sans ms,sans-serif}Are you looking for an international experience regarding your education?{font}{font}{font}{font} and
+============== long text in cell
+<table class="macroTable"><tr><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>123 long sentance and long long ago<br />abc put some thing wrong here for test<br /></td><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>def Enter your Username and Password<br />kbes He/she has read permission on your space. You can assign more <br /></td></tr></table>
+-------------- 
+{table}
+{cell}
+123 long sentance and long long ago
+abc put some thing wrong here for test
+{cell}{cell}
+def Enter your Username and Password
+kbes He/she has read permission on your space. You can assign more 
+{cell}
+{table}
+==============  //surrounding by macro
+<span style="font-size:x-small;"><br /><table class="macroTable"><tr><th><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>long sentance and long long ago<br />abc put some thing wrong here for test<br /></th></tr><tr><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:System admin portal|type:0" href="#">System admin portal</a><br /><img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:Server and Database compatible matrix|type:0" href="#">Server and Database compatible matrix</a><br /><img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:System file system  overview|type:0" href="#">System file system  overview</a><br /></td></tr></table><br /></span>
+--------------
+{font:size=x-small}
+{table:hastitle=yes}
+{cell}
+long sentance and long long ago
+abc put some thing wrong here for test
+{cell}
+{rowdiv}
+{cell}
+[System admin portal]
+[Server and Database compatible matrix]
+[System file system  overview]
+{cell}
+{table}
+{font}
+==============  link in cell 
+<table class="macroTable"><tr><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:Features|type:0" href="#">Features</a><br /><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#">link1</a><br /></td><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link2|type:1" href="#">link2</a><br /></td></tr></table>
+--------------
+{table}
+{cell}
+[Features]
+[link1]
+{cell}{cell}
+[link2]
+{cell}
+{table}
+==============
+<div class="macroTabs" id="macroTabs-0"><div name="macroTabNames">
+		<div class="renderMacroMarkup mceNonEditable">
+			<span>{tabs}: </span>
+				<span styles="margin: 0px 5px 0px 5px">work</span>
+				<span styles="margin: 0px 5px 0px 5px">life</span>
+		</div>
+</div>
+<div class="macroTab" id="tab-0-1" name="work"><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>working one something<br /></div><div class="macroTab" id="tab-0-2" name="life"><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>life for fun<br /></div></div>
+--------------
+{tabs}
+{tab:name=work}
+working one something
+{tab}
+{tab:name=life}
+life for fun
+{tab}
+{tabs}
+==============
+<img aid="norender" title="Email to" class="renderExtLinkImg" src="/skins/default/render/link/email.png"><a href='mailto:help@edgenius.com'>contact us</a>
+--------------
+[contact us>mailto:help@edgenius.com]
+==============
+<img aid="norender" title="Email to" class="renderExtLinkImg" src="/skins/default/render/link/email.png"><a aid="com.edgenius.wiki.render.filter.EmailFilter" href="mailto:ndp@edgenius.com">ndp@edgenius.com</a>
+--------------
+mailto:ndp@edgenius.com
+==============
+<div class="macroQA"><div class="question">Question is here as first line.</div><div class="answer"><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>Then next lines are answers.<br /><table class="macroTable"><tr><th>Test</th><th>header2</th></tr><tr class="odd"><td>my</td><td>and</td></tr></table><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span></div></div><br />This is out side file
+--------------
+{qa}
+Question is here as first line.
+Then next lines are answers.
+||Test||header2||
+|my|and|
+{qa}
+This is out side file
+==============
+<div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor0" href="#">test <img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"> my link </a></p>
+</div><br /><h2 id="HeaderAnchor0">test <img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:some pages|type:0" href="#">my link</a></h2>
+--------------
+{toc}
+h2. test [my link>some pages]
+==============
+<div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor0" href="#">This is <span style="font-family:arial,helvetica,sans-serif;">a new page</span></a></p>
+<p style="text-indent:30px"><b>2 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor1" href="#">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></a></p>
+<p style="text-indent:30px"><b>3 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor2" href="#">test  my link </a></p>
+<p style="text-indent:30px"><b>4 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor3" href="#">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://foo.com' target='_blank'>my extlink</a></a></p>
+</div><br /><h2 id="HeaderAnchor0">This is <span style="font-family:arial,helvetica,sans-serif;">a new page</span></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor2">test <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#">my link</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor3">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://foo.com' target='_blank'>my extlink</a></h2>
+--------------
+{toc}
+h2. This is {font:font=arial,helvetica,sans-serif}a new page{font}
+h2. test http://foo.com
+h2. test [my link>link1]
+h2. test [my extlink>http://foo.com]
+==============
+<div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor0" href="#">test  my link </a></p>
+<p style="text-indent:30px"><b>2 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor1" href="#">test2  my link2 </a></p>
+<p style="text-indent:30px"><b>3 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor2" href="#">test3  my link3 </a></p>
+</div><br /><h2 id="HeaderAnchor0">test <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#">my link</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1">test2 <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#">my link2</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor2">test3 <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#">my link3</a></h2>
+--------------
+{toc}
+h2. test [my link>link1]
+h2. test2 [my link2>link1]
+h2. test3 [my link3>link1]
+==============
+<table class="macroTable"><tr><th>header1</th><th>header2</th></tr><tr class="odd"><td><div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler|deep:4" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p>No heading found</p></div></td><td>conten1</td></tr></table>
+--------------
+||header1||header2||
+|{toc:deep=4}|conten1|
+==============
+<a aid="norender" class='renderImage' target='_blank' href="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false" title="my test@and test&gt; and| and special"><img width="280" title="my test@and test&gt; and| and special" wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" style="float:left" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
+-------------- 
+!image.jpg|title=my test\@and test\> and\| and special|big|left!
+==============
+<a aid="norender" class='renderImage' target='_blank' href="http://inside.iuf.indiana.edu/reference_desk/donor_closet/photos/closet.jpg"><img width="367" height="318" hspace="5" style="float:right" src="http://inside.iuf.indiana.edu/reference_desk/donor_closet/photos/closet.jpg" border="0"></a>
+-------------- 
+!http://inside.iuf.indiana.edu/reference_desk/donor_closet/photos/closet.jpg|367*318|hspace=5|align=right|border=0!
+=============
+<table class='macroTable'><tr><th>&nbsp;</th><th><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span></th></tr><tr><td>8/5/2009</td><td><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><ul class="star"><li>JOB.PGM</li><li>OE.PGM</li><li>PO.PGM</li><li>PROD.PGM</li><li>QUOTE.PGM</li><li>WC.PGM<br /><hr /><br />Purpose: to find all &lt;nn&#62; field references to INVENTORY.MASTER that also writes to the file<br /></td></li></ul></tr></table>
+--------------
+{table:hasTitle=yes}
+{cell}{cell}{cell}
+{cell}
+{rowdiv}
+{cell}8/5/2009{cell}{cell}
+* JOB.PGM
+* OE.PGM
+* PO.PGM
+* PROD.PGM
+* QUOTE.PGM
+* WC.PGM
+----
+Purpose: to find all <nn\> field references to INVENTORY.MASTER that also writes to the file
+{cell}
+{table}
+=============
+<ul class="star"><li><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span>asdf</li><li>abc<br />&#42; new list<br />and</li></ul>
+-------------- 
+* 
+asdf
+* abc
+\* new list
+and
+=============
+<ul class="star"><li>test  </li><ol><li>123</li><li>tab</li></ol><li>hhh</li></ul><ol><li>123</li><li>ab</li><ul class="star"><li>123</li><li>123</li></ul><li>ab<br />&#42; <br />asdf</li></ol>
+-------------- 
+* test  
+*# 123
+*# tab
+* hhh
+# 123
+# ab
+#* 123
+#* 123
+# ab
+\* 
+asdf
+=============
+<ul class="star"><li>list1<br />and next line</li><li>list2</li><ul class="star"><li>sub list of list2</li></ul></ul><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><br /><ol class="roman"><li>minus list</li><ol class="roman"><li>minus sub list</li></ol></ol><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><br /><ul class="star"><li>new list</li></ul><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><br />Stop list
+-------------- 
+* list1
+and next line
+* list2
+** sub list of list2
+
+i. minus list
+ii. minus sub list
+
+* new list
+
+Stop list
+=============
+<table class="macroTable"><tr><th>&nbsp;</th></tr><tr class="odd"><td>&nbsp;</td></tr></table>
+-------------- 
+|| || 
+| | 
+============= 
+<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://www.edgenius.com' target='_blank'>website</a>
+-------------- 
+[website>http://www.edgenius.com]
+==============
+<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://www.geniuswiki.com' target='_blank'>http://www.geniuswiki.com</a>
+--------------
+[http://www.geniuswiki.com]
+==============
+<table class='macroTable' style='border-color:#e6185a;background-color:#b42dd2;width:384px;height:122px;border-width:2px;'><tr><th style='border-color:#e6185a;border-width:2px'>sdfsdfsdf</th><th style='border-color:#e6185a;border-width:2px'>sdfsfsdfsdfsdfsdf</th></tr><tr><td style='border-color:#e6185a;border-width:2px'>sdf</td><td style='border-color:#e6185a;border-width:2px'>sdf</td></tr></table>
+--------------
+{table:hasTitle=yes|width=384px|height=122px|bgColor=#b42dd2|borderWidth=2px|borderColor=#e6185a}
+{cell}sdfsdfsdf{cell}{cell}sdfsfsdfsdfsdfsdf{cell}
+{rowdiv}
+{cell}sdf{cell}{cell}sdf{cell}
+{table}
+============== Dynamic attribute $$Dx$$ x is number
+<div class="macroToc mceNonEditable" wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:0px"><b>1 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:$$DD1$$" href="#">head one</a></p>
+<p style="text-indent:30px"><b>1.1 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:$$DD2$$" href="#">head one one</a></p>
+<p style="text-indent:30px"><b>1.2 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:$$DD3$$" href="#">head one two</a></p>
+<p style="text-indent:60px"><b>1.2.1 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:$$DD4$$" href="#">head one two one</a></p>
+<p style="text-indent:0px"><b>2 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:$$DD5$$" href="#">head two</a></p>
+<p style="text-indent:0px"><b>3 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:$$DD6$$" href="#">head three</a></p>
+</div><br /><h1 id="$$DD1$$">head one</h1><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="$$DD2$$">head one one</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="$$DD3$$">head one two</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h3 id="$$DD4$$">head one two one</h3><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h1 id="$$DD5$$">head two</h1><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h1 id="$$DD6$$">head three</h1>
+--------------
+{toc}
+h1. head one
+h2. head one one
+h2. head one two
+h3. head one two one
+h1. head two
+h1. head three
+==============
+<h2 id="$$DD1$$">adfadsfa<span style="font-size:large;"><span style="font-family:arial,helvetica,sans-serif;">sdf asdf</span></span><span style="background-color:#b0c4de;"><span style="font-size:large;"><span style="font-family:arial,helvetica,sans-serif;">as</span></span><span style="color:#cc3300;">dfa</span>sdfsadf </span> </h2>
+--------------
+h2. adfadsfa{font:size=large}{font:font=arial,helvetica,sans-serif}sdf asdf{font}{font}{font:bkcolor=#b0c4de}{font:size=large}{font:font=arial,helvetica,sans-serif}as{font}{font}{font:color=#cc3300}dfa{font}sdfsadf {font} 
+=============   Below has not  Dynamic attribute 
+<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>. 
+--------------
+http://www.edgenius.com. 
+=============
+<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>
+--------------
+http://www.edgenius.com
+=============
+<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>;This is more test
+--------------
+http://www.edgenius.com;This is more test
+============= Link filter can render view by markup, such image
+<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://www.edgenius.com' target='_blank'><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
+-------------- 
+[!image.jpg!>http://www.edgenius.com]
+==============
+<a aid="norender" class='renderImage' target='_blank' href="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"><img width="120" wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
+--------------
+!image.jpg|small!
+==============
+<a aid="norender" class='renderImage' target='_blank' href="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false" title="title of image"><img width="120" title="title of image " wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
+--------------
+!image.jpg|title=title of image|small!
+==============
+{font:font=arial|size=medium}<span style="font-family:avant;font-size:large;">link1</span>
+--------------
+{font:font=arial|size=medium}{font:font=avant|size=large}link1{font}
+==============
+<span style="font-family:arial;font-size:medium;"><pre class="macroPreview">link1</pre></span>
+--------------
+{font:font=arial|size=medium}{pre}link1{pre}{font}
+==============
+<pre class="macroPreview">abc</pre> and<pre class="macroPreview">preview?</pre>
+--------------
+{pre}abc{pre} and{pre}preview?{pre}
+==============
+<span style="font-family:arial;font-size:medium;">{align:align=center}link1</span>{align}
+--------------
+{font:font=arial|size=medium}{align:align=center}link1{font}{align}
+==============
+<span style="font-family:arial;font-size:medium;"><span style="font-family:avant;font-size:large;">link1</span></span>
+--------------
+{font:font=arial|size=medium}{font:font=avant|size=large}link1{font}{font}
+==============
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#">view [link1&#93; to </a>
+--------------
+[view [link1\] to > link1]
+==============
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#">view has double &#92;</a>
+--------------
+[view has double \\> link1]
+==============
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1|anchor:anchor123" href="#">view with&#64; and&#62; and &#35; and &#95;sub&#95; </a>
+--------------
+[view with\@ and\> and \# and \_sub\_ > link1#anchor123@test space]
+============== Both view and link trim spaces? 
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#">view </a>
+--------------
+[view > link1]
+==============
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#">view</a>
+--------------
+[view>link1]
+============== overlap {pre} replace LinkFilter
+<pre class="macroPreview">test\{pre} [!</pre>abc{pre}.png!&gt;link1]
+-------------- 
+{pre}test\{pre} [!{pre}abc{pre}.png!>link1]
+==============
+_my test <blockquote> and_ </blockquote>
+--------------
+_my test {quote} and_ {quote}
+==============
+<span style="text-decoration: underline;">my test <blockquote>_ and <span style="text-decoration: underline;">moreand</span></blockquote> this</span> and <span style="text-decoration: underline;">tail text</span> 
+--------------
+_my test {quote}_ and _moreand_{quote} this_ and _tail text_ 
+==============
+<img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:{align\:align=center}{font\:font=arial black,avant garde\|size=medium}link1{font}{align}|type:0" href="#">{align:align=center}{font:font=arial black,avant garde|size=medium}link1{font}{align}</a>
+--------------
+[{align:align=center}{font:font=arial black,avant garde|size=medium}link1{font}{align}]
+==============
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#"><p style="text-align: center;"><span style="font-family:arial black,avant garde;font-size:medium;">download</span></p></a>
+--------------
+[{align:align=center}{font:font=arial black,avant garde|size=medium}download{font}{align}>link1]
+==============
+<p style="text-align: center;"><span style="font-family:arial black,avant garde;font-size:medium;"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#">download</a></span></p>
+-------------- 
+{align:align=center}{font:font=arial black,avant garde|size=medium}[download>link1]{font}{align}
+============== 
+<blockquote> abbb[some </blockquote> view&gt;link1]
+-------------- 
+{quote} abbb[some {quote} view>link1]
+============== Image filter, image file name contain another Macro mark, render normally
+<img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:{pre}abc{pre}.png" src="/download?space=test+space&uuid=nuuid2&file=%7Bpre%7Dabc%7Bpre%7D.png&download=false">
+-------------- 
+!{pre}abc{pre}.png!
+==============
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#">&#33;not-img.png! and &#62; still view </a>
+-------------- 
+[\!not-img.png! and \> still view > link1]
+==============
+<strong>bold1</strong>
+*bold2*
+-------------- 
+{html}
+<strong>bold1</strong>
+*bold2*
+{html}
+==============
+alert("test")
+*bold2*
+-------------- 
+{html}
+<script>alert("test")</script>
+*bold2*
+{html}
+==============
+<img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/skins/default/render/emotions/smiley-smile.gif"><img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/skins/default/render/emotions/smiley-cry.gif"><img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/skins/default/render/emotions/smiley-star.gif">
+-------------- 
+:)%%:(%%(*)
+==============
+<img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/skins/default/render/emotions/smiley-smile.gif">
+-------------- 
+:)
+==============
+<img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/skins/default/render/emotions/smiley-smile.gif"><img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/skins/default/render/emotions/smiley-cry.gif"><img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/skins/default/render/emotions/smiley-star.gif">
+-------------- 
+%%:)%%%%:(%%(*)
+============== Image filter, image file name contain another Macro mark, render normally
+<img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:{pre}abc{pre}.png" src="/download?space=test+space&uuid=nuuid2&file=%7Bpre%7Dabc%7Bpre%7D.png&download=false">
+-------------- 
+!{pre}abc{pre}.png!
+============= Link filter can render view by markup, such image, if page link exist 
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#"><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
+-------------- 
+[!image.jpg!>link1]
+============= if page link does not exist, and no write permission, render image only 
+<img aid="norender" title="Page does not exist, click to create it." class="renderExtLinkImg" src="/skins/default/render/link/createlink.png"><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:abc|type:0" href="#"><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
+-------------- 
+[!image.jpg!>abc]
+============= support complext file name as well
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#"><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:{pre}abc{pre}.png" src="/download?space=test+space&uuid=nuuid2&file=%7Bpre%7Dabc%7Bpre%7D.png&download=false"></a>
+-------------- 
+[!{pre}abc{pre}.png!>link1]
+============== overlap {pre} replace LinkFilter
+<pre class="macroPreview">test\{pre} [!</pre>abc{pre}.png!&gt;link1]
+-------------- 
+{pre}test\{pre} [!{pre}abc{pre}.png!>link1]
+==============
+<pre class="macroPreview">test abc</pre> <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#"><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:{pre}abc{pre}.png" src="/download?space=test+space&uuid=nuuid2&file=%7Bpre%7Dabc%7Bpre%7D.png&download=false"></a>
+-------------- 
+{pre}test abc{pre} [!{pre}abc{pre}.png!>link1]
+==============
+{pre}test&#123;pre}
+-------------- 
+{pre}test\{pre}
+==============
+[link some <br />text]
+-------------- 
+[link some 
+text]
+==============
+<pre class="macroPreview"> my test</pre> <pre class="macroPreview">hello</pre> 
+--------------
+{pre} my test{pre} {pre}hello{pre} 
+==============
+<pre class="macroPreview"> my test</pre> <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|link:link1" href="#">view</a> <pre class="macroPreview">hello</pre> 
+--------------
+{pre} my test{pre} [view>link1] {pre}hello{pre} 
+==============
+<pre name="sourcecode" class="java" aid="com.edgenius.wiki.render.macro.CodeMacro">
+public int methodA(){
+	return abc;
+} 
+</pre>
+--------------
+{code:src=java}
+public int methodA(){
+	return abc;
+} 
+{code}
+==============
+&#92;<pre class="macroPreview">
+\[link1]
+</pre>
+-------------- 
+\\{pre}
+\[link1]
+{pre}
+============== {pre} replace by string, the cause this link treat as valid
+[link <pre class="macroPreview">
+	some text</pre>]
+-------------- 
+[link {pre}
+	some text{pre}]
+==============
+<iframe src='http://g.cn' class='macroInclude' frameborder="0"></iframe>
+-------------- 
+{include:src=http://g.cn}
+==============
+<div id="renderGalleryID-1" wajax="aname:com.edgenius.wiki.render.macro.GalleryMacro" class="macroGallery mceNonEditable" aid="gallery"><ul><li><a href="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false" title="five ring"/><img src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false" width="145" height="145"/></a></li><li><a href="/download?space=test+space&uuid=nuuid2&file=%7Bpre%7Dabc%7Bpre%7D.png&download=false" title="test png 2"/><img src="/download?space=test+space&uuid=nuuid2&file=%7Bpre%7Dabc%7Bpre%7D.png&download=false" width="145" height="145"/></a></li></ul></div>
+-------------- 
+{gallery}
+==============
+REM ==============
+REM <img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:{pre}abc{pre}.png" title="<blockquote>test</blockquote>" src="/download?space=test+space&uuid=nuuid2&download=false">
+REM -------------- 
+REM !{quote}test{quote}>{pre}abc{pre}.png!
+
+REM ============== 
+REM  Need work out if visible is hidden, then need remove all sourrounding br
+REM -------------- 
+REM {visible:on=logout}
+REM {include:src=Dashboard home@Wibokr Community}
+REM {portal:showLogo=false}
+REM {visible}
+REM {visible:on=login}
+REM {portal:showLogo=true}
+REM {visible}

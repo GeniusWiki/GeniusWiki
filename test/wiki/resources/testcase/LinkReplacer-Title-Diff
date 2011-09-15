@@ -1,0 +1,17 @@
+==============
+text [view>new title@target] abc [view > old world] 123 [my view > some others old world]
+--------------
+text [view>old world@target] abc [view > old world] 123 [my view > some others old world]
+==============
+text [view>old world] abc [view > old world] 123 [my view > some others old world]
+--------------
+text [view>old world] abc [view > old world] 123 [my view > some others old world]
+==============
+text2 [view>old world@source] abc [view >new title@target] 123 [my view > some others old world]
+--------------
+text2 [view>old world@source] abc [view > old world@target] 123 [my view > some others old world]
+==============
+text1 [view>old world#123] abc [view > old world#123@source] 123 [my view > some others old world]
+--------------
+text1 [view>old world#123] abc [view > old world#123@source] 123 [my view > some others old world]
+==============

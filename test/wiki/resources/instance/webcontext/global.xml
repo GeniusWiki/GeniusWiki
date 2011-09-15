@@ -1,0 +1,41 @@
+<!--This is default value of Global properties: The reason has this file is, while publish package, this allow installer to assign value 
+ Global.xml (override)  Global.derfult.xml (override) Global.class file -->
+<com.edgenius.core.GlobalSetting>
+  <defaultNotifyMail>notify@geniuswiki.com</defaultNotifyMail>
+  <defaultReceiverMailAddress>feedback@geniuswiki.com</defaultReceiverMailAddress>
+  <systemTitle>Diversify your website</systemTitle>
+  <ccToSystemAdmin>true</ccToSystemAdmin>
+  <defaultDirection>LEFT</defaultDirection>
+  <defaultLanguage>en</defaultLanguage>
+  <defaultCountry>US</defaultCountry>
+  <defaultTimeZone>GMT</defaultTimeZone>
+  <defaultLoginKey>username</defaultLoginKey>
+  <publicSearchEngineAllow>true</publicSearchEngineAllow>
+  <hostProtocol>https://</hostProtocol>
+  <hostName>geniuswiki.com</hostName>
+  <contextPath>webcontext</contextPath>
+  <hostPort>443</hostPort>
+  <spaceQuota>209715200</spaceQuota>
+  <encryptPassword>true</encryptPassword>
+  <encryptAlgorithm>MD5</encryptAlgorithm>
+  <delayRemoveSpaceHours>48</delayRemoveSpaceHours>
+  <enableAdminPermControl>false</enableAdminPermControl>
+  <delayOfflineSyncMinutes>30</delayOfflineSyncMinutes>
+  <registerMethod>signup</registerMethod>
+  <maintainJobCron>0 0 3 * * ?</maintainJobCron>
+  <commentsNotifierCron>0 0 23 * * ?</commentsNotifierCron>
+  <maxCommentsNotifyPerDay>2</maxCommentsNotifyPerDay>
+  <autoFixLinks>3</autoFixLinks>
+  <adsense>disabled</adsense>
+  <textnut>disabled</textnut>
+  <skin>default</skin>
+  <webservice>disabled</webservice>  
+  <webserviceAuthenticaton>basic</webserviceAuthenticaton>
+  <restservice>disabled</restservice>
+  <restserviceAuthenticaton>basic</restserviceAuthenticaton>
+  <suppress></suppress>
+  <detectLocaleFromRequest>false</detectLocaleFromRequest>
+  <versionCheck>false</versionCheck>
+  <versionCheckCron>0 0 2 * * ?</versionCheckCron>
+  <purgeDaysOldActivityLog>365</purgeDaysOldActivityLog>
+</com.edgenius.core.GlobalSetting>

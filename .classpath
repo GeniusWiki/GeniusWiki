@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/core/java"/>
+	<classpathentry kind="src" path="src/integration/java"/>
+	<classpathentry kind="src" path="src/ext/java"/>
+	<classpathentry kind="src" path="src/gwt/java"/>
+	<classpathentry kind="src" path="src/wiki/java"/>
+	<classpathentry kind="src" path="test/core/java"/>
+	<classpathentry kind="src" path="test/gwt/java"/>
+	<classpathentry kind="src" path="test/gwtclient/java"/>
+	<classpathentry kind="src" path="test/wiki/java"/>
+	<classpathentry kind="src" path="test/ext/java"/>
+	<classpathentry kind="src" path="test/sandbox/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?ivyXmlPath=ivy.xml&amp;confs=*"/>
+	<classpathentry kind="lib" path="lib/dev/xpp3-1.1.4c.jar"/>
+	<classpathentry kind="output" path="dev/WEB-INF/classes"/>
+</classpath>

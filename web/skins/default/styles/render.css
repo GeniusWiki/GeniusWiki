@@ -1,0 +1,414 @@
+/** Overwrite mce style **/
+.mceContentBody{color:#000; font-family:"lucida grande", tahoma, verdana, arial, sans-serif; font-size:15px; line-height:19px;  margin:8px;}
+.mceItemTable td{font-family: "lucida grande", tahoma, verdana, arial, sans-serif;font-size:15px;}
+/************************************************************
+ Render page style 
+************************************************************/
+.render-content{
+	font-size:14px;
+	line-height:20px; 
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+}
+
+/** Render error - will show with ToolTip **/
+.renderError{
+	background-color:#FFEAEA;
+	border:1px solid #FF0000;
+}
+
+/** Image aside Link, e.g., link broken, ext link, email etc.**/
+.renderExtLinkImg{
+	padding-right:2px;
+	padding-left:2px;
+	vertical-align:middle;
+}
+/** Render macro text in RichEditor **/
+.renderMacroMarkup{
+	color:#A9A9A9;
+}
+
+/***********************************************************************************/
+/**                    MACRO                                                      **/
+/***********************************************************************************/
+/** Image will display by LightBox **/
+a.renderImage:hover { color: #fff;text-decoration: none;border-bottom:0px;}
+a.renderImage {text-decoration: none;border-bottom:0px;}
+a.renderImage img {	border: 1px solid #fff;}
+a.renderImage:hover img {border: 1px solid #445;}
+
+/* Ctrl-somekey or Shift-somekey */
+.macroKey{
+	
+}
+
+/* Header macro */
+.render-content h1, h2, h3, h4, h5, h6, .mceContentBody h1, h2, h3, h4, h5, h6{
+	border-bottom:1px solid #AAAAAA;
+	padding-bottom:0.17em;
+	padding-top:0.5em;
+	font-family: Georgia,"Times New Roman",Times,serif;
+} 
+/* !!!!! MacroTable css value has hardcode in SharedConstant.TABLE_xxx, please change accordingly!!!!! */
+.macroTable{
+	border-collapse: collapse;
+	padding: 5px;
+}
+
+.macroTable caption{
+	background:#EDEDED none repeat scroll 0%;
+	border:1px solid #BBB;
+	padding: 5px;
+}
+.macroTable td{
+	border:1px solid #BBB;
+	padding: 5px;
+}
+.macroTable th{	
+	border:1px solid #BBB;
+	background:#EDEDED none repeat scroll 0%;
+	color:#333;
+	height:20px !important;
+	padding: 5px;
+	text-align: center;
+}
+.macroTable .odd{
+	background:#FFFFFF;
+}
+.macroTable .even{
+	background:#FFFFFF;
+}
+.macroGrid td{
+	vertical-align: top;
+}
+
+/* code and pre macro */
+pre.macroPreview{
+	
+}
+/* For editor */
+.mceContentBody pre{
+	margin: 10px;
+	padding: 7px;
+	background-color: #F9F9F9;
+	border: 1px solid #AAAAAA;
+}
+
+/* Message macro */
+.macroMessage{
+	
+}
+.macroMessage .title{
+	font-weight: bolder;
+	padding-left:20px;
+	color: #000000;
+}
+.macroMessage .info{
+	background:url('../render/messages/info.png') no-repeat scroll 2px 2px;
+	background-color:#F4FBFF;
+	border:1px solid #C1E1F9;
+	margin:5px 50px 5px 50px;
+	padding:3px 5px 3px 20px;
+	text-align:left;
+	clear: both;
+}
+.macroMessage .warning{
+	background:url('../render/messages/warning.png') no-repeat scroll 2px 2px;
+	background-color:#FFFFE0;
+	border:1px solid #C1E1F9;
+	margin:5px 50px 5px 50px;
+	padding:3px 5px 3px 20px;
+	text-align:left;
+	clear: both;
+}
+.macroMessage .error{
+	background:url('../render/messages/error.png') no-repeat scroll 2px 2px;
+	background-color:#FFEAEA;
+	border:1px solid #FF0000;
+	margin:5px 50px 5px 50px;
+	padding:3px 5px 3px 20px;
+	text-align:left;
+	clear: both;
+	
+}
+/* Quote macro */
+.render-content blockquote, .mceContentBody blockquote{
+	border-color:#FFFFFF rgb(255, 255, 255) rgb(255, 255, 255) rgb(195, 217, 255);
+	border-style:solid;
+	border-width:2px 2px 2px 6px;
+	color:#666666;
+	margin:0pt 30px 20px;
+	padding:0pt 0pt 0pt 10px;
+	clear: both;
+}
+/* TOC macro */
+.macroToc{
+	margin: 10px;
+	padding: 7px;
+	background-color: #F5F5F5;
+	border: 1px solid #AAAAAA;
+	display:table;
+	min-width: 300px;
+}
+.macroToc p{
+	line-height:0.5;
+}
+.macroToc .title{
+	font-size:16px;
+	font-weight: bolder;
+	text-align:center;
+}
+/**need change according browser: margin-left:-20px; **/
+.macroToc ul{
+}
+
+.macroInclude{
+	width:100%;
+	border:0px none;
+}
+/* Gallery */
+.macroGallery {
+	background-color: #FFFFDD;
+	padding: 3px;
+	border-bottom:1px solid #D6800C;
+	border-top:1px solid #D6800C;
+}
+.macroGallery a:hover{
+	text-decoration: none;
+	border-bottom: 0px;
+}
+.macroGallery ul { list-style: none; }
+.macroGallery ul li { display: inline; padding: 3px; }
+.macroGallery ul img {	border: 1px solid #fff;}
+.macroGallery ul a:hover img {	border: 1px solid #445;}
+.macroGallery ul a:hover { color: #fff;text-decoration: none;border-bottom:0px;}
+.macroGallery ul a {text-decoration: none;border-bottom:0px;}
+
+/* Attatchment and Repo macro */
+.macroAttachment {
+	width:95%;
+	border-collapse: collapse;
+}
+.macroAttachment td{
+	border:1px solid #BBB;
+	padding: 5px;
+}
+.macroAttachment th{	
+	border:1px solid #BBB;
+	background:#EDEDED none repeat scroll 0%;
+	color:#333;
+	height:20px !important;
+	padding: 5px;
+	text-align: center;
+}
+
+.macroAttachment .column1 {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.macroAttachment  .column2 {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.macroAttachment  .column3 {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.macroAttachment  .column4 {
+	width: 1%;
+	white-space: nowrap;
+}
+/* Panel macro */
+.macroPanel{
+	width:100%;
+	border:1px solid #808080;
+	background-color:#fff;
+	overflow:hidden;
+	
+}
+.macroPanel .title{
+	width:100%;
+	border-bottom:1px solid #808080;
+	background-color: #EDEDED;
+	text-align: center;
+	font-weight: bold;
+	font-size:16px;
+	line-height:26px;
+}
+.macroPanel .content{
+	margin:4px;
+}
+.macroPanel .macroPanelExpander{
+	background:url('../render/panel/collapse.png') no-repeat scroll 2px 2px;
+	float:right;
+	width:20px;
+	height:20px;
+}
+.macroPanel .collapse{
+	background:url('../render/panel/expand.png') no-repeat scroll 2px 2px;
+	float:right;
+	width:20px;
+	height:20px;
+}
+
+.macroRating{
+	
+}
+.macroProgress{
+	background-color:#DCDCDC;
+	position:relative;
+	padding:0px;
+	margin:2px;
+	border:1px solid #000000;
+}
+.macroProgress .value{
+	position:absolute;
+	top:0px;
+	left:0px;
+	background-color: #0a0; 
+}
+	
+.macroProgress .text{
+	position:absolute;
+	top:0px;
+	left:0px;
+	font-family:verdana;
+	font-weight:bold;
+	color:#C0C0C0;
+	text-align:center;
+}
+
+.macroQA{
+	border:1px solid #3a9aec;
+	padding:0px;
+	margin:0px 0px 0px 0px;
+	width:100%;
+}
+.macroQA .question{
+	border-bottom:1px solid #3a9aec;
+	background:#FEEFB3;
+	width:100%;
+	font-weight: bold;
+	font-size:16px;
+	line-height:30px;
+	text-indent:5px;
+}
+
+.macroQA .answer{
+	margin:5px;
+}
+
+.macroPageIndexKeys{
+	font-size:25px;
+	font-weight:bold;
+	border-bottom: 1px solid #000;
+	margin-bottom: 15px;
+	
+}
+.macroPageIndexKey{
+	font-size:25px;
+	font-weight:bold;
+	border-bottom: 1px dotted #CCC;
+	margin-bottom: 6px;
+	
+}
+.macroPageIndexKey img{
+	float:right;
+}
+
+.macroPageinfo{
+	text-align:center;
+	font-size: 12px;
+	line-height: 22px;
+}
+.macroProfile{
+	line-height: 16px;
+	font-size: 12px;
+	width:100%;
+}
+
+/* Menu macro */
+.macroMenu {
+	background-color: #506784;
+	height: 30px;
+	width: 100%;
+	font-size: 12px;
+	line-height: 30px;
+}
+.macroMenu ul.menubar{
+	-moz-padding-start: 10px;
+	-webkit-padding-start: 10px;	
+}
+
+.macroMenu li{
+	text-decoration: none;
+	color: #fff;
+}
+.macroMenu li a, .macroMenu li a:hover {
+	text-decoration: none;
+	border-bottom: 0px;
+	color: #fff;
+}
+
+.macroMenu,.menu,.macroMenu .menu li {
+	margin: 0px;
+	padding: 0px;
+}
+.macroMenu li {
+	float: left;
+	display: inline;
+	cursor: pointer;
+	list-style: none;
+	padding: 0px 10px 0px 10px;
+	position: relative;
+}
+
+.macroMenu li ul.first {
+	left: -1px;
+	top: 100%;
+}
+.macroMenu li .subid{
+	float:right;
+	padding-right: 3px;
+}
+.macroMenu .menu li {
+	width: 100%;
+	text-indent: 10px;
+	line-height: 30px;
+	margin-right: 10px;
+	border-bottom:1px solid #699DDD;
+	background-color: #506784;
+}
+
+.macroMenu li a {
+	display: block;
+	width: inherit;
+	height: inherit;
+}
+
+.macroMenu ul.menu {
+	display: none;
+}
+
+.macroMenu li:hover>a,.macroMenu li:hover {
+	background-color: #213866;
+	height: 30px;
+}
+
+li:hover>.menu {
+	display: block;
+	position: absolute;
+	width: 200px;
+	top: 0px;
+	left: 98%;
+	z-index: 1000;
+	border-top:1px solid #699DDD;
+	border-bottom:1px solid #699DDD;
+}
+
+.macroMenu li:hover {
+	position: relative;
+	z-index: 2000;
+}

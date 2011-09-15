@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<property file="metadata/conf/database/database-mysql.properties"/>
+	<property file="metadata/conf/database/database-postgresql.properties"/>
+	<property file="metadata/conf/database/database-oracle9i.properties"/>
+	<property file="metadata/conf/database/database-db2.properties"/>
+	
+	<property file="metadata/conf/database/database-sqlserver.properties"/>
+	<property file="metadata/conf/database/database-hsqldb.properties"/>
+	<property file="metadata/conf/database/database-derby.properties"/>
+	
+	<property file="metadata/conf/database/database-mysql-test.properties"/>
+		
+	<filterset id="db.properties.mysql">
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.mysql}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.mysql}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.mysql}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.mysql}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.mysql}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.mysql}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+	</filterset>
+	
+	<filterset id="db.properties.sqlserver">
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.sqlserver}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.sqlserver}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.sqlserver}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.sqlserver}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.sqlserver}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.sqlserver}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+	</filterset>
+	
+	<filterset id="db.properties.hsqldb">
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.hsqldb}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.hsqldb}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.hsqldb}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.hsqldb}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.hsqldb}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.hsqldb}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+	</filterset>
+	
+	<filterset id="db.properties.oracle9i">
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.oracle9i}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.oracle9i}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.oracle9i}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.oracle9i}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.oracle9i}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.oracle9i}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+	</filterset>
+	
+	<filterset id="db.properties.db2">
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.db2}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.db2}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.db2}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.db2}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.db2}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.db2}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+	</filterset>
+	
+	<filterset id="db.properties.postgresql">
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.postgresql}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.postgresql}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.postgresql}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.postgresql}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.postgresql}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.postgresql}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+	</filterset>
+	
+	<filterset id="db.properties.test">
+		<filter token="TOKEN.DATABASE.DIALECT" value="${database.dialect.test}" />
+		<filter token="TOKEN.DATABASE.USERNAME" value="${database.username.test}" />
+		<filter token="TOKEN.DATABASE.PASSWORD" value="${database.password.test}" />
+		<filter token="TOKEN.DATABASE.URL" value="${database.url.test}" />
+		<filter token="TOKEN.DATABASE.DRIVER_CLASS" value="${database.driver.class.test}" />
+		<filter token="TOKEN.DATABASE.NAME" value="${database.name.test}" />
+		
+		<filter token="TOKEN.TABLE.PREFIX" value="${table.prefix}" />
+	</filterset>
+	
+	
+		 
+	<!--  MYSQL is default database -->
+	<property name="database.schema" value="${database.schema.mysql}" />
+	<property name="database.dialect" value="${database.dialect.mysql}" />
+	<property name="database.url" value="${database.url.mysql}" />
+	<property name="database.driver.class" value="${database.driver.class.mysql}" />
+	<property name="database.admin.url" value="${database.admin.url.mysql}" />
+	<property name="database.admin.username" value="${database.admin.username.mysql}" />
+	<property name="database.admin.password" value="${database.admin.password.mysql}" />
+	<property name="database.name" value="${database.name.mysql}" />
+	<property name="database.username" value="${database.username.mysql}" />
+	<property name="database.password" value="${database.password.mysql}" />
+	
+</project>

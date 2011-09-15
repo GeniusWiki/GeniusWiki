@@ -1,0 +1,1 @@
+GeniusWiki - ${sender}发出的好友请求

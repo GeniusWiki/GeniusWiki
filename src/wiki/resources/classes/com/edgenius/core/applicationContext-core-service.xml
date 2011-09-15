@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	   default-autowire="byName" default-lazy-init="true">
+	
+	<context:annotation-config />
+	
+	<bean id="repositoryService" class="com.edgenius.core.repository.SimpleRepositoryServiceImpl">
+		<property name="homeDirResource" value="${geniuswiki.data.root}data/repository" />
+	</bean>
+	
+  	<bean id="roleService" class="com.edgenius.core.service.impl.RoleServiceImpl">
+  		<property name="roleDAO" ref="roleDAO"/>
+  	</bean>
+  	
+  	<bean id="userService" class="com.edgenius.core.service.impl.UserServiceImpl">
+  		<property name="userDAO" ref="userDAO"/>
+  		<property name="userCache" ref="userCache"/>
+  	</bean>
+  	
+  	<bean id="userReadingService" class="com.edgenius.core.service.impl.UserReadingServiceImpl">
+  		<property name="userDAO" ref="userDAO"/>
+  		<property name="userCache" ref="userCache"/>
+  		<!-- TODO: bind with wiki part -->
+  		<property name="messageService" ref="messageService"/>
+  	</bean>
+
+	<!-- Default definition -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="*" read-only="false"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!--  @Transactional  annotation driven -->
+	<tx:annotation-driven order="30" transaction-manager="transactionManager"/>
+
+	<!--  @AspectJ	 -->
+	<aop:aspectj-autoproxy/>
+
+	<!--  
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="so"/>
+	 -->	
+	
+	<!--  Thread interrupt manager thread: to control a thread interrupt in timeout. CheckInterval unit is second -->
+	<bean id="threadInterruptManager" class="com.edgenius.core.util.ThreadInterruptManager" init-method="start" destroy-method="stop" 
+		scope="singleton"  lazy-init="false">
+		<property name="checkInterval" value="5"/>
+	</bean>
+	
+</beans>

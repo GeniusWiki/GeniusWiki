@@ -1,0 +1,52 @@
+Run
+-------------------
+* Confirm your OS has Java 5+ installed. In command line, run "java -version". If Java isn't installed or version lower than 5, please download and install JDK from http://www.oracle.com/technetwork/java/javase/downloads/index.html.
+* Please review setup-variables.properties in /bin directory, you may want to change some default values, such as login user name etc. You must change them before your first time start. It only used when your system first time start! If you want to take it effect again, you have to reset your system data(see below FAQ).    
+* Run run.bat(Windows) or run.sh(Unix) in /bin directory
+* Open browser and go http://localhost:8080/, you will see default GeniusWiki home page. 
+* Default login user name is admin, password is admin.
+* To shutdown server, run shutdown.bat(Windows) or shutdown.sh(Unix) in /bin directory.
+
+Your data is safe if you restart the server. 
+
+Note: If you are using Unix style OS, you may need to change shell script attributes: chmod +x bin/*sh;chmod +x tomcat/bin/*.sh
+
+Upgrade
+-------------------
+You can upgrade GeniusWiki to new version without breaking your existing data by following steps:
+
+* Backup /data and /database directories to somewhere and delete entire geniuswiki-standalone directory. Some files you may want to backup as well, such as /geniuswiki/conf/server.xml or /geniuswiki/logs for system logs. 
+* Unzip new version geniuswiki-standalone.
+* Overwrite /data and /database directories from backup.
+* Start server, i.e., run.bat or run.sh
+* Go http://localhost:8080/, you will see(depends the upgraded version) 
+** GeniusWiki home page, then you upgrade is success. Or 
+** upgrade page, please click "upgrade" link. Known issue: You have to manually shutdown server and restart after upgrade. This is caused by a HsqlDB issue.  
+
+FAQ
+-------------------
+The most common problem is the ports are used by other programs. There are 4 ports required for GeniusWiki.
+=====
+** Tomcat web server: 8005/8080  - Update it from /geniuswiki/conf/server.xml
+** HsqlDB: 9001 - If it is your first time run, update it from /bin/setup-variables.properties. Otherwise, update it from /bin/run.bat(DATABASE_PORT) and /data/server.properties  
+** ActiveMQ: 61616 If it is your first time run, update it from /bin/setup-variables.properties. Otherwise, update it from /data/server.properties.
+
+For any above changes, restart is required.
+
+How can reset all data and run again?
+=====
+Delete all files in /data and /database directory and follow the steps in "Run" section. Please note, this will delete all your existing data!
+
+Can I use this stand alone version in production environment?
+=====
+For production environment, we recommend setup Installation version with external database, such as MySQL, PostgreSQL or Oracle etc. However, we believe this version is quite stable for most cases, just don't forget backup your data often.  
+
+Where are the log files stored?
+===== 
+All log files are stored in geniuswiki/logs directory.
+
+Questions?
+-------------------
+Any problems and feedbacks send to support@edgenius.com
+Visit our website at http://www.edgenius.com
+

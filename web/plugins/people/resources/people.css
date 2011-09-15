@@ -1,0 +1,27 @@
+.macroPeopleContainer{
+}
+.macroPeopleContainer .person{
+	float:left;
+	maring:10 10 20 10;
+	width:300px;
+}
+.macroPeopleContainer .person img{
+	float:left;
+	margin-right:10px;
+}
+.macroPeopleContainer .person .profile{
+	display:inline;
+}
+.macroPeopleContainer .person .profile .value1{
+	font-size:16px;
+	font-weight: bold;
+}
+.macroPeopleContainer .person .profile .value2{
+	font-size:13px;
+	font-weight: bold;
+}
+.macroPeopleContainer .actions{
+	
+}
+.macroPeopleContainer .action{
+}

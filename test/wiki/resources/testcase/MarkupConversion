@@ -1,0 +1,454 @@
+REM markup convert to HTML then to markup, to html to markup again
+REM ==============
+REM {tabs}
+REM {tab}
+REM 123
+REM {tab}
+REM {tab}
+REM abc
+REM {tab}
+REM {tabs}
+==============
+{slider:width=923|height=341}
+!image.jpg!
+{slider}
+--------------
+MIXED - this is tell above markup need parsed then compared.
+==============
+{index}
+abc
+==============
+{table:hasTitle=yes|bgColor=#b3eb13|borderColor=#C3C3C3|borderWidth=4}
+{cell}This is title1{cell}
+{table}
+abn
+============== empty line case
+abc
+* test
+
+* 123
+
+
+
+============== 
+* first
+
+* second
+
+||head1||head2||head1||
+|rc11|r1c2|rc13|
+============== Will test RenderErrorEnclosureMacro as below macro will render to error(no CalendarServiceBean injected)
+{cal}
+==============
+@admin@
+==============
+[contact us>mailto:help\@edgenius.com]
+============== title is abc > and \" and \] \& and
+[view>abc \> and \\" and \] \\& and]
+==============
+[\^\^my page]
+==============
+[my view has \> and \@ character <b>\></b\> My link has \# character]
+==============
+[view>\^\^my page]
+==============
+[view to attachment>^image.jpg]
+==============
+[^image.jpg]
+==============
+[view to attachment>^my file]
+==============
+[^my file]
+==============
+{logo:align=center}
+==============
+{font:size=x-small}
+{table:hasTitle=yes}
+{cell}
+long sentance and long long ago
+abc put some thing wrong here for test
+{cell}
+{rowdiv}
+{cell}
+System admin portal
+Server and Database compatible matrix
+System file system  overview
+{cell}
+{table}
+{font}
+==============
+{code}
+{qa}
+Questions *some* things here
+Second -line is- answer
+{qa}
+{code}
+==============
+{qa}
+Questions *some* things here
+Second -line is- answer
+{qa}
+==============
+{progress:complete=50%|width=201|height=12|text=some}
+==============
+{rating:score=3.5/5|shape=star|size=15}
+==============
+{panel:title=Hello world}
+This is 
+panel test
+{panel}
+==============
+{table:hasTitle=yes}
+{cell}123{cell}{cell}abb{cell}
+{rowdiv}
+{cell}123{cell}{cell}
+
+asdf
+
+test{cell}
+{table}
+{grid}
+{cell}sdf{cell}{cell}sdf{cell}{cell}sdf{cell}
+{rowdiv}
+{cell}sdf{cell}{cell}
+
+sdf
+
+and{cell}{cell}sdf{cell}
+{grid}
+{table}
+{cell}123{cell}{cell}abb{cell}
+{rowdiv}
+{cell}123{cell}{cell}
+
+asdf
+
+test{cell}
+{table}
+==============
+{toc}
+h2. This is {font:font=arial,helvetica,sans-serif}a new page{font}
+h2. test [my link>link1]
+h2. test http://foo.com
+h2. test [my extlink>http://foo.com]
+==============
+||header1||header2||
+|{toc:deep=4}|conten1|
+
+h2. test header
+==============
+# a
+# b
+
+# a
+# b
+==============
+[chose>http://www.google.fr]
+
+||header1||header2||
+|col1|col2|
+{attach}
+==============
+h2. abc
+
+{toc}
+==============
+h2. PostgreSQL
+
+||test||and||
+==============
+Note: MySQL database JDBC driver is already included in the deployed package.
+
+h2. PostgreSQL
+
+==============
+!image.jpg|title=my test\@and test\> and\| and special|big|left!
+==============
+!http://wibork.com/my.jpg|big|right!
+==============
+* test  
+*# 123
+*# tab
+* hhh
+# 123
+# ab
+#* 123
+#* 123
+# ab
+* 
+asdf
+* abc
+\* new list
+and
+==============
+* list1
+and next line
+* list2
+** sub list of list2
+
+* new list
+
+Stop list
+==============
+{gallery:column=4|thumbsize=180*180|filter=*.jpg,*.png}
+--------------
+MIXED - this is tell above markup need parsed then compared.
+==============
+|| || ||
+| | |
+==============
+[%%!image.jpg!%%text in link>http://geniuswiki.com]
+==============
+[!image.jpg! text in link>http://geniuswiki.com]
+==============
+my close%%!image.jpg!%%text without space
+==============
+[!image.jpg! text in link>link1]
+==============
+[view\@and\>and\#and>link1]
+==============
+[view \>abc\[ \\& and>link1]
+==============
+!image.jpg|center!
+==============
+!image.jpg|small|center!
+==============
+{align:align=center}{font:font=arial black,avant garde|size=medium}abc 
+{preview}
+orignal text
+{preview}
+123{font}{align}
+==============
+{warning:title=test warn}
+This is just sample page for geniuswiki wiki markup. 
+	The page may contain incorrect content.
+{warning}
+==============
+[view>link1]
+============== empty line case
+:)%%!image.jpg!%%
+==============
+start
+{preview}
+This is just sample page for geniuswiki wiki markup. 
+	The page may contain incorrect content.
+{preview}
+end
+start
+{code}
+This is just sample page for geniuswiki wiki markup. 
+	The page may contain incorrect content.
+{code}
+end
+==============
+some text
+
+----
+
+abc
+==============
+!http://wibork.com/my.jpg!
+==============
+!image.jpg!
+==============
+!image.jpg|title=title|big|left!
+==============
+!image.jpg|title=title100*100|left!
+==============
+!image.jpg|title=title|100*100|left|class=im_css!
+==============
+Ctrl-abc
+==============
+__sub__
+==============
+^sup^
+==============
+_under_
+==============
+start -cross- end
+==============
+-cross-
+============== 
+*bold*
+==============
+~italic~
+==============
+----
+==============
+ #anchor#
+==============
+h1. head one
+==============
+Ctrl-abc
+==============
+ctRl-abc
+==============
+...
+-------------- #??? is expected?
+…
+==============
+http://geniuswiki.com
+==============
+mailto:ndp@geniuswiki.com
+--------------
+mailto:ndp\@geniuswiki.com
+==============  
+* list1
+* list2
+** list22a
+** list22b
+==============  
+* list1
+* list2
+** list22a
+** list22b
+ab
+==============
+abc
+* test 
+* 123
+def
+==============
+abc
+* test
+
+* 123
+def
+============== empty line case
+abc
+* test
+
+* 123
+
+
+
+==============  # test empty line <br>
+
+ 
+==============  # test empty line <p>
+
+
+ 
+==============  # test empty line <p><br /> 
+
+
+
+ 
+==============
+||Titolo||Regista||Anno||
+|Une visite au Louvre|StraubHuillet|2004|
+|Playtime|J. Tati|1965|
+============== empty line surrounding
+
+||Titolo||Regista||Anno||
+|Une visite au Louvre|StraubHuillet|2004|
+|Playtime|J. Tati|1965|
+
+
+============== multiple consequence tables
+
+||Titolo||Regista||Anno||
+|Une visite au Louvre|StraubHuillet|2004|
+
+|Playtime|J. Tati|1965|
+
+
+==============
+[view>link1]
+==============
+[view>link1@test space]
+--------------
+[view>link1]
+==============
+[view>link1@non-exist space]
+==============
+[view>http://www.geniuswiki.com]
+==============
+!image.jpg!
+==============
+\[view>link1\]
+--------------
+\[view\>link1\]
+============== 
+&gt;
+============== 
+&*bold*
+==============
+\[my view has> and @ > link1 has #\]
+--------------
+\[my view has\> and \@ \> link1 has \#\]
+==============
+\\\[my view has> and \@ > link1 has \#\\\]
+--------------
+\\\[my view has\> and \@ \> link1 has \#\\\]
+==============
+@demo@
+==============
+{warning:title=test warn}
+This is just sample page for geniuswiki wiki markup. 
+	The page may contain incorrect content.
+{warning}
+==============
+{quote}
+This is just sample page for geniuswiki wiki markup. 
+	The page may contain incorrect content.
+{quote}
+==============
+{preview}
+This is just sample page for geniuswiki wiki markup. 
+	The page may contain incorrect content.
+{preview}
+==============
+{code}
+This is just sample page for geniuswiki wiki markup. 
+The page may contain incorrect content.
+{code}
+==============
+some text
+
+h2. head2
+
+abc
+==============
+[th%%*is is b*%%old>link1]
+==============
+[th^is is b^old>link1]
+==============
+[th%%~is is b~%%old>link1]
+==============
+[th__is is b__old>link1]
+==============
+[th -is is b- old>link1]
+==============
+[th _is is b_ old>link1]
+==============
+{pageinfo:type=creator}
+==============
+{pageinfo:type=modifier|value=status}
+--------------
+MIXED - this is tell above markup need parsed then compared.
+==============
+{comment:title=input your comment}
+==============
+{feedback:title=Give us some feedback}
+==============
+{portal:columns=3}
+==============
+{search:keyword=test}
+==============
+{signup:title=Please sign up}
+==============
+{tagcloud}
+==============
+{templatelist}
+==============
+{include:src=http://foo.com|height=200}
+REM ==============
+REM {cal:name=test}
+==============
+{menuitem}
+REM ==============
+REM {sharethis}
+REM ==============
+REM {menu}
+==============

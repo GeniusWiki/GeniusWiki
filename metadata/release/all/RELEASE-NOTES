@@ -1,0 +1,406 @@
+Version 3.0
+=======================================================
+h2. Enhancements
+* Many UI small enhancements.
+* User hover out profile popup in instance/space/page permission control user list. 
+
+h2. Bugs
+* Align macro hide all surrounding content if align parameters is invalid.
+* Anonymous user can not display in pageInfo macro.
+
+Version 2.6
+=======================================================
+h2. Enhancements
+
+h2. Bugs
+* If page has duplicated title with the page in trash bin, space removing failed.
+  
+Version 2.5
+=======================================================
+h2. Enhancements
+* Space key restricts to only letters, numbers and hyphens.
+* New \{menu\} and \{menuitem\} macro for drop-down menu.
+* New layout integrates with \{menu\} macro.
+* A new sidebar with panel.
+* New \{sharethis\} macro for social sharing. This is integrated to the new sidebar.
+* More refine skin
+* Password also send if this user is created by administrator rather than sign-up.
+* A image highlights message in message board that send to system admin.
+ 
+h2. Bugs
+* New line even with spaces can be list divider.
+* Refresh or close button in porlet in Chrome is very hard to invoke by click.
+* Space admin can not display properly in Chrome and Safari when switching from page view.
+* Space admin navbar "Space Admin" item doesn't redirect correctly.
+* Firefox does not response enter keyboard.
+ 
+Version 2.4
+=======================================================
+h2. Enhancements
+* Enhance skin implementation mode. The installed new skin only needs to contain modified files.  
+* A new skin.
+* Right side bar can be hidden.
+* Page tree won't refresh when page switched in same space.
+* When user change page by clicking page tree, the page can be scrolled to the top page.
+* PageInfo macro has new parameter "verbose" that can decide if display portrait of author or modifier.
+* Panel macro supports collapse or expand panel content.
+* A pin image aside title indicates if the page is pin on space list top.
+
+h2. Bugs
+* Some macro are case sensitive.
+* Emotion macro render to broken image for any characters in parenthesis.  
+* Templates can not be displayed in drop-down panel.
+* Administrator can not add user from admin page when system disables the public login.
+* Change language in admin, the country flag doesn't refresh after submit.
+* After language changed, some text is cached and refresh until server restarted. 
+* MS SQL server can not add new user as some unique index failure.  Thank Kee to report this issue. 
+* JSP error of theme and skin in admin page in Tomcat7.x
+* When doing version compare with latest version, the revision number is not displayed on message bar.
+* In some case, \{index\} macro can not render correctly and it will erase all following text if converting from rich editor to markup.
+
+Version 2.301
+=======================================================
+h2. Enhancements
+h2. Bugs
+* A critical infinite looping bug when retrieve space list in search result page.
+* Don't allow send blank message to admin.
+* Backup broken when page context has ASCII control characters - this caused invalid XML output.
+* Load system default theme by wrong name.
+* Anonymous doesn't have activities from profile page.
+* Contribute pages should list the current version for anonymous user.
+* Restore not success if database has been rebuilt before. This caused system queries system space by constant value - fix. 
+
+Version 2.3
+=======================================================
+h2. Enhancements
+* i18n - Chinese
+* System admin and installation add language selection options.
+* Comment is default visible when page open.
+
+h2. Bugs
+* Pin to top doesn't switch property which continuous click.
+* Page not refresh the cache when javascript version upgrade.
+* Highlight default selection of theme in list panel.
+* Display "none" from empty recently activity widget.
+
+
+Version 2.1x - 2.2
+=======================================================
+h2. Enhancements
+* Space suggest box optimise so it won't it won't be bottleneck of searching.
+* More reliable search if keyword is empty.
+* Enhance on email host input validation on system admin page
+* Login and sign-up page UI enhancement.
+* SMTP supports JNDI lookup for mail provider session.
+* SMTP supports SSL and TLS connection type.
+* Allow update base URL from system admin page. It was only updated from global.xml
+* Backup performance enhancement.
+* Downgrade detect (disallow) during installation and system start to avoid data damage.
+* Some third party libraries upgraded.
+* Change "print cache" to "submit bug report" in advance tab of system admin.
+* Allow system admin and owner delete message from message board.
+* Enhance locate to anchor, more accurate with animation. 
+* Add filter parameter in index macro.
+* Add "Owner page" column in repo macro. 
+* Version check don't put message to message board but still send email to admin and put to activity log
+* Add release notes, version, etc. into release package.
+* Histories of page becomes pagination list. 
+* Enhance export page with necessary images and styles resources. 
+* Enhance print and export on Tab, Calendar and Todo macro
+* User profile allows input social links such as twitter, facebook and linkedin. 
+* Performance and UI enhance on user profile activies, contributed spaces and pages list.
+* Add \[^attachment_file_name\] or \[view>^attachment_file_name\] for attachment link.
+* Customized Skins and themes
+
+h2. Fixed Bugs
+* Missing follow button on user profile page on some case.
+* Restore failed if system has user network. 
+* Some embedded macro doesn't render properly
+* STMP connection failed if it uses user and password for authentication. 
+* Activity messages messed.
+* Include macro has border in IE.
+* Anchor doesn't work in Chrome.
+* Attachment and Repo macro lost parameter list after conversion from rich editor.
+* RSS and Index may failed if page has index macro.
+* 403 doesn't redirect correctly if web context is not Root
+* Search spaces in "more spaces" dialog, the pagination doesn't disappear if second search results is zero.
+* NullPointException at exporting pages.
+* Calendar all day event doesn't save correctly.
+* Calendar all day event can not be edited as it still valid from and to date.
+* Calendar and TODO could remove its following text after conversion from WYSIWYG to mark.
+* Unable to hide comment from anonymous users.
+* PostgreSQL imports large volume data with ROLE_PERMISSON relation table duplicated error.
+* Fix bug that may cause user session invalid. 
+* Error render hover text displays invalid message.
+* Popup dark background doesn't cover window scrolled area.
+* Page anchor doesn't work.
+* Link markup has escape and unescape on some specified charaters.
+* Webkit browser anchor doens't work in WYSIWYG editor.
+* Oracle table script has wrong data type for string to long text.  Fix to clob.
+* IE9 Compatible fix
+
+Version 2.1
+=======================================================
+Enhancements
+------------
+* Activities widget
+* New user profile with activities and network
+* New user profile popup
+* Follow/unfollow user 
+
+Bugs
+------------
+* User volume full email can't send out
+ 
+Version 2.06
+=======================================================
+Bugs
+------------
+* Some case in postgreSQL, widget list can not rendered.
+* 2.0.5 refactor code causes portrait can not display in chrome browser(HTML image miss end ">").
+
+Version 2.05
+=======================================================
+Enhancements
+------------
+* All messages box to auto-resize style.
+* More elegant date time display.
+* New "Recently update" widget in user default portal.
+
+Bugs
+------------
+* Send admin messages broadcast to all user
+* RememberMe checkbox doesn't accept enter in login form
+* Duplicated todo submitted if user just saved page and use "Ctrl-Enter" shortcut to add todo item.
+
+Version 2.02
+=======================================================
+Enhancements
+------------
+* New QuickNote widget.
+* Memory optimise in cache.
+* System properties "geniuswiki.auto.upgrade" to allow system automatically upgrade without manually interactive.
+* Version information in MANIFEST.MF
+
+Bugs
+------------
+* In system admin, dashboard misses "More spaces" button
+
+
+Version 2.01
+=======================================================
+Enhancements
+------------
+* Refined space friend invitation process.
+* Some email/message format, misspelling, etc.
+* Small enhancement on message board UI
+* Upgrade process support HsqlDB - standalone version.
+
+Bugs
+------------
+* Todo allow change status even users haven't permission.
+* Duplicated message on new daily version check.
+* Backup file can not restore in some case - this may break your backup. Suggest upgrade then backup again.
+* Table convert to markup, sometime the next newline is not processed.
+
+Version 2.0
+=======================================================
+Bugs fix
+
+Version 1.992
+=======================================================
+Enhancements
+------------
+Bugs
+------------
+* Fix serious bug - users may lose system registered user role if view user detail page is opened from system admin part.
+
+Version 1.991
+=======================================================
+Enhancements
+------------
+* TODO macro
+* Tab macro
+* Delete list from backup and restore file list
+* Restore directly from backup file list
+* Automatically detect new version
+* Pin page on portlet top
+
+Bugs
+------------
+* Backup and restore files are locked after backup and restore page displayed.
+* Message can be lost when send in personal.
+
+
+Version 1.99
+=======================================================
+Enhancements
+------------
+* QA macro
+* Twitter style internal message system. Send message to user from popup and personal page.
+* Filter on Users, Groups and Spaces on system admin page.
+
+
+Version 1.98
+=======================================================
+Enhancements
+------------
+
+Version 1.97
+=======================================================
+Enhancements
+------------
+
+
+Fixed Bugs
+------------
+* Change allow public sign-up option causes server can not restart because of invalid value in global.xml
+* Fix upgrade license bug
+ 
+
+Version 1.96
+=======================================================
+Enhancements
+------------
+Add Blog(wordpress) synchronisation function.
+
+Fixed Bugs
+------------
+
+Version 1.95
+=======================================================
+Enhancements
+------------
+* We add a read-only mode. Its URL looks \http://foo.com/view/space/page. 
+* New \{calendar:name=Sample\} macro.
+
+Fixed Bugs
+------------
+* Fix anonymous can not edit page if database is postgresql.
+* Anonymous can't get contribute version list in profile page.
+ 
+Version 1.94
+=======================================================
+Enhancements
+------------
+* Integration interface download is available. It includes a sign-in API and some web services which can create users, spaces etc. 
+* New \{index\} macro to list all pages indexes in this space.
+* New \{panel\} macro to render content in a block with title.
+* New \{grid\} macro for grid layout. In WYSIWYG editor, user can add grid from "Insert table" dialog by choose "As grid layout" option.  
+* Backup and restore files are sorted by create time.
+* UI enhancement on Menu, popup and list. 
+* You may note there is small indicated icons along with text in some scenarios, for example, linked page does not exist. It is good in page view. Unfortunately, in WYSIWYG editor, users may be confused by these icons as they come out from our render engine rather than users input. Now, it won't be displayed inside WYSIWYG edtior.
+
+Fixed Bugs
+------------
+* Removing space is failed caused by deleting its binded templates.
+
+Version 1.93
+=======================================================
+Enhancements
+------------
+*  We make lots efforts on URL stuff. The old URL looks http://foo/page/page.do#my%20space$SPmy%20first%20page, now it becomes http://foo/page#/my+space/my+first+page
+{warn}
+This version page URL is not compatible with old version, please update your bookmark accordingly
+{warn}
+
+Fixed Bugs
+------------
+
+* A bug in license verify code to cause license becomes expired early. 
+* In some cases, MySQL database sits idle become of missing of "autoReconnect=true" in URL. Now this parameter becomes default.
+* In system admin, "go to user profile" link doesn't work.
+* Some marco cann't render if they are inside the cell of table macro.
+* Heading macro render title into weird string like "aExWbnX", if the title text include any macro. For example, h2. Test {font:size=1}my heading{font} render 
+* Anchor can't render correctly if it is surround by text.
+* In Safari, Anchor can't multiple switch between rich and plain editor. 
+* In Firefox 3.5, Insert attachment macro can't render correctly.
+* Search failed when keyword has non-ascii characters.
+* Table insert dialog in WYSIWYGE editor, row and col are exchanged.
+ 
+Version 1.921
+=======================================================.
+Fixed Bugs
+------------
+* In WYSIWYG editor, newline can't be rendered correctly.
+
+Version 1.92
+=======================================================
+Enhancements
+------------
+* New {repo} macro to render all attachments in current space. The list is under the permission control, i.e., the page's attachments won't be listed if user hasn't the view permission on these pages.
+* Manual draft saved, the "unsaved exit" warning won't popup if user exits current editing.
+* Registered and public user group is hidden from system admin page as they are meaningless for end users.
+* The location of log files becomes more smarter. It can be detect following setting, if one failed then goes next option. First geniuswiki.log.dir, the Tomcat default log directory if server is Tomcat, then user data root log directory, finally, it goes to application server standard log files.
+ 
+Fixed Bugs
+------------
+* If user switch from editing status by clicking navigation bar, the "user is editing in xx minutes ago" message still display when the user returns to editing
+* Some macro can not fill newline after switch to markup editor from rich editor
+* There are lots unexpected server requests in dashboard.
+* Even from preview page, users get "unsaved exit" confirmation when they click navigation bar to switch to another page.
+* List markup may cause infinite looping in some cases.
+
+Version 1.91
+=======================================================
+Enhancements
+------------
+* Popup show up only when mouse hover for a while in target, rather popup immediately. 
+
+Fixed Bugs
+----
+* Fix Captcha error message and page authentication redirect can not work properly as a new third part library upgrade.
+* Fix return null getSession() in some cases. This causes timezone inaccurate calculation sometimes.   
+ 
+Version 1.9
+=======================================================
+Enhancements
+------------
+* UI speed improvement about 30%
+* MS SQL Server is in our supported database deck. Now, Geniuswiki is compatible with MySQL, PostgreSql, Oracle, DB2, HSQLDB and SQL Server.
+* User conflict editing warning message. If a user try to edit a page which is editing by others, a waring message will let this user know this. 
+* User can send message from message board. The receiver can be all users or a specified user or the contributors from a specified space.
+* Message board has pagination to let users retrieve old messages.
+* Merge "Space friends" function into "Space admin" -> "Security" 
+* Mouse-hover can activate tag and user popup.  
+
+Fixed Bugs
+------------
+* Send message to system admin box can not input some characters as they treat as shortcut.  
+* Comments notification email can not send out correctly.
+* RSS feed not refresh when the pages are removed. 
+* Fix Watched and Favorite toggle button swap incorrectly. 
+
+Version 1.8
+=======================================================
+Enhancements
+------------
+* Restart web server is not required when setup wizard completed. The system can redirect to web page directly.
+* Allow display user portrait in space list. This option becomes default that it can be changed in space setting page.
+* Log file rolling policy change to date based from sized-based
+
+Fixed Bugs
+------------
+* Fix dialog image pre-loading problem
+* Click user profile popup page link, the popup can not hide automatically even the page switched.
+* Fix RSS created date set to modified data by mistake.
+* Fix user popup overflow the screen issue.
+* Fix newline becomes non-editable area if the rich editor has non-editable block, such as IoC, gallary etc.
+* Fix TOC macro can not render correctly sometimes in rich editor. 
+
+Version 1.72
+=======================================================
+Enhancements
+------------
+* HSQLDB is added to support list. Now Geniuswiki is able to run on MySQL, PostgreSql, Oracle, DB2 and HSQLDB
+* Standalone version is available. It integerted with HSQLDB and Tomcat. Run GeniusWiki out-of-box!
+* The number of children is displayed beside the page children tab.
+* Enhancement in sidebar render.
+* Highlight status display when drafts saved or publish.
+* Some UIs enhancement
+
+Fixed Bugs
+------------
+* Sidebar can not render link correctly
+* Comment counter does not change when new comment is added.
+* Fix system cann't shutdown properly when web server shutdown.

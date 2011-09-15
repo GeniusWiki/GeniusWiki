@@ -1,0 +1,191 @@
+<filters>
+	<filter>
+		<!--
+			put before any filter: skip any macro which implement OrignialTextRequest text part
+		-->
+		<classname>com.edgenius.wiki.render.filter.EscapeFilter</classname>
+		<order>0</order>
+	</filter>
+
+	<!--
+	<filter>
+		Variable - replace {$variableName} to its value text 
+		<classname>com.edgenius.wiki.render.filter.VariableFilter</classname>
+		<order>2</order>
+	</filter>
+	-->
+	
+	<filter>
+		<!-- 
+		macro: put it here, so that all macro could handle first before any filter try to replace.
+		#such as {image:http://xxx} must do before UrlFilter
+		-->
+		<classname>com.edgenius.wiki.render.filter.MacroFilter</classname>
+		<order>5</order>
+	</filter>
+
+	<filter>
+		<!-- 
+	 		Image file name could be any so put before other macro, for example !image -file- name.jpg!, won't replace to StrikeThrough 
+	 		image file name also could be link such as image[name].jpg, so also put it before LinkFilter
+		-->
+		<classname>com.edgenius.wiki.render.filter.ImageFilter</classname>
+		<order>10</order>
+	</filter>
+	<filter>
+		<!-- 
+			[view>link]: View could be any text, so it won't replace by other filter. And link could be "http://xxx, 
+			so that [view|http://foo.com] does not replace by UrlFilter to [view|<a href="...">http://foo.com</a>]
+		-->	
+		<classname>com.edgenius.wiki.render.filter.LinkFilter</classname>
+		<order>12</order>
+	</filter>
+	<filter>
+		<!-- 
+			@user fullname@:user name may contain any text, so put before other filter
+		-->
+		<classname>com.edgenius.wiki.render.filter.UserFilter</classname>
+		<order>15</order>
+	</filter>
+	<filter>
+		<!-- 
+			 hr , before StrikeThrough Line, so that hr markup can correctly render rather than strikeThrough
+		-->
+		<classname>com.edgenius.wiki.render.filter.LineFilter</classname>
+		<order>18</order>
+	</filter>
+	<filter>
+		<!-- before others: some replaced tag style include "-", such as "render-heading-1", if this is after others, it will replace that "-"  -->
+		<classname>com.edgenius.wiki.render.filter.StrikeThroughFilter</classname>
+		<order>20</order>
+	</filter>
+	<filter>
+		<!-- 
+			__	must before UnderlineFilter
+		-->	
+		<classname>com.edgenius.wiki.render.filter.SubscriptFilter</classname>
+		<order>30</order>
+	</filter>
+	<filter>
+		<!-- 
+			_	
+		-->
+		<classname>com.edgenius.wiki.render.filter.UnderlinkFilter</classname>
+		<order>50</order>
+	</filter>
+	<filter>
+		<!-- 
+			^	
+		-->	
+		<classname>com.edgenius.wiki.render.filter.SuperscriptFilter</classname>
+		<order>50</order>
+	</filter>
+	<filter>
+		<!-- 
+			~	
+		-->	
+		<classname>com.edgenius.wiki.render.filter.ItalicFilter</classname>
+		<order>50</order>
+	</filter>
+	<filter>
+		<!-- 
+			#hx	
+		-->
+		<classname>com.edgenius.wiki.render.filter.HeadingFilter</classname>
+		<order>55</order>
+	</filter>
+	<filter>
+		<!-- 
+		http://, ftp://, news://,nttp:// : must after LinkFilter : this Filter match leading has spaces or line-start, 
+		so that, it won't replace  LinkFilter URL, because LinkFilter replace text to string uuid+flag+view+link, which does not contain spaces.
+		-->
+		<classname>com.edgenius.wiki.render.filter.UrlFilter</classname>
+		<order>55</order>
+	</filter>
+	<filter>
+		<!-- 
+			emailto : must after LinkFilter and ImageFilter		
+		-->
+		<classname>com.edgenius.wiki.render.filter.EmailtoFilter</classname>
+		<order>55</order>
+	</filter>
+
+	<filter>
+		<!-- 
+			# ol,ul, li
+		-->
+		<classname>com.edgenius.wiki.render.filter.ListFilter</classname>
+		<order>55</order>
+	</filter>
+		<filter>
+		<!-- 
+			#anchor# must after list.match, otherwise follow will translate anchor
+			# list1
+			## list111
+		-->
+		<classname>com.edgenius.wiki.render.filter.AnchorFilter</classname>
+		<order>60</order>
+	</filter>
+	<filter>
+		<!-- 
+			#*bold* must after list.match, otherwise follow will translate bold
+			#** list11
+			#*** list111
+			#* 
+		-->
+		<classname>com.edgenius.wiki.render.filter.BoldFilter</classname>
+		<order>65</order>
+	</filter>
+	<filter>
+		<!--
+		  ||head1||header2||
+		  |col1|col2| 
+		-->
+		<classname>com.edgenius.wiki.render.filter.TableFilter</classname>
+		<order>65</order>
+	</filter>
+	<filter>
+		<!-- 
+			#emotions :), :(, (*) etc
+		-->
+		<classname>com.edgenius.wiki.render.filter.EmotionFilter</classname>
+		<order>68</order>
+	</filter>
+	<filter>
+		<!-- 
+			before%*bold*%after: a placeholder for text embedded filter
+		-->
+		<classname>com.edgenius.wiki.render.filter.SeparatorFilter</classname>
+		<order>70</order>
+	</filter>
+	
+	<filter>
+		<!-- 
+			#ctrl, shift
+		-->
+		<classname>com.edgenius.wiki.render.filter.KeyFilter</classname>
+		<order>80</order>
+	</filter>
+	<filter>
+		<!-- 
+			#... with ellipses http://daringfireball.net/projects/smartypants/
+		-->
+		<classname>com.edgenius.wiki.render.filter.TypographyFilter</classname>
+		<order>80</order>
+	</filter>
+	<filter>
+		<!-- 
+			#put it last, so that ^ and $ still works.
+		-->
+		<classname>com.edgenius.wiki.render.filter.NewlineFilter</classname>
+		<order>100</order>
+	</filter>
+	
+</filters>
+
+
+<!--
+#before NewLineFilter to convert more than one \n
+com.edgenius.wiki.render.radeox.filter.ParagraphFilter
+-->
+

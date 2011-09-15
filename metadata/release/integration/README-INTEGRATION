@@ -1,0 +1,79 @@
+h2. Installation
+h3. GeniusWiki update (since version 1.93)
+* Download GeniusWiki(GW) latest build from http://download.edgenius.com/
+* Fresh install or upgrade your old version GW
+* Ensure {data_root}/global.xml includes these 2 lines, please note, webservice is disabled by default, please change it to "enable"
+{code} 
+  <webservice>enable</webservice>
+  <webserviceAuthenticaton>basic</webserviceAuthenticaton>
+{code}  
+If you modified global.xml, web server restart is required.
+* After GW started, please test URL: http://gw_url/services/, which lists all available web service.
+
+h2. GeniusWiki integration client  
+* Download GW integration client library from http://download.edgenius.com/
+* Unzip it and copy it your webapp library directory
+* Integration client needs a dependency library, apache-common-codec. Please download latest one from http://commons.apache.org/codec/download_codec.cgi
+
+h2. Integration functionality
+h3. Login and Logout
+{warn}
+So far, GeniusWiki and your application must be under same domain. For example, http://www.foo.com/yourApp, and http://www.foo.com/GeniusWiki
+We may release single sign-on version with CAS in the near future.  
+{warn}
+Login is implemented by API from GW integration client library. Example like here:
+{code}
+		import com.edgenius.wiki.integration.client.Authentication;
+		....
+		Authentication auth = new Authentication();
+		auth.login(request, response, "gwuser", "9cb14dd9e03aaec8f73eb255ea1fcb15", "/geniuswwiki");
+{code}  
+
+login method has 5 parameters, (HttpServletRequest, HttpServletResponse, username, encryptPassword, geniusWikiTargetWebContext). Please note, password is text directly from database, i.e., encrypted password text. If your GW URL looks http://gw_url/geniuswiki, the web context should be /geniuswiki.
+
+Logout is achieve by sending URL request: http://gw_url/j_spring_security_logout
+
+h3. Webservices
+List all available webservice WSDL:
+http://localhost:8080/geniuswiki/services/?wsdl
+
+There are 3 type web services. The WSDL file is available from geniuswiki-integer-client.jar/META_INF. Most web service methods need http basic authentication.    
+
+*UserSerive.wsdl*
+Methods: createUser(WsUser) and updateUser(WsUser). 
+Return: All methods return integer which is auto-incremental key in GW database.
+Authentication: createUser() doesn't need authentication yet. Update user requires system administration level permission or the user himself.  
+Note: Username field is as key in updateUser() and all information must be filled in even they are unchanged.  
+
+*SpaceService.wsdl*
+Method: createSpace(WsSpace)
+Return: auto-incremental space key in GW database.
+Authentication: Create space permission.
+Note: Space theme can use enumeration value from "defaultWiki" or "defaultBlog"
+
+*DashboardService.wsdl* 
+Method: attachSpaceToUsers(spaceKey, List<String> usernameList)
+Return: warning message if any given users don't exist or success message.
+Authentication: System administrators or user himself(if only one user).  
+Note: GW allows duplicated same space in dashboard. Please beware of attaching the space only once per user.
+
+All webservice endpoint URL need be revised accordingly. For example:
+http://localhost:8080/geniuswiki/services/UserWebService
+http://localhost:8080/geniuswiki/services/SpaceWebService
+http://localhost:8080/geniuswiki/services/DashboardWebService
+
+
+h3. Disable UI components
+If you embed GeniusWiki within your application. You may not want to logout link in GeniusWiki page. There are two methods to disable some UI components.
+
+For permanently disable components,  update field <suppress> in global.xml file. For example:
+{code}
+	<suppress>signup,logout</suppress>
+{code} 
+
+For temporarily disable, put URL parameter "?suppress=signup,logout". Please note, its validation is session scope once this parameters is used. It becomes invalid only when users logout or close browser.
+
+
+h2. REST service
+List all available REST service:
+http://localhost:8080/geniuswiki/rest/application.wadl

@@ -1,0 +1,37 @@
+h2. What is GeniusWiki
+
+GeniusWiki is free open source enterprise level WIKI system. It can be use for intranet website for your organisation. It is better way to create, share and collect knowledge, ideas, files etc. 
+
+There are some highlight features:
+* Powerful markup or WYSIWYG editor and they can switch seamless.
+* Fine-grained access control
+* Skins and Themes
+* Powerful administrator portal.
+* Easy to install and upgrade
+* Support most popular Java web server and database - MySQL, PostgreSQL, Oracle, DB2, SQL Server and HSQL. 
+* Plugin framework
+* Keyboard shortcut support
+* Many fancy functions, such as watch/favourite list, comment, page tree, draft auto saving, revision, DND dashboard etc.
+
+If you want to try or use without installation, please free register in http://www.geniuswiki.com - a reliable website running with GeniusWiki over 4 years.
+
+h2. How to build and install
+
+Prereqisite:
+* Java 6+ (after GeniusWiki version 3.0)
+* Tomcat 6+
+* MySQL or Postgresql etc.
+* Ant
+
+After checkout code from github, go to project root directory, and run these two ant tasks:
+set ANT_OPTS=-Xmx512m (Windows) or export ANT_OPTS=-Xmx512m (Linux)
+ant ivy.retrieve # This task will take a couple of minutes in first time run, as it will download ~100M depdencies jars file
+ant package #If this task failed in silence, please check if your ANT_OPTS has correct value.
+
+After these tasks, you will find out geniuswiki.war from /dist directory. 
+
+h2. How to setup development environment
+
+h2. How to write plugin
+
+

@@ -1,0 +1,126 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'>
+  <ui:with field='res' type='com.edgenius.wiki.gwt.client.widgets.IconBundle'/>
+  <ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages'/>
+ <ui:style field='style'>
+ 	.editpanel{
+ 		margin:8px;
+ 	}
+ 	.subject{
+ 		width:85%;
+ 	}
+ 	.desc{
+ 		width:95%; height:70px
+ 	}
+ 	.location{
+ 		width:95%;
+ 	}
+ 	.sedate{
+ 		padding-left:2px;width:90px;
+ 	}
+ 	.setime{
+ 		width:40px;
+ 	}
+ 	.fform{
+ 	}
+ 	.fform .lb{
+	 	display:block;
+		margin-top:2px;
+		padding:2px;
+		vertical-align:top;
+		font-weight:bold;
+	}
+	.vpanel{
+		margin:8px;
+	}
+
+	.fform input, .fform textarea{
+		border:1px solid #3C7FB1 !important;
+		cursor:pointer;
+		overflow:hidden;
+		padding-right:15px;
+	}
+	.fform .inlineLabel{
+		display:inline;
+	}
+	.vpanel .vlb{
+	 	display:inline;
+		margin-top:2px;
+		padding:2px;
+		font-weight:bold;
+	}
+ </ui:style>
+<g:FlowPanel>
+<my:MessageWidget ui:field="message"/>
+<g:DeckPanel ui:field="deck" >
+<g:FormPanel ui:field="form"  method="post" styleName="{style.fform}"> 
+<g:HTMLPanel styleName="{style.editpanel}">
+	<g:Hidden ui:field="eventID"/>
+	<g:Hidden ui:field="pageUuid"/>
+	<g:Hidden ui:field="calendarName"/>
+	
+    <div> 
+    <g:Label styleName="{style.lb}"  text="*{i18n.what}"/> 
+            <div id="calendarcolor"></div>
+       	    <g:Hidden ui:field="color" name="colorvalue"/>
+            <g:TextBox ui:field="subject" maxLength="200" name="Subject" styleName="{style.subject}"/> 
+      </div>
+      
+         <div> 
+            <g:Label styleName="{style.lb}"  text="*{i18n.when}"/>  
+            <div> 
+              <g:TextBox ui:field="sdate" maxLength="10" name="stpartdate"  styleName="{style.sedate}" /> 
+              <g:TextBox ui:field="stime" maxLength="5" name="stparttime"  styleName="{style.setime}" /> 
+              <g:Label ui:field="toLabel" styleName="{style.inlineLabel}"  text="{i18n.to}"/> 
+              <g:TextBox ui:field="edate" maxLength="10" name="etpartdate"  styleName="{style.sedate}" /> 
+              <g:TextBox ui:field="etime" maxLength="50" name="etparttime"  styleName="{style.setime}" /> 
+              <lable>
+	           	  <g:CheckBox ui:field="isAllDayEvent" name="IsAllDayEvent"/>
+	           	  <g:Label styleName="{style.inlineLabel}"  text="{i18n.all_day_event}"/>
+              </lable>
+            </div> 
+      </div>            
+         <div> 
+            <g:Label styleName="{style.lb}" text="{i18n.where}"/>
+            <g:TextBox ui:field="location" maxLength="200" name="Location"  styleName="{style.location}"/>
+        </div> 
+         <div> 
+            <g:Label styleName="{style.lb}"  text="{i18n.description}"/> 
+            <g:TextArea ui:field="description" name="Description" styleName="{style.desc}"></g:TextArea> 
+        </div> 
+</g:HTMLPanel>
+</g:FormPanel>
+<g:HTMLPanel ui:field="viewPanel" styleName="{style.vpanel}">
+	<div>
+	    <g:Label styleName="{style.vlb}" text="{i18n.what}: "/> 
+		<g:Label ui:field="vSubject"></g:Label>
+	</div>
+	
+	<div>
+	    <g:Label styleName="{style.vlb}" text="{i18n.when}: "/> 
+		<g:Label ui:field="vTime"></g:Label> 
+		<g:Label ui:field="vAllDayEvent" text="{i18n.all_day_event}"/>
+	</div>
+	
+	<div>
+	    <g:Label styleName="{style.vlb}" text="{i18n.where}: "/>
+		<g:Label ui:field="vLocation"></g:Label>
+	</div>
+	
+	<div>
+	    <g:Label styleName="{style.vlb}" text="{i18n.description}: "/>
+		<br/>
+		<g:Label ui:field="vDescription"></g:Label>
+	</div>
+	
+</g:HTMLPanel>
+ 
+<g:FlowPanel ui:field="busy">
+	<g:Image resource="{res.loadingBar}"/>
+</g:FlowPanel>
+
+</g:DeckPanel>
+
+</g:FlowPanel>
+</ui:UiBinder>

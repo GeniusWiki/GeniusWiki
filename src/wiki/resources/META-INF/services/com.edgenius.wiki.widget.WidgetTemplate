@@ -1,0 +1,16 @@
+com.edgenius.wiki.widget.MyDraftWidget
+com.edgenius.wiki.widget.MyFavoriteWidget
+com.edgenius.wiki.widget.MyMessageWidget
+com.edgenius.wiki.widget.MyWatchedWidget
+com.edgenius.wiki.widget.QuickNoteWidget
+com.edgenius.wiki.widget.ActivityLogWidget
+
+#com.edgenius.wiki.widget.SavemeWidget
+#com.edgenius.wiki.widget.FeedbackWidget
+
+com.edgenius.wiki.widget.SpaceWidget
+#com.edgenius.wiki.widget.WelcomeWidget
+
+#com.edgenius.wiki.widget.SpaceWidgetTemplate
+com.edgenius.wiki.widget.MarkupRenderWidgetTemplate
+com.edgenius.wiki.widget.PageLinkerWidgetTemplate

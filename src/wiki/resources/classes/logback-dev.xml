@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  For development mode: Print to both file and console -->
+<configuration>
+  <appender name="hibernatefile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <Append>true</Append>
+    <File>@TOKEN.LOG.ROOT@/@TOKEN.APP.NAME.LOWCASE@-hibernate.log</File>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d{ISO8601} [%-5p][%c] -- %m%n</Pattern>
+    </layout>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>@TOKEN.LOG.ROOT@/@TOKEN.APP.NAME.LOWCASE@-hibernate-%d{yyyy-MM-dd}.log</FileNamePattern>
+      <!-- keep 60 days worth of history -->
+      <MaxHistory>60</MaxHistory>
+    </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <MaxFileSize>5000KB</MaxFileSize>
+    </triggeringPolicy>
+  </appender>
+  <appender name="mainfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <Append>true</Append>
+    <File>@TOKEN.LOG.ROOT@/@TOKEN.APP.NAME.LOWCASE@.log</File>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d{ISO8601} [%-5p][%c] -- %m%n</Pattern>
+    </layout>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>@TOKEN.LOG.ROOT@/@TOKEN.APP.NAME.LOWCASE@-%d{yyyy-MM-dd}.log</FileNamePattern>
+      <!-- keep 60 days worth of history -->
+      <MaxHistory>60</MaxHistory>
+    </rollingPolicy>
+  </appender>
+  <appender name="auditfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <Append>true</Append>
+    <File>@TOKEN.LOG.ROOT@/@TOKEN.APP.NAME.LOWCASE@-audit.log</File>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d{ISO8601} [%-5p][%c] -- %m%n</Pattern>
+    </layout>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>@TOKEN.LOG.ROOT@/@TOKEN.APP.NAME.LOWCASE@-audit-%d{yyyy-MM-dd}.log</FileNamePattern>
+      <!-- keep 60 days worth of history -->
+      <MaxHistory>60</MaxHistory>
+    </rollingPolicy>
+  </appender>
+  
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>[%d{HH:mm:ss}] %-5p [%c{0}] %m%n</Pattern>
+    </layout>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+  </appender>
+  
+  <logger name="com.edgenius" level="DEBUG"/>
+  
+  <logger name="org.hibernate" level="INFO" additivity="false">
+    <appender-ref ref="hibernatefile"/>
+  </logger>
+  
+  <logger name="com.edgenius.core.util.AuditLogger" level="DEBUG"  additivity="false">
+    <appender-ref ref="auditfile"/>
+  </logger>
+  
+  <root level="INFO">
+    <appender-ref ref="mainfile"/>
+    <appender-ref ref="console"/>
+  </root>
+  
+</configuration>

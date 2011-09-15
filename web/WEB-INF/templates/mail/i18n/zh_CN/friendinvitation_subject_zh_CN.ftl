@@ -1,0 +1,1 @@
+GeniusWiki - 你朋友${user.fullname}的邀请

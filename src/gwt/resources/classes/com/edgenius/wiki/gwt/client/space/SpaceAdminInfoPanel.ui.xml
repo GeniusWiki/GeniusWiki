@@ -1,0 +1,78 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'
+    xmlns:sp='urn:import:com.edgenius.wiki.gwt.client.space'>
+
+  	<ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages'/>
+
+
+	<g:HTMLPanel ui:field="panel" width="100%" >
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td colspan="2" height="25px"><my:MessageWidget ui:field="message"/></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="border-bottom:1px solid #D2D2D2;">
+				<g:Label text="{i18n.spacekey}: " styleName="form-label"/>
+				<g:Label ui:field="unixname" styleName="inline"/>
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top;width:450px;border-right:1px dashed #D2D2D2;">
+				<table width="100%">
+					<tr>
+						<td width="1%">
+							<g:Label text="{i18n.logo}: " styleName="form-label"/>
+						</td>
+						<td>
+							<g:SimplePanel ui:field="logo"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="1%">
+							<g:Label text="{i18n.name}: " styleName="form-label"/>
+						</td>
+						<td>
+							<g:Label ui:field="spacenameLabel"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="1%">
+							<g:Label text="{i18n.attach_quota}: " styleName="form-label"/>
+						</td>
+						<td>
+							<g:Label ui:field="quotaLabel"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="1%">
+							<g:Label text="{i18n.private_space}: " styleName="form-label"/>
+						</td>
+						<td>
+							<g:Label ui:field="privateSpaceLabel"/>
+						</td>
+					</tr>
+					<tr>
+						<td width="1%">
+							<g:Label text="{i18n.description}: " styleName="form-label"/>
+						</td>
+						<td>
+							<g:Label ui:field="descLabel"/>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="vertical-align:top">
+				<div style="margin-left:10px">
+					<g:DeckPanel ui:field="deck">
+						<g:VerticalPanel ui:field="funcPanel" spacing="10"/>
+						<sp:SpaceUpdateForm ui:field="detailForm"/>
+						<sp:SpaceLogoForm ui:field="logoForm"/>
+					</g:DeckPanel>
+				</div>
+			</td>
+		</tr>
+	</table>
+	</g:HTMLPanel>
+
+</ui:UiBinder>  

@@ -1,0 +1,136 @@
+==============
+[^bk.sh]
+--------------
+<object data="file:///bk.sh">bk.sh</object>
+==============  //For TextNut embedded image format
+!Picture%201.png!
+--------------
+<img src="file:///Picture%201.png" alt="Picture 1.png">
+==============
+* list1
+* list2
+
+--------------
+<ul style="list-style-type:disc;">
+  <li>list1</li>
+  <li>list2</li>
+</ul>
+==============
+abc
+|123|
+def
+--------------
+abc<table><tr><td>123</td></tr></table>def
+==============
+# a
+# b
+ 
+# a
+# b
+--------------
+<ol><li>a</li><li>b</li></ol> <ol><li>a</li><li>b</li></ol>
+==============
+# a
+# b
+hoo
+foo
+# a
+# b
+ 
+foo
+--------------
+<ol><li>a</li><li>b</li></ol>hoo
+foo<ol><li>a</li><li>b</li></ol> 
+foo
+==============
+# a
+# b
+# a
+# b
+--------------
+<ol><li>a</li><li>b</li></ol>
+<ol><li>a</li><li>b</li></ol>
+==============
+%%!signup.png|title=s!%%s
+-------------- 
+<img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:signup.png" title="s" src="../download?space=Manual&amp;uuid=b4490d42-e2b0-4414-9468-a530b5ae1ac2&amp;download=false" />s
+==============
+||header||
+|123|
+-------------- 
+<table class="macroTable" style="border-width: 1px;border-color:#BBB;border:1px solid #BBB;background-color:#FFFFFF" border="0"><tbody><tr><th style="border-width:1px;background-color:#EDEDED">header</th></tr><tr><td style="border-width: 1px;">123</td></tr></tbody></table>
+==============
+{table:width=414|height=137}
+{cell}123{cell}{cell}456{cell}
+{rowdiv}
+{cell}789{cell}{cell}abc{cell}
+{table}
+-------------- 
+<table class="macroTable" style="width: 414px; height: 137px;" border="0"><tbody><tr class="odd"><td>123</td><td>456</td></tr><tr class="even"><td>789</td><td>abc</td></tr></tbody></table>
+==============
+|sdfsdfsdf|sd{font:color=#888888}f{font}|sdf|sdf|sdf|
+|sdf|sf{font:bkcolor=#339966}dsd{font}f|sd|sdf|df|
+|sfsdfdf|{align:align=center}sfd{align}|sdf|sdf|df|
+
+
+-------------- 
+<table class="macroTable" border="0"><tbody style="text-align: left;"><tr class="odd" style="text-align: left;"><td style="text-align: left;">sdfsdfsdf</td><td style="text-align: left;">sd<span style="color:#888888;">f</span></td><td style="text-align: left;">sdf</td><td style="text-align: left;">sdf</td><td style="text-align: left;">sdf</td></tr><tr class="even" style="text-align: left;"><td style="text-align: left;">sdf</td><td style="text-align: left;">sf<span style="background-color:#339966;">dsd</span>f</td><td style="text-align: left;">sd</td><td style="text-align: left;">sdf</td><td style="text-align: left;">df</td></tr><tr class="odd" style="text-align: left;"><td style="text-align: left;">sfsdfdf</td><td style="text-align: center;">sfd</td><td style="text-align: left;">sdf</td><td style="text-align: left;">sdf</td><td style="text-align: left;">df</td></tr></tbody></table><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><br />
+==============
+{table}
+{cell:colspan=4}{align:align=center}test{align}{cell}
+{table}
+--------------
+<table><tbody><tr><td style="text-align: center;" colspan="4">test</td></tr></tbody></table>
+=============
+|{align:align=right}text{align}|
+--------------
+<table><tr><td style="text-align:right">text</td></tr></table>
+=============
+|{align:align=center}text{align}|
+--------------
+<table><tr><td><div style="text-align:center">text</div></td></tr></table>
+==============
+some text
+{quote}
+my message
+{quote}
+end text
+-------------- 
+some text<blockquote>my message</blockquote>end text
+==============
+some text{preview}my message{preview}end text
+-------------- 
+some text<pre>my message</pre>end text
+==============
+some text
+{code}
+my message
+{code}
+end text
+-------------- 
+some text<pre aid="com.edgenius.wiki.render.macro.CodeMacro">my message</pre>end text
+==============
+some text
+{warning}
+my warning message
+{warning}
+end text
+-------------- 
+some text<div aid="com.edgenius.wiki.render.macro.WarningMacro"><div aid="content">my warning message</div></div>end text
+==============
+%%:)%%%%:(%%(*)
+-------------- 
+<img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/widgets/tiny_mce/plugins/wbemotions/img/smiley-smile.gif"><img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/widgets/tiny_mce/plugins/wbemotions/img/smiley-cry.gif"><img aid="com.edgenius.wiki.render.filter.EmotionFilter" src="/widgets/tiny_mce/plugins/wbemotions/img/smiley-star.gif">
+============== view==link, then convert markup without view
+[link1]
+-------------- 
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:0" href="#">link1</a>
+============== view != link, then convert view>link format
+[view>link1]
+-------------- 
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:0" href="#">view</a>
+============== how above differnet space?
+[view>link1@another space]
+-------------- 
+<a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:another space|link:link1|type:0" href="#">view</a>
+==============

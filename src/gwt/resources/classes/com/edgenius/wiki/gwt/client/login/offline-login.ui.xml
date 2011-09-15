@@ -1,0 +1,24 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'>
+    
+    <ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages'/>
+    
+    <g:FormPanel ui:field="form" styleName="normal-form">
+    	<g:HTMLPanel>
+    		<my:MessageWidget ui:field="message"/>
+    		<table class="login-table">
+    			<tr>
+    				<td><g:Label styleName="form-label" text="{i18n.user_name}"/></td>
+    				<td><my:FormTextBox ui:field="username" name="j_username"  styleName="form-input"/></td>
+    			</tr>
+    		</table>
+    		<g:Hidden ui:field="redir" name="redir"/>
+    		<div style="display:none">
+   				<my:FormPasswordTextBox ui:field="password"/>
+   				<g:CheckBox ui:field="remeberme"/>
+   				<my:CaptchaWidget ui:field="captcha"/>
+    		</div>
+    	</g:HTMLPanel>
+    </g:FormPanel>
+</ui:UiBinder>

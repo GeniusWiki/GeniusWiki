@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<property file="resources.properties"/>
+	
+	<!--  Default phase: dev or deploy -->
+	<property name="phase" value="dev" />
+	<property name="file.separator" value="/" />
+	
+	 <!--
+	 These properties will decide which plugin directory will keep in tinyMCE unziped directory (from nonjava library of IVY)
+	 the reason put them together is just for easy to keep consistant.
+	 1.DON'T use fullscreen plugin as it conflicts with GWT popup window
+	 2. be careful first letter is ","
+	 -->
+	<property name="tinymce.plugin" value=",safari,paste,noneditable,tabfocus" />
+	<property name="tinymce.plugin.1" value="safari" />
+	<property name="tinymce.plugin.2" value="paste" />
+	<property name="tinymce.plugin.3" value="noneditable" />
+	<property name="tinymce.plugin.4" value="tabfocus" />
+	
+	<property name="company.name" value="Edgenius Pty Ltd." />
+	<property name="company.website" value="www.edgenius.com" />
+	<property name="app.name" value="GeniusWiki" />
+	<property name="app.name.lowcase" value="geniuswiki" />
+
+	<property name="app.version" value="2.8" />
+	<property name="pack.version" value="118" />
+	
+	<property name="site.version" value="${pack.version}" />
+	<property name="gears.main.db.version" value="${pack.version}" />
+	<property name="gears.db.version" value="${pack.version}" />
+	<property name="gears.site.version" value="${pack.version}" />
+	
+	<property name="copyright.year" value="2007-2011" />
+	<!-- !!!!!!!!!!! This field is hardcode in Constants.TABLE_PREFIX  please update accordingly !!!!!! -->
+	<property name="table.prefix" value="EDG_" />
+	
+	<property name="javac.source" value="1.6" />
+	<property name="javac.target" value="1.6" />
+	<property name="javac.target" value="1.6" />
+	<property name="compile.debug" value="true" />
+	
+		
+	<property name="core.properties.package" value="com.edgenius.core" />
+	<property name="core.properties.package.path" value="com/edgenius/core" />
+	<property name="wiki.properties.package" value="com.edgenius.wiki" />
+	<property name="wiki.properties.package.path" value="com/edgenius/wiki" />
+	<property name="ext.properties.package" value="com.edgenius.ext" />
+	<property name="ext.properties.package.path" value="com/edgenius/ext" />	
+	<property name="gwt.i18n.package" value="com.edgenius.wiki.gwt.client.i18n" />	
+	<property name="gwt.i18n.package.path" value="com/edgenius/wiki/gwt/client/i18n" />	
+</project>

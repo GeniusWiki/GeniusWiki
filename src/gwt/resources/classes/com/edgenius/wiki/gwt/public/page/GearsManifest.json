@@ -1,0 +1,14 @@
+{
+  "betaManifestVersion" : 1,
+  "version" : "@TOKEN.GEARS.SITE.VERSION@",
+  
+  // URLs to be cached (URLs are given relative to the manifest URL)
+  "entries": [
+   	  __ENTRIES__,
+   	  __STATIC_ENTRIES__,
+      
+ 	  { "url": "/", "redirect": "/loading.do" },
+      { "url": "/loading.do", "src": "/monitor.jsp" },
+      { "url": "/offline.do", "src": "/offline.jsp" }
+    ]  
+}

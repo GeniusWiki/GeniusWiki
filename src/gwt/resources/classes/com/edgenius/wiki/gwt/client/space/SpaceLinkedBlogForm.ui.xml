@@ -1,0 +1,59 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'
+    xmlns:sp='urn:import:com.edgenius.wiki.gwt.client.space'>
+    
+	  <ui:with field='res' type='com.edgenius.wiki.gwt.client.widgets.IconBundle'/>
+	  <ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages'/>
+	<ui:style field='style'>
+	 	.mg{
+	 		margin:5px;
+	 		padding-left:5px;
+	 		display:inline;
+	 	}
+	 	
+ 	</ui:style>
+	<g:HTMLPanel>
+		<table border="0px">
+  			<tr>
+  				<td><g:Label styleName="form-label" text="{i18n.type}*"/></td>
+  				<td><my:FormListBox ui:field="blogs"/></td>
+  			</tr>
+  			<tr>
+  				<td><g:Label styleName="form-label" text="{i18n.blog_url}*"/></td>
+  				<td><my:FormTextBox ui:field="blogUrl" styleName="form-input"/>
+	  				<g:Label ui:field="blogReadonlyUrl"/></td>
+  			</tr>
+  			<tr>
+  				<td><g:Label styleName="form-label" text="{i18n.admin_name}*"/></td>
+  				<td><my:FormTextBox ui:field="blogUser" styleName="form-input"/></td>
+  			</tr>
+  			<tr>
+  				<td><g:Label styleName="form-label" text="{i18n.password}*"/></td>
+  				<td><my:FormPasswordTextBox ui:field="blogPassword" styleName="form-input"/></td>
+  			</tr>
+  			<tr>
+				<td><g:Label ui:field="currentBlogLabel" styleName="form-label" text="{i18n.current_blog}"/></td>
+  				<td>
+  					 <g:Label ui:field="currentBlog"/>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td colspan="2" align="right">
+  					<my:ClickLink ui:field="disconnect" text="{i18n.remove}" styleName="{style.mg}"/>
+  					<my:ClickLink ui:field="getBlogs" text="{i18n.get_blogs}" styleName="{style.mg}"/>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td colspan="2">
+  					<g:DeckPanel ui:field="bloglistDeck">
+	  					<g:FlowPanel ui:field="bloglist"/>
+	  					<g:FlowPanel visible="false">
+	  						<g:Image resource="{res.loadingBar}"/>
+	  					</g:FlowPanel>
+  					</g:DeckPanel>
+  				</td>
+  			</tr>
+  		</table>
+	</g:HTMLPanel>
+</ui:UiBinder>  	

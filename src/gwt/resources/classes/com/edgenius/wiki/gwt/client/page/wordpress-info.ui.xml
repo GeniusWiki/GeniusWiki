@@ -1,0 +1,46 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder' xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+	<ui:with field='res' type='com.edgenius.wiki.gwt.client.widgets.IconBundle' />
+	<ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages' />
+	<ui:style field='style'>
+	 	.excerpt-box{
+	 		width:200px;
+	 		height:230px;
+	 	}
+ 	</ui:style>
+	<g:HTMLPanel>
+		<table width="100%">
+			<tr>
+				<td>
+					<h2 style="text-align:center">Wordpress</h2>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<g:CheckBox ui:field="notify" text="{i18n.post_to_linked_blog}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<g:Label text="{i18n.excerpt}" styleName="form-label"/>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<g:TextArea ui:field="excerptBox" styleName="{style.excerpt-box}"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<g:Label text="{i18n.categories}" styleName="form-label" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<g:VerticalPanel ui:field="categoriesPanel"/>
+				</td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder>

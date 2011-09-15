@@ -1,0 +1,157 @@
+html,body {
+	background-color: #fff;
+	line-height: 16px;
+	font-size: 12px;
+}
+hr {
+	height: 1px;
+	color: #DADADA;
+	background-color: #DADADA;
+}
+div.separator{
+	border-top: 1px solid #AAA;
+	width: 100%;
+	padding-bottom: 3px;
+	padding-top: 5px;
+}
+a {
+	color: #303694;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #303694;
+	text-decoration: none;
+	border-bottom: 1px solid #303694;
+}
+
+a:visited {
+	color: #303694;
+	text-decoration: none;
+}
+
+input[type="text"].long{
+	width:300px;
+}
+.label{
+	font-weight: bold;
+	white-space:nowrap;
+}
+.desc{
+	color: grey;
+}
+
+table{
+	font-family:inherit;
+	font-size:inherit;
+	font-weight:inherit;
+	
+}
+table.list{
+	border:1px solid #666666;
+	margin-top:5px;
+	width: 95%;
+	border-spacing:0px;
+}
+
+table.list tr{
+	border-spacing:2px;
+}
+
+table.list th{
+	padding: 10px;
+	margin: 5px;
+	color: #FFFFFF;
+	text-align: left;
+	font-size:15px;
+	background-color: #67A7E3;
+	white-space: nowrap;
+}
+
+table.list th a{
+	color: #FFFFFF;
+	border-bottom: 0px;
+	padding-left:15px;
+}
+table.list th a:visited{
+	color: #FFFFFF;
+	border-bottom: 0px;
+	padding-left:15px;
+}
+table.list th a:hover{
+	color: #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+	padding-left:15px;
+}
+
+table.list th.sortable a{
+	background:url('../images/admin/sort.png') no-repeat transparent;
+}
+table.list th.desc a{
+	background:url('../images/admin/desc.png') no-repeat transparent;
+}
+table.list th.asc a{
+	background:url('../images/admin/asc.png') no-repeat transparent;
+}
+
+table.list tr.even {
+	background-color: #def;
+}
+table.list td {
+	padding: 4px;
+	margin: 2px;
+}
+table.list tr.detailrow {
+	padding:0px;
+}
+table.list td.detailrow{
+	padding:0px;
+}
+.total{
+	display:inline;
+	float: right;
+	margin-right: 30px;
+}
+.pagination{
+	margin-top: 10px;
+	text-align: center;
+}
+.detail{
+	background-color:#FFFFB9;
+	border:.5px solid #FEEFB3;
+	padding: 5px;
+}
+
+.func{
+	color:grey;
+	font-size:14px !important;
+	font-weight: bolder !important;
+}
+.func-area{
+	background-color:inherit;
+	font-size:12px !important;
+	font-weight: bolder !important;
+}
+.func-area a{
+	text-decoration: underline;
+}
+.backupSchedule{
+	background:url('../images/admin/clock.png') no-repeat center left;
+	background-color: #cef6bc;
+	border: 1px solid #67a44d;
+	font-size: 15px;
+	padding: 5px 5px 5px 55px;
+	position:relative;
+	height:45px;
+}
+.scheduleBody{
+	 position:absolute; 
+	 top:50%;  
+	 margin-top:-10px;
+}
+.backupSchedule div{
+	display:inline;
+}
+.nowrap{
+	white-space:nowrap;
+}

@@ -1,0 +1,1 @@
+alter table EDG_CR_FILENODES ADD COLUMN MD5_DIGEST varchar(64);

@@ -1,0 +1,22 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder' xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+	<ui:with field='res' type='com.edgenius.wiki.gwt.client.widgets.IconBundle' />
+	<ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages' />
+	<ui:style field='style'>
+
+ 	</ui:style>
+	<g:HTMLPanel>
+		<table width="100%">
+			<tr>
+				<td>
+					<h2 style="text-align:center">Blogger</h2>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<g:CheckBox ui:field="notify" text="{i18n.post_to_linked_blog}" />
+				</td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder>

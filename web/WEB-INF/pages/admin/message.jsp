@@ -1,0 +1,1 @@
+<div class="message-panel"><div class="info" style="width:95%">${message}</div></div>

@@ -1,0 +1,76 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:my='urn:import:com.edgenius.wiki.gwt.client.widgets'
+    xmlns:ur='urn:import:com.edgenius.wiki.gwt.client.user'>
+
+  	<ui:with field='i18n' type='com.edgenius.wiki.gwt.client.i18n.Messages'/>
+	<g:HTMLPanel ui:field="panel" styleName="macroProfile">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><my:MessageWidget ui:field="message"/></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td>
+						<table width="100%" cellpadding="1" cellspacing="0">
+							<tr>
+								<td>
+									<table width="100%" cellpadding="5" cellspacing="5">
+										<tr>
+											<td valign="top" align="center" width="1%">
+												<g:SimplePanel ui:field="portrait"/>
+											</td>
+											<td valign="top" rowspan="2">
+												<div style="padding:0px 0px 10px 3px"><g:Label ui:field="fullname" styleName="heading1"/></div> 
+												<div style="padding:0px 0px 15px 3px"><g:Label text="{i18n.login_name}" styleName="form-label"/>: <g:Label ui:field="loginname"/></div>
+												<ur:ContactPanel ui:field="contacts" cellPadding="3" width="100%"/>
+												
+												<div style="padding-top:15px;padding-left:3px"><g:HorizontalPanel ui:field="actionP" styleName="action-tabs" width="280px"/></div>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top" width="1%">
+												<div style="padding-top:5px"><g:Label ui:field="status"/></div>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 <g:StackLayoutPanel ui:field="listP" width="99%" >
+									  <g:stack>
+									    <g:customHeader size='30'><g:Label text="{i18n.activities}" styleName="form-label"/></g:customHeader>
+									    <my:ZebraTable ui:field="activityP" width="100%" />
+									  </g:stack>
+									  <g:stack>
+									    <g:customHeader size='30'><g:Label text="{i18n.space_contribution}" styleName="form-label"/></g:customHeader>
+									    <my:ZebraTable ui:field="spaceP" width="100%" />
+									  </g:stack>
+									  <g:stack>
+									    <g:customHeader size='30'><g:Label text="{i18n.page_contribution}" styleName="form-label"/></g:customHeader>
+									    <my:ZebraTable ui:field="pageP" width="100%" />
+									  </g:stack>
+									 </g:StackLayoutPanel>
+ 					
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td valign="top" width="220px">
+					 	<g:VerticalPanel ui:field="networkP" styleName="network" >
+						    	<g:FlowPanel styleName="header"><g:Label text="{i18n.network}"/></g:FlowPanel>
+								<g:FlexTable ui:field="followingP" styleName="follow"/>
+								<g:FlexTable ui:field="followerP" styleName="follow"/>
+						</g:VerticalPanel>
+					</td>
+				</tr>
+				</table>			
+			</td>
+		</tr>
+	</table>
+	</g:HTMLPanel>
+
+</ui:UiBinder>  
