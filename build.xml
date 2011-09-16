@@ -429,7 +429,6 @@
 		<depends module="gwtserver"/>
 		<depends module="wiki"/>
 		<depends module="ext"/>
-		<depends module="test/server"/>
 		
 		<processTestResources module="core" phase="build"/>
 		<processTestResources module="gwt" phase="build"/>
@@ -439,15 +438,15 @@
 		<!-- ==================================================================== -->
 		<!-- Compile UNIT test classes -->
 		<javac destdir="${build.dir}/test/server/classes" debug="${compile.debug}"
-			source="${javac.source}" target="${javac.target}" verbose="false"
+			source="1.5" target="1.5" verbose="false"
 			classpath="${depends.classpath}"
 			classpathref="compile.classpath">
 				<src path="${test.dir}"/>
 			    <exclude name="sandbox/**"/>
 			    <exclude name="gwtclient/**"/>
 		</javac>
-		
-	   <junit printsummary="true" showoutput="yes" filtertrace="yes" timeout="300000" fork="yes">
+
+		<junit printsummary="true" showoutput="yes" filtertrace="yes" timeout="300000" fork="yes">
 	   	  <formatter type="xml" usefile="true"/>
 	      <batchtest todir="${reports.dir}/junit-report/raw">
 	        <fileset dir="${build.dir}/test/server/classes">
@@ -457,6 +456,7 @@
 	        	 <exclude name="**/*$?.class"/>
 	        </fileset>
 	      </batchtest>
+	      <classpath path="${build.dir}/test/server/classes" />
 	      <classpath path="${depends.classpath}" />
 		  <!-- For mail template classpath finder -->
 	      <classpath path="web/WEB-INF" />
