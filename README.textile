@@ -1,3 +1,9 @@
+h2. General information
+
+Website:  http://www.geniuswiki.com
+Github home page: https://github.com/GeniusWiki/GeniusWiki
+License: GNU General Public License version 2
+
 h2. What is GeniusWiki
 
 GeniusWiki is free open source enterprise level WIKI system. It can be use for intranet website for your organisation. It is better way to create, share and collect knowledge, ideas, files etc. 
@@ -29,6 +35,8 @@ ant ivy.retrieve # This task will take a couple of minutes in first time run, as
 ant package #If this task failed in silence, please check if your ANT_OPTS has correct value.
 
 After these tasks, you will find out geniuswiki.war from /dist directory. 
+
+
 
 h2. How to setup development environment
 
