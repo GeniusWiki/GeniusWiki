@@ -410,7 +410,7 @@
 					<copyDBMetaSQL dest="${dev.dir}/WEB-INF/classes/META-INF/meta"   type="@{type}"/>
 				</then>
 				<else>
-					<copyDBMetaSQL dest="${build.dir}/wiki/classes/META-INF/meta"  type="@{type}"/>
+					<copyDBMetaSQL dest="${build.dir}/geniuswiki-wiki/classes/META-INF/meta"  type="@{type}"/>
 				</else>
 			</if>
 		</sequential>
