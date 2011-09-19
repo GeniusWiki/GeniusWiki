@@ -23,8 +23,8 @@
 	<property name="app.name" value="GeniusWiki" />
 	<property name="app.name.lowcase" value="geniuswiki" />
 
-	<property name="app.version" value="2.8" />
-	<property name="pack.version" value="118" />
+	<property name="app.version" value="3.0" />
+	<property name="pack.version" value="119" />
 	
 	<property name="site.version" value="${pack.version}" />
 	<property name="gears.main.db.version" value="${pack.version}" />

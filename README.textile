@@ -37,9 +37,5 @@ ant package #If this task failed in silence, please check if your ANT_OPTS has c
 After these tasks, you will find out geniuswiki.war from /dist directory. 
 
 
-
-h2. How to setup development environment
-
-h2. How to write plugin
-
-
+More detail for installation and development please visit our document space:
+http://www.geniuswiki.com/page/GeniusWiki+document/GeniusWiki+document 
