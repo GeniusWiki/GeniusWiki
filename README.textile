@@ -38,4 +38,4 @@ After these tasks, you will find out geniuswiki.war from /dist directory.
 
 
 More detail for installation and development please visit our document space:
-http://www.geniuswiki.com/page/GeniusWiki+document/GeniusWiki+document 
+"GeniusWiki Document Center":http://www.geniuswiki.com/page/GeniusWiki+document/GeniusWiki+document 
