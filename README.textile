@@ -1,41 +1,27 @@
 h2. General information
 
-Website:  http://www.geniuswiki.com
+Website:  "http://www.geniuswiki.com":http://www.geniuswiki.com
 Github home page: https://github.com/GeniusWiki/GeniusWiki
 License: GNU General Public License version 2
 
 h2. What is GeniusWiki
 
-GeniusWiki is free open source enterprise level WIKI system. It can be use for intranet website for your organization. It is better way to create, share and collect knowledge, ideas, files etc. 
+GeniusWiki is a free open source enterprise level wiki software. It is a web system that is able to create, share and collect knowledge, ideas and files etc. It is the better way to set up your organization Intranet or create a public website. It runs for geniuswiki.com and hosts thousands users and spaces in last 4 years that never fail users expectations. 
 
-There are some highlight features:
-* Powerful markup or WYSIWYG editor and they can switch seamless.
+Here are some highlight features:
+
+* Powerful markup or WYSIWYG editor by seamless switching.
+* Customized dashbard
 * Fine-grained access control
 * Skins and Themes
-* Powerful administrator portal.
+* Support keyboard shortcut
+* Powerful administrator portal
 * Easy to install and upgrade
-* Support most popular Java web server and database - MySQL, PostgreSQL, Oracle, DB2, SQL Server and HSQL. 
-* Plugin framework
+* Support most popular Java web server and database - MySQL, PostgreSQL, Oracle, DB2, SQL Server and HSQL 
+* Plugins framework
 * Keyboard shortcut support
-* Many fancy functions, such as watch/favorite list, comment, page tree, draft auto saving, revision, DND dashboard etc.
+* Full text searching with advanced search options
+* Many fancy functions, watch/favorite list, comment, page tree, draft auto saving, revision, and DND dashboard etc.
 
-If you want to try or use without installation, please free register in http://www.geniuswiki.com - a reliable website running with GeniusWiki over 4 years.
-
-h2. How to build
-
-Prerequisite:
-* Java 6+ (after GeniusWiki version 3.0)
-* Tomcat 6+
-* MySQL or Postgresql etc.
-* Ant
-
-After checkout code from github, go to project root directory, and run these two ant tasks:
-set ANT_OPTS=-Xmx512m (Windows) or export ANT_OPTS=-Xmx512m (Linux)
-ant ivy.retrieve # This task will take a couple of minutes in first time run, as it will download ~100M dependencies jars file
-ant package #If this task failed in silence, please check if your ANT_OPTS has correct value.
-
-After these tasks, you will find out geniuswiki.war from /dist directory. 
-
-
-More detail for installation and development please visit our document space:
+More detail for build, installation and development,  please visit our document wiki space:
 "GeniusWiki Document Center":http://www.geniuswiki.com/page/GeniusWiki+document/GeniusWiki+document 
