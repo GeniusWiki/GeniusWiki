@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -40,6 +41,7 @@ import org.springframework.stereotype.Component;
 import com.edgenius.core.repository.FileNode;
 import com.edgenius.core.repository.RepositoryException;
 import com.edgenius.wiki.Shell;
+import com.edgenius.wiki.WikiConstants;
 import com.edgenius.wiki.gwt.client.model.RenderPiece;
 import com.edgenius.wiki.integration.rest.model.CommentBean;
 import com.edgenius.wiki.integration.rest.model.FileBean;
@@ -50,13 +52,18 @@ import com.edgenius.wiki.integration.rest.model.mapper.FileMapper;
 import com.edgenius.wiki.integration.rest.model.mapper.PageMapper;
 import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.model.PageComment;
+import com.edgenius.wiki.model.PageContent;
 import com.edgenius.wiki.model.PageTag;
 import com.edgenius.wiki.render.RenderContext;
 import com.edgenius.wiki.service.CommentException;
 import com.edgenius.wiki.service.CommentService;
+import com.edgenius.wiki.service.DuplicatedPageException;
+import com.edgenius.wiki.service.PageException;
+import com.edgenius.wiki.service.PageSaveTiemoutExcetpion;
 import com.edgenius.wiki.service.PageService;
 import com.edgenius.wiki.service.RenderService;
 import com.edgenius.wiki.service.SecurityDummy;
+import com.edgenius.wiki.service.VersionConflictException;
 import com.google.gson.Gson;
 
 /**
@@ -66,7 +73,9 @@ import com.google.gson.Gson;
 @Component
 @Scope("singleton")
 public class PageResource {
+	
 	private static final Logger log = LoggerFactory.getLogger(PageResource.class);
+	
 	private @Autowired PageService pageService;
 	private @Autowired RenderService renderService;
 	private @Autowired CommentService commentService;
@@ -88,6 +97,7 @@ public class PageResource {
 			@QueryParam("withcomments") boolean withComments,
 			@QueryParam("withattachments") boolean withAttachments,
 			@QueryParam("myurl") String myURL) {
+		
 		Page page = pageService.getCurrentPageByUuid(pageUuid);
 		if (page != null) {
 			String spaceUname = page.getSpace().getUnixName();
@@ -171,6 +181,40 @@ public class PageResource {
 			String json = gson.toJson(attachments);
 			return json;
 		}
+		return "";
+	}
+	
+	/**
+	 * 
+	 * @param pageUuid
+	 * @param pageTitle
+	 * @param content
+	 * @return Render content
+	 */
+	@POST
+	public String savePage(@QueryParam("suname") String spaceUname, @QueryParam("puuid") String pageUuid, 
+			@QueryParam("title") String pageTitle, @QueryParam("content") String content){
+		
+		try {
+			Page page = new Page();
+			page.setContent(new PageContent(content));
+			page = pageService.savePage(page, WikiConstants.NOTIFY_NONE, false);
+			
+			PageBean bean = PageMapper.pageToBean(page);
+			bean.setContent(renderService.renderNativeHTML(spaceUname, pageUuid, page.getRenderPieces()));
+			
+			return new Gson().toJson(bean);
+			
+		} catch (PageException e) {
+			log.error("Save page error " + pageTitle,e);
+		} catch (VersionConflictException e) {
+			log.error("Save page error " + pageTitle,e);
+		} catch (DuplicatedPageException e) {
+			log.error("Save page error " + pageTitle,e);
+		} catch (PageSaveTiemoutExcetpion e) {
+			log.error("Save page error " + pageTitle,e);
+		}
+
 		return "";
 	}
 	

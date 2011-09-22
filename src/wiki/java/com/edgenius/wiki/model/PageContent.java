@@ -46,7 +46,15 @@ public class PageContent extends AbstractContent {
 	@Column(name="PUID")
 	private Integer uid;
 	
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Constructors
+	public PageContent(){}
+	public PageContent(String content) {
+		super(content);
+	}
 
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Set / Get
 	public Integer getUid() {
 		return uid;
 	}

@@ -41,12 +41,18 @@ public abstract class AbstractContent implements Cloneable,Serializable{
 	private static transient final Logger log = LoggerFactory.getLogger(AbstractContent.class);
 
 	@Column(name="CONTENT_TYPE")
-	private int type;
+	protected int type;
 
 	@Type(type="text")
 	@Column(name="CONTENT", length=1073741824) //1G
-	private String content ="";
+	protected String content ="";
 
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Constructors
+	public AbstractContent(){}
+	public AbstractContent(String content){
+		this.content = content;
+	}
 	//********************************************************************
 	//               Clone method
 	//********************************************************************

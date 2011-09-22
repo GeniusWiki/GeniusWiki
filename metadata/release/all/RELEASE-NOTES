@@ -7,6 +7,7 @@ h2. Enhancements
 h2. Bugs
 * Align macro hide all surrounding content if align parameters is invalid.
 * Anonymous user can not display in pageInfo macro.
+* NullpointException in activities log widget.
 
 Version 2.6
 =======================================================

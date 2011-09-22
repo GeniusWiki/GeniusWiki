@@ -40,7 +40,6 @@
 	<property name="javac.target" value="1.6" />
 	<property name="compile.debug" value="true" />
 	
-		
 	<property name="core.properties.package" value="com.edgenius.core" />
 	<property name="core.properties.package.path" value="com/edgenius/core" />
 	<property name="wiki.properties.package" value="com.edgenius.wiki" />
