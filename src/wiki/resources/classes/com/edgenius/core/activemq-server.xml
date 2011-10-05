@@ -29,7 +29,7 @@
 			</amq:jdbcPersistenceAdapter>
 		</amq:persistenceAdapter>
 		<amq:transportConnectors>
-			<amq:transportConnector uri="tcp://${mq.server.url}?wireFormat.maxInactivityDuration=0"/>
+			<amq:transportConnector uri="${mq.server.url}"/>
 		</amq:transportConnectors>
 	</amq:broker>
 </beans>

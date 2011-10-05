@@ -70,6 +70,9 @@ import com.edgenius.wiki.webapp.context.ApplicationContextUtil;
  */
 public class InstallServlet extends BaseServlet {
 	private static final long serialVersionUID = -2291585339038974441L;
+	
+	//this is just to help user to find back default url(complicated) if confuse it accidently.
+	private static final String MQ_DEFAULT_URL = "tcp://127.0.0.1:61616?wireFormat.maxInactivityDuration=0";
 	protected transient final Logger log = LoggerFactory.getLogger(InstallServlet.class);
 
 //	StringBuffer buf = new StringBuffer("{visible:on=login}Welcome to GeniusWiki! Enjoy all new web2.0 Wiki and Blog.")
@@ -161,6 +164,8 @@ public class InstallServlet extends BaseServlet {
 		Installation install = Installation.refreshInstallation();
 		loadInitData(request);
 		
+		//this variable is just for user easily to find back default MQ server URL - currently, it is hardcode.
+		request.getSession().setAttribute("mqserverDefaultUrl", MQ_DEFAULT_URL);
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Data root
 		if("dataroot".equalsIgnoreCase(step)){
