@@ -226,8 +226,12 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			String zipFileName = getBackupFilename();
 			ZipFileUtil.createZipFile(zipFileName, getSources(dir, options, comment),true);;
 			
-			//clean temp
-			FileUtil.deleteDir(dir);
+			//clean temp directory - not critical task
+			try {
+				FileUtil.deleteDir(dir);
+			} catch (Exception e) {
+				log.warn("Backup tempoaraily directory can not deleted: " + dir);
+			}
 			log.info("Backup success complete");
 			return zipFileName;
 		} catch (Exception e) {
@@ -406,7 +410,11 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			}
 			
 			log.info("Restore data root files tooks {}s", (System.currentTimeMillis() - time)/1000);
-			FileUtil.deleteDir(dir);
+			try {
+				FileUtil.deleteDir(dir);
+			} catch (IOException e) {
+				log.error("Unable to delete restore temp directory " + dir);
+			}
 			
 			Version.LEFT_USERS = leftUserCount;
 			log.info("Restore success complete. Database transaction will submit.");
@@ -704,8 +712,9 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		Writer writer = new OutputStreamWriter(os, Constants.UTF8);
 		XStream xstream = createXStreamInstance();
 		xstream.toXML(binder,writer);
-		writer.close();
-		os.close();
+		
+		IOUtils.closeQuietly(writer);
+		IOUtils.closeQuietly(os);
 		
 		log.info("Databinder export {} success, will do proxy object removing", binderTmp);
 		
@@ -716,15 +725,16 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		// remove "resolve-to" attribute to real class tag, discard useless proxy class name
 		os = FileUtil.getFileOutputStream(binderName);
 		writer = new OutputStreamWriter(os, Constants.UTF8);
-		FileInputStream fis = new FileInputStream(binderTmp);
+		FileReader reader = new FileReader(binderTmp);
 
 		//Don't use SAX parser as it can not process ASCII control characters, such as "&#x3;"(text-end). 
 		//See: http://xstream.codehaus.org/faq.html#XML_control_char
+		
 		ResolveRemoveHandler handler = this.new ResolveRemoveHandler(writer);
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 		factory.setNamespaceAware(false);
 		XmlPullParser xpp = factory.newPullParser();
-		xpp.setInput(new FileReader(binderTmp));
+		xpp.setInput(reader);
 		int eventType = xpp.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			if (eventType == XmlPullParser.START_TAG) {
@@ -737,15 +747,16 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			eventType = xpp.next();
 		}
 		
+		
 //		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
 //		XMLReader reader = parser.getXMLReader();
 //		reader.setContentHandler(this.new ResolveRemoveHandler(writer));
 //		reader.parse(new InputSource(fis));
 
 		//close
-		fis.close();
-		writer.close();
-		os.close();
+		IOUtils.closeQuietly(reader);
+		IOUtils.closeQuietly(writer);
+		IOUtils.closeQuietly(os);
 		log.info("Databinder XML polished");
 		
 		File tmp = new File(binderTmp);
