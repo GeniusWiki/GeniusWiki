@@ -31,6 +31,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.CrFileNodeDAO;
 import com.edgenius.core.model.CrFileNode;
@@ -38,6 +39,7 @@ import com.edgenius.core.util.AuditLogger;
 /**
  * @author dapeng
  */
+@Repository("crFileNodeDAO")
 public class CrFileNodeDAOHibernate extends BaseDAOHibernate<CrFileNode> implements  CrFileNodeDAO {
 
 	private final static String GET_BASE_BY_NODE_UUID ="from " + CrFileNode.class.getName() + 

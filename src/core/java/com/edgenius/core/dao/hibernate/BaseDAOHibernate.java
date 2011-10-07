@@ -27,9 +27,12 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -47,6 +50,11 @@ public class BaseDAOHibernate<T> extends HibernateDaoSupport  implements DAO<T> 
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 	protected Class<T> entityClass;
 
+	@Resource(name="sessionFactory")
+	public void initSessionFactory(SessionFactory factory) {
+	    setSessionFactory(factory);
+	}
+	
 	/**
 	 */
 	public BaseDAOHibernate() {

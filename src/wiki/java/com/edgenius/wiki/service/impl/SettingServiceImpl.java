@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.ClassPathResource;
@@ -76,7 +77,8 @@ import com.thoughtworks.xstream.XStream;
 @Transactional
 public class SettingServiceImpl implements SettingService,  ApplicationContextAware, InitializingBean{
 	private Logger log = LoggerFactory.getLogger(SettingServiceImpl.class);
-	private ConfigurationDAO configurationDAO;
+	
+	@Autowired private ConfigurationDAO configurationDAO;
 	private UserService userService; 
 	private Resource globalConf;
 	private Resource gearsConf;
@@ -370,10 +372,6 @@ public class SettingServiceImpl implements SettingService,  ApplicationContextAw
 	//***********************************************************
 	// GET / SET METHODS
 	//***********************************************************
-	public void setConfigurationDAO(ConfigurationDAO settingDAO) {
-		this.configurationDAO = settingDAO;
-	}
-	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}

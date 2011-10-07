@@ -33,6 +33,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.RoleDAO;
 import com.edgenius.core.model.Role;
@@ -43,6 +44,7 @@ import com.edgenius.core.model.Role;
  * retrieve Role objects.
  *
  */
+@Repository("roleDAO")
 public class RoleDAOHibernate extends BaseDAOHibernate<Role> implements RoleDAO {
 
 	private static final String GET_BY_NAME = "from " + Role.class.getName()  + " as r where r.name=?";

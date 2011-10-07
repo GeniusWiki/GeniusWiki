@@ -30,6 +30,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.CrWorkspaceDAO;
 import com.edgenius.core.model.CrWorkspace;
@@ -37,6 +38,7 @@ import com.edgenius.core.model.CrWorkspace;
 /**
  * @author Dapeng.Ni
  */
+@Repository("crWorkspaceDAO")
 public class CrWorkspaceDAOHibernate extends BaseDAOHibernate<CrWorkspace> implements CrWorkspaceDAO {
 
 	private static String GET_BY_SPACENAME = "from " + CrWorkspace.class.getName() + " as c where c.name=?"; 

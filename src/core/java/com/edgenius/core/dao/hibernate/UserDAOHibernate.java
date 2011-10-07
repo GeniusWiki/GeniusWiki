@@ -39,6 +39,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.Constants;
 import com.edgenius.core.SecurityValues.OPERATIONS;
@@ -55,6 +56,7 @@ import com.edgenius.core.util.AuditLogger;
  * retrieve User objects.
  *
 */
+@Repository("userDAO")
 public class UserDAOHibernate extends BaseDAOHibernate<User> implements UserDAO, UserDetailsService {
 	
 	private static final String SQL_GET_BY_USERNAME = "from " + User.class.getName() + " as u where u.username=?";
