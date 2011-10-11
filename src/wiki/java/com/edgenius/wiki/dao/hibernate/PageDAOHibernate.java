@@ -35,6 +35,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.core.model.User;
@@ -48,6 +49,7 @@ import com.edgenius.wiki.model.UserPageMark;
 /**
  * @author Dapeng.Ni
  */
+@Repository("pageDAO")
 @SuppressWarnings("unchecked")
 public class PageDAOHibernate extends BaseDAOHibernate<Page> implements PageDAO {
 

@@ -25,6 +25,8 @@ package com.edgenius.wiki.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.SpaceTagDAO;
 import com.edgenius.wiki.model.SpaceTag;
@@ -32,6 +34,7 @@ import com.edgenius.wiki.model.SpaceTag;
 /**
  * @author Dapeng.Ni
  */
+@Repository("spaceTagDAO")
 public class SpaceTagDAOHibernate  extends BaseDAOHibernate<SpaceTag> implements SpaceTagDAO {
 	private static String GET_BY_NAME = "from " + SpaceTag.class.getName() + " as t where t.name=?";
 	

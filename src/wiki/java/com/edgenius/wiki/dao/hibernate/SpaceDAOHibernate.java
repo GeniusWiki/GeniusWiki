@@ -37,6 +37,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.core.model.Resource;
@@ -48,6 +49,7 @@ import com.edgenius.wiki.model.Space;
 /**
  * @author Dapeng.Ni
  */
+@Repository("spaceDAO")
 public class SpaceDAOHibernate extends BaseDAOHibernate<Space> implements SpaceDAO {
 
 	private static String GET_BY_UNAME = "from " + Space.class.getName() + " as s where s.unixName=?";

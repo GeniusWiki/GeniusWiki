@@ -32,6 +32,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.core.model.User;
@@ -41,6 +42,7 @@ import com.edgenius.wiki.model.ActivityLog;
 /**
  * @author Dapeng.Ni
  */
+@Repository("activityLogDAO")
 public class ActivityLogDAOHibernate extends BaseDAOHibernate<ActivityLog>  implements ActivityLogDAO {
 	private static final String GET_BY_TARGET = "from " + ActivityLog.class.getName() 
 		+ " as a where a.type=? and a.subType=? and a.tgtResourceType=? and a.tgtResourceName=? order by a.createdDate desc";

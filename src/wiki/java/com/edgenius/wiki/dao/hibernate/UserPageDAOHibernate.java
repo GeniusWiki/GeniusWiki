@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.core.model.User;
@@ -40,6 +41,7 @@ import com.edgenius.wiki.model.UserPageMark;
 /**
  * @author Dapeng.Ni
  */
+@Repository("userPageDAO")
 public class UserPageDAOHibernate extends BaseDAOHibernate<UserPageMark> implements UserPageDAO {
 	private static final String GET_BY_OBJECT ="from " + UserPageMark.class.getName() 
 				+ " as u where u.page=? and u.user=? and u.type=?";

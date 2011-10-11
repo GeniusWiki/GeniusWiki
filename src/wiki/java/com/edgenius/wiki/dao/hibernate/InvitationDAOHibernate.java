@@ -31,6 +31,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.InvitationDAO;
@@ -39,12 +40,13 @@ import com.edgenius.wiki.model.Invitation;
 /**
  * @author Dapeng.Ni
  */
+@Repository("invitationDAO")
 public class InvitationDAOHibernate extends BaseDAOHibernate<Invitation> implements InvitationDAO {
 	private static String GET_BY_SPACEUNAME_UUID = "from " + Invitation.class.getName() + " as i where i.spaceUname=? and i.uuid=? ";
 	private static String REMOVE_BY_AGE = "delete from " + Invitation.class.getName() + " where createdDate < :cDate ";
 
-	@SuppressWarnings("unchecked")
 	public Invitation getByUuid(String spaceUname, String invitationUuid) {
+		@SuppressWarnings("rawtypes")
 		List list = getHibernateTemplate().find(GET_BY_SPACEUNAME_UUID,new String[]{spaceUname,invitationUuid});
 		if(list == null || list.size() == 0){
 			return null;

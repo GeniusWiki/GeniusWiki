@@ -25,12 +25,15 @@ package com.edgenius.wiki.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.CommentDAO;
 import com.edgenius.wiki.model.PageComment;
 /**
  * @author Dapeng.Ni
  */
+@Repository("commentDAO")
 public class CommentDAOHibernate extends BaseDAOHibernate<PageComment> implements CommentDAO{
 	private static final String GET_BY_PAGE_UID= "from " + PageComment.class.getName() 
 				+ " as c where c.page.uid=?";

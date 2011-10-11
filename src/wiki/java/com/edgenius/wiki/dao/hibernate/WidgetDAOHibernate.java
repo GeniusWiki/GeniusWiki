@@ -25,6 +25,8 @@ package com.edgenius.wiki.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.WidgetDAO;
 import com.edgenius.wiki.model.Widget;
@@ -32,6 +34,7 @@ import com.edgenius.wiki.model.Widget;
 /**
  * @author Dapeng.Ni
  */
+@Repository("widgetDAO")
 public class WidgetDAOHibernate extends BaseDAOHibernate<Widget> implements WidgetDAO {
 	private static final String GET_BY_UUID= "from " + Widget.class.getName() + " as w where w.uuid=?";
 

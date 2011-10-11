@@ -25,6 +25,8 @@ package com.edgenius.wiki.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.PageLinkDAO;
 import com.edgenius.wiki.model.PageLink;
@@ -32,6 +34,7 @@ import com.edgenius.wiki.model.PageLink;
 /**
  * @author Dapeng.Ni
  */
+@Repository("pageLinkDAO")
 public class PageLinkDAOHibernate extends BaseDAOHibernate<PageLink> implements PageLinkDAO {
 	private static final String GET_BY_NAME="from "+ PageLink.class.getName() + " as p where p.type=? and p.spaceUname=? and p.link=?";
 	/* (non-Javadoc)

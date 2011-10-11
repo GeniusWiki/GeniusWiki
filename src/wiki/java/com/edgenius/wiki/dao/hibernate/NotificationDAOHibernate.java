@@ -33,6 +33,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.SecurityValues;
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
@@ -45,6 +46,7 @@ import com.edgenius.wiki.model.Notification;
 /**
  * @author Dapeng.Ni
  */
+@Repository("notificationDAO")
 public class NotificationDAOHibernate extends BaseDAOHibernate<Notification>  implements NotificationDAO {
 	private final static String GET_MESSAGES_PREFIX = "from " + Notification.class.getName() 
 		+ " as n ";
