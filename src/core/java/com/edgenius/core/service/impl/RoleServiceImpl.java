@@ -32,6 +32,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edgenius.core.Constants;
@@ -47,6 +48,7 @@ import com.edgenius.core.service.UserService;
  * Implementation of RoleService interface.</p>
  * 
  */
+@Service(RoleService.SERVICE_NAME)
 @Transactional(readOnly=true)
 public class RoleServiceImpl implements RoleService {
 	private static final Logger log = LoggerFactory.getLogger(RoleServiceImpl.class);

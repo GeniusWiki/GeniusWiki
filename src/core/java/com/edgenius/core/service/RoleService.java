@@ -35,50 +35,62 @@ import com.edgenius.core.model.Role;
  * @author Dapeng.Ni
  */
 public interface RoleService {
+	String SERVICE_NAME = "roleService";
 
-		static final String createRole = "createRole";
-		
-		@Transactional(readOnly=true)
-		public Role getRoleByName(String rolename);
-		
-		@Transactional(readOnly=true)
-	    public Role getRole(Integer uid);
+	static final String createRole = "createRole";
 
-	    /**
-	     * This method will be RoleIndexService intercepted
-	     * @param role
-	     */
-	    public Role createRole(Role role);
-	    /**
-	     * This method will NOT be RoleIndexService intercepted
-	     * @param role
-	     */
-	    public Role saveRole(Role role); 
-	    /**
-	     * This method is not potent to do security check as it only called by removeSpace() which is invoked by QuartzJob in most case.
-	     * Then it is impossible to get current user information as WikiUtil.getUser() only works in Servlet Request.
-	     * @param rolename
-	     */
-	    public void removeRole(String rolename);
+	@Transactional(readOnly = true)
+	public Role getRoleByName(String rolename);
 
-	    /**
-	     * 
-	     * @return system default role for new signup user
-	     */
-	    @Transactional(readOnly=true)
-		public Set<Role> getDefaultRole();
+	@Transactional(readOnly = true)
+	public Role getRole(Integer uid);
 
-		/**
-		 * Return roles according to role type.
-		 * @param roleType  roleType -1: return all type of role. otherwise should be Role.TYPE_SYSTEM or Role.TYPE_SPACE
-		 */
-		@Transactional(readOnly=true)
-		public List<Role> getRoles(int roleType, String filter);
+	/**
+	 * This method will be RoleIndexService intercepted
+	 * 
+	 * @param role
+	 */
+	public Role createRole(Role role);
 
-		/**
-		 * @return Role.TYPE_SYSTEM and Role.TYPE_GROUP (except ROle.TYPE_SPACE) include users count. 
-		 * Please note, if role does not include users(count==0), it does not return. 
-		 */
-		@Transactional(readOnly=true)
-		public Map<Integer, Long> getRolesUsersCount();
+	/**
+	 * This method will NOT be RoleIndexService intercepted
+	 * 
+	 * @param role
+	 */
+	public Role saveRole(Role role);
+
+	/**
+	 * This method is not potent to do security check as it only called by
+	 * removeSpace() which is invoked by QuartzJob in most case. Then it is
+	 * impossible to get current user information as WikiUtil.getUser() only
+	 * works in Servlet Request.
+	 * 
+	 * @param rolename
+	 */
+	public void removeRole(String rolename);
+
+	/**
+	 * 
+	 * @return system default role for new signup user
+	 */
+	@Transactional(readOnly = true)
+	public Set<Role> getDefaultRole();
+
+	/**
+	 * Return roles according to role type.
+	 * 
+	 * @param roleType
+	 *            roleType -1: return all type of role. otherwise should be
+	 *            Role.TYPE_SYSTEM or Role.TYPE_SPACE
+	 */
+	@Transactional(readOnly = true)
+	public List<Role> getRoles(int roleType, String filter);
+
+	/**
+	 * @return Role.TYPE_SYSTEM and Role.TYPE_GROUP (except ROle.TYPE_SPACE)
+	 *         include users count. Please note, if role does not include
+	 *         users(count==0), it does not return.
+	 */
+	@Transactional(readOnly = true)
+	public Map<Integer, Long> getRolesUsersCount();
 }
