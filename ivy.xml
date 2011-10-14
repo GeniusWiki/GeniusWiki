@@ -70,7 +70,7 @@
 		 -->
 		<dependency org="org/springframework" name="spring-modules" rev="0.9"	conf="deploy->lucene;dev->lucene-source" />
 		<!-- 3.0.2.RELEASE  -->
-		<dependency org="org/springframework" name="spring" rev="2.5.6" conf="deploy->default;dev->source,test" /> 
+		<dependency org="org/springframework" name="spring" rev="3.1.0.RC1" conf="deploy->default;dev->source,test" /> 
 		<dependency org="org/springframework" name="security" rev="2.0.4"	conf="deploy->default;dev->source" />
 		
 		
@@ -177,7 +177,7 @@
 		<!--  Only for test  -->
 		<dependency org="org" name="unitils" rev="3.1" conf="dev->default"/>
 		<!-- 4.8.2 is not compatible with spring 2.5.x, so use 4.4 instead -->
-		<dependency org="org" name="junit" rev="4.4" conf="dev->default"/>
+		<dependency org="org" name="junit" rev="4.10" conf="dev->default"/>
 		<dependency org="org" name="easymock" rev="2.5.2" conf="dev->classextension"/>
 		
 		<!--  Only for database test -->

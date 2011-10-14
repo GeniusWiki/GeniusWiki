@@ -35,6 +35,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.SourceFilteringListener;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 
@@ -50,8 +51,11 @@ public class ContextAwareDelegatingFilterProxy extends DelegatingFilterProxy imp
 	
 	protected Filter initDelegate(WebApplicationContext wac) throws ServletException {
 		
+		// See bug on spring 3.0+ : https://jira.springsource.org/browse/SPR-6228
 		//!!! Add context event listener
-		((ConfigurableWebApplicationContext)wac).addApplicationListener(new SourceFilteringListener(wac, this));
+		SourceFilteringListener listener = new SourceFilteringListener(wac, this);
+		((ConfigurableWebApplicationContext)wac).addApplicationListener(listener);
+		((XmlWebApplicationContext)wac).getApplicationListeners().add(listener);
 		
 		return super.initDelegate(wac);
 	}
@@ -68,6 +72,7 @@ public class ContextAwareDelegatingFilterProxy extends DelegatingFilterProxy imp
 	 */
 	private void onRefresh(ApplicationContext applicationContext) {
 		destroy();
+		
 		try {
 			initFilterBean();
 		} catch (ServletException e) {
