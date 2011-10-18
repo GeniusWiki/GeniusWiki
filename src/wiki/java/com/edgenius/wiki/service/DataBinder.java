@@ -117,6 +117,8 @@ public class DataBinder {
 		private String name;
 		private List<Object> list = new ArrayList<Object>();
 
+		public DataObject() {}
+		
 		public DataObject(String name, List<? extends Object> list) {
 			this.name = name;
 			this.list.addAll(list);
