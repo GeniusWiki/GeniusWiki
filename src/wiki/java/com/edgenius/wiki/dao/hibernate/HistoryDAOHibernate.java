@@ -32,6 +32,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.core.model.User;
@@ -43,6 +44,7 @@ import com.edgenius.wiki.model.Space;
 /**
  * @author Dapeng.Ni
  */
+@Repository("historyDAO")
 public class HistoryDAOHibernate  extends BaseDAOHibernate<History> implements HistoryDAO {
 	//don't simple get p.User, if that, the p.User==null(anonymous user) won't be in result set.
 	private static String GET_HISTORY_BY_UUID = "from " + History.class.getName() 

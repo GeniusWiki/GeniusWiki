@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.core.model.User;
@@ -37,6 +38,7 @@ import com.edgenius.wiki.model.Draft;
 /**
  * @author Dapeng.Ni
  */
+@Repository("draftDAO")
 public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftDAO {
 	
 	private static final String GET_DRAFT_BY_UUID = "from " + Draft.class.getName() 

@@ -31,6 +31,7 @@ import net.sf.ehcache.Element;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +56,7 @@ import com.edgenius.core.util.AuditLogger;
  * 
  * @author Dapeng.Ni
  */
-
+@Service(UserReadingService.SERVICE_NAME)
 @Transactional(readOnly=true)
 public class UserReadingServiceImpl extends AbstractUserService implements UserReadingService {
 

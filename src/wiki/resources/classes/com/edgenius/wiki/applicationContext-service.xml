@@ -17,7 +17,6 @@
   		<property name="gearsConf" value="classpath:geniuswiki/gears.properties"/>
   		<property name="offlineDBVersion" value="@TOKEN.GEARS.DB.VERSION@"/>
   		<property name="offlineDefaultDBVersion" value="@TOKEN.GEARS.MAIN.DB.VERSION@"/>
-  		<property name="configurationDAO" ref="configurationDAO"/>
   	</bean>
   		  
 	<bean id="messageService" class="com.edgenius.core.service.impl.MessageServiceImpl">

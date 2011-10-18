@@ -25,6 +25,8 @@ package com.edgenius.wiki.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.PageProgressDAO;
 import com.edgenius.wiki.model.PageProgress;
@@ -32,6 +34,7 @@ import com.edgenius.wiki.model.PageProgress;
 /**
  * @author Dapeng.Ni
  */
+@Repository("pageProgressDAO")
 public class PageProgressDAOHibernate extends BaseDAOHibernate<PageProgress> implements PageProgressDAO {
 	private static String GET_EXT_LINK_ID = "from " + PageProgress.class.getName() + " as t where t.linkExtID=?";
 

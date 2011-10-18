@@ -32,6 +32,7 @@ import net.sf.ehcache.Element;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,7 @@ import com.edgenius.core.util.WebUtil;
 /**
  * @author Dapeng.Ni
  */
+@Service(UserService.SERVICE_NAME)
 @Transactional
 public class UserServiceImpl extends AbstractUserService implements UserService {
 	

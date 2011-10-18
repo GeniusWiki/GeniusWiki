@@ -17,7 +17,6 @@
 	</bean>
 	
   	<bean id="roleService" class="com.edgenius.core.service.impl.RoleServiceImpl">
-  		<property name="roleDAO" ref="roleDAO"/>
   	</bean>
   	
   	<bean id="userService" class="com.edgenius.core.service.impl.UserServiceImpl">

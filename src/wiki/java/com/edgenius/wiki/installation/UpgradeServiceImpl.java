@@ -47,6 +47,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
@@ -821,7 +822,21 @@ public class UpgradeServiceImpl implements UpgradeService {
 		mergeCustomizedThemesOnVersion2180(root);
 	}
 
-	
+	@SuppressWarnings("unused")
+	private void up3000To3100() throws Exception{
+		String root = DataRoot.getDataRoot();
+		if(FileUtil.exist(root+Server.FILE)){
+			Server server = new Server();
+			Properties prop = FileUtil.loadProperties(root+Server.FILE);
+			server.syncFrom(prop);
+			if(server.getMqServerEmbedded() == null || BooleanUtils.toBoolean(server.getMqServerEmbedded())){
+			    //embedded
+				server.setMqServerUrl("tcp://" + server.getMqServerUrl() + "?wireFormat.maxInactivityDuration=0");
+				server.syncTo(prop);
+				prop.store(FileUtil.getFileOutputStream(root+Server.FILE), "save by system program");
+			}
+		}
+	}
 	/**
 	 * @param root
 	 * @throws ParserConfigurationException

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.TemplateDAO;
@@ -36,6 +37,7 @@ import com.edgenius.wiki.model.Template;
 /**
  * @author Dapeng.Ni
  */
+@Repository("templateDAO")
 public class TemplateDAOHibernate extends BaseDAOHibernate<Template> implements TemplateDAO {
 	private static String GET_ALL = "from " + Template.class.getName() + " as t order by t.name";
 	private static String GET_BY_SPACE = "from " + Template.class.getName() + " as t where t.space.unixName=? order by t.name";

@@ -25,6 +25,9 @@ package com.edgenius.core.service;
 
 
 public interface CacheService {
+	
+	String SERVICE_NAME = "cacheService";
+	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//               Cache number
 	public static final int CACHE_ALL = 0;

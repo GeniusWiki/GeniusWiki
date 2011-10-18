@@ -10,7 +10,7 @@
 	<!-- 
 	<amq:connectionFactory id="jmsConnectionFactory" brokerURL="vm://localhost"/>
 	 -->
-	<amq:connectionFactory id="jmsConnectionFactory" brokerURL="tcp://${mq.server.url}?wireFormat.maxInactivityDuration=0"/>
+	<amq:connectionFactory id="jmsConnectionFactory" brokerURL="${mq.server.url}"/>
 
 
 	<!--  Spring JmsTemplate config -->

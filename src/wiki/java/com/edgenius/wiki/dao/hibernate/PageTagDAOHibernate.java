@@ -26,6 +26,8 @@ package com.edgenius.wiki.dao.hibernate;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.PageTagDAO;
 import com.edgenius.wiki.model.PageTag;
@@ -33,6 +35,7 @@ import com.edgenius.wiki.model.PageTag;
 /**
  * @author Dapeng.Ni
  */
+@Repository("pageTagDAO")
 public class PageTagDAOHibernate  extends BaseDAOHibernate<PageTag> implements PageTagDAO {
 	
 	private static final String GET_TAGS_IN_SAPCE = "from " +  PageTag.class.getName() + " as t where t.space.unixName=?";

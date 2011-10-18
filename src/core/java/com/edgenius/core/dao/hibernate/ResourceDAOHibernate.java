@@ -25,12 +25,15 @@ package com.edgenius.core.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.ResourceDAO;
 import com.edgenius.core.model.Resource;
 
 /**
  * @author Dapeng.Ni
  */
+@Repository("resourceDAO")
 public class ResourceDAOHibernate extends BaseDAOHibernate<Resource> implements ResourceDAO {
 	private static final String GET_BY_NAME = "from " + Resource.class.getName()  + " as r where r.resource=?";
 	

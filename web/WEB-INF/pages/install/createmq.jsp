@@ -29,6 +29,9 @@
 			return v.blank();
 			
 		}
+		function resetUrl(){
+			$("url").value="${mqserverDefaultUrl}";
+		}
 		</script>
 	</head>
 
@@ -54,7 +57,9 @@
 			</tr>
 			<tr>
 				<td><fmt:message key='mq.url'/></td>
-				<td> <input type="text" name="url" id="url" value="${server.mqServerUrl}"></td>
+				<td> <input type="text" name="url" id="url" value="${server.mqServerUrl}" style="width:350px">
+					 <a href="javascript:;" onclick="resetUrl()"><fmt:message key='reset'/></a>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2">

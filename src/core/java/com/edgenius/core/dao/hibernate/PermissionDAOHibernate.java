@@ -25,6 +25,8 @@ package com.edgenius.core.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.SecurityValues.OPERATIONS;
 import com.edgenius.core.dao.PermissionDAO;
 import com.edgenius.core.model.Permission;
@@ -32,6 +34,7 @@ import com.edgenius.core.model.Permission;
 /**
  * @author Dapeng.Ni
  */
+@Repository("permissionDAO")
 public class PermissionDAOHibernate extends BaseDAOHibernate<Permission>  implements PermissionDAO {
 	private static final String GET_BY_RESOURCE	= " from " + Permission.class.getName() + " as p " 
 											+ " where p.resource.resource=?"; 

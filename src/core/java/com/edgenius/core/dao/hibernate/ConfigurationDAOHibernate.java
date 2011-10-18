@@ -25,9 +25,14 @@ package com.edgenius.core.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.ConfigurationDAO;
 import com.edgenius.core.model.Configuration;
-
+/**
+ * @author Dapeng.Ni
+ */
+@Repository("configurationDAO")
 public class ConfigurationDAOHibernate extends BaseDAOHibernate<Configuration> implements ConfigurationDAO {
 
 	private final static String GET_BY_TYPE ="from " + Configuration.class.getName() +" as s where s.type=?";

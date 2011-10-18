@@ -25,6 +25,8 @@ package com.edgenius.wiki.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.dao.FriendDAO;
 import com.edgenius.wiki.model.Friend;
@@ -32,6 +34,7 @@ import com.edgenius.wiki.model.Friend;
 /**
  * @author Dapeng.Ni
  */
+@Repository("friendDAO")
 public class FriendDAOHibernate extends BaseDAOHibernate<Friend>  implements FriendDAO {
 
 	private static String GET_HISTORY_BY_UUID = "from " + Friend.class.getName() + " as f where f.sender=? and f.receiver=?";
