@@ -23,39 +23,47 @@
  */
 package com.edgenius.wiki.security.acegi;
 
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolderStrategy;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.util.Assert;
 
 /**
- * Copy from org.springframework.security.context.ThreadLocalSecurityContextHolderStrategy.
+ * Copy from org.springframework.security.context.
+ * ThreadLocalSecurityContextHolderStrategy.
  * 
- * The only change: getContext() return SecurityContextCloneableImpl() but not SecurityContextImpl();
+ * The only change: getContext() return SecurityContextCloneableImpl() but not
+ * SecurityContextImpl();
  * 
  * This class is set from LogListener class.
+ * 
  * @author Dapeng.Ni
  */
-public class ThreadLocalSecurityContextCloneableHolderStrategy implements SecurityContextHolderStrategy{
-	
-	   private static ThreadLocal contextHolder = new ThreadLocal();
+public class ThreadLocalSecurityContextCloneableHolderStrategy implements SecurityContextHolderStrategy {
 
-	    //~ Methods ========================================================================================================
+	private static ThreadLocal contextHolder = new ThreadLocal();
 
-	    public void clearContext() {
-	        contextHolder.set(null);
-	    }
+	// ~ Methods
+	// ========================================================================================================
 
-	    public SecurityContext getContext() {
-	        if (contextHolder.get() == null) {
-	        	//CHANGE by NDP~~~
-	            contextHolder.set(new SecurityContextCloneableImpl());
-	        }
+	public void clearContext() {
+		contextHolder.set(null);
+	}
 
-	        return (SecurityContext) contextHolder.get();
-	    }
+	public SecurityContext getContext() {
+		if (contextHolder.get() == null) {
+			// CHANGE by NDP~~~
+			contextHolder.set(new SecurityContextCloneableImpl());
+		}
 
-	    public void setContext(SecurityContext context) {
-	        Assert.notNull(context, "Only non-null SecurityContext instances are permitted");
-	        contextHolder.set(context);
-	    }
+		return (SecurityContext) contextHolder.get();
+	}
+
+	public void setContext(SecurityContext context) {
+		Assert.notNull(context, "Only non-null SecurityContext instances are permitted");
+		contextHolder.set(context);
+	}
+    public SecurityContext createEmptyContext() {
+        return new SecurityContextImpl();
+    }
 }

@@ -26,8 +26,8 @@ package com.edgenius.wiki.security.acegi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextImpl;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextImpl;
 
 /**
  * For ajax, simultaneously thread for one user usually happens. If only use same instance from HttpSession. AnonymousFilter will

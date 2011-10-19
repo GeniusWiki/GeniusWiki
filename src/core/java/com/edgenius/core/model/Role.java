@@ -40,7 +40,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.edgenius.core.Constants;
 

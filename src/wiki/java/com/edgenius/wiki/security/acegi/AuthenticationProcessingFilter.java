@@ -28,6 +28,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.web.DefaultRedirectStrategy;
+
 import com.edgenius.core.Constants;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
@@ -36,13 +38,14 @@ import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
  * Don't realy redirect url, just send url as string for ajax usage.
  * @author Dapeng.Ni
  */
-public class AuthenticationProcessingFilter extends org.springframework.security.ui.webapp.AuthenticationProcessingFilter {
+//upgrade: AbstractAuthenticationProcessingFilter
+public class AuthenticationProcessingFilter extends DefaultRedirectStrategy {
 	
 	private CaptchaReqiredFilterService captchaReqiredFilterService;
 	@Override
-	protected void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
+	public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
 			throws IOException {
-		String username = (String) request.getSession().getAttribute(AuthenticationProcessingFilter.SPRING_SECURITY_LAST_USERNAME_KEY);
+		String username = request.getRemoteUser();
 		if(url.indexOf("/login_error") == -1){
 			captchaReqiredFilterService.clean(username);
 			response.getWriter().write(url);
@@ -62,7 +65,7 @@ public class AuthenticationProcessingFilter extends org.springframework.security
 		String targetUrl = false ? null : url; 
 
 		if (targetUrl == null) {
-			targetUrl = getDefaultTargetUrl();
+//			targetUrl = getDefaultTargetUrl();
 		}
 
 		return targetUrl;

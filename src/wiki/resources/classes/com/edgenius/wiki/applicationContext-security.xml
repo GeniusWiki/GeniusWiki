@@ -294,7 +294,7 @@
 		<property name="accessDeniedHandler"  ref="accessDeniedHandler"/>
 	</bean>
 	
-	<bean id="filterInvocationInterceptor" class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+	<bean id="filterInvocationInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="accessDecisionManager" ref="accessDecisionManager"/>
 		<property name="objectDefinitionSource" ref="filterDefinitionSource"/>

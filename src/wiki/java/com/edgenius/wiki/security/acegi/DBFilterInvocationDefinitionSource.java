@@ -25,9 +25,9 @@ package com.edgenius.wiki.security.acegi;
 
 import java.util.Collection;
 
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.intercept.web.FilterInvocation;
-import org.springframework.security.intercept.web.FilterInvocationDefinitionSource;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 import com.edgenius.wiki.security.Policy;
 import com.edgenius.wiki.security.service.SecurityService;
@@ -38,7 +38,7 @@ import com.edgenius.wiki.security.service.SecurityService;
  * SVN to see its brilliant history: which support URI, to parameter exactly match ect.
  * 
  */
-public class DBFilterInvocationDefinitionSource implements FilterInvocationDefinitionSource{
+public class DBFilterInvocationDefinitionSource implements FilterInvocationSecurityMetadataSource{
 
 
 	
@@ -48,7 +48,7 @@ public class DBFilterInvocationDefinitionSource implements FilterInvocationDefin
 
 
 	//JDK1.6 @Override
-	public ConfigAttributeDefinition getAttributes(Object object) throws IllegalArgumentException {
+	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         if ((object == null) || !this.supports(object.getClass())) {
             throw new IllegalArgumentException("Object must be a FilterInvocation");
         }
@@ -59,25 +59,15 @@ public class DBFilterInvocationDefinitionSource implements FilterInvocationDefin
 	}
 
 
-
-	//JDK1.6 @Override
-	public Collection getConfigAttributeDefinitions() {
-		return null;
-	}
-
-
-
-	//JDK1.6 @Override
-	public boolean supports(Class clazz) {
+	@Override
+	public boolean supports(Class<?> clazz) {
 		return FilterInvocation.class.isAssignableFrom(clazz);
 	}
-
-
 	/**
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public ConfigAttributeDefinition lookupAttributes(String url) {
+	public Collection<ConfigAttribute> lookupAttributes(String url) {
 		//for performance reason: skip resource checking
 		if(url != null && (url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".jpg")  
 				|| url.endsWith(".js") || url.endsWith(".css") || url.endsWith(".rpc") || url.endsWith(".rpcs")
@@ -107,6 +97,17 @@ public class DBFilterInvocationDefinitionSource implements FilterInvocationDefin
 	public void setSecurityService(SecurityService securityService) {
 		this.securityService = securityService;
 	}
+
+
+
+	@Override
+	public Collection<ConfigAttribute> getAllConfigAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 
 

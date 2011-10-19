@@ -34,8 +34,8 @@ import java.util.Map;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.AuthenticationException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 
 import com.edgenius.core.Constants;
 import com.edgenius.core.model.User;

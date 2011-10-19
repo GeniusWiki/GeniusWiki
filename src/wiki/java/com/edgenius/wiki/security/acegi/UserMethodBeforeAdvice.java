@@ -28,8 +28,8 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.MethodBeforeAdvice;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.AuthenticationException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 
 import com.edgenius.core.Global;
 import com.edgenius.core.SecurityValues;

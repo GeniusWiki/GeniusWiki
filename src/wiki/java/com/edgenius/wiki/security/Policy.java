@@ -26,6 +26,8 @@ package com.edgenius.wiki.security;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,9 +35,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.ConfigAttribute;
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.SecurityConfig;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 
 import com.edgenius.core.SecurityValues.OPERATIONS;
 import com.edgenius.core.SecurityValues.RESOURCE_TYPES;
@@ -57,7 +58,7 @@ public class Policy implements Comparable<Policy>,Serializable, Cloneable{
 	//could be $instance$, spaceUname or pageUuid
 	private String resourceName;
 
-	private List<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
+	private List<ConfigAttribute> attributes = new ArrayList<ConfigAttribute>();
 	//********************************************************************
 	//               Methods
 	//********************************************************************
@@ -68,7 +69,7 @@ public class Policy implements Comparable<Policy>,Serializable, Cloneable{
 		try {
 			obj  = super.clone();
 			((Policy)obj).removeAllAttribute();
-			for(Iterator iter = list.iterator();iter.hasNext();){
+			for(Iterator iter = attributes.iterator();iter.hasNext();){
 				((Policy)obj).addAttribute(((SecurityConfig)iter.next()).getAttribute());
 			}
 		} catch (CloneNotSupportedException e) {
@@ -80,20 +81,20 @@ public class Policy implements Comparable<Policy>,Serializable, Cloneable{
 	
 	public void addAttribute(String attribute){
 		SecurityConfig config = new SecurityConfig(attribute);
-		list.add(config);
+		attributes.add(config);
 	}
 	public void addAllAttribute(List<ConfigAttribute> atts){
-		list.addAll(atts);
+		attributes.addAll(atts);
 	}
 	
 	public boolean hasAttribute(String attribute){
 		SecurityConfig config = new SecurityConfig(attribute);
-		return list.contains(config);
+		return attributes.contains(config);
 	}
 	
 	public boolean removeAttribute(String attribute) {
 		SecurityConfig config = new SecurityConfig(attribute);
-		Iterator<ConfigAttribute> iter = list.iterator();
+		Iterator<ConfigAttribute> iter = attributes.iterator();
 		while(iter.hasNext()){
 			ConfigAttribute att = iter.next();
 			if(att.equals(config)){
@@ -107,10 +108,10 @@ public class Policy implements Comparable<Policy>,Serializable, Cloneable{
 	public void removeAllAttribute() {
 		//NOTE: don't user list.clear(); as list may reference to other policy's list, clear() will impact other policy
 		//please refer to clone() method;
-		list = new ArrayList<ConfigAttribute>();
+		attributes = new ArrayList<ConfigAttribute>();
 	}
 	public boolean containAttribute(String name) {
-		return list.contains(new SecurityConfig(name));
+		return attributes.contains(new SecurityConfig(name));
 	}
 
 
@@ -139,23 +140,23 @@ public class Policy implements Comparable<Policy>,Serializable, Cloneable{
 		return new HashCodeBuilder().append(this.type).append(this.operation).append(this.resourceName).toHashCode();
 	}
 	public int size() {
-		return list.size();
+		return attributes.size();
 	}
 	public String toString(){
-		return "Policy: Users/Roles("+ Arrays.toString(list.toArray()) +") on resource (" 
+		return "Policy: Users/Roles("+ Arrays.toString(attributes.toArray()) +") on resource (" 
 		+ (type==null?"":type.name()) + ":"+ resourceName + "} can (" + (operation==null?"":operation.name()) +")\n";
 	}
 	
 	public List<ConfigAttribute> getMutableAttributeDefinition() {
-		return list;
+		return attributes;
 	}
 
 	/**
 	 * 
 	 * @return ConfigAttributeDefinition is immutable collection. 
 	 */
-	public ConfigAttributeDefinition getAttributeDefinition() {
-		return new ConfigAttributeDefinition(list);
+	public Collection<ConfigAttribute> getAttributeDefinition() {
+		return Collections.unmodifiableCollection(attributes);
 	}
 	//********************************************************************
 	//               Get / Set

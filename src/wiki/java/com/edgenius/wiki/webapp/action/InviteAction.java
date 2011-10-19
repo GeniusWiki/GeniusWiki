@@ -26,8 +26,8 @@ package com.edgenius.wiki.webapp.action;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.util.PortResolver;
-import org.springframework.security.util.PortResolverImpl;
+import org.springframework.security.web.PortResolver;
+import org.springframework.security.web.PortResolverImpl;
 
 import com.edgenius.core.SecurityValues.RESOURCE_TYPES;
 import com.edgenius.core.model.User;

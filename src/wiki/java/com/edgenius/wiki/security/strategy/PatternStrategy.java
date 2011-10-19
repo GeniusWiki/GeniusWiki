@@ -60,7 +60,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.ConfigAttribute;
+import org.springframework.security.access.ConfigAttribute;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 

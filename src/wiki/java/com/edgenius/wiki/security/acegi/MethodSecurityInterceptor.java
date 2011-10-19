@@ -27,12 +27,11 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.intercept.AbstractSecurityInterceptor;
-import org.springframework.security.intercept.InterceptorStatusToken;
-import org.springframework.security.intercept.ObjectDefinitionSource;
-import org.springframework.security.intercept.method.MethodDefinitionSource;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.SecurityMetadataSource;
+import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
+import org.springframework.security.access.intercept.InterceptorStatusToken;
+import org.springframework.security.core.AuthenticationException;
 
 /**
  * @author Dapeng.Ni
@@ -40,7 +39,7 @@ import org.springframework.security.intercept.method.MethodDefinitionSource;
 public class MethodSecurityInterceptor extends AbstractSecurityInterceptor implements MethodInterceptor{
 	private static final Logger log = LoggerFactory.getLogger(MethodSecurityInterceptor.class);
 	
-    private MethodDefinitionSource objectDefinitionSource;
+    private SecurityMetadataSource objectDefinitionSource;
     private MethodExceptionHandler methodExceptionHandler; 
 	@Override
 	public Class getSecureObjectClass() {
@@ -74,19 +73,20 @@ public class MethodSecurityInterceptor extends AbstractSecurityInterceptor imple
 	}
 	
 	@Override
-    public ObjectDefinitionSource obtainObjectDefinitionSource() {
-        return this.objectDefinitionSource;
-    }
-
+	public SecurityMetadataSource obtainSecurityMetadataSource() {
+		return this.objectDefinitionSource;
+	}
     //********************************************************************
 	//               set / get
 	//********************************************************************
-    public void setObjectDefinitionSource(MethodDefinitionSource newSource) {
+    public void setObjectDefinitionSource(SecurityMetadataSource newSource) {
         this.objectDefinitionSource = newSource;
     }
     
 	public void setMethodExceptionHandler(MethodExceptionHandler methodExceptionHandler) {
 		this.methodExceptionHandler = methodExceptionHandler;
 	}
+
+
 
 }

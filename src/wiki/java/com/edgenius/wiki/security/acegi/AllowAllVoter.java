@@ -23,12 +23,11 @@
  */
 package com.edgenius.wiki.security.acegi;
 
-import java.util.Iterator;
+import java.util.Collection;
 
-import org.springframework.security.Authentication;
-import org.springframework.security.ConfigAttribute;
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.vote.AccessDecisionVoter;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.core.Authentication;
 
 import com.edgenius.core.SecurityValues.SYSTEM_ROLES;
 
@@ -39,7 +38,7 @@ import com.edgenius.core.SecurityValues.SYSTEM_ROLES;
  * 
  * @author Dapeng.Ni
  */
-public class AllowAllVoter implements AccessDecisionVoter {
+public class AllowAllVoter implements AccessDecisionVoter<Object> {
 
 
     public boolean supports(ConfigAttribute attribute) {
@@ -61,13 +60,9 @@ public class AllowAllVoter implements AccessDecisionVoter {
         return true;
     }
 
-    public int vote(Authentication authentication, Object object, ConfigAttributeDefinition config) {
+    public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
         int result = ACCESS_ABSTAIN;
-        Iterator iter = config.getConfigAttributes().iterator();
-
-        while (iter.hasNext()) {
-            ConfigAttribute attribute = (ConfigAttribute) iter.next();
-
+       	for (ConfigAttribute attribute : attributes) {
             if (this.supports(attribute)) {
                  return ACCESS_GRANTED;
             }

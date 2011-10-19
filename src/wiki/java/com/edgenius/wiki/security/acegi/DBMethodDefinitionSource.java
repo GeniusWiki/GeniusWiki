@@ -24,14 +24,15 @@
 package com.edgenius.wiki.security.acegi;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.SecurityConfig;
-import org.springframework.security.intercept.method.MethodDefinitionSource;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.util.Assert;
 
 import com.edgenius.core.SecurityValues.SYSTEM_ROLES;
@@ -41,11 +42,11 @@ import com.edgenius.wiki.security.service.SecurityService;
  * 
  * @author Dapeng.Ni
  */
-public class DBMethodDefinitionSource implements MethodDefinitionSource {
+public class DBMethodDefinitionSource implements SecurityMetadataSource {
 	private static final Logger logger = LoggerFactory.getLogger(DBMethodDefinitionSource.class);
 	private SecurityService securityService;
 	
-	public ConfigAttributeDefinition getAttributes(Object object) {
+	public Collection<ConfigAttribute> getAttributes(Object object) {
 		Assert.notNull(object, "Object cannot be null");
 
 		if (object instanceof MethodInvocation) {
@@ -56,23 +57,18 @@ public class DBMethodDefinitionSource implements MethodDefinitionSource {
 		throw new IllegalArgumentException("Object must be a MethodInvocation");
 	}
 
-	public boolean supports(Class clazz) {
+	@Override
+	public boolean supports(Class<?> clazz) {
 		return (MethodInvocation.class.isAssignableFrom(clazz));
 	}
 
-
-
-	//JDK1.6 @Override
-	public Collection getConfigAttributeDefinitions() {
-		return null;
-	}
 	/**
 	 *
 	 * @param args 
 	 * @see org.springframework.security.intercept.method.AbstractMethodDefinitionSource#lookupAttributes(java.lang.reflect.Method)
 	 */
 	@SuppressWarnings("unchecked")
-	protected ConfigAttributeDefinition lookupAttributes(Class clszz, Method mi, Object[] args) {
+	protected Collection<ConfigAttribute> lookupAttributes(Class clszz, Method mi, Object[] args) {
 		Assert.notNull(mi, "lookupAttrubutes in the DBMethodDefinitionSource is null");
 
 		Policy policy = securityService.findBeforeMethodPolicy(clszz.getName(), mi.getName(), args);
@@ -82,7 +78,7 @@ public class DBMethodDefinitionSource implements MethodDefinitionSource {
 		//if there is not policy mapping before method, then return $ALL$ to allow AfterInvocation check:
 		//NOTE: if return null, AfterInvocation check also cancelled because MethodSecurityInterceptor
 		//will skip AfterInvocation if InterceptorStatusToken(returned by beforeInvocation) is null 
-		ConfigAttributeDefinition cd = new ConfigAttributeDefinition(new SecurityConfig(SYSTEM_ROLES.ALL.getName()));
+		Collection<ConfigAttribute> cd = Arrays.asList((ConfigAttribute)new SecurityConfig(SYSTEM_ROLES.ALL.getName()));
 		return cd;
 	}
 
@@ -94,10 +90,11 @@ public class DBMethodDefinitionSource implements MethodDefinitionSource {
 		this.securityService = securityService;
 	}
 
-	//JDK1.6 @Override
-	public ConfigAttributeDefinition getAttributes(Method method, Class targetClass) {
+	@Override
+	public Collection<ConfigAttribute> getAllConfigAttributes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

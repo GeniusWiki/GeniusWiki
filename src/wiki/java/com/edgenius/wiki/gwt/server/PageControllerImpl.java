@@ -35,7 +35,7 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.AccessDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.captcha.CaptchaServiceProxy;
 
 import com.edgenius.core.Global;

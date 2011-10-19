@@ -27,15 +27,13 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.ui.AccessDeniedHandler;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.WikiConstants;
@@ -53,7 +51,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     //********************************************************************
 	//               method
 	//********************************************************************
-    public void handle(ServletRequest request, ServletResponse response, AccessDeniedException accessDeniedException)
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
         throws IOException, ServletException {
     	// this could happen when Webservice call
     	if(request == null) 

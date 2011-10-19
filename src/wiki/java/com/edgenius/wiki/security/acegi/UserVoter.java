@@ -23,19 +23,19 @@
  */
 package com.edgenius.wiki.security.acegi;
 
-import java.util.Iterator;
+import java.util.Collection;
 
-import org.springframework.security.Authentication;
-import org.springframework.security.ConfigAttribute;
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.vote.AccessDecisionVoter;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.edgenius.core.model.Role;
 
 /**
  * @author Dapeng.Ni
  */
-public class UserVoter implements AccessDecisionVoter {
+public class UserVoter implements AccessDecisionVoter<Object> {
 
 	
     private String userPrefix = Role.USER_PREFIX;
@@ -70,19 +70,17 @@ public class UserVoter implements AccessDecisionVoter {
         return true;
     }
 
-    public int vote(Authentication authentication, Object object, ConfigAttributeDefinition config) {
+    public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
         int result = ACCESS_ABSTAIN;
-        Iterator iter = config.getConfigAttributes().iterator();
-
-        while (iter.hasNext()) {
-            ConfigAttribute attribute = (ConfigAttribute) iter.next();
+			
+       	for (ConfigAttribute attribute : attributes) {
 
             if (this.supports(attribute)) {
                 result = ACCESS_DENIED;
 
                 // Attempt to find a matching granted authority
-                for (int i = 0; i < authentication.getAuthorities().length; i++) {
-                    if (attribute.getAttribute().equals(authentication.getAuthorities()[i].getAuthority())) {
+                for (GrantedAuthority authority : authentication.getAuthorities()) {
+                    if (attribute.getAttribute().equals(authority.getAuthority())) {
                         return ACCESS_GRANTED;
                     }
                 }

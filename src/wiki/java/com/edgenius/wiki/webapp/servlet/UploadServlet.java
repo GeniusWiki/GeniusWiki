@@ -42,8 +42,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.AuthenticationException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.edgenius.core.Constants;

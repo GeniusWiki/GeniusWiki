@@ -24,6 +24,7 @@
 package com.edgenius.wiki.security.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -37,13 +38,13 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.Authentication;
-import org.springframework.security.ConfigAttribute;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.providers.ProviderManager;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-import org.springframework.security.providers.anonymous.AnonymousAuthenticationToken;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -562,7 +563,7 @@ public class SecurityServiceImpl implements SecurityService, InitializingBean {
 	public void login(String username, String confirmPassword) {
         // log user in automatically
         Authentication auth = new UsernamePasswordAuthenticationToken(username, confirmPassword);
-        SecurityContextHolder.getContext().setAuthentication(authenticationManager.doAuthentication(auth));
+        SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(auth));
 	}
 	public void resetPolicyCache(RESOURCE_TYPES type, String resourceName) {
 		log.info("Resource " + resourceName + " of type " + type.name() + "  policy cache is reset.");
@@ -828,8 +829,7 @@ public class SecurityServiceImpl implements SecurityService, InitializingBean {
 		Authentication auth;
 		User user = userReadingService.getUserByName(username);
 		if(user == null || user.isAnonymous()){
-			auth = new AnonymousAuthenticationToken(ANONYMOUS_KEY, ANONYMOUS_PASSWORD, 
-		    		new GrantedAuthority[]{roleDAO.getByName(SYSTEM_ROLES.ANONYMOUS.getName())});
+			auth = new AnonymousAuthenticationToken(ANONYMOUS_KEY, ANONYMOUS_PASSWORD, Arrays.asList((GrantedAuthority)roleDAO.getByName(SYSTEM_ROLES.ANONYMOUS.getName())));
 		}else{
 			//there is no plain password available, so just set Authenticated as true
 			auth = new UsernamePasswordAuthenticationToken(user.getUsername(),"", user.getAuthorities());

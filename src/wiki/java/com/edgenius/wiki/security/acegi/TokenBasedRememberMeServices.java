@@ -30,88 +30,101 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.security.ui.rememberme.InvalidCookieException;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.rememberme.InvalidCookieException;
 
 import com.edgenius.core.Global;
 
 /**
  * @author Dapeng.Ni
  */
-public class TokenBasedRememberMeServices extends  org.springframework.security.ui.rememberme.TokenBasedRememberMeServices{
+public class TokenBasedRememberMeServices extends org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices {
 	private String integrationCookieKey;
-	
-	//same hardcode from com.edgenius.wiki.integration.client.Authentication.REMEMBERME_COOKIE_KEY
+
+	// same hardcode from
+	// com.edgenius.wiki.integration.client.Authentication.REMEMBERME_COOKIE_KEY
 	public static final String REMEMBERME_COOKIE_KEY = "integrationRememberMe";
 
 	public UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
-	            HttpServletResponse response) {
+			HttpServletResponse response) {
 
-	        if (cookieTokens.length != 3) {
-	            throw new InvalidCookieException("Cookie token did not contain " + 2 +
-	                    " tokens, but contained '" + Arrays.asList(cookieTokens) + "'");
-	        }
-
-	        long tokenExpiryTime;
-
-	        try {
-	            tokenExpiryTime = new Long(cookieTokens[1]).longValue();
-	        }
-	        catch (NumberFormatException nfe) {
-	            throw new InvalidCookieException("Cookie token[1] did not contain a valid number (contained '" +
-	                    cookieTokens[1] + "')");
-	        }
-
-	        if (isTokenExpired(tokenExpiryTime)) {
-	            throw new InvalidCookieException("Cookie token[1] has expired (expired on '"
-	                    + new Date(tokenExpiryTime) + "'; current time is '" + new Date() + "')");
-	        }
-
-	        // Check the user exists.
-	        // Defer lookup until after expiry time checked, to possibly avoid expensive database call.
-
-	        UserDetails userDetails = getUserDetailsService().loadUserByUsername(cookieTokens[0]);
-
-	        // Check signature of token matches remaining details.
-	        // Must do this after user lookup, as we need the DAO-derived password.
-	        // If efficiency was a major issue, just add in a UserCache implementation,
-	        // but recall that this method is usually only called once per HttpSession - if the token is valid,
-	        // it will cause SecurityContextHolder population, whilst if invalid, will cause the cookie to be cancelled.
-	        String expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(),
-	                userDetails.getPassword());
-
-	        if (!expectedTokenSignature.equals(cookieTokens[2])) {
-	        	//NDPDNP - this is part of different with original code
-	        	if(Global.webServiceEnabled || Global.restServiceEnabled){
-	        		//this is compare different key: it could come from com.edgenius.wiki.integration.client.Authentication.login(); 
-	        		expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(),
-	    	                userDetails.getPassword(), REMEMBERME_COOKIE_KEY);
-	        		if (expectedTokenSignature.equals(cookieTokens[2])) {
-	        			//Remove this login cookie immediately, so that Authentication.login() won't cause "rememberMe" style login.
-	        			cancelCookie(request, response);
-	        			return userDetails;
-	        		}
-	        	}
-	            throw new InvalidCookieException("Cookie token[2] contained signature '" + cookieTokens[2]
-	                    + "' but expected '" + expectedTokenSignature + "'");
-	        }
-
-	        return userDetails;
-	    }
-
-	    /**
-	     * Calculates the digital signature to be put in the cookie. Default value is
-	     * MD5 ("username:tokenExpiryTime:password:key")
-	     */
-	    protected String makeTokenSignature(long tokenExpiryTime, String username, String password, String key) {
-			return DigestUtils.md5Hex(username + ":" + tokenExpiryTime + ":" + password + ":" + key);
-		}
-	    	    
-		public String getIntegrationCookieKey() {
-			return integrationCookieKey;
+		if (cookieTokens.length != 3) {
+			throw new InvalidCookieException("Cookie token did not contain " + 2 + " tokens, but contained '"
+					+ Arrays.asList(cookieTokens) + "'");
 		}
 
-		public void setIntegrationCookieKey(String integrationCookieKey) {
-			this.integrationCookieKey = integrationCookieKey;
+		long tokenExpiryTime;
+
+		try {
+			tokenExpiryTime = new Long(cookieTokens[1]).longValue();
+		} catch (NumberFormatException nfe) {
+			throw new InvalidCookieException("Cookie token[1] did not contain a valid number (contained '"
+					+ cookieTokens[1] + "')");
 		}
+
+		if (isTokenExpired(tokenExpiryTime)) {
+			throw new InvalidCookieException("Cookie token[1] has expired (expired on '" + new Date(tokenExpiryTime)
+					+ "'; current time is '" + new Date() + "')");
+		}
+
+		// Check the user exists.
+		// Defer lookup until after expiry time checked, to possibly avoid
+		// expensive database call.
+
+		UserDetails userDetails = getUserDetailsService().loadUserByUsername(cookieTokens[0]);
+
+		// Check signature of token matches remaining details.
+		// Must do this after user lookup, as we need the DAO-derived password.
+		// If efficiency was a major issue, just add in a UserCache
+		// implementation,
+		// but recall that this method is usually only called once per
+		// HttpSession - if the token is valid,
+		// it will cause SecurityContextHolder population, whilst if invalid,
+		// will cause the cookie to be cancelled.
+		String expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(),
+				userDetails.getPassword());
+
+		if (!expectedTokenSignature.equals(cookieTokens[2])) {
+			// NDPDNP - this is part of different with original code
+			if (Global.webServiceEnabled || Global.restServiceEnabled) {
+				// this is compare different key: it could come from
+				// com.edgenius.wiki.integration.client.Authentication.login();
+				expectedTokenSignature = makeTokenSignature(tokenExpiryTime, userDetails.getUsername(),
+						userDetails.getPassword(), REMEMBERME_COOKIE_KEY);
+				if (expectedTokenSignature.equals(cookieTokens[2])) {
+					// Remove this login cookie immediately, so that
+					// Authentication.login() won't cause "rememberMe" style
+					// login.
+					cancelCookie(request, response);
+					return userDetails;
+				}
+			}
+			throw new InvalidCookieException("Cookie token[2] contained signature '" + cookieTokens[2]
+					+ "' but expected '" + expectedTokenSignature + "'");
+		}
+
+		return userDetails;
+	}
+
+	/**
+	 * Calculates the digital signature to be put in the cookie. Default value
+	 * is MD5 ("username:tokenExpiryTime:password:key")
+	 */
+	protected String makeTokenSignature(long tokenExpiryTime, String username, String password, String key) {
+		return DigestUtils.md5Hex(username + ":" + tokenExpiryTime + ":" + password + ":" + key);
+	}
+
+	public String getIntegrationCookieKey() {
+		return integrationCookieKey;
+	}
+
+	public void setIntegrationCookieKey(String integrationCookieKey) {
+		this.integrationCookieKey = integrationCookieKey;
+	}
+	
+    public SecurityContext createEmptyContext() {
+        return new SecurityContextImpl();
+    }
 }

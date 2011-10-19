@@ -23,6 +23,8 @@
  */
 package com.edgenius.core.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -51,8 +53,8 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Index;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.edgenius.core.Constants;
 import com.edgenius.core.SecurityValues.OPERATIONS;
@@ -350,12 +352,12 @@ public class User implements UserDetails, Cloneable, GrantedAuthority{
 			
 		return setting;
 	}
-
-	public GrantedAuthority[] getAuthorities() {
+	@Override
+	public  Collection<? extends GrantedAuthority> getAuthorities() {
 		//for single user and its roles authority
-		GrantedAuthority[] auths = new GrantedAuthority[roles.size() +1]; 
-		roles.toArray(auths);
-		auths[auths.length-1] = this;
+		List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>(roles.size() +1); 
+		auths.addAll(roles);
+		auths.add(this);
 		
 		return auths;
 	}

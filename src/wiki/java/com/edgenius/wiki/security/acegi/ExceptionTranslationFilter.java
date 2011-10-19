@@ -29,15 +29,16 @@ import java.io.PrintWriter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.ui.savedrequest.SavedRequest;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.util.Assert;
 
 import com.edgenius.core.util.WebUtil;
@@ -46,33 +47,24 @@ import com.edgenius.wiki.WikiConstants;
 /**
  * @author Dapeng.Ni
  */
-public class ExceptionTranslationFilter extends org.springframework.security.ui.ExceptionTranslationFilter {
+public class ExceptionTranslationFilter extends org.springframework.security.web.access.ExceptionTranslationFilter {
 	private static final Logger log = LoggerFactory.getLogger(ExceptionTranslationFilter.class);
 	
-	public void afterPropertiesSet() throws Exception {
-		Assert.notNull(getPortResolver(), "portResolver must be specified");
+    private RequestCache requestCache = new HttpSessionRequestCache();
+    
+	public ExceptionTranslationFilter(AuthenticationEntryPoint authenticationEntryPoint, RequestCache requestCache){
+        super(authenticationEntryPoint, requestCache);
+	}
+	public void afterPropertiesSet() {
 		Assert.notNull(getAuthenticationTrustResolver(), "authenticationTrustResolver must be specified");
 	}
-	protected void sendStartAuthentication(ServletRequest request, ServletResponse response, FilterChain chain,
-			AuthenticationException reason) throws ServletException, IOException {
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
+	@Override
+    protected void sendStartAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            AuthenticationException reason) throws ServletException, IOException {
 
-		SavedRequest savedRequest = new SavedRequest(httpRequest, getPortResolver());
-
-		if (log.isDebugEnabled()) {
-			log.debug("Authentication entry point being called; SavedRequest added to Session: " + savedRequest);
-		}
-
-		//Never put request URL to session, it is useless because it does not contain anchor token info
-//		if (isCreateSessionAllowed()) {
-//			// Store the HTTP request itself. Used by AbstractProcessingFilter
-//			// for redirection after successful authentication (SEC-29)
-//			httpRequest.getSession().setAttribute(AbstractProcessingFilter.ACEGI_SAVED_REQUEST_KEY, savedRequest);
-//		}
-
-		// SEC-112: Clear the SecurityContextHolder's Authentication, as the
-		// existing Authentication is no longer considered valid
-		SecurityContextHolder.getContext().setAuthentication(null);
+        SecurityContextHolder.getContext().setAuthentication(null);
+        requestCache.saveRequest(request, response);
+        log.debug("Calling Authentication entry point.");
 
 		PrintWriter writer = response.getWriter();
 

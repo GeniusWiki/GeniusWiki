@@ -71,7 +71,7 @@
 		<dependency org="org/springframework" name="spring-modules" rev="0.9"	conf="deploy->lucene;dev->lucene-source" />
 		<!-- 3.0.2.RELEASE  -->
 		<dependency org="org/springframework" name="spring" rev="3.1.0.RC1" conf="deploy->default;dev->source,test" /> 
-		<dependency org="org/springframework" name="security" rev="2.0.4"	conf="deploy->default;dev->source" />
+		<dependency org="org/springframework" name="security" rev="3.1.0.RC3"	conf="deploy->default;dev->source" />
 		
 		
 		<dependency org="javax" name="mail" rev="1.4" conf="deploy->default" />

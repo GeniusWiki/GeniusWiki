@@ -34,16 +34,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.AuthenticationTrustResolver;
-import org.springframework.security.AuthenticationTrustResolverImpl;
-import org.springframework.security.InsufficientAuthenticationException;
-import org.springframework.security.SpringSecurityException;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.ui.AccessDeniedHandler;
-import org.springframework.security.util.PortResolver;
-import org.springframework.security.util.PortResolverImpl;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.PortResolver;
+import org.springframework.security.web.PortResolverImpl;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.util.Assert;
 
 import com.edgenius.core.util.WebUtil;
@@ -66,7 +65,7 @@ public class MethodExceptionHandler implements InitializingBean {
         Assert.notNull(authenticationTrustResolver, "authenticationTrustResolver must be specified");
     }
 
-    public void handleException(SpringSecurityException exception) throws IOException, ServletException {
+    public void handleException(RuntimeException exception) throws IOException, ServletException {
     	HttpServletRequest request = WebUtil.getRequest();
     	HttpServletResponse response = WebUtil.getResponse();
     	

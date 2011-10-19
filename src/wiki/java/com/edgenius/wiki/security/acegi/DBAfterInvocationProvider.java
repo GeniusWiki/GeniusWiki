@@ -24,13 +24,14 @@
 package com.edgenius.wiki.security.acegi;
 
 
+import java.util.Collection;
+
 import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.security.AccessDecisionManager;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.Authentication;
-import org.springframework.security.ConfigAttribute;
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.afterinvocation.AfterInvocationProvider;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AfterInvocationProvider;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.core.Authentication;
 
 import com.edgenius.wiki.security.Policy;
 import com.edgenius.wiki.security.service.SecurityService;
@@ -42,7 +43,7 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 	private SecurityService securityService;
 	private AccessDecisionManager accessDecisionManager;
 	
-	public Object decide(Authentication auth, Object object, ConfigAttributeDefinition config,
+	public Object decide(Authentication auth, Object object, ConfigAttribute config,
 			Object returnedObject) throws AccessDeniedException {
 		if(returnedObject == null)
 			return returnedObject;
@@ -65,15 +66,16 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 
 	}
 
-
+	@Override
 	public boolean supports(ConfigAttribute attribute) {
 		return true;
 	}
 
-	public boolean supports(Class clazz) {
+	@Override
+	public boolean supports(Class<?> clazz) {
 		return true;
 	}
-	
+
 	//********************************************************************
 	//               set /get 
 	//********************************************************************
@@ -84,6 +86,16 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 	public void setAccessDecisionManager(AccessDecisionManager accessDecisionManager) {
 		this.accessDecisionManager = accessDecisionManager;
 	}
+
+
+	@Override
+	public Object decide(Authentication authentication, Object object, Collection<ConfigAttribute> attributes,
+			Object returnedObject) throws AccessDeniedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 
 }

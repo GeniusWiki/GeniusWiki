@@ -27,8 +27,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.AuthenticationException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 
 import com.edgenius.core.model.User;
 import com.edgenius.core.repository.FileNode;
