@@ -39,15 +39,13 @@ import com.edgenius.wiki.security.service.SecurityService;
  * 
  */
 public class DBFilterInvocationDefinitionSource implements FilterInvocationSecurityMetadataSource{
-
-
 	
 	//properties
 	private boolean convertUrlToLowercaseBeforeComparison = false;
 	private SecurityService securityService;
 
 
-	//JDK1.6 @Override
+	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         if ((object == null) || !this.supports(object.getClass())) {
             throw new IllegalArgumentException("Object must be a FilterInvocation");
@@ -63,10 +61,14 @@ public class DBFilterInvocationDefinitionSource implements FilterInvocationSecur
 	public boolean supports(Class<?> clazz) {
 		return FilterInvocation.class.isAssignableFrom(clazz);
 	}
+
+	@Override
+	public Collection<ConfigAttribute> getAllConfigAttributes() {
+		return null;
+	}
 	/**
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	public Collection<ConfigAttribute> lookupAttributes(String url) {
 		//for performance reason: skip resource checking
 		if(url != null && (url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".jpg")  
@@ -100,11 +102,6 @@ public class DBFilterInvocationDefinitionSource implements FilterInvocationSecur
 
 
 
-	@Override
-	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 
