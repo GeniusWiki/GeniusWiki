@@ -30,23 +30,27 @@
 		
 		<!-- 90 days remember-me, 'changethis' has Hardcode in WsConstants -->
 		<logout delete-cookies="JSESSIONID" logout-success-url="/index.jsp"/>
-		<access-denied-handler error-page="/403.jsp" />
+		<access-denied-handler ref="accessDeniedHandler"/>
 		
 		<remember-me data-source-ref="userDAO" key="changethis" token-validity-seconds="7776000"/> 
 		<anonymous key="changethis" username="anonymousUser,ROLE_SYS_ANONYMOUS"/>
 		
 	</http>
+	
+
 	<authentication-manager>
-		
 		<authentication-provider user-service-ref="userDAO">
-			<!-- ???NDPNDP: Cache??? --> 
-			<password-encoder hash="md5" />
+			<password-encoder hash="md5" />  <!-- ???NDPNDP: Cache??? --> 
 		</authentication-provider>
-		<authentication-provider>
+		<authentication-provider ref="">
 			
 		</authentication-provider>
 	</authentication-manager>
 
+	<global-method-security>
+	</global-method-security>
+  
+  
   
 	<!-- /**/feed.do filter must: securityContextHolderAwareRequestFilter after basicProcessingFilter, so that the Basic Authenticate header
 	 don't lost.  securityContextHolderAwareRequestFilter is fill HttpRequest.remoteUser value, which is useful when FeedAction check 
@@ -189,6 +193,12 @@
 		<property name="securityService" ref="securityService"/>
 	</bean>
 	
+	<!-- ================================================================================================================================================= -->
+	<!--  Beans -->
+	<!-- ================================================================================================================================================= -->
+	<bean id="accessDeniedHandler" class="com.edgenius.wiki.security.acegi.AccessDeniedHandlerImpl">
+		<property name="errorPage" value="/403.jsp"/>
+	</bean>
 	<!-- ================================================================================================================================================= -->
 	<!--  Beans -->
 	<!-- ================================================================================================================================================= -->
