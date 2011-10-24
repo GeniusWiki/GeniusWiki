@@ -39,7 +39,7 @@ import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
  * @author Dapeng.Ni
  */
 //upgrade: AbstractAuthenticationProcessingFilter
-public class AuthenticationProcessingFilter extends DefaultRedirectStrategy {
+public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 	
 	private CaptchaReqiredFilterService captchaReqiredFilterService;
 	@Override
