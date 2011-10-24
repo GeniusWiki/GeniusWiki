@@ -31,7 +31,7 @@ Login is implemented by API from GW integration client library. Example like her
 
 login method has 5 parameters, (HttpServletRequest, HttpServletResponse, username, encryptPassword, geniusWikiTargetWebContext). Please note, password is text directly from database, i.e., encrypted password text. If your GW URL looks http://gw_url/geniuswiki, the web context should be /geniuswiki.
 
-Logout is achieve by sending URL request: http://gw_url/j_spring_security_logout
+Logout is achieved by sending URL request: http://gw_url/j_spring_security_logout
 
 h3. Webservices
 List all available webservice WSDL:

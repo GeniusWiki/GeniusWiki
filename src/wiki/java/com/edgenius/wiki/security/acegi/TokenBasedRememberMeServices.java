@@ -95,8 +95,7 @@ public class TokenBasedRememberMeServices extends org.springframework.security.w
 						userDetails.getPassword(), REMEMBERME_COOKIE_KEY);
 				if (expectedTokenSignature.equals(cookieTokens[2])) {
 					// Remove this login cookie immediately, so that
-					// Authentication.login() won't cause "rememberMe" style
-					// login.
+					// Authentication.login() won't be a "rememberMe" style login - we just implement login by this cookie but not rememberMe.
 					cancelCookie(request, response);
 					return userDetails;
 				}

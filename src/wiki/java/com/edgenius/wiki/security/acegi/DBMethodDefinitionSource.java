@@ -62,12 +62,17 @@ public class DBMethodDefinitionSource implements SecurityMetadataSource {
 		return (MethodInvocation.class.isAssignableFrom(clazz));
 	}
 
+
+	@Override
+	public Collection<ConfigAttribute> getAllConfigAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	/**
 	 *
 	 * @param args 
 	 * @see org.springframework.security.intercept.method.AbstractMethodDefinitionSource#lookupAttributes(java.lang.reflect.Method)
 	 */
-	@SuppressWarnings("unchecked")
 	protected Collection<ConfigAttribute> lookupAttributes(Class clszz, Method mi, Object[] args) {
 		Assert.notNull(mi, "lookupAttrubutes in the DBMethodDefinitionSource is null");
 
@@ -90,11 +95,6 @@ public class DBMethodDefinitionSource implements SecurityMetadataSource {
 		this.securityService = securityService;
 	}
 
-	@Override
-	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 }

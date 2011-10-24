@@ -39,7 +39,7 @@ import org.springframework.security.core.AuthenticationException;
 public class MethodSecurityInterceptor extends AbstractSecurityInterceptor implements MethodInterceptor{
 	private static final Logger log = LoggerFactory.getLogger(MethodSecurityInterceptor.class);
 	
-    private SecurityMetadataSource objectDefinitionSource;
+    private SecurityMetadataSource securityMetadataSource;
     private MethodExceptionHandler methodExceptionHandler; 
 	@Override
 	public Class getSecureObjectClass() {
@@ -74,13 +74,13 @@ public class MethodSecurityInterceptor extends AbstractSecurityInterceptor imple
 	
 	@Override
 	public SecurityMetadataSource obtainSecurityMetadataSource() {
-		return this.objectDefinitionSource;
+		return this.securityMetadataSource;
 	}
     //********************************************************************
 	//               set / get
 	//********************************************************************
-    public void setObjectDefinitionSource(SecurityMetadataSource newSource) {
-        this.objectDefinitionSource = newSource;
+    public void setSecurityMetadataSource(SecurityMetadataSource newSource) {
+        this.securityMetadataSource = newSource;
     }
     
 	public void setMethodExceptionHandler(MethodExceptionHandler methodExceptionHandler) {
