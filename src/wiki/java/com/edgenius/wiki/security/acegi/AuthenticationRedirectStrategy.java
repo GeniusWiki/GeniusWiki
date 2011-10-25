@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.edgenius.core.Constants;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
@@ -47,8 +48,7 @@ public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 	public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
 			throws IOException {
 
-		
-		String username = request.getRemoteUser();
+		String username = request.getParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
 		if(url.indexOf(defaultFailureUrl) == -1){
 			//login success
 			captchaReqiredFilterService.clean(username);
@@ -59,22 +59,7 @@ public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 			response.getOutputStream().write((SharedConstants.FORM_RET_HEADER+SharedConstants.FORM_RET_HEADER_ERROR_IN_USERPASS+(require?1:0)+username).getBytes(Constants.UTF8));
 		}
 	}
-	/**
-	 * This method will be called after success login. This means loginForm should has redirect URL.
-	 */
-	protected String determineTargetUrl(HttpServletRequest request) {
-		//try to get url from login submit form.
-		String url = request.getParameter("redir");
-		//as super class isAlwaysUseDefaultTargetUrl() is not visible, here just use "false"
-		String targetUrl = false ? null : url; 
-
-		if (targetUrl == null) {
-//			targetUrl = getDefaultTargetUrl();
-		}
-
-		return targetUrl;
-	}
-
+	
 	//********************************************************************
 	//               set /get
 	//********************************************************************

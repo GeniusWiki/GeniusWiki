@@ -100,14 +100,4 @@ public class DBFilterInvocationDefinitionSource implements FilterInvocationSecur
 		this.securityService = securityService;
 	}
 
-
-
-
-
-
-
-
-
-
-
 }

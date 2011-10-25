@@ -21,7 +21,7 @@
 
 	<http access-decision-manager-ref="accessDecisionManager" pattern="/**" >
 	
-		<form-login login-page='/signin' default-target-url="/index.jsp" 
+		<form-login login-page='/signin' 
 				authentication-failure-handler-ref="authenticationFailureHandler" 
 				authentication-success-handler-ref="authenticationSuccessHandler"/>
 		
@@ -47,6 +47,8 @@
 		<bean:property name="redirectStrategy" ref="redirectStrategy"/>
 	</bean:bean>
 	<bean:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<bean:property name="targetUrlParameter" value="redir"/>
+		<bean:property name="defaultTargetUrl" value="/index.jsp"/>
 		<bean:property name="redirectStrategy" ref="redirectStrategy"/>
 	</bean:bean>
 	

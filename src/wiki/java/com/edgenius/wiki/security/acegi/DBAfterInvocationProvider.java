@@ -43,8 +43,6 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 	private SecurityService securityService;
 	private AccessDecisionManager accessDecisionManager;
 	
-
-
 	@Override
 	public Object decide(Authentication authentication, Object object, Collection<ConfigAttribute> attributes, Object returnedObject) throws AccessDeniedException {
 		if(returnedObject == null)
@@ -88,9 +86,6 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 	public void setAccessDecisionManager(AccessDecisionManager accessDecisionManager) {
 		this.accessDecisionManager = accessDecisionManager;
 	}
-
-
-
 
 
 }
