@@ -43,8 +43,10 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 	private SecurityService securityService;
 	private AccessDecisionManager accessDecisionManager;
 	
-	public Object decide(Authentication auth, Object object, ConfigAttribute config,
-			Object returnedObject) throws AccessDeniedException {
+
+
+	@Override
+	public Object decide(Authentication authentication, Object object, Collection<ConfigAttribute> attributes, Object returnedObject) throws AccessDeniedException {
 		if(returnedObject == null)
 			return returnedObject;
 		
@@ -55,7 +57,7 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 								, miv.getMethod().getName(),returnedObject);
 			if(policy != null){
 	            try {
-	            	accessDecisionManager.decide(auth, object, policy.getAttributeDefinition());
+	            	accessDecisionManager.decide(authentication, object, policy.getAttributeDefinition());
 	            } catch (AccessDeniedException accessDeniedException) {
 	                throw accessDeniedException;
 	            }
@@ -87,13 +89,6 @@ public class DBAfterInvocationProvider implements AfterInvocationProvider{
 		this.accessDecisionManager = accessDecisionManager;
 	}
 
-
-	@Override
-	public Object decide(Authentication authentication, Object object, Collection<ConfigAttribute> attributes,
-			Object returnedObject) throws AccessDeniedException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

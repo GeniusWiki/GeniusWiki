@@ -8,7 +8,6 @@
            	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
            	
 	<!-- RSS httpBasci auth, clone-session for multiple thread, method auth, integration cookie login, login then redirect to last access page, login error echo back user name-->
-
 	
   	<http security="none" pattern="/static/**"/>
   	<http security="none" pattern="/plugins/**"/>
@@ -20,8 +19,11 @@
 		<http-basic />
 	</http>
 
-	<http access-decision-manager-ref="accessDecisionManager" pattern="/**">
-		<form-login login-page='/signin' default-target-url="/index.jsp" />
+	<http access-decision-manager-ref="accessDecisionManager" pattern="/**" >
+	
+		<form-login login-page='/signin' default-target-url="/index.jsp" 
+				authentication-failure-handler-ref="authenticationFailureHandler" 
+				authentication-success-handler-ref="authenticationSuccessHandler"/>
 		
 		<!-- 90 days remember-me, 'changethis' has Hardcode in WsConstants -->
 		<logout delete-cookies="JSESSIONID" logout-success-url="/index.jsp"/>
@@ -37,7 +39,16 @@
 		<bean:property name="securityService" ref="securityService"/>
 	</bean:bean>
 	
-	
+	<bean:bean id="redirectStrategy" class="com.edgenius.wiki.security.acegi.AuthenticationRedirectStrategy">
+		<bean:property name="captchaReqiredFilterService" ref="captchaReqiredFilterService"/>
+	</bean:bean>
+	<bean:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<bean:property name="defaultFailureUrl" value="/login_error"/>
+		<bean:property name="redirectStrategy" ref="redirectStrategy"/>
+	</bean:bean>
+	<bean:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<bean:property name="redirectStrategy" ref="redirectStrategy"/>
+	</bean:bean>
 	
 	<!-- ================================================================================================================================================= -->
 	<!--  AUTHENTICATION -->	

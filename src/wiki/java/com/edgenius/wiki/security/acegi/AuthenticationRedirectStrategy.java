@@ -38,19 +38,23 @@ import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
  * Don't realy redirect url, just send url as string for ajax usage.
  * @author Dapeng.Ni
  */
-//upgrade: AbstractAuthenticationProcessingFilter
-public class AuthenticationProcessingFilter extends DefaultRedirectStrategy {
+public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
+	private static final String defaultFailureUrl = "/login_error"; //there is same value in applicationContext-security.xml
 	
 	private CaptchaReqiredFilterService captchaReqiredFilterService;
+	
 	@Override
 	public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
 			throws IOException {
+
+		
 		String username = request.getRemoteUser();
-		if(url.indexOf("/login_error") == -1){
+		if(url.indexOf(defaultFailureUrl) == -1){
+			//login success
 			captchaReqiredFilterService.clean(username);
 			response.getWriter().write(url);
 		}else{
-//			login error, re display user name
+			//login error, re-display user name
 			boolean require = captchaReqiredFilterService.reqiredCaptche(username);
 			response.getOutputStream().write((SharedConstants.FORM_RET_HEADER+SharedConstants.FORM_RET_HEADER_ERROR_IN_USERPASS+(require?1:0)+username).getBytes(Constants.UTF8));
 		}
