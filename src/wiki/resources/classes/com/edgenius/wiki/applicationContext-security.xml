@@ -15,25 +15,37 @@
   	<http security="none" pattern="/themes/**"/>
   	<http security="none" pattern="/widgets/**" />
 
-	<http  realm="@TOKEN.APP.NAME@ - Authentication" pattern="/**/feed.do*">
+	<http access-decision-manager-ref="accessDecisionManager" realm="@TOKEN.APP.NAME@ - Authentication" pattern="/**/feed.do*">
+		<intercept-url pattern="/**"/>
 		<http-basic />
+		<access-denied-handler ref="accessDeniedHandler"/>
+	</http>
+	<http access-decision-manager-ref="accessDecisionManager" realm="@TOKEN.APP.NAME@ - Authentication" pattern="/feed/*">
+	 	<intercept-url pattern="/**"/>
+		<http-basic />
+		<access-denied-handler ref="accessDeniedHandler"/>
 	</http>
 
-	<http access-decision-manager-ref="accessDecisionManager" pattern="/**" >
+	<http access-decision-manager-ref="accessDecisionManager" >
 	
 		<form-login login-page='/signin' 
 				authentication-failure-handler-ref="authenticationFailureHandler" 
 				authentication-success-handler-ref="authenticationSuccessHandler"/>
 		
-		<!-- 90 days remember-me, 'changethis' has Hardcode in WsConstants -->
 		<logout delete-cookies="JSESSIONID" logout-success-url="/index.jsp"/>
-		<access-denied-handler ref="accessDeniedHandler"/>
 		
+		<!-- 90 days remember-me, 'changethis' has Hardcode in WsConstants -->
 		<remember-me services-ref="rememberMeServices"/> 
 		<anonymous key="changethis" username="anonymousUser,ROLE_SYS_ANONYMOUS"/>
 		
+		<access-denied-handler ref="accessDeniedHandler"/>
 	</http>
 	
+	<bean:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<bean:property name="authenticationManager" ref="authenticationManager"/>
+		<bean:property name="accessDecisionManager" ref="accessDecisionManager"/>
+		<bean:property name="securityMetadataSource" ref="securityMetadataSource"/>
+	</bean:bean>
 	<bean:bean id="securityMetadataSource" class="com.edgenius.wiki.security.acegi.DBFilterInvocationDefinitionSource">
 		<bean:property name="convertUrlToLowercaseBeforeComparison" value="true"/>
 		<bean:property name="securityService" ref="securityService"/>
@@ -52,6 +64,16 @@
 		<bean:property name="redirectStrategy" ref="redirectStrategy"/>
 	</bean:bean>
 	
+	<bean:bean id="exceptionTranslationFilter" class="com.edgenius.wiki.security.acegi.ExceptionTranslationFilter">
+		<bean:constructor-arg>
+			<bean:bean class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+				<bean:property name="loginFormUrl" value="/signin" />
+			</bean:bean>
+		</bean:constructor-arg>
+		<bean:constructor-arg>
+			<bean:bean class="org.springframework.security.web.savedrequest.HttpSessionRequestCache"/>
+		</bean:constructor-arg>
+	</bean:bean>
 	<!-- ================================================================================================================================================= -->
 	<!--  AUTHENTICATION -->	
 	<authentication-manager alias="authenticationManager">
@@ -130,16 +152,7 @@
 		<bean:property name="cache" ref="userCache"/>
 	</bean:bean>
 		
-	<bean:bean id="exceptionTranslationFilter" class="com.edgenius.wiki.security.acegi.ExceptionTranslationFilter">
-		<bean:constructor-arg>
-			<bean:bean class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-				<bean:property name="loginFormUrl" value="/signin" />
-			</bean:bean>
-		</bean:constructor-arg>
-		<bean:constructor-arg>
-			<bean:bean class="org.springframework.security.web.savedrequest.HttpSessionRequestCache"/>
-		</bean:constructor-arg>
-	</bean:bean>
+	
 
 	<!-- ================================================================================================================================================= -->
 	<!--  Beans -->

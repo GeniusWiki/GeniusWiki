@@ -34,7 +34,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
@@ -42,7 +41,6 @@ import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.StatusPrinter;
 
 import com.edgenius.core.DataRoot;
-import com.edgenius.wiki.security.acegi.ThreadLocalSecurityContextCloneableHolderStrategy;
 
 /**
  * This class try to set "geniuswiki.data.root". This is not perfect yet!
@@ -57,7 +55,7 @@ public class LogListener  implements ServletContextListener{
 	private static final Logger log = LoggerFactory.getLogger(LogListener.class);
 	static{
 		//May not good place put this irrelevant property here, but don't need create a new class for this single line code.
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, ThreadLocalSecurityContextCloneableHolderStrategy.class.getName());
+//		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, ThreadLocalSecurityContextCloneableHolderStrategy.class.getName());
 		
 		//get system property first 
 		String logDir = System.getProperty("geniuswiki.log.dir");
