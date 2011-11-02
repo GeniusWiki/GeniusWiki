@@ -1,41 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:security="http://www.springframework.org/schema/security"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-     			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
-                http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
+  xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+  		 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+           	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
   
 	<!-- /**/feed.do filter must: securityContextHolderAwareRequestFilter after basicProcessingFilter, so that the Basic Authenticate header
 	 don't lost.  securityContextHolderAwareRequestFilter is fill HttpRequest.remoteUser value, which is useful when FeedAction check 
 	 page permission.
 	-->
-	<bean id="springSecurityFilterChain" class="org.springframework.security.util.FilterChainProxy">
-	     <security:filter-chain-map path-type="ant" >
-	         <security:filter-chain pattern="/**/feed.do*" filters="httpSessionContextIntegrationFilter,authenticationProcessingFilter,rememberMeProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,basicAuthenticationExceptionFilter,filterInvocationInterceptor"/>
-	         <security:filter-chain pattern="/**" filters="httpSessionContextIntegrationFilter,captchaValidationProcessingFilter, logoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor"/>
-	     </security:filter-chain-map>
+	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+	 <constructor-arg>
+    	<list>
+	         <security:filter-chain pattern="/**/feed.do*" filters="
+	         	securityContextPersistenceFilter,
+	         	authenticationProcessingFilter,
+	         	rememberMeProcessingFilter,
+	         	basicProcessingFilter,
+	         	securityContextHolderAwareRequestFilter,
+	         	anonymousProcessingFilter,
+	         	basicAuthenticationExceptionFilter,
+	        	filterSecurityInterceptor"/>
+	         <security:filter-chain pattern="/**" filters="
+	         	securityContextPersistenceFilter,
+	         	captchaValidationProcessingFilter, 
+	         	logoutFilter,
+	         	authenticationProcessingFilter,
+	         	securityContextHolderAwareRequestFilter,
+	         	rememberMeProcessingFilter,
+	         	anonymousProcessingFilter,
+	         	exceptionTranslationFilter,
+	         	filterSecurityInterceptor"/>
+    	</list>
+	 </constructor-arg>
 	</bean>
 	
+	<!-- ================================================================================================================================================= -->
+	<!--  HTTP Basic Authentication -->
 	<!-- If some resource need mandatory Basic Authentication login, use this filter to open Basic Authentication dialog
 	<bean id="basicAuthenticationReqireFilter" class="com.edgenius.wiki.security.spring.BasicAuthenticationReqireFilter">
 		<property name="userService" ref="userService"/>
 	</bean>
 	 -->
-	
-	<bean id="basicProcessingFilterEntryPoint" class="org.springframework.security.ui.basicauth.BasicProcessingFilterEntryPoint">
+	<bean id="basicProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
 		<property name="realmName" value="@TOKEN.APP.NAME@ - Authentication"/>
 	</bean>
+	
 	<bean id="basicAuthenticationExceptionFilter" class="com.edgenius.wiki.security.acegi.ExceptionTranslationFilter">
-		<property name="authenticationEntryPoint"  ref="basicProcessingFilterEntryPoint"/>
-		<property name="accessDeniedHandler"  ref="accessDeniedHandler"/>
-		<!-- NOTE: if false, this forbid redir after authentication success login. Default is true. 
-		<property name="createSessionAllowed" value="false"/>
-		-->
+		<constructor-arg ref="basicProcessingFilterEntryPoint"/>
+		<constructor-arg>
+			<bean class="org.springframework.security.web.savedrequest.HttpSessionRequestCache"/>
+		</constructor-arg>
+		<property name="accessDeniedHandler" ref="accessDeniedHandler"/>
 	</bean>
 	
-	<bean id="basicProcessingFilter" class="org.springframework.security.ui.basicauth.BasicProcessingFilter">
+	<bean id="basicProcessingFilter" class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
 		<property name="authenticationEntryPoint" ref="basicProcessingFilterEntryPoint"/>
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<!-- 
@@ -43,7 +64,7 @@
 		 -->
 	</bean>
 	
-	
+	<!-- ================================================================================================================================================= -->
 	<!-- Start captcha service -->		
 	<!--  so far ,this filter only handle normal HTTP request but it can not handle GWT Ajax call --> 	
 	<bean id="captchaValidationProcessingFilter" class="com.edgenius.wiki.security.acegi.CaptchaValidationProcessingFilter">
@@ -67,108 +88,137 @@
 		 	<bean class="com.edgenius.wiki.security.service.SimpleListImageCaptchaEngine"/>
 		 </property>
 	</bean>
-	
-	
 	<!-- End captcha service -->		 	
 
-	<bean id="httpSessionContextIntegrationFilter" class="org.springframework.security.context.HttpSessionContextIntegrationFilter">
-		<property name="contextClass">
-			<value type="java.lang.Class">com.edgenius.wiki.security.acegi.SecurityContextCloneableImpl</value>
-		</property>
-		<property name="cloneFromHttpSession" value="true"/>
+	<!-- ================================================================================================================================================= -->
+	<!-- HTTP Filters -->		
+	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+	  <property name='securityContextRepository'>
+	    <bean class='org.springframework.security.web.context.HttpSessionSecurityContextRepository'>
+	    </bean>
+	  </property>
 	</bean>
 	 
-	<bean id="logoutFilter" class="org.springframework.security.ui.logout.LogoutFilter">
+	<bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
 		<!-- URL redirected to after logout -->
 		<constructor-arg value="/index.jsp"/>
 		<constructor-arg>
-			<list>
-				<ref bean="rememberMeServices"/>
-				<bean class="org.springframework.security.ui.logout.SecurityContextLogoutHandler"/>
-			</list>
+			<bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
 		</constructor-arg>
 	</bean>
 
-	<bean id="authenticationProcessingFilter"
-		  class="com.edgenius.wiki.security.acegi.AuthenticationProcessingFilter">
-		<property name="authenticationManager"
-				  ref="authenticationManager"/>
-		<property name="authenticationFailureUrl"
-				  value="/login_error"/>
+	<bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/login_error"/>
+		<property name="redirectStrategy" ref="redirectStrategy"/>
+	</bean>
+	<bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<property name="targetUrlParameter" value="redir"/>
 		<property name="defaultTargetUrl" value="/index.jsp"/>
-		<property name="filterProcessesUrl"
-				  value="/j_spring_security_check"/>
-		
-		<!--  temporary use index.jsp to rescue some ajax call problem. in future, it is better build a url map: ajax url-> target url.
-		(2008/03/13)Comment again: invite.do need redir after login, and other ajax stuff seems OK except popup, need further test...
-		(2008/03/14)open comment: acegi remember last HttpRequest as redir url after login success. 
-		But RPC will break this become *.rpcs should last URL.
-		(2008/04/02)
-		(2008/05/05) this properties never be use again after upgarde to Spring-security
-		the reason is isAllwaysUserDefaultTargetUrl() method is private, the extends class
-		does not get this value any more!!!
-		<property name="alwaysUseDefaultTargetUrl" value="true"/>				 
-		-->
-		<property name="rememberMeServices" ref="rememberMeServices"/>
+		<property name="redirectStrategy" ref="redirectStrategy"/>
+	</bean>
+	<bean id="redirectStrategy" class="com.edgenius.wiki.security.acegi.AuthenticationRedirectStrategy">
 		<property name="captchaReqiredFilterService" ref="captchaReqiredFilterService"/>
 	</bean>
-
-	<bean id="securityContextHolderAwareRequestFilter"
-		  class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter"/>
-
-	<bean id="rememberMeProcessingFilter"
-		  class="org.springframework.security.ui.rememberme.RememberMeProcessingFilter">
-		<property name="authenticationManager"
-				  ref="authenticationManager"/>
+	<bean id="authenticationProcessingFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+  		<property name="filterProcessesUrl" value="/j_spring_security_check"/>
+		<property name="authenticationManager" ref="authenticationManager"/>
+  		<property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+  		<property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
 		<property name="rememberMeServices" ref="rememberMeServices"/>
 	</bean>
+
+	<bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter"/>
+
+	<bean id="rememberMeServices" class="com.edgenius.wiki.security.acegi.TokenBasedRememberMeServices">
+		<property name="userDetailsService" ref="userDAO"/>
+		<property name="tokenValiditySeconds" value="7776000"/> <!-- 90 days -->
+		<property name="key" value="changeThis"/> <!-- Hardcode WsConstants -->
+	</bean>
+	<bean id="rememberMeProcessingFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+  		<property name="rememberMeServices" ref="rememberMeServices"/>
+  		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
 	
-	<bean id="anonymousProcessingFilter"
-		  class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
+	<bean id="anonymousProcessingFilter" class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
 		<property name="key" value="changeThis"/> <!-- Hardcode WsConstants -->
 		<property name="userAttribute"   value="anonymousUser,ROLE_SYS_ANONYMOUS"/> <!-- Hardcode WsConstants -->
 	</bean>
-	
 
-
-	<bean id="methodExceptionHandler" class="com.edgenius.wiki.security.acegi.MethodExceptionHandler">
-		<property name="accessDeniedHandler"  ref="accessDeniedHandler"/>
-	</bean>
-	
-	<bean id="authenticationEntryPoint" class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
-		<property name="loginFormUrl" value="/signin"/>
-		<property name="forceHttps" value="false"/>
-	</bean>
 	<bean id="accessDeniedHandler" class="com.edgenius.wiki.security.acegi.AccessDeniedHandlerImpl">
 		<property name="errorPage" value="/403.jsp"/>
+	</bean>
+	
+	<bean id="exceptionTranslationFilter" class="com.edgenius.wiki.security.acegi.ExceptionTranslationFilter">
+		<constructor-arg>
+			<bean class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+				<property name="loginFormUrl" value="/signin" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="org.springframework.security.web.savedrequest.HttpSessionRequestCache"/>
+		</constructor-arg>
+		<property name="accessDeniedHandler" ref="accessDeniedHandler"/>
+	</bean>
+	
+	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager"/>
+		<property name="accessDecisionManager" ref="accessDecisionManager"/>
+		<property name="securityMetadataSource">
+			<bean class="com.edgenius.wiki.security.acegi.DBFilterInvocationDefinitionSource">
+				<property name="convertUrlToLowercaseBeforeComparison" value="true"/>
+				<property name="securityService" ref="securityService"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<constructor-arg>
+    		<list>
+				<bean  class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+					<property name="userDetailsService" ref="userDAO"/>
+					<property name="userCache" ref="userCacheProvider"/>
+					<property name="passwordEncoder">
+						<bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+					</property>
+				</bean>
+				<bean class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+					<property name="key" value="changeThis"/>  <!-- Hardcode WsConstants -->
+				</bean>
+				<bean class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+					<property name="key" value="changeThis"/>   <!-- Hardcode WsConstants -->
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions" value="false"/>
+		<property name="decisionVoters">
+			<list>
+				<bean class="com.edgenius.wiki.security.acegi.AllowAllVoter"/>
+				<bean class="com.edgenius.wiki.security.acegi.UserVoter"/>
+				<bean class="org.springframework.security.access.vote.RoleVoter"/>
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- ================================================================================================================================================= -->
+	<!--  Method Authentication -->
+	<bean id="methodExceptionHandler" class="com.edgenius.wiki.security.acegi.MethodExceptionHandler">
+		<property name="accessDeniedHandler"  ref="accessDeniedHandler"/>
 	</bean>
 	
 	<bean id="methodSecurityInterceptor" class="com.edgenius.wiki.security.acegi.MethodSecurityInterceptor">
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="accessDecisionManager" ref="accessDecisionManager"/>
         <property name="afterInvocationManager" ref="afterInvocationManager"/>
-        <property name="objectDefinitionSource" ref="methodDefinitionSource"/>
+        <property name="securityMetadataSource" ref="methodSecurityMetadataSource"/>
         <property name="methodExceptionHandler" ref="methodExceptionHandler"/>
     </bean>
     
-	<bean id="userSecurityInterceptor" class="org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor">
-		<constructor-arg>
-			<bean class="com.edgenius.wiki.security.acegi.UserMethodBeforeAdvice">
-				<property name="securityService" ref="securityService"/>
-		        <property name="methodExceptionHandler" ref="methodExceptionHandler"/>
-			</bean>
-		</constructor-arg>
-    </bean>
-    
-	<bean id="pageSecurityInterceptor" class="org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor">
-		<constructor-arg>
-			<bean class="com.edgenius.wiki.security.acegi.PageMethodBeforeAdvice">
-		        <property name="methodExceptionHandler" ref="methodExceptionHandler"/>
-			</bean>
-		</constructor-arg>
-    </bean>
-    
-    <bean id="afterInvocationManager" class="org.springframework.security.afterinvocation.AfterInvocationProviderManager">
+    <bean id="afterInvocationManager" class="org.springframework.security.access.intercept.AfterInvocationProviderManager">
     	<property name="providers">
     		<list>
     			<ref local="dbAfterInvocationProvider"/>
@@ -182,52 +232,25 @@
 		<property name="securityService" ref="securityService"/>
 	</bean>
 	
-	<bean id="methodDefinitionSource" class="com.edgenius.wiki.security.acegi.DBMethodDefinitionSource">
+	<bean id="methodSecurityMetadataSource" class="com.edgenius.wiki.security.acegi.DBMethodDefinitionSource">
 		<property name="securityService" ref="securityService"/>
 	</bean>
+
+  	<bean id="patternFactoryFactory" class="com.edgenius.wiki.security.strategy.PatternFactoryFactory" >
+		<property name="pagePatternFactory">
+			<bean class="com.edgenius.wiki.security.strategy.PagePatternFactory" autowire="byName"/>
+		</property>
+		<property name="spacePatternFactory">
+			<bean class="com.edgenius.wiki.security.strategy.SpacePatternFactory" autowire="byName"/>
+		</property>
+		<property name="instancePatternFactory">
+			<bean class="com.edgenius.wiki.security.strategy.InstancePatternFactory" autowire="byName"/>
+		</property>
+		<property name="widgetPatternFactory">
+			<bean class="com.edgenius.wiki.security.strategy.WidgetPatternFactory" autowire="byName"/>
+		</property>
+	</bean>
 	
-	<bean id="rememberMeServices"
-		  class="com.edgenius.wiki.security.acegi.TokenBasedRememberMeServices">
-		<property name="userDetailsService" ref="userDAO"/>
-		<property name="tokenValiditySeconds" value="7776000"/> <!-- 90 days -->
-		<property name="key" value="changeThis"/> <!-- Hardcode WsConstants -->
-	</bean>
-
-	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
-		<property name="providers">
-			<list>
-				<ref local="daoAuthenticationProvider"/>
-				<bean class="org.springframework.security.providers.anonymous.AnonymousAuthenticationProvider">
-					<property name="key" value="changeThis"/>  <!-- Hardcode WsConstants -->
-				</bean>
-				<bean class="org.springframework.security.providers.rememberme.RememberMeAuthenticationProvider">
-					<property name="key" value="changeThis"/>   <!-- Hardcode WsConstants -->
-				</bean>
-			</list>
-		</property>
-	</bean>
-	<bean id="accessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
-		<property name="allowIfAllAbstainDecisions"
-				  value="false"/>
-		<property name="decisionVoters">
-			<list>
-				<bean class="com.edgenius.wiki.security.acegi.AllowAllVoter"/>
-				<bean class="com.edgenius.wiki.security.acegi.UserVoter"/>
-				<bean class="org.springframework.security.vote.RoleVoter"/>
-				<bean class="org.springframework.security.vote.AuthenticatedVoter"/>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="passwordEncoder" class="org.springframework.security.providers.encoding.Md5PasswordEncoder"/>
-
-	<bean id="daoAuthenticationProvider"
-		  class="org.springframework.security.providers.dao.DaoAuthenticationProvider">
-		<property name="userDetailsService" ref="userDAO"/>
-		<property name="userCache" ref="userCacheProvider"/>
-		<property name="passwordEncoder" ref="passwordEncoder"/>
-	</bean>
-
 	<bean id="patternStrategy" class="com.edgenius.wiki.security.strategy.PatternStrategy" autowire="byName">
 		<property name="patternFactoryFactory" ref="patternFactoryFactory"/>
 		<property name="methodValueProviderList">
@@ -247,40 +270,6 @@
 		</property>
 		<property name="policyCache" ref="policyCache"/>
 	</bean>
-	
-	<bean id="patternFactoryFactory" class="com.edgenius.wiki.security.strategy.PatternFactoryFactory" >
-		<property name="pagePatternFactory">
-			<bean class="com.edgenius.wiki.security.strategy.PagePatternFactory" autowire="byName"/>
-		</property>
-		<property name="spacePatternFactory">
-			<bean class="com.edgenius.wiki.security.strategy.SpacePatternFactory" autowire="byName"/>
-		</property>
-		<property name="instancePatternFactory">
-			<bean class="com.edgenius.wiki.security.strategy.InstancePatternFactory" autowire="byName"/>
-		</property>
-		<property name="widgetPatternFactory">
-			<bean class="com.edgenius.wiki.security.strategy.WidgetPatternFactory" autowire="byName"/>
-		</property>
-	</bean>
-	
-	<bean name="userCacheProvider" class="org.springframework.security.providers.dao.cache.EhCacheBasedUserCache">
-		<property name="cache" ref="userCache"/>
-	</bean>
-
-	<bean id="policyCache" class="com.edgenius.wiki.security.service.PolicyCache">
-		<property name="cache" ref="policyCacheContainer"/>
-	</bean>
-	
-	<!-- This bean is optional; it isn't used by any other bean as it only listens and logs -->
-	<bean id="loggerListener" class="org.springframework.security.event.authentication.LoggerListener"/>
-
-	<bean id="securityService" class="com.edgenius.wiki.security.service.SecurityServiceImpl" autowire="byName">
-		<property name="initialSpaceReadingCacheAtStart" value="false"/>
-  		<property name="patternStrategy" ref="patternStrategy"/>
-  		<property name="authenticationManager" ref="authenticationManager"/>
-
-  	</bean>
-  	
 	<bean id="pageMethodValueProvider" class="com.edgenius.wiki.service.impl.PageMethodValueProvider"/>
 	<bean id="spaceMethodValueProvider" class="com.edgenius.wiki.service.impl.SpaceMethodValueProvider"/>
 	<bean id="commentMethodValueProvider" class="com.edgenius.wiki.service.impl.CommentMethodValueProvider"/>
@@ -288,28 +277,6 @@
 	<bean id="diffMethodValueProvider" class="com.edgenius.wiki.service.impl.DiffMethodValueProvider"/>
 	<bean id="spaceURLValueProvider" class="com.edgenius.wiki.security.strategy.SpaceURLValueProvider"/>
 	<bean id="securityDummyMethodValueProvider" class="com.edgenius.wiki.service.SecurityDummyMethodValueProvider"/>
-
-		
-	<bean id="exceptionTranslationFilter" class="com.edgenius.wiki.security.acegi.ExceptionTranslationFilter">
-		<property name="accessDeniedHandler"  ref="accessDeniedHandler"/>
-	</bean>
-	
-	<bean id="filterInvocationInterceptor" class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
-		<property name="authenticationManager" ref="authenticationManager"/>
-		<property name="accessDecisionManager" ref="accessDecisionManager"/>
-		<property name="objectDefinitionSource" ref="filterDefinitionSource"/>
-	</bean>
-	<bean id="filterDefinitionSource" class="com.edgenius.wiki.security.acegi.DBFilterInvocationDefinitionSource">
-		<property name="convertUrlToLowercaseBeforeComparison" value="true"/>
-		<property name="securityService" ref="securityService"/>
-	</bean>
-	
-	<!-- Comment URL filter interceptor, it is weak in Ajax application.
-	This bean is useless now
-	<bean id="urlMatcher" class="com.edgenius.wiki.security.acegi.URLMatcher"/>
-	 -->	
-	 
-	<bean id="securityDummy" class="com.edgenius.wiki.service.SecurityDummy"/>
 	
 	<aop:config proxy-target-class="true">
 		<aop:advisor advice-ref="methodSecurityInterceptor" order="40" pointcut="execution(* *..wiki.service.SecurityDummy.check*(..))"/>
@@ -370,5 +337,44 @@
 		<aop:advisor advice-ref="pageSecurityInterceptor" order="35" pointcut="execution(* *..wiki.service.PageService.removeDraft(..))"/>
 		<aop:advisor advice-ref="pageSecurityInterceptor" order="35" pointcut="execution(* *..wiki.service.PageService.saveDraft(..))"/>		
 	</aop:config>
+	
+
+	<!-- ================================================================================================================================================= -->
+	<!--  Services and specical method security interceptors -->
+	<bean id="securityDummy" class="com.edgenius.wiki.service.SecurityDummy"/>
+	
+	<bean id="securityService" class="com.edgenius.wiki.security.service.SecurityServiceImpl" autowire="byName">
+		<property name="initialSpaceReadingCacheAtStart" value="false"/>
+  		<property name="patternStrategy" ref="patternStrategy"/>
+  		<property name="authenticationManager" ref="authenticationManager"/>
+
+  	</bean>
+  	
+	<bean id="userSecurityInterceptor" class="org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor">
+		<constructor-arg>
+			<bean class="com.edgenius.wiki.security.acegi.UserMethodBeforeAdvice">
+				<property name="securityService" ref="securityService"/>
+		        <property name="methodExceptionHandler" ref="methodExceptionHandler"/>
+			</bean>
+		</constructor-arg>
+    </bean>
+    
+	<bean id="pageSecurityInterceptor" class="org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor">
+		<constructor-arg>
+			<bean class="com.edgenius.wiki.security.acegi.PageMethodBeforeAdvice">
+		        <property name="methodExceptionHandler" ref="methodExceptionHandler"/>
+			</bean>
+		</constructor-arg>
+    </bean>
+	<bean name="userCacheProvider" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+		<property name="cache" ref="userCache"/>
+	</bean>
+
+	<bean id="policyCache" class="com.edgenius.wiki.security.service.PolicyCache">
+		<property name="cache" ref="policyCacheContainer"/>
+	</bean>
+	
+	<!-- This bean is optional; it isn't used by any other bean as it only listens and logs -->
+	<bean id="loggerListener" class="org.springframework.security.access.event.LoggerListener"/>
 	
 </beans>
