@@ -42,8 +42,8 @@ import com.edgenius.wiki.security.service.SecurityService;
  * 
  * @author Dapeng.Ni
  */
-public class DBMethodDefinitionSource implements SecurityMetadataSource {
-	private static final Logger logger = LoggerFactory.getLogger(DBMethodDefinitionSource.class);
+public class DBMethodSecurityMetadataSource implements SecurityMetadataSource {
+	private static final Logger logger = LoggerFactory.getLogger(DBMethodSecurityMetadataSource.class);
 	private SecurityService securityService;
 	
 	public Collection<ConfigAttribute> getAttributes(Object object) {

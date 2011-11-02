@@ -38,7 +38,7 @@ import com.edgenius.wiki.security.service.SecurityService;
  * SVN to see its brilliant history: which support URI, to parameter exactly match ect.
  * 
  */
-public class DBFilterInvocationDefinitionSource implements FilterInvocationSecurityMetadataSource{
+public class DBFilterSecurityMetadataSource implements FilterInvocationSecurityMetadataSource{
 	
 	//properties
 	private boolean convertUrlToLowercaseBeforeComparison = false;

@@ -167,7 +167,7 @@
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="accessDecisionManager" ref="accessDecisionManager"/>
 		<property name="securityMetadataSource">
-			<bean class="com.edgenius.wiki.security.acegi.DBFilterInvocationDefinitionSource">
+			<bean class="com.edgenius.wiki.security.acegi.DBFilterSecurityMetadataSource">
 				<property name="convertUrlToLowercaseBeforeComparison" value="true"/>
 				<property name="securityService" ref="securityService"/>
 			</bean>
@@ -235,7 +235,7 @@
 		<property name="securityService" ref="securityService"/>
 	</bean>
 	
-	<bean id="methodSecurityMetadataSource" class="com.edgenius.wiki.security.acegi.DBMethodDefinitionSource">
+	<bean id="methodSecurityMetadataSource" class="com.edgenius.wiki.security.acegi.DBMethodSecurityMetadataSource">
 		<property name="securityService" ref="securityService"/>
 	</bean>
 
