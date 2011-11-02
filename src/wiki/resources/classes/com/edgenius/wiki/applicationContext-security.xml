@@ -14,7 +14,7 @@
 	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
 	 <constructor-arg>
     	<list>
-	         <security:filter-chain pattern="/**/feed.do*" filters="
+	         <security:filter-chain pattern="/feed/*" filters="
 	         	securityContextPersistenceFilter,
 	         	authenticationProcessingFilter,
 	         	rememberMeProcessingFilter,
@@ -103,7 +103,10 @@
 		<!-- URL redirected to after logout -->
 		<constructor-arg value="/index.jsp"/>
 		<constructor-arg>
-			<bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+			<list>
+				<bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+				<ref bean="rememberMeServices"/>
+			</list>
 		</constructor-arg>
 	</bean>
 
