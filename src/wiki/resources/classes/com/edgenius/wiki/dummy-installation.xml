@@ -9,15 +9,14 @@
   
 	<!-- org.springframework.web.filter.DelegatingFilterProxy requires "springSecurityFilterChain" bean, here is just dummy one for install proces
 	-->
-	<bean id="springSecurityFilterChain" class="org.springframework.security.util.FilterChainProxy">
+	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
 	     <security:filter-chain-map path-type="ant" >
 	    
 	         <security:filter-chain pattern="/**" filters="anonymousProcessingFilter"/>
 	     </security:filter-chain-map>
 	</bean>
 	
-	<bean id="anonymousProcessingFilter"
-		  class="org.springframework.security.providers.anonymous.AnonymousProcessingFilter">
+	<bean id="anonymousProcessingFilter" class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
 		<property name="key" value="changeThis"/>
 		<property name="userAttribute" value="anonymousUser,ROLE_SYS_ANONYMOUS"/>
 	</bean>
