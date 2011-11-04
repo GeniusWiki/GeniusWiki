@@ -49,7 +49,7 @@ public class RemoveSpaceJob extends AuthenticatedQuartzJobBean {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+	public void execute(JobExecutionContext context) throws JobExecutionException {
 		Space space = null;
 		try {
 			String adminUsername = proxyLoginAsSystemAdmin();

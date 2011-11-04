@@ -78,14 +78,9 @@ public class RemoveSpaceJobInvoker implements ExportableJob{
 		Date startDate = DateUtils.addHours( new Date(), delayHours);
 		// start the scheduling job
 		try{
-			//delete trigger: restore 
-			Trigger trigger = scheduler.getTrigger(triggerKey);
-			if(trigger != null){
-				scheduler.unscheduleJob(triggerKey);
-				log.info("Last remove space job is cancelled and ready for new job set");
-			}	
+			cancelJob(spaceUname);
 			
-			trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).startAt(startDate).build();
+			Trigger trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).startAt(startDate).build();
 			scheduler.scheduleJob(removeSpaceJob, trigger);
 			log.info("Remove space " + spaceUname + " is scheduled in " + delayHours + " hours later.");
 		}catch (SchedulerException e){
@@ -96,7 +91,18 @@ public class RemoveSpaceJobInvoker implements ExportableJob{
 
 	public void cancelJob(String spaceUname) throws QuartzException{
 		try {
-			scheduler.unscheduleJob(new TriggerKey(REMOVE_SPACE_TRIGGER+ spaceUname, QUARTZ_EXPORTABLE_JOB_GROUP));
+			//delete trigger 
+			TriggerKey triggerKey = new TriggerKey(REMOVE_SPACE_TRIGGER+ spaceUname, QUARTZ_EXPORTABLE_JOB_GROUP);
+			if(scheduler.checkExists(triggerKey)){
+				scheduler.unscheduleJob(triggerKey);
+				log.info("Last remove space job is cancelled and ready for new job set");
+			}	
+			
+			JobKey jobKey = new JobKey(REMOVE_SPACE_JOB_PRE+ spaceUname, QUARTZ_EXPORTABLE_JOB_GROUP);
+			if(scheduler.checkExists(jobKey)){
+				scheduler.deleteJob(jobKey);
+				log.info("Last remove space job is cancelled and ready for new job set");
+			}
 		} catch (SchedulerException e) {
 			log.error("Error occurred at [RemoveSpace Schedule]- fail to cancel scheduling:" , e);
 			throw new QuartzException("Error occurred at [RemoveSpace Schedule]- fail to cancel scheduling",e);
@@ -105,9 +111,9 @@ public class RemoveSpaceJobInvoker implements ExportableJob{
 	
 	public int getLeftHours(String spaceUname){
 		try {
-			List<? extends Trigger> triggers = scheduler.getTriggersOfJob(new JobKey(REMOVE_SPACE_JOB_PRE+ spaceUname,QUARTZ_EXPORTABLE_JOB_GROUP));
-			if(triggers != null && triggers.size() > 0){
-				String hours = DurationFormatUtils.formatDuration(triggers.get(0).getStartTime().getTime() - new Date().getTime(), "H");
+			Trigger trigger = scheduler.getTrigger(new TriggerKey(REMOVE_SPACE_TRIGGER+ spaceUname,QUARTZ_EXPORTABLE_JOB_GROUP));
+			if(trigger != null){
+				String hours = DurationFormatUtils.formatDuration(trigger.getStartTime().getTime() - new Date().getTime(), "H");
 				return NumberUtils.toInt(hours);
 			}else{
 				log.warn("Unable to get job detail for space remove job " + spaceUname);
@@ -135,12 +141,12 @@ public class RemoveSpaceJobInvoker implements ExportableJob{
 				String username = ""; 
 				if(desc.startsWith(spaceUname+":"))
 					username = desc.substring(spaceUname.length()+1);
+
+				TriggerKey triggerKey = new TriggerKey(REMOVE_SPACE_TRIGGER+ spaceUname, QUARTZ_EXPORTABLE_JOB_GROUP);
 				
-				List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
+				Trigger trigger = scheduler.getTrigger(triggerKey);
 				int hours = -1;
-				if(triggers != null && triggers.size() > 0 ) {
-					//per trigger per job
-					Trigger trigger = triggers.get(0);
+				if(trigger != null) {
 					long period = trigger.getNextFireTime().getTime() - new Date().getTime();
 					//to hours
 					if(period > 0)

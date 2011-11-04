@@ -25,8 +25,10 @@ package com.edgenius.wiki.quartz;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 
 import com.edgenius.wiki.service.BackupException;
 import com.edgenius.wiki.service.BackupService;
@@ -39,7 +41,15 @@ public class BackupJob extends AuthenticatedQuartzJobBean {
 
 
 	@Override
-	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+	public void execute(JobExecutionContext context) throws JobExecutionException {
+		try {
+			this.applicationContext = (ApplicationContext) context.getScheduler().getContext().get("applicationContext");
+		} catch (SchedulerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		BackupService backupService = (BackupService) applicationContext.getBean(BackupService.SERVICE_NAME);
 		try {
 			proxyLoginAsSystemAdmin();
@@ -52,7 +62,6 @@ public class BackupJob extends AuthenticatedQuartzJobBean {
 		}finally{
 			logout();
 		}
-
 		
 	}
 	

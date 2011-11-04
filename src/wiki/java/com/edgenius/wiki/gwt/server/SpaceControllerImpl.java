@@ -483,9 +483,7 @@ public class SpaceControllerImpl extends GWTSpringController implements SpaceCon
 	public void setSettingService(SettingService settingService) {
 		this.settingService = settingService;
 	}
-	/**
-	 * @param repositoryService the repositoryService to set
-	 */
+
 	public void setRepositoryService(RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
 	}

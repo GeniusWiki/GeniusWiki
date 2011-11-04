@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Dapeng.Ni
  */
-public class BackupJobInvoker  implements ExportableJob{
+public class BackupJobInvoker implements ExportableJob{
 	private static final Logger log = LoggerFactory.getLogger(BackupJobInvoker.class);
 	private static final String JOB_NAME = "Backup-QuartJob";
 	private static final String TRIGGER_NAME = "Backup-Trigger";
@@ -55,7 +55,6 @@ public class BackupJobInvoker  implements ExportableJob{
 
 	private Scheduler scheduler;
 	private TriggerKey triggerKey;
-	private JobKey jobKey;
 
 	public BackupJobInvoker(){
 		backupJob = JobBuilder.newJob(BackupJob.class)
@@ -66,7 +65,6 @@ public class BackupJobInvoker  implements ExportableJob{
 				 .build();
 		
 		triggerKey = new TriggerKey(TRIGGER_NAME, QUARTZ_EXPORTABLE_JOB_GROUP);
-		jobKey = new JobKey(JOB_NAME);
 	}
 	public void invokeJob(String cron) throws QuartzException {
 
@@ -74,12 +72,10 @@ public class BackupJobInvoker  implements ExportableJob{
 		// start the scheduling job
 		try {
 			// check if this trigger already exist, if so, need cancel it then recreate
-			Trigger trigger = scheduler.getTrigger(triggerKey);
-			if (trigger != null) {
-				scheduler.unscheduleJob(triggerKey);
-				log.info("Last backup job is cancelled and ready for new job set");
-			}
-			trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).withSchedule(CronScheduleBuilder.cronSchedule(cron)).build();
+			cancelJob();
+			
+			CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey)
+					.withSchedule(CronScheduleBuilder.cronSchedule(cron)).build();
 			scheduler.scheduleJob(backupJob, trigger);
 
 			log.info("Backup job is scheduled in " + cron);
@@ -94,7 +90,17 @@ public class BackupJobInvoker  implements ExportableJob{
 
 	public void cancelJob() throws QuartzException {
 		try {
-			scheduler.unscheduleJob(triggerKey);
+			//delete trigger 
+			if(scheduler.checkExists(triggerKey)){
+				scheduler.unscheduleJob(triggerKey);
+				log.info("Last backup job is cancelled and ready for new job set");
+			}	
+			
+			JobKey jobKey = new JobKey(JOB_NAME, QUARTZ_EXPORTABLE_JOB_GROUP);
+			if(scheduler.checkExists(jobKey)){
+				scheduler.deleteJob(jobKey);
+				log.info("Last backup job is cancelled and ready for new job set");
+			}
 		} catch (SchedulerException e) {
 			log.error("Error occurred at [Backup Job Schedule]- fail to cancel scheduling:", e);
 			throw new QuartzException("Error occurred at [Backup Job  Schedule]- fail to cancel scheduling", e);
@@ -105,17 +111,14 @@ public class BackupJobInvoker  implements ExportableJob{
 		ExportedJob expJob = null;
 		try {
 			List<Map<String,Object>> jobs = new ArrayList<Map<String,Object>>();
+		
+			Trigger trigger = scheduler.getTrigger(triggerKey);
+			if(trigger != null ) {
+				String expr = ((CronTrigger)trigger).getCronExpression();
 				
-			List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
-			if(triggers != null && triggers.size() > 0 ) {
-				//per trigger per job
-				if(triggers.get(0) instanceof CronTrigger){
-					String expr = ((CronTrigger)triggers.get(0)).getCronExpression();
-					
-					Map<String, Object> jobData = new HashMap<String, Object>();
-					jobData.put(CRON_EXPR,expr);
-					jobs.add(jobData);
-				}
+				Map<String, Object> jobData = new HashMap<String, Object>();
+				jobData.put(CRON_EXPR,expr);
+				jobs.add(jobData);
 			}
 
 			if(jobs.size() > 0){

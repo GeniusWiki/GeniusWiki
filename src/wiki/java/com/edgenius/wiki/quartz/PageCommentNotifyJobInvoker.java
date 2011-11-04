@@ -26,8 +26,10 @@ package com.edgenius.wiki.quartz;
 import java.text.ParseException;
 
 import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
@@ -66,12 +68,10 @@ public class PageCommentNotifyJobInvoker {
 		// start the scheduling job
 		try{
 			//check if this trigger already exist, if so, need cancel it then recreate
-			Trigger trigger = scheduler.getTrigger(triggerKey);
-			if(trigger != null){
-				scheduler.unscheduleJob(triggerKey);
-				log.info("Last PageCommentNotify job is cancelled and ready for new job set");
-			}
-			trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).withSchedule(CronScheduleBuilder.cronSchedule(Global.CommentsNotifierCron)).build(); 
+			cancelJob();
+			
+			CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey)
+					.withSchedule(CronScheduleBuilder.cronSchedule(Global.CommentsNotifierCron)).build(); 
 			scheduler.scheduleJob(commentNotifyJob, trigger);
 			
 			log.info("PageCommentNotify is scheduled in " + Global.CommentsNotifierCron);
@@ -86,10 +86,19 @@ public class PageCommentNotifyJobInvoker {
 	
 	public void cancelJob() throws QuartzException{
 		try {
-			scheduler.unscheduleJob(triggerKey);
+			if(scheduler.checkExists(triggerKey)){
+				scheduler.unscheduleJob(triggerKey);
+				log.info("PageCommentNotify job trigger is cancelled." );
+			}
+			
+			JobKey jobKey = new JobKey(JOB_NAME, Scheduler.DEFAULT_GROUP);
+			if(scheduler.checkExists(jobKey)){
+				scheduler.deleteJob(jobKey);
+				log.info("PageCommentNotify job is removed." );
+			}
 		} catch (SchedulerException e) {
-			log.error("Error occurred at [IndexOptimize Schedule]- fail to cancel scheduling:" , e);
-			throw new QuartzException("Error occurred at [IndexOptimize Schedule]- fail to cancel scheduling",e);
+			log.error("Error occurred at [PageCommentNotify Schedule]- fail to cancel scheduling:" , e);
+			throw new QuartzException("Error occurred at [PageCommentNotify Schedule]- fail to cancel scheduling",e);
 		}
 	}
 	

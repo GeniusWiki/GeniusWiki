@@ -34,7 +34,7 @@ import com.edgenius.wiki.service.NotificationService;
 public class VersionCheckJob extends AuthenticatedQuartzJobBean{
 
 	@Override
-	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+	public void execute(JobExecutionContext context) throws JobExecutionException {
 		
 		NotificationService notificationService = (NotificationService) applicationContext.getBean(NotificationService.SERVICE_NAME);
 		notificationService.doVersionCheck();
