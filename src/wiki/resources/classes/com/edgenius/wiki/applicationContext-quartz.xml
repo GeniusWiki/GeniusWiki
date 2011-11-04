@@ -24,36 +24,6 @@
 		<property name="startupDelay" value="90" />
 	</bean>
 	
-	<bean id="removeSpaceJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass">
-			<value>com.edgenius.wiki.quartz.RemoveSpaceJob</value>
-		</property>
-	</bean>
-	
-	<bean id="maintainJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass">
-			<value>com.edgenius.wiki.quartz.MaintainJob</value>
-		</property>
-	</bean>
-	
-	<bean id="backupJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass">
-			<value>com.edgenius.wiki.quartz.BackupJob</value>
-		</property>
-	</bean>
-	
-	<bean id="versionCheckJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass">
-			<value>com.edgenius.wiki.quartz.VersionCheckJob</value>
-		</property>
-	</bean>
-	
-	<bean id="commentNotifyJob"	class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass">
-			<value>com.edgenius.wiki.quartz.PageCommentNotifyJob</value>
-		</property>
-	</bean>
-	
 	<bean id="removeSpaceJobInvoker" class="com.edgenius.wiki.quartz.RemoveSpaceJobInvoker">
 	</bean>
 	<bean id="maintainJobInvoker" class="com.edgenius.wiki.quartz.MaintainJobInvoker">

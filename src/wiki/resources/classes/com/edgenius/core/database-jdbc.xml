@@ -39,7 +39,7 @@
         <property name="removeAbandonedTimeout" value="60"/>
         <property name="logAbandoned" value="true"/>
         <property name="testOnBorrow" value="true"/>
-        <property name="validationQuery" value="select 1 from @TOKEN.TABLE.PREFIX@QRTZ_LOCKS"/>
+        <property name="validationQuery" value="select 1"/>
     </bean>
 
 </beans>
