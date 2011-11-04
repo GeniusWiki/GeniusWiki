@@ -25,11 +25,14 @@ package com.edgenius.wiki.quartz;
 
 import java.text.ParseException;
 
-import org.quartz.CronTrigger;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,20 +48,30 @@ public class PageCommentNotifyJobInvoker {
 	
 	private JobDetail commentNotifyJob;
 	private Scheduler scheduler;
+	private TriggerKey triggerKey;
 
+	public PageCommentNotifyJobInvoker() {
+		commentNotifyJob = JobBuilder.newJob(PageCommentNotifyJob.class)
+				 .withIdentity(JOB_NAME, Scheduler.DEFAULT_GROUP)
+				 .withDescription(JOB_NAME)
+				 .storeDurably()
+				 .requestRecovery()
+				 .build();
+		
+		triggerKey = new TriggerKey(TRIGGER_NAME,Scheduler.DEFAULT_GROUP);
+	}
 	public void invokeJob() throws QuartzException{
-		commentNotifyJob.setName(JOB_NAME);
-		commentNotifyJob.setDescription(JOB_NAME);
+
 		
 		// start the scheduling job
 		try{
 			//check if this trigger already exist, if so, need cancel it then recreate
-			Trigger trigger = scheduler.getTrigger(TRIGGER_NAME,Scheduler.DEFAULT_GROUP);
+			Trigger trigger = scheduler.getTrigger(triggerKey);
 			if(trigger != null){
-				scheduler.unscheduleJob(TRIGGER_NAME, Scheduler.DEFAULT_GROUP);
+				scheduler.unscheduleJob(triggerKey);
 				log.info("Last PageCommentNotify job is cancelled and ready for new job set");
 			}
-			trigger = new CronTrigger(TRIGGER_NAME,Scheduler.DEFAULT_GROUP, Global.CommentsNotifierCron);
+			trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).withSchedule(CronScheduleBuilder.cronSchedule(Global.CommentsNotifierCron)).build(); 
 			scheduler.scheduleJob(commentNotifyJob, trigger);
 			
 			log.info("PageCommentNotify is scheduled in " + Global.CommentsNotifierCron);
@@ -73,7 +86,7 @@ public class PageCommentNotifyJobInvoker {
 	
 	public void cancelJob() throws QuartzException{
 		try {
-			scheduler.unscheduleJob(TRIGGER_NAME, Scheduler.DEFAULT_GROUP);
+			scheduler.unscheduleJob(triggerKey);
 		} catch (SchedulerException e) {
 			log.error("Error occurred at [IndexOptimize Schedule]- fail to cancel scheduling:" , e);
 			throw new QuartzException("Error occurred at [IndexOptimize Schedule]- fail to cancel scheduling",e);
@@ -83,12 +96,6 @@ public class PageCommentNotifyJobInvoker {
 	//********************************************************************
 	//               set /get 
 	//********************************************************************
-	public JobDetail getCommentNotifyJob() {
-		return commentNotifyJob;
-	}
-	public void setCommentNotifyJob(JobDetail commentNotifyJob) {
-		this.commentNotifyJob = commentNotifyJob;
-	}
 	public Scheduler getScheduler() {
 		return scheduler;
 	}

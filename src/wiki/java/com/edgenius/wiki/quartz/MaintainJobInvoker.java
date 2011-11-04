@@ -25,11 +25,14 @@ package com.edgenius.wiki.quartz;
 
 import java.text.ParseException;
 
-import org.quartz.CronTrigger;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,20 +48,30 @@ public class MaintainJobInvoker {
 	
 	private JobDetail maintainJob;
 	private Scheduler scheduler;
+	private TriggerKey triggerKey;
 	
+	public MaintainJobInvoker() {
+		maintainJob = JobBuilder.newJob(MaintainJob.class)
+				 .withIdentity(JOB_NAME, Scheduler.DEFAULT_GROUP)
+				 .withDescription(JOB_NAME)
+				 .storeDurably()
+				 .requestRecovery()
+				 .build();
+		
+		triggerKey = new TriggerKey(TRIGGER_NAME,Scheduler.DEFAULT_GROUP);
+	}
 	public void invokeJob() throws QuartzException{
-		maintainJob.setName(JOB_NAME);
-		maintainJob.setDescription(JOB_NAME);
 		
 		// start the scheduling job
 		try{
 			//check if this trigger already exist, if so, need cancel it then recreate
-			Trigger trigger = scheduler.getTrigger(TRIGGER_NAME,Scheduler.DEFAULT_GROUP);
+			Trigger trigger = scheduler.getTrigger(triggerKey);
 			if(trigger != null){
-				scheduler.unscheduleJob(TRIGGER_NAME, Scheduler.DEFAULT_GROUP);
+				scheduler.unscheduleJob(triggerKey);
 				log.info("Last maintain job is cancelled and ready for new job set");
 			}
-			trigger = new CronTrigger(TRIGGER_NAME,Scheduler.DEFAULT_GROUP, Global.MaintainJobCron);
+			trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).withSchedule(CronScheduleBuilder.cronSchedule(Global.MaintainJobCron)).build();
+			
 			scheduler.scheduleJob(maintainJob, trigger);
 			
 			log.info("Maintain job is scheduled in " + Global.MaintainJobCron);
@@ -72,7 +85,7 @@ public class MaintainJobInvoker {
 	}
 	public void cancelJob() throws QuartzException{
 		try {
-			scheduler.unscheduleJob(TRIGGER_NAME, Scheduler.DEFAULT_GROUP);
+			scheduler.unscheduleJob(triggerKey);
 		} catch (SchedulerException e) {
 			log.error("Error occurred at [Maintain job  Schedule]- fail to cancel scheduling:" , e);
 			throw new QuartzException("Error occurred at [Maintain job  Schedule]- fail to cancel scheduling",e);
@@ -82,16 +95,11 @@ public class MaintainJobInvoker {
 	//********************************************************************
 	//               set /get 
 	//********************************************************************
-	public JobDetail getMaintainJob() {
-		return maintainJob;
-	}
-	public void setMaintainJob(JobDetail maintainJob) {
-		this.maintainJob = maintainJob;
-	}
 	public Scheduler getScheduler() {
 		return scheduler;
 	}
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
+
 }

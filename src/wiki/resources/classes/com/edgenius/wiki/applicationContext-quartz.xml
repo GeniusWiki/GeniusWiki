@@ -13,7 +13,7 @@
 				<prop key="org.quartz.jobStore.class">org.springframework.scheduling.quartz.LocalDataSourceJobStore</prop>
 				<prop key="org.quartz.jobStore.driverDelegateClass">${quartz.jobstore.driver}</prop>
 				<prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
-				<prop key="org.quartz.jobStore.tablePrefix">@TOKEN.TABLE.PREFIX@QRTZ_</prop>
+				<prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
 			</props>
 		</property>
 		<property name="dataSource">

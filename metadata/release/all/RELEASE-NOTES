@@ -1,6 +1,14 @@
 Version 3.0
 =======================================================
 h2. Enhancements
+* Some major third party libraries upgrades. Spring, Spring Security, Lucene etc.
+* MySQL 5.5 jump to deck. MySQL 4.x is not offically supported.
+
+h2. Bugs
+
+Version 3.0
+=======================================================
+h2. Enhancements
 * Many UI small enhancements.
 * User hover out profile popup in instance/space/page permission control user list. 
 

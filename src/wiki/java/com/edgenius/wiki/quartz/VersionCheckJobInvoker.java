@@ -25,11 +25,14 @@ package com.edgenius.wiki.quartz;
 
 import java.text.ParseException;
 
-import org.quartz.CronTrigger;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,23 +48,34 @@ public class VersionCheckJobInvoker {
 	
 	private JobDetail versionCheckJob;
 	private Scheduler scheduler;
+	private TriggerKey triggerKey;
 	
+	public VersionCheckJobInvoker() {
+		versionCheckJob = JobBuilder.newJob(VersionCheckJob.class)
+				 .withIdentity(JOB_NAME, Scheduler.DEFAULT_GROUP)
+				 .withDescription(JOB_NAME)
+				 .storeDurably()
+				 .requestRecovery()
+				 .build();
+		
+		triggerKey = new TriggerKey(TRIGGER_NAME,Scheduler.DEFAULT_GROUP);
+	}
 	public void invokeJob() throws QuartzException{
 		if(!Global.VersionCheck)
 			return;
 		
 		// start the scheduling job
 		try{
-			versionCheckJob.setName(JOB_NAME);
-			versionCheckJob.setDescription(JOB_NAME);
-			
+	
 			//check if this trigger already exist, if so, need cancel it then recreate
-			Trigger trigger = scheduler.getTrigger(TRIGGER_NAME,Scheduler.DEFAULT_GROUP);
+			Trigger trigger = scheduler.getTrigger(triggerKey);
 			if(trigger != null){
-				scheduler.unscheduleJob(TRIGGER_NAME, Scheduler.DEFAULT_GROUP);
+				scheduler.unscheduleJob(triggerKey);
 				log.info("Last version check job is cancelled and ready for new job set");
 			}
-			trigger = new CronTrigger(TRIGGER_NAME,Scheduler.DEFAULT_GROUP, Global.VersionCheckCron);
+			
+			trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).withSchedule(CronScheduleBuilder.cronSchedule(Global.VersionCheckCron)).build();
+			
 			scheduler.scheduleJob(versionCheckJob, trigger);
 			
 			log.info("Version check is scheduled in " + Global.VersionCheckCron);
@@ -75,7 +89,7 @@ public class VersionCheckJobInvoker {
 	}
 	public void cancelJob() throws QuartzException{
 		try {
-			scheduler.unscheduleJob(TRIGGER_NAME, Scheduler.DEFAULT_GROUP);
+			scheduler.unscheduleJob(triggerKey);
 			log.info("Version check job is cancelled." );
 		} catch (SchedulerException e) {
 			log.error("Error occurred at [VersionCheck Schedule]- fail to cancel scheduling:" , e);
@@ -93,10 +107,5 @@ public class VersionCheckJobInvoker {
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
-	public JobDetail getVersionCheckJob() {
-		return versionCheckJob;
-	}
-	public void setVersionCheckJob(JobDetail versionCheckJob) {
-		this.versionCheckJob = versionCheckJob;
-	}
+
 }
