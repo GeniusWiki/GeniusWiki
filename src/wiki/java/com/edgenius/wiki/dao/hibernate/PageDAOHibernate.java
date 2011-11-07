@@ -371,8 +371,8 @@ public class PageDAOHibernate extends BaseDAOHibernate<Page> implements PageDAO 
 	}
 
 	public List<Page> getPageForIndexing(final int start, final int returnNum) {
-		return (List<Page>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+		return (List<Page>) getHibernateTemplate().execute(new HibernateCallback<List<Page>>(){
+			public List<Page> doInHibernate(Session session) throws HibernateException, SQLException {
 				Query query = session.createQuery(GET_PAGE_FOR_INDEXING);
 				if(start > 0)
 					query.setFirstResult(start);
@@ -408,7 +408,7 @@ public class PageDAOHibernate extends BaseDAOHibernate<Page> implements PageDAO 
 	}
 
 	public Page getPageByProgressExtLinkID(String spaceUname, String extLinkID) {
-		List<Page> list = getHibernateTemplate().find(GET_PAGES_BY_PROGRESS_EXT_LINK_ID,new String[]{spaceUname, extLinkID});
+		List<Page> list = getHibernateTemplate().find(GET_PAGES_BY_PROGRESS_EXT_LINK_ID,new Object[]{spaceUname, extLinkID});
 		if(list == null || list.size() == 0)
 			return null;
 		return list.get(0);
