@@ -30,7 +30,6 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriter.MaxFieldLength;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.util.Version;
 import org.springmodules.lucene.index.LuceneIndexAccessException;
 import org.springmodules.lucene.index.factory.AbstractIndexFactory;
 import org.springmodules.lucene.index.factory.IndexFactory;
@@ -47,7 +46,7 @@ public class SimpleIndexFactory  extends AbstractIndexFactory implements IndexFa
 	public SimpleIndexFactory(Directory directory) {
 		setDirectory(directory);
 		//set default analyser
-		setAnalyzer(new StandardAnalyzer(Version.LUCENE_CURRENT));
+		setAnalyzer(new StandardAnalyzer(LuceneVersion.VERSION));
 	}
 
 	private void checkIndexLocking() throws IOException {

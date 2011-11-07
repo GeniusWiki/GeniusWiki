@@ -51,14 +51,12 @@ import org.apache.lucene.search.highlight.QueryScorer;
 import org.apache.lucene.search.highlight.Scorer;
 import org.apache.lucene.search.highlight.SimpleFragmenter;
 import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springmodules.lucene.search.core.SearcherCallback;
 import org.springmodules.lucene.search.factory.LuceneHits;
 import org.springmodules.lucene.search.factory.LuceneSearcher;
-import org.springmodules.lucene.search.support.LuceneSearchSupport;
 
 import com.edgenius.core.SecurityValues.OPERATIONS;
 import com.edgenius.core.model.User;
@@ -71,7 +69,7 @@ import com.edgenius.wiki.security.service.SecurityService;
 /**
  * @author Dapeng.Ni
  */
-public abstract class AbstractSearchService extends LuceneSearchSupport {
+public abstract class AbstractSearchService {
 	protected static final int FRAGMENT_LEN = 200;
 
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -92,6 +90,8 @@ public abstract class AbstractSearchService extends LuceneSearchSupport {
 	protected SearchResult commonSearch(final String keyword, final int currPageNumber, 
 				final int returnCount, final User user, final String... advance)
 			throws SearchException {
+		
+		
 		try {
 			return (SearchResult) this.getLuceneSearcherTemplate().search(new SearcherCallback() {
 				public Object doWithSearcher(LuceneSearcher searcher) throws Exception {
@@ -193,7 +193,7 @@ public abstract class AbstractSearchService extends LuceneSearchSupport {
 		
 
 		keyword = QueryParser.escape(StringUtils.trimToEmpty(keyword));
-		QueryParser parser = new QueryParser(FieldName.CONTENT,new StandardAnalyzer(Version.LUCENE_CURRENT));
+		QueryParser parser = new QueryParser(FieldName.CONTENT,new StandardAnalyzer(LuceneVersion.VERSION));
 		
 		if (advKeyword == SearchService.KEYWORD_EXACT)
 			keyword = "\"" + keyword + "\"";
@@ -529,7 +529,7 @@ public abstract class AbstractSearchService extends LuceneSearchSupport {
 		if(hl == null)
 			return content;
 		
-		TokenStream tokenStream = new StandardAnalyzer(Version.LUCENE_CURRENT).tokenStream(FieldName.CONTENT, new StringReader(content));
+		TokenStream tokenStream = new StandardAnalyzer(LuceneVersion.VERSION).tokenStream(FieldName.CONTENT, new StringReader(content));
 		String frag;
 		try {
 			frag = hl.getBestFragments(tokenStream, content, 3, "...");

@@ -202,7 +202,7 @@
 	</bean>
 	
 	<!-- Search Factory -->
-	<bean id="searcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+	<bean id="searcherFactory" class="com.edgenius.wiki.search.service.ParallelSearcherFactory">
 		<property name="directories">
 			<list>
 				<ref local="pageFsDirectory"/>
@@ -220,7 +220,7 @@
 		</property>
 	</bean>
 	
-	<bean id="widgetSpaceSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+	<bean id="widgetSpaceSearcherFactory" class="com.edgenius.wiki.search.service.ParallelSearcherFactory">
 		<property name="directories">
 			<list>
 				<ref local="spaceFsDirectory"/>
@@ -233,21 +233,21 @@
 	org.springmodules.lucene.search.factory.SingleSearcherFactory has problem when a new index added. It won't immediately return 
 	new result but still get back old results. I don't have time to investigate, anyway, use ParallelMultipleSearcherFactory instead.
 	 -->
-	<bean id="spaceSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+	<bean id="spaceSearcherFactory" class="com.edgenius.wiki.search.service.ParallelSearcherFactory">
 		<property name="directories">
 			<list>
 				<ref local="spaceFsDirectory"/>
 			</list>
 		</property>
 	</bean>
-	<bean id="userSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+	<bean id="userSearcherFactory" class="com.edgenius.wiki.search.service.ParallelSearcherFactory">
 		<property name="directories">
 			<list>
 				<ref local="userFsDirectory"/>
 			</list>
 		</property>
 	</bean>
-	<bean id="roleSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+	<bean id="roleSearcherFactory" class="com.edgenius.wiki.search.service.ParallelSearcherFactory">
 		<property name="directories">
 			<list>
 				<ref local="roleFsDirectory"/>
@@ -256,7 +256,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="attachmentSearcherFactory" class="org.springmodules.lucene.search.factory.ParallelMultipleSearcherFactory">
+	<bean id="attachmentSearcherFactory" class="com.edgenius.wiki.search.service.ParallelSearcherFactory">
 		<property name="directories">
 			<list>
 				<ref local="attachmentFsDirectory"/>

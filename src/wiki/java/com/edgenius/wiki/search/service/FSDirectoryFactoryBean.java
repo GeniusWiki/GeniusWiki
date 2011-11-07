@@ -25,7 +25,6 @@ package com.edgenius.wiki.search.service;
 
 import java.io.File;
 
-import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.SimpleFSLockFactory;
 import org.springframework.beans.factory.BeanInitializationException;
@@ -37,20 +36,23 @@ import org.springframework.core.io.Resource;
 /**
  * @author Dapeng.Ni
  */
-public class FSDirectoryFactoryBean  implements FactoryBean, InitializingBean,DisposableBean {
+public class FSDirectoryFactoryBean  implements FactoryBean<FSDirectory>, InitializingBean,DisposableBean {
 
     private Resource location;
     private Resource lockLocation;
     private FSDirectory directory;
 
-    public Object getObject() throws Exception {
+    @Override
+    public FSDirectory getObject() throws Exception {
         return directory;
     }
 
-    public Class getObjectType() {
-        return Directory.class;
+    @Override
+    public Class<FSDirectory> getObjectType() {
+        return FSDirectory.class;
     }
 
+    @Override
     public boolean isSingleton() {
         return true;
     }
@@ -60,14 +62,13 @@ public class FSDirectoryFactoryBean  implements FactoryBean, InitializingBean,Di
      *  
      * <p>The location property must be set, and be a directory
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
         if (location == null) {
-            throw new BeanInitializationException(
-                    "Must specify a location property");
+            throw new BeanInitializationException("Must specify a location property");
         }
         if(lockLocation == null){
-        	throw new BeanInitializationException(
-            "Must specify a lock location property");
+        	throw new BeanInitializationException("Must specify a lock location property");
         }
         
         File locationDir = location.getFile();
@@ -78,7 +79,7 @@ public class FSDirectoryFactoryBean  implements FactoryBean, InitializingBean,Di
         if(!lockDir.exists()){
         	lockDir.mkdirs();
         }
-        directory = FSDirectory.getDirectory(locationDir, new SimpleFSLockFactory(lockDir));
+        directory = FSDirectory.open(locationDir, new SimpleFSLockFactory(lockDir));
     }
 	public void destroy() throws Exception {
 		directory.close();
@@ -93,8 +94,5 @@ public class FSDirectoryFactoryBean  implements FactoryBean, InitializingBean,Di
 	public void setLockLocation(Resource lockLocation) {
 		this.lockLocation = lockLocation;
 	}
-
-
-
 
 }

@@ -24,16 +24,16 @@
 package com.edgenius.wiki.search.service;
 
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springmodules.lucene.index.factory.IndexFactory;
 import org.springmodules.lucene.index.factory.LuceneIndexWriter;
 
 /**
  * @author Dapeng.Ni
  */
-public class SimpleIndexFactoryBean implements FactoryBean,InitializingBean {
+public class SimpleIndexFactoryBean implements FactoryBean<SimpleIndexFactory>,InitializingBean {
 
 	private SimpleIndexFactory factory;
 	private Directory directory;
@@ -41,15 +41,15 @@ public class SimpleIndexFactoryBean implements FactoryBean,InitializingBean {
 	/**
 	 * @see org.springframework.beans.factory.FactoryBean#getObject()
 	 */
-	public Object getObject() throws Exception {
+	public SimpleIndexFactory getObject() throws Exception {
 		return factory;
 	}
 
 	/**
 	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
 	 */
-	public Class getObjectType() {
-		return IndexFactory.class;
+	public Class<SimpleIndexFactory> getObjectType() {
+		return SimpleIndexFactory.class;
 	}
 
 	/**
@@ -76,8 +76,8 @@ public class SimpleIndexFactoryBean implements FactoryBean,InitializingBean {
 		} catch (Exception e) {
 		} finally{
 			//clean lock when factory initial
-			if(IndexReader.isLocked(getDirectory())){
-				IndexReader.unlock(getDirectory());
+			if(IndexWriter.isLocked(getDirectory())){
+				IndexWriter.unlock(getDirectory());
 			}
 		}
 	}

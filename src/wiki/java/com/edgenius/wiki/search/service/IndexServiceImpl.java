@@ -926,7 +926,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			throw new BeanInitializationException("Must set indexRoot and it must be directory");
 		}
 			
-		analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer());
+		analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneVersion.VERSION));
 		analyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
 		analyzer.addAnalyzer(FieldName.CONTRIBUTOR,new LowerCaseAnalyzer());
 		analyzer.addAnalyzer(FieldName.KEY,new LowerCaseAnalyzer());

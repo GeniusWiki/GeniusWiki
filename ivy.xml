@@ -100,10 +100,10 @@
 		<dependency org="org" name="displaytag" rev="1.1.1" conf="deploy->export;dev->export" />
 		 -->
 		<!--  need wait Spring Modules project come back or just replace that,  otherwise, no 3.0.0 above support -->
-        <dependency org="apache/lucene" name="lucene" rev="2.9.0" conf="deploy->default;dev->default"/>
-        <dependency org="apache/lucene" name="contrib" rev="2.9.0" conf="deploy->highlighter;dev->highlighter"/>
+        <dependency org="apache/lucene" name="lucene" rev="3.4.0" conf="deploy->default;dev->source"/>
+        <dependency org="apache/lucene" name="contrib" rev="3.4.0" conf="deploy->highlighter;dev->highlighter-source"/>
         <!--  highlighter depends on memeoy, but to make things easy, just put it here -->
-        <dependency org="apache/lucene" name="contrib" rev="2.9.0" conf="deploy->memory;dev->memory"/>
+        <dependency org="apache/lucene" name="contrib" rev="3.4.0" conf="deploy->memory;dev->memory-source"/>
 		
 		<dependency org="apache" name="jackrabbit" rev="1.4" conf="deploy->extractor;dev->extractor" />
 		<!-- 
