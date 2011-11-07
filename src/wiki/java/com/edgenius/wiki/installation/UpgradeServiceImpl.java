@@ -821,22 +821,6 @@ public class UpgradeServiceImpl implements UpgradeService {
 		String root = DataRoot.getDataRoot();
 		mergeCustomizedThemesOnVersion2180(root);
 	}
-
-	@SuppressWarnings("unused")
-	private void up3000To3100() throws Exception{
-		String root = DataRoot.getDataRoot();
-		if(FileUtil.exist(root+Server.FILE)){
-			Server server = new Server();
-			Properties prop = FileUtil.loadProperties(root+Server.FILE);
-			server.syncFrom(prop);
-			if(server.getMqServerEmbedded() == null || BooleanUtils.toBoolean(server.getMqServerEmbedded())){
-			    //embedded
-				server.setMqServerUrl("tcp://" + server.getMqServerUrl() + "?wireFormat.maxInactivityDuration=0");
-				server.syncTo(prop);
-				prop.store(FileUtil.getFileOutputStream(root+Server.FILE), "save by system program");
-			}
-		}
-	}
 	/**
 	 * @param root
 	 * @throws ParserConfigurationException
@@ -966,6 +950,66 @@ public class UpgradeServiceImpl implements UpgradeService {
 			log.error("Unable to parse out theme directory {}", (root+"data/themes/customized"));
 		}
 	}
+
+
+	@SuppressWarnings("unused")
+	private void up3000To3100() throws Exception{
+		log.info("Version 3.0 to 3.1 is upgarding");
+		
+		String root = DataRoot.getDataRoot();
+		if(FileUtil.exist(root+Server.FILE)){
+			Server server = new Server();
+			Properties prop = FileUtil.loadProperties(root+Server.FILE);
+			server.syncFrom(prop);
+			if(server.getMqServerEmbedded() == null || BooleanUtils.toBoolean(server.getMqServerEmbedded())){
+			    //embedded
+				server.setMqServerUrl("tcp://" + server.getMqServerUrl() + "?wireFormat.maxInactivityDuration=0");
+				server.syncTo(prop);
+				prop.store(FileUtil.getFileOutputStream(root+Server.FILE), "save by system program");
+			}
+		}
+		
+		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// database - remove all quartz tables - we don't backup Exportable job(backup and remove space) - it is not perfect but not big issue.
+		if(FileUtil.exist(root+Server.FILE)){
+			Server server = new Server();
+			Properties prop = FileUtil.loadProperties(root+Server.FILE);
+			server.syncFrom(prop);
+			String dbType = server.getDbType();
+		
+			String migrateSQL = dbType+"-3000-3100.sql";
+			DBLoader loader = new DBLoader();
+			ConnectionProxy con = loader.getConnection(dbType,server.getDbUrl(), server.getDbSchema(), server.getDbUsername(),server.getDbPassword());
+			loader.runSQLFile(dbType, migrateSQL,con);
+			
+			//reload quartz table
+			log.info("Initialize quartz tables for system...");
+			Statement stat = con.createStatement();
+			Statement dropStat = con.createStatement();
+			List<String> lines = loader.loadSQLFile(dbType,  dbType+"-quartz.sql");
+			for (String sql : lines) {
+				sql = sql.replaceAll("\n", " ").trim();
+				if(sql.toLowerCase().startsWith("drop ")){
+					try {
+						dropStat.execute(sql);
+					} catch (Exception e) {
+						log.error("Drop operation failed...." + sql);
+					}
+					continue;
+				}
+				stat.addBatch(sql);
+			}
+			stat.executeBatch();
+			
+			dropStat.close();
+			stat.close();
+			con.close();
+		}
+		
+	}
+
+	
 	//********************************************************************
 	//               Method for backup export upgrade
 	//********************************************************************

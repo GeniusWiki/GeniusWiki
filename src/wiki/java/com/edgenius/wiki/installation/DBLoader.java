@@ -519,9 +519,7 @@ public class DBLoader {
 	//********************************************************************
 	//               private methods
 	//********************************************************************
-	
-	@SuppressWarnings("unchecked")
-	private List<String> loadSQLFile(String type, String filename) throws IOException{
+	protected List<String> loadSQLFile(String type, String filename) throws IOException{
 		InputStream is = FileUtil.getFileInputStream("classpath:META-INF/meta/"+type+"/"+filename);
 		List<String> plines = IOUtils.readLines(is);
 		IOUtils.closeQuietly(is);
