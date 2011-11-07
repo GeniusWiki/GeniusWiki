@@ -42,7 +42,7 @@ public class MaintainJob  extends AuthenticatedQuartzJobBean {
 
 
 	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException {
+	public void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//  Purge old activity logs
 		if(Global.PurgeDaysOldActivityLog > 0){

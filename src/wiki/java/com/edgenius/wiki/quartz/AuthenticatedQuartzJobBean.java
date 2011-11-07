@@ -23,7 +23,6 @@
  */
 package com.edgenius.wiki.quartz;
 
-import org.quartz.Job;
 import org.springframework.context.ApplicationContext;
 
 import com.edgenius.wiki.security.service.SecurityService;
@@ -31,7 +30,7 @@ import com.edgenius.wiki.security.service.SecurityService;
 /**
  * @author Dapeng.Ni
  */
-public abstract class AuthenticatedQuartzJobBean implements Job{
+public abstract class AuthenticatedQuartzJobBean extends AbstractQuartzJobBean{
 	protected ApplicationContext applicationContext;
 
 	public String proxyLoginAsSystemAdmin(){

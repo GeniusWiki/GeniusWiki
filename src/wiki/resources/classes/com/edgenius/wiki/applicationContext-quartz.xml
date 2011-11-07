@@ -6,7 +6,8 @@
 	
 	<bean id="scheduler" class="com.edgenius.wiki.service.impl.SchedulerFactoryBean" destroy-method="destroy">
 		<property name="applicationContextSchedulerContextKey">
-			<value>applicationContext</value>
+			<!-- There is same value hardcode in AbstractQuartzJobBean.java -->
+			<value>applicationContext</value> 
   		</property>
 		<property name="quartzProperties">
 			<props>

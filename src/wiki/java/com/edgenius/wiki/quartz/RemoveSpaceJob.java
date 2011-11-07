@@ -47,9 +47,8 @@ public class RemoveSpaceJob extends AuthenticatedQuartzJobBean {
 	private static final Logger log = LoggerFactory.getLogger(RemoveSpaceJob.class);
 
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException {
+	public void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		Space space = null;
 		try {
 			String adminUsername = proxyLoginAsSystemAdmin();

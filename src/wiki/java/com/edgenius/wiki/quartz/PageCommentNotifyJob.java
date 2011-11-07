@@ -37,7 +37,7 @@ public class PageCommentNotifyJob extends AuthenticatedQuartzJobBean {
 	private static final Logger log = LoggerFactory.getLogger(PageCommentNotifyJob.class);
 
 	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException {
+	public void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		try{
 			//not good, directly use DAO...
 			CommentService commentService = (CommentService) applicationContext.getBean(CommentService.SERVICE_NAME);
