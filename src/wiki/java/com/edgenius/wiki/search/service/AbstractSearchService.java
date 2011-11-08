@@ -101,7 +101,13 @@ public abstract class AbstractSearchService extends LuceneSearchSupport{
 							// Don't use Lucene default filter function to filter out no reading permission results 
 							// it is too slow - it will retrieve all documents in index - whatever it is matched or not
 							//Filter filter = new SecurityFilter(user);
-							TopDocs hits = searcher.search(queries[0], LuceneVersion.MAX_RETURN, sort);
+							TopDocs hits;
+							if(sort == null){
+								hits = searcher.search(queries[0], LuceneVersion.MAX_RETURN);
+							}else{
+								hits = searcher.search(queries[0], LuceneVersion.MAX_RETURN, sort);
+							}
+							
 							SearchResult rs = getResult(searcher, hits, keyword, currPageNumber, returnCount, user,queries[1]);
 							return rs;
 						}else{

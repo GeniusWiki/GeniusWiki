@@ -30,5 +30,5 @@ import org.apache.lucene.util.Version;
 public class LuceneVersion {
 	
 	public static Version VERSION = Version.LUCENE_34;
-	public static int MAX_RETURN = 0;
+	public static int MAX_RETURN = 3000;
 }
