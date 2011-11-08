@@ -30,4 +30,9 @@ import org.apache.lucene.search.IndexSearcher;
  */
 public interface SearcherFactory {
 	IndexSearcher getSearcher() throws SearchException;
+
+	/**
+	 * Close IndexSearcher and IndexReader.
+	 */
+	void close() throws SearchException;
 }

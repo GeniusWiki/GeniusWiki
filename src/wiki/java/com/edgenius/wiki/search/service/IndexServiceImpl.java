@@ -516,7 +516,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				try {
 				FileUtils.cleanDirectory(file);
 				} catch (IOException e) {
-					log.error("Unable to clean index root directory:" + indexRoot.getFilename());
+					log.error("Unable to clean index root directory:" + indexRoot.getFilename(), e);
 				}
 			}
 		} catch (IOException e1) {

@@ -42,14 +42,31 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public class ParallelSearcherFactory implements InitializingBean, DisposableBean, SearcherFactory{
 	private Directory[] directories;
-	private IndexReader reader;
 	private ExecutorService exectorService = Executors.newCachedThreadPool();
+	
+	private ThreadLocal<IndexSearcher> container = new ThreadLocal<IndexSearcher>();
 	
 	@Override
 	public IndexSearcher getSearcher() throws SearchException{
 		try {
-			reader = reader.reopen();
+			if(container.get() != null){
+				return container.get();
+			}
+			IndexReader reader;
+			if(directories.length > 1){
+				IndexReader[] readers = new IndexReader[directories.length]; 
+				for (int idx=0; idx< directories.length; idx++) {
+					readers[idx] = IndexReader.open(directories[idx], true);
+				}
+				reader = new MultiReader(readers,true);
+			}else{
+				reader = IndexReader.open(directories[0]);
+			}
+			
 			IndexSearcher searcher = new IndexSearcher(reader, exectorService);
+			
+			container.set(searcher);
+			
 			return searcher;
 			
 		} catch (CorruptIndexException e) {
@@ -58,27 +75,32 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 			throw new SearchException(e);
 		}
 	}
-
+	@Override
+	public void close() throws SearchException {
+		if(container.get() != null){
+			IndexSearcher searcher = container.get();
+			container.remove();
+			try {
+				searcher.getIndexReader().close();
+				searcher.close();
+			} catch (IOException e) {
+				throw new SearchException(e);
+			}
+		}
+		
+	}
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		
-		if(directories.length > 1){
-			IndexReader[] readers = new IndexReader[directories.length]; 
-			for (int idx=0; idx< directories.length; idx++) {
-				readers[idx] = IndexReader.open(directories[idx], true);
-			}
-			reader = new MultiReader(readers,true);
-		}else if(directories.length > 0){
-			reader = IndexReader.open(directories[0]);
-		}else{
+		if(directories == null || directories.length == 0){
 			throw new BeanInitializationException("Must declare at least one directory");
 		}
 	}
 
 	@Override
 	public void destroy() throws Exception {
-		reader.close();
+		this.close();
 		exectorService.shutdown();
 	}
 
@@ -94,6 +116,9 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 	public void setDirectories(Directory[] directories) {
 		this.directories = directories;
 	}
+
+
+
 
 
 }

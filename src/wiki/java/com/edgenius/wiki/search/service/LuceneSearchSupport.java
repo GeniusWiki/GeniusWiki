@@ -23,14 +23,16 @@
  */
 package com.edgenius.wiki.search.service;
 
-import java.io.IOException;
-
 import org.apache.lucene.search.IndexSearcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Dapeng.Ni
  */
 public class LuceneSearchSupport  {
+	private static final Logger log = LoggerFactory.getLogger(LuceneSearchSupport.class);
+	
 	private SearcherFactory searcherFactory;
 
 	protected Object search(SearcherCallback searcherCallback) throws SearchException {
@@ -39,11 +41,14 @@ public class LuceneSearchSupport  {
 			
 			Object rs = searcherCallback.doWithSearcher(searcher);
 			
-			searcher.close();
-			
 			return rs;
-		} catch (IOException e) {
-			throw new SearchException(e);
+			
+		} finally{
+			try {
+				searcherFactory.close();
+			} catch (Exception e) {
+				log.error("Close IndexSearcher/IndexReader failed after search", e);
+			}
 		}
 	}
 
