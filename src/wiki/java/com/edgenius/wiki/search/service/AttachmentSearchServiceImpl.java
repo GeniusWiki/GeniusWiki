@@ -25,10 +25,9 @@ package com.edgenius.wiki.search.service;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
-import org.springmodules.lucene.search.core.SearcherCallback;
-import org.springmodules.lucene.search.factory.LuceneHits;
-import org.springmodules.lucene.search.factory.LuceneSearcher;
+import org.apache.lucene.search.TopDocs;
 
 /**
  * @author Dapeng.Ni
@@ -37,16 +36,22 @@ public class AttachmentSearchServiceImpl  extends AbstractSearchService implemen
 
 	public Document searchByNodeUuid(final String nodeUuid) throws SearchException {
 		
-		return (Document) this.getLuceneSearcherTemplate().search(new SearcherCallback() {
-			public Object doWithSearcher(LuceneSearcher searcher) throws Exception {
-				Term identifierTerm = new Term(FieldName.KEY,nodeUuid.toLowerCase());
-				TermQuery query = new TermQuery(identifierTerm);
-				LuceneHits hits = searcher.search(query);
-				Document doc = null;
-				if(hits.length() > 0){
-					doc = hits.doc(0);
+		return (Document) this.search(new SearcherCallback() {
+			public Object doWithSearcher(IndexSearcher searcher) throws SearchException {
+				try {
+					Term identifierTerm = new Term(FieldName.KEY,nodeUuid.toLowerCase());
+					TermQuery query = new TermQuery(identifierTerm);
+					TopDocs hits = searcher.search(query, LuceneVersion.MAX_RETURN);
+					Document doc = null;
+					
+					if(hits.totalHits > 0){
+						//assume only one
+						doc = searcher.doc(hits.scoreDocs[0].doc);
+					}
+					return doc;
+				} catch (Exception e) {
+					throw new SearchException(e);
 				}
-				return doc;
 			}
 		});
 	}

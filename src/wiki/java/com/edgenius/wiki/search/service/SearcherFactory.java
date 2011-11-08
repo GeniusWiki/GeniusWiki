@@ -1,6 +1,6 @@
 /* 
- * =====================================import org.apache.lucene.util.Version;
-C) 2007-2011 Edgenius (http://www.edgenius.com)
+ * =============================================================
+ * Copyright (C) 2007-2011 Edgenius (http://www.edgenius.com)
  * =============================================================
  * License Information: http://www.edgenius.com/licensing/edgenius/2.0/
  *
@@ -23,12 +23,11 @@ C) 2007-2011 Edgenius (http://www.edgenius.com)
  */
 package com.edgenius.wiki.search.service;
 
-import org.apache.lucene.util.Version;
+import org.apache.lucene.search.IndexSearcher;
+
 /**
  * @author Dapeng.Ni
  */
-public class LuceneVersion {
-	
-	public static Version VERSION = Version.LUCENE_34;
-	public static int MAX_RETURN = 0;
+public interface SearcherFactory {
+	IndexSearcher getSearcher() throws SearchException;
 }

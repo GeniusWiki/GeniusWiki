@@ -296,49 +296,31 @@
 	 	<property name="searcherFactory" ref="searcherFactory"/>
 	 	<property name="securityService" ref="securityService"/>
 	 	<property name="userReadingService" ref="userReadingService"/>
-	    <property name="analyzer">
-	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
-	    </property>
   	</bean>
   	
     <bean id="spaceSearchService" class="com.edgenius.wiki.search.service.SpaceSearchServiceImpl">
 	 	<property name="searcherFactory" ref="spaceSearcherFactory"/>
 	 	<property name="securityService" ref="securityService"/>
-	    <property name="analyzer">
-	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
-	    </property>
   	</bean>
   	
     <bean id="widgetSpaceSearchService" class="com.edgenius.wiki.search.service.WidgetSpaceSearchServiceImpl">
 	 	<property name="searcherFactory" ref="widgetSpaceSearcherFactory"/>
 	 	<property name="securityService" ref="securityService"/>
-	    <property name="analyzer">
-	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
-	    </property>
   	</bean>
   	
     <bean id="userSearchService" class="com.edgenius.wiki.search.service.UserSearchServiceImpl">
 	 	<property name="searcherFactory" ref="userSearcherFactory"/>
 	 	<property name="securityService" ref="securityService"/>
-	    <property name="analyzer">
-	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
-	    </property>
   	</bean>
   	
     <bean id="roleSearchService" class="com.edgenius.wiki.search.service.RoleSearchServiceImpl">
 	 	<property name="searcherFactory" ref="roleSearcherFactory"/>
 	 	<property name="securityService" ref="securityService"/>
-	    <property name="analyzer">
-	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
-	    </property>
   	</bean>
   	
     <bean id="attachmentSearchService" class="com.edgenius.wiki.search.service.AttachmentSearchServiceImpl">
 	 	<property name="searcherFactory" ref="attachmentSearcherFactory"/>
 	 	<property name="securityService" ref="securityService"/>
-	    <property name="analyzer">
-	        <bean class="org.apache.lucene.analysis.KeywordAnalyzer"/>
-	    </property>
   	</bean>
   	
   	<!--  The intercepter for index: They are JMS Message Producer to send message to com.edgenius.wiki.service.impl.IndexMQConsumer -->

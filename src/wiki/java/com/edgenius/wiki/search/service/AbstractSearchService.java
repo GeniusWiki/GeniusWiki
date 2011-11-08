@@ -39,10 +39,12 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.highlight.Formatter;
 import org.apache.lucene.search.highlight.Fragmenter;
 import org.apache.lucene.search.highlight.Highlighter;
@@ -54,9 +56,6 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
-import org.springmodules.lucene.search.core.SearcherCallback;
-import org.springmodules.lucene.search.factory.LuceneHits;
-import org.springmodules.lucene.search.factory.LuceneSearcher;
 
 import com.edgenius.core.SecurityValues.OPERATIONS;
 import com.edgenius.core.model.User;
@@ -69,7 +68,7 @@ import com.edgenius.wiki.security.service.SecurityService;
 /**
  * @author Dapeng.Ni
  */
-public abstract class AbstractSearchService {
+public abstract class AbstractSearchService extends LuceneSearchSupport{
 	protected static final int FRAGMENT_LEN = 200;
 
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -93,19 +92,23 @@ public abstract class AbstractSearchService {
 		
 		
 		try {
-			return (SearchResult) this.getLuceneSearcherTemplate().search(new SearcherCallback() {
-				public Object doWithSearcher(LuceneSearcher searcher) throws Exception {
-					if(StringUtils.trimToEmpty(keyword).length() > 0){
-						Query[] queries = createQuery(keyword, advance);
-						Sort sort = createSort(advance);
-						// Don't use Lucene default filter function to filter out no reading permission results 
-						// it is too slow - it will retrieve all documents in index - whatever it is matched or not
-						//Filter filter = new SecurityFilter(user);
-						LuceneHits hits = searcher.search(queries[0], sort);
-						SearchResult rs = getResult(hits, keyword, currPageNumber, returnCount, user,queries[1]);
-						return rs;
-					}else{
-						return emptyResult(keyword,currPageNumber);
+			return (SearchResult) this.search(new SearcherCallback() {
+				public Object doWithSearcher(IndexSearcher searcher) throws SearchException {
+					try {
+						if(StringUtils.trimToEmpty(keyword).length() > 0){
+							Query[] queries = createQuery(keyword, advance);
+							Sort sort = createSort(advance);
+							// Don't use Lucene default filter function to filter out no reading permission results 
+							// it is too slow - it will retrieve all documents in index - whatever it is matched or not
+							//Filter filter = new SecurityFilter(user);
+							TopDocs hits = searcher.search(queries[0], LuceneVersion.MAX_RETURN, sort);
+							SearchResult rs = getResult(searcher, hits, keyword, currPageNumber, returnCount, user,queries[1]);
+							return rs;
+						}else{
+							return emptyResult(keyword,currPageNumber);
+						}
+					} catch (Exception e) {
+						throw new SearchException(e);
 					}
 				}
 
@@ -117,7 +120,7 @@ public abstract class AbstractSearchService {
 		}
 	}
 
-	// ********************************************************************
+		// ********************************************************************
 	// private class
 	// ********************************************************************
 	private Sort createSort(String[] advance) {
@@ -193,7 +196,7 @@ public abstract class AbstractSearchService {
 		
 
 		keyword = QueryParser.escape(StringUtils.trimToEmpty(keyword));
-		QueryParser parser = new QueryParser(FieldName.CONTENT,new StandardAnalyzer(LuceneVersion.VERSION));
+		QueryParser parser = new QueryParser(LuceneVersion.VERSION, FieldName.CONTENT,new StandardAnalyzer(LuceneVersion.VERSION));
 		
 		if (advKeyword == SearchService.KEYWORD_EXACT)
 			keyword = "\"" + keyword + "\"";
@@ -308,7 +311,7 @@ public abstract class AbstractSearchService {
 
 	
 	
-	private SearchResult getResult(LuceneHits hits, String keyword, int currPageNumber, int ps, User user, Query hlQuery)
+	private SearchResult getResult(IndexSearcher searcher, TopDocs hits, String keyword, int currPageNumber, int ps, User user, Query hlQuery)
 			throws IOException {
 		// failure tolerance
 		if (currPageNumber < 1)
@@ -318,7 +321,7 @@ public abstract class AbstractSearchService {
 		List<SearchResultItem> detachedDocs = new ArrayList<SearchResultItem>();
 
 		int from = (currPageNumber - 1) * ps;
-		int total = detach(detachedDocs, hits, hlQuery, from, from + ps, user);
+		int total = detach(searcher, detachedDocs, hits, hlQuery, from, from + ps, user);
 		
 		int numberOfPages = (int) Math.ceil((float) total / ps);
 
@@ -333,14 +336,14 @@ public abstract class AbstractSearchService {
 		return rs;
 	}
 
-	private int detach(List<SearchResultItem> viewableMatchedResults, LuceneHits hits, Query hlQuery, int from, int to, User user) throws IOException {
+	private int detach(IndexSearcher searcher, List<SearchResultItem> viewableMatchedResults, TopDocs hits, Query hlQuery, int from, int to, User user) throws IOException {
 
 		Assert.isTrue(from <= to && from >= 0 && (to >= 0 || to == -1));
 
 		//For performance issue, we simply return total result set length without permission filter out.
 		//This means is total length might be larger than the set that user can view, as some result will be filter out
 		//if user doesn't have permission to see.
-		int len = hits.length();
+		int len = hits.totalHits;
 		
 		if (len > 0 && from < len) {
 			to = to == -1 ? len : (len > to ? to : len);
@@ -352,7 +355,7 @@ public abstract class AbstractSearchService {
 				
 				//TODO: if page includes some result that invisible to user, it is better display message to tell user
 				//some result is hidden for security reason.
-				if(!isAllowView(hits.doc(idx), user))
+				if(!isAllowView(searcher.doc(hits.scoreDocs[idx].doc), user))
 					continue;
 				
 				resultIdx.add(idx);
@@ -371,7 +374,7 @@ public abstract class AbstractSearchService {
 			for (int idx : resultIdx) {
 				SearchResultItem item = new SearchResultItem();
 
-				Document doc = hits.doc(idx);
+				Document doc = searcher.doc(hits.scoreDocs[idx].doc);
 				String docType = doc.get(FieldName.DOC_TYPE);
 
 				//common items in search results
