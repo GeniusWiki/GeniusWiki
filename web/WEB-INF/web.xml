@@ -321,10 +321,6 @@
         <servlet-name>Installation</servlet-name>
         <servlet-class>com.edgenius.wiki.webapp.servlet.InstallServlet</servlet-class>
   	</servlet>
-  	<servlet>
-        <servlet-name>Textnut</servlet-name>
-        <servlet-class>com.edgenius.wiki.ext.textnut.NutServlet</servlet-class>
-  	</servlet>
 
     <servlet>
         <servlet-name>shellValidationService</servlet-name>
@@ -363,10 +359,6 @@
     </servlet-mapping>
   	
 	<servlet-mapping>
-    	<servlet-name>Textnut</servlet-name>
-	    <url-pattern>/nut</url-pattern>
-    </servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>restService</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
@@ -387,17 +379,6 @@
     	<servlet-name>PageLayout</servlet-name>
 	    <url-pattern>/layout.js</url-pattern>
     </servlet-mapping>
-    <!-- 
-	<servlet-mapping>
-    	<servlet-name>PluginAction</servlet-name>
-	    <url-pattern>*.ex</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-    	<servlet-name>Facebook</servlet-name>
-	    <url-pattern>/facebook</url-pattern>
-    </servlet-mapping>
-     -->
 
 
     <session-config>

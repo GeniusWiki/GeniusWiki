@@ -229,10 +229,6 @@
 		</property>
 	</bean>
 	
-	<!--  NOTE
-	org.springmodules.lucene.search.factory.SingleSearcherFactory has problem when a new index added. It won't immediately return 
-	new result but still get back old results. I don't have time to investigate, anyway, use ParallelMultipleSearcherFactory instead.
-	 -->
 	<bean id="spaceSearcherFactory" class="com.edgenius.wiki.search.service.ParallelSearcherFactory">
 		<property name="directories">
 			<list>
