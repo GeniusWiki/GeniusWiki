@@ -21,7 +21,7 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.security.acegi;
+package com.edgenius.wiki.security.aop;
 
 import java.lang.reflect.Method;
 
@@ -31,50 +31,75 @@ import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 
+import com.edgenius.core.Global;
+import com.edgenius.core.SecurityValues;
 import com.edgenius.core.model.User;
-import com.edgenius.wiki.service.PageService;
+import com.edgenius.core.service.UserService;
+import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
+import com.edgenius.wiki.security.UserSignUpDiabledException;
+import com.edgenius.wiki.security.acegi.MethodExceptionHandler;
+import com.edgenius.wiki.security.service.SecurityService;
 import com.edgenius.wiki.util.WikiUtil;
 
 /**
  * @author Dapeng.Ni
  */
-public class PageMethodBeforeAdvice  implements MethodBeforeAdvice{
-	private static final Logger log = LoggerFactory.getLogger(PageMethodBeforeAdvice.class);
+public class UserMethodBeforeAdvice implements MethodBeforeAdvice{
+	private static final Logger log = LoggerFactory.getLogger(UserMethodBeforeAdvice.class);
+	private SecurityService securityService; 
     private MethodExceptionHandler methodExceptionHandler; 
     
   //JDK1.6 @Override
 	public void before(Method method, Object[] args, Object target) throws Throwable {
 		String name = method.getName();
 		try{
-			if(name.equals(PageService.getDraft)
-				|| name.equals(PageService.getDraftPages)
-				|| name.equals(PageService.removeDraft)
-				|| name.equals(PageService.saveDraft)){
+			User loginUser = WikiUtil.getUser();
+			if(name.equals(UserService.saveUser)){
+				if((Global.getCurrentSuppress() & SharedConstants.SUPPRESS.SIGNUP.getValue()) > 0
+						//administrator allows to add user from system admin page 
+					& !securityService.isAllowResourceAdmin(SharedConstants.INSTANCE_NAME, SecurityValues.RESOURCE_TYPES.INSTANCE,loginUser)){
+					throw new UserSignUpDiabledException("User sign up is disabled.");
+				}
+			}else if(name.equals(UserService.updateUser)
+					|| name.equals(UserService.updateUserWithIndex)
+					|| name.equals(UserService.uploadPortrait)){
 				User user = (User) args[0];
-				User loginUser = WikiUtil.getUser();
-				if(loginUser.isAnonymous()){
+				if(loginUser == null || loginUser.isAnonymous()){
 					//anonymous
-					throw new AccessDeniedException("Anonymous can not call any draft function methods. Security exception.");
-				}else if (!loginUser.equals(user)){
-					throw new AccessDeniedException("Only user can get/remove his/her owned drafts");
+					throw new AccessDeniedException("Anonymous can not update user. Security exception.");
+				}else if (!loginUser.equals(user)&& 
+							!securityService.isAllowResourceAdmin(SharedConstants.INSTANCE_NAME,
+								SecurityValues.RESOURCE_TYPES.INSTANCE,loginUser)){
+					throw new AccessDeniedException("User has no system admin permssion and try to update other user.Security exception.");
+				}
+				
+			}else if(name.equals(UserService.removeUser)){
+				if(!securityService.isAllowResourceAdmin(SharedConstants.INSTANCE_NAME,
+								SecurityValues.RESOURCE_TYPES.INSTANCE,loginUser)){
+					throw new AccessDeniedException("Only system admin user can do removeUser.Security exception.");
 				}
 			}
         } catch (AccessDeniedException e) {
-        	log.warn("access denied for PageService method " + name);
+        	log.warn("access denied for UserService method " + name);
         	methodExceptionHandler.handleException(e);
         	//throw exception, so give target method a chance to stop futher process 
         	throw e;
 		} catch (AuthenticationException e) {
-			log.warn("Authentication failed for PageService  method " + name);
+			log.warn("Authentication failed for UserService  method " + name);
 			methodExceptionHandler.handleException(e);
 			//throw exception, so give target method a chance to stop futher process 
 			throw e;
 		}
+		
 	}
 	
 	//********************************************************************
 	//               set / get
 	//********************************************************************
+	public void setSecurityService(SecurityService securityService) {
+		this.securityService = securityService;
+	}
+
 	public void setMethodExceptionHandler(MethodExceptionHandler methodExceptionHandler) {
 		this.methodExceptionHandler = methodExceptionHandler;
 	}

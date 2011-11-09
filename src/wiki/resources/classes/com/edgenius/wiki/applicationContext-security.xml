@@ -355,7 +355,7 @@
   	
 	<bean id="userSecurityInterceptor" class="org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor">
 		<constructor-arg>
-			<bean class="com.edgenius.wiki.security.acegi.UserMethodBeforeAdvice">
+			<bean class="com.edgenius.wiki.security.aop.UserMethodBeforeAdvice">
 				<property name="securityService" ref="securityService"/>
 		        <property name="methodExceptionHandler" ref="methodExceptionHandler"/>
 			</bean>
@@ -364,7 +364,7 @@
     
 	<bean id="pageSecurityInterceptor" class="org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor">
 		<constructor-arg>
-			<bean class="com.edgenius.wiki.security.acegi.PageMethodBeforeAdvice">
+			<bean class="com.edgenius.wiki.security.aop.PageMethodBeforeAdvice">
 		        <property name="methodExceptionHandler" ref="methodExceptionHandler"/>
 			</bean>
 		</constructor-arg>

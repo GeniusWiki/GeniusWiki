@@ -55,12 +55,19 @@ public class NotifyMQObject implements Serializable{
 	private String spaceUname;
 	private String username;
 	private String id;
+	private Integer commentUid;
 	
 
 	public NotifyMQObject(int type, String loginUser, Integer pageUid) {
 		this.type = type;
 		this.username = loginUser;
 		this.pageUid = pageUid;
+	}
+	public NotifyMQObject(int type, String loginUser, Integer pageUid, Integer commentUid) {
+		this.type = type;
+		this.username = loginUser;
+		this.pageUid = pageUid;
+		this.commentUid = commentUid;
 	}
 	public NotifyMQObject(String loginUser, Space space, int removeDelayHours) {
 		this.username = loginUser;
@@ -150,6 +157,12 @@ public class NotifyMQObject implements Serializable{
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public Integer getCommentUid() {
+		return commentUid;
+	}
+	public void setCommentUid(Integer commentUid) {
+		this.commentUid = commentUid;
 	}
 
 	

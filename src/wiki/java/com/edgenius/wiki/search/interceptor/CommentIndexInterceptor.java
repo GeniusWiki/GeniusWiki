@@ -66,7 +66,7 @@ public class CommentIndexInterceptor extends IndexInterceptor {
 			List<Integer> pageUidList = commentDAO.getNeedNotifyCommentPageUids();
 			if(pageUidList != null){
 				for (Integer pageUid : pageUidList) {
-					sendEmailNotify(pageUid);
+					sendEmailNotify(null, pageUid);
 				}
 			}
 			//clean all comment notify flag, whatever it is daily summary or per post 
@@ -105,7 +105,7 @@ public class CommentIndexInterceptor extends IndexInterceptor {
 			//if need send per post, it also need check how many sent out today! to avoid spam
 			int count = commentDAO.getNotifySentCount(page.getUid());
 			if(count <= setting.getCommentNotifyMaxPerDay()){
-				sendEmailNotify(page.getUid());
+				sendEmailNotify(comment.getUid(), page.getUid());
 			}
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,8 +131,8 @@ public class CommentIndexInterceptor extends IndexInterceptor {
 	/**
 	 * @param pageUid
 	 */
-	private void sendEmailNotify(Integer pageUid) {
-		NotifyMQObject pnObj = new NotifyMQObject(NotifyMQObject.TYPE_COMMENT_NOTIFY, WikiUtil.getUserName(), pageUid); 
+	private void sendEmailNotify(Integer commentUid, Integer pageUid) {
+		NotifyMQObject pnObj = new NotifyMQObject(NotifyMQObject.TYPE_COMMENT_NOTIFY, WikiUtil.getUserName(), pageUid, commentUid); 
 		jmsTemplate.convertAndSend(notifyQueue, pnObj);
 	}
 

@@ -94,7 +94,7 @@ public class NotifyMQConsumer {
 				}else if(mqObj.getType() == NotifyMQObject.TYPE_SPACE_REMOVE){
 					sendSpaceRemovingNotification(mqObj.getSpace(),mqObj.getRemoveDelayHours());
 				}else if(mqObj.getType() == NotifyMQObject.TYPE_COMMENT_NOTIFY){
-					sendPageCommentsNotification(mqObj.getUsername(), mqObj.getPageUid());
+					sendPageCommentsNotification(mqObj.getUsername(), mqObj.getPageUid(), mqObj.getCommentUid());
 				}else if(mqObj.getType() == NotifyMQObject.TYPE_EXT_LINK_BLOG){
 					syncExtBlog( mqObj.getSpaceUname(),mqObj.getBlogMeta(), mqObj.getSyncLimit());
 				}else if(mqObj.getType() == NotifyMQObject.TYPE_EXT_POST){
@@ -205,13 +205,29 @@ public class NotifyMQConsumer {
 	 * @param space
 	 * @param removeDelayHours
 	 */
-	private void sendPageCommentsNotification(String username, Integer pageUid) {
+	private void sendPageCommentsNotification(String username, Integer pageUid, Integer commentUid) {
 
 		Page page = pageService.getPage(pageUid);
 		if(page == null){
 			log.error("Unable to get page by uid {}, send page comment notificaiton failed.", pageUid);
 			return;
 		}
+		
+		String comment = null;
+		if(commentUid == null){
+			//send daily digest
+			comment = "";
+		}else{
+			PageComment pageComment = commentService.getComment(commentUid);
+			if(pageComment != null)
+				comment = pageComment.getBody();
+		}
+		
+		if(comment == null){
+			log.error("Unable to get comment by uid {}, send page comment notificaiton failed.", commentUid);
+			return;
+		}
+		
 		int nType = page.getSpace().getSetting().getCommentNotifyType();
 		String spaceUname = page.getSpace().getUnixName();
 		Set<String> bccList =  new HashSet<String>();
@@ -237,6 +253,7 @@ public class NotifyMQConsumer {
 		String link = WikiUtil.getPageRedirFullURL(spaceUname, page.getTitle(),page.getPageUuid());
 		model.put(WikiConstants.ATTR_PAGE_LINK, link);
 		model.put(WikiConstants.ATTR_PAGE_TITLE, page.getTitle());
+		model.put(WikiConstants.ATTR_CONTENT, comment);
 		if((nType & SpaceSetting.COMMENT_NOTIFY_FEQ_EVERY_POST) != 0){
 			//send every post
 			sendMail(WikiConstants.MAIL_TEMPL_COMMENT_PER_POST,bccList, model);
