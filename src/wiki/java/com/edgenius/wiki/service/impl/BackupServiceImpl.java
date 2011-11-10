@@ -629,6 +629,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		binder.setVersion(Version.VERSION);
 		binder.setOptions(options);
 		
+		long start = System.currentTimeMillis();
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// backup database
 		Map<File, String> list = new HashMap<File, String>();
@@ -636,8 +637,9 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			exportData(binder);
 		}
 		
-		log.info("Backup successfully export data from database");
-
+		log.info("Backup successfully export data from database in {}ms", (System.currentTimeMillis() - start) );
+		start = System.currentTimeMillis();
+		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// backup data directory
 		String root = rootLocation.getFile().getCanonicalPath();
@@ -698,7 +700,8 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			list.put(new File(FileUtil.getFullPath(root,Installation.FILE)),root);
 		}
 		
-		log.info("Databinder successed adds external files info.");
+		log.info("Databinder successed adds external files info in {}ms", (System.currentTimeMillis() - start) );
+		start = System.currentTimeMillis();
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Save Data binder XML
 		//output to XML file - rather than directly using String as next SAXParser InputSource() as this way save memory!
@@ -719,7 +722,8 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		IOUtils.closeQuietly(writer);
 		IOUtils.closeQuietly(os);
 		
-		log.info("Databinder export successfully, will do proxy object removing", binderTmp);
+		log.info("Databinder export successfully, will do proxy object removing in {}ms", binderTmp, (System.currentTimeMillis() - start) );
+		start = System.currentTimeMillis();
 		
 		//TODO: above XML has resolves-to attribute, following code will remove them, this part code may need remove 
 		//if XStream supports suppress "resolves-to"
@@ -760,7 +764,8 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		IOUtils.closeQuietly(reader);
 		IOUtils.closeQuietly(writer);
 		IOUtils.closeQuietly(os);
-		log.info("Databinder XML polished");
+		log.info("Databinder XML polished in {}ms", (System.currentTimeMillis() - start) );
+		start = System.currentTimeMillis();
 		
 		File tmp = new File(binderTmp);
 		if(!tmp.delete())
@@ -775,6 +780,8 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			FileUtils.writeStringToFile(commentFile, comment);
 			list.put(commentFile,path);
 		}
+		
+		log.info("System starting zip files...");
 		return list;
 	}
 
