@@ -963,9 +963,11 @@ public class UpgradeServiceImpl implements UpgradeService {
 			server.syncFrom(prop);
 			if(server.getMqServerEmbedded() == null || BooleanUtils.toBoolean(server.getMqServerEmbedded())){
 			    //embedded
-				server.setMqServerUrl("tcp://" + server.getMqServerUrl() + "?wireFormat.maxInactivityDuration=0");
-				server.syncTo(prop);
-				prop.store(FileUtil.getFileOutputStream(root+Server.FILE), "save by system program");
+				if(!server.getMqServerUrl().startsWith("tcp://")){
+					server.setMqServerUrl("tcp://" + server.getMqServerUrl() + "?wireFormat.maxInactivityDuration=0");
+					server.syncTo(prop);
+					prop.store(FileUtil.getFileOutputStream(root+Server.FILE), "save by system program");
+				}
 			}
 		}
 		
