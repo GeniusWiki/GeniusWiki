@@ -88,7 +88,7 @@
 		<dependency org="org/tuckey" name="urlrewrite" rev="3.2.0" conf="deploy->default;dev->source" />
 		
 		<!--  Quartz ALL package  -->
-		<dependency org="thoughtworks" name="xstream" rev="1.3.1" conf="deploy->default;dev->source" />
+		<dependency org="thoughtworks" name="xstream" rev="1.4.2" conf="deploy->default;dev->source" />
 		
 		<dependency org="org/opensymphony" name="quartz" rev="2.1.0" conf="deploy->default" />
 		<!--  NO USE since 31/05/2007

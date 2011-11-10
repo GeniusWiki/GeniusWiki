@@ -698,6 +698,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			list.put(new File(FileUtil.getFullPath(root,Installation.FILE)),root);
 		}
 		
+		log.info("Databinder successed adds external files info.");
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Save Data binder XML
 		//output to XML file - rather than directly using String as next SAXParser InputSource() as this way save memory!
@@ -708,6 +709,8 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			path += File.separator;
 		
 		String binderTmp = FileUtil.getFullPath(dir, OBJS_BINDER_NAME+"_tmp");
+		log.info("Databinder is going to export to file {} ", binderTmp);
+		
 		OutputStream os = FileUtil.getFileOutputStream(binderTmp);
 		Writer writer = new OutputStreamWriter(os, Constants.UTF8);
 		XStream xstream = createXStreamInstance();
@@ -716,7 +719,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		IOUtils.closeQuietly(writer);
 		IOUtils.closeQuietly(os);
 		
-		log.info("Databinder export {} success, will do proxy object removing", binderTmp);
+		log.info("Databinder export successfully, will do proxy object removing", binderTmp);
 		
 		//TODO: above XML has resolves-to attribute, following code will remove them, this part code may need remove 
 		//if XStream supports suppress "resolves-to"

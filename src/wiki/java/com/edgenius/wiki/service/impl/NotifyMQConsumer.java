@@ -216,7 +216,7 @@ public class NotifyMQConsumer {
 		String comment = null;
 		if(commentUid == null){
 			//send daily digest
-			comment = "";
+			comment = ""; //TODO
 		}else{
 			PageComment pageComment = commentService.getComment(commentUid);
 			if(pageComment != null)
