@@ -23,13 +23,19 @@
  */
 package com.edgenius.wiki.service.impl;
 
+import static com.edgenius.wiki.model.AbstractPage.PAGE_TYPE.DRAFT;
+import static com.edgenius.wiki.model.AbstractPage.PAGE_TYPE.HISTORY;
+import static com.edgenius.wiki.model.AbstractPage.PAGE_TYPE.PAGE;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,6 +125,8 @@ import com.edgenius.wiki.dao.WidgetDAO;
 import com.edgenius.wiki.dao.hibernate.JDBCTemplateDAO;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.installation.UpgradeService;
+import com.edgenius.wiki.model.AbstractPage;
+import com.edgenius.wiki.model.AbstractPage.PAGE_TYPE;
 import com.edgenius.wiki.model.ActivityLog;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.model.Friend;
@@ -140,6 +148,7 @@ import com.edgenius.wiki.quartz.ExportedJob;
 import com.edgenius.wiki.service.BackupException;
 import com.edgenius.wiki.service.BackupService;
 import com.edgenius.wiki.service.DataBinder;
+import com.edgenius.wiki.service.DataBinder.ContentBodyMap;
 import com.edgenius.wiki.util.CommentComparator;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -623,6 +632,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	
 	private Map<File, String> getSources(String dir, int options, String comment) throws IOException, FileUtilException, ParserConfigurationException, XmlPullParserException{
 		
+		
 		String binderName = FileUtil.getFullPath(dir, OBJS_BINDER_NAME);
 		
 		DataBinder binder = new DataBinder();
@@ -702,14 +712,10 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		
 		log.info("Databinder successed adds external files info in {}ms", (System.currentTimeMillis() - start) );
 		start = System.currentTimeMillis();
+		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Save Data binder XML
 		//output to XML file - rather than directly using String as next SAXParser InputSource() as this way save memory!
-		
-		//this will make c:\\doc~1\\ expand to c:\\my document\\...
-		String path = new File(FileUtil.getFileDirectory(binderName)).getCanonicalPath();
-		if(!path.endsWith(File.separator))
-			path += File.separator;
 		
 		String binderTmp = FileUtil.getFullPath(dir, OBJS_BINDER_NAME+"_tmp");
 		log.info("Databinder is going to export to file {} ", binderTmp);
@@ -767,18 +773,24 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		log.info("Databinder XML polished in {}ms", (System.currentTimeMillis() - start) );
 		start = System.currentTimeMillis();
 		
+		//this will make c:\\doc~1\\ expand to c:\\my document\\...
+		String canonicalPath = new File(dir).getCanonicalPath();
+		if(!canonicalPath.endsWith(File.separator))
+			canonicalPath += File.separator;
+				
+				
 		File tmp = new File(binderTmp);
 		if(!tmp.delete())
 			tmp.deleteOnExit();
 		
 		//binder XML always put into root directory in backup zip
-		list.put(new File(binderName),path);
+		list.put(new File(binderName),canonicalPath);
 
 		//Comment file
 		if(!StringUtils.isBlank(comment)){
 			File commentFile= new File(FileUtil.getFullPath(dir, COMMENT_FILE_NAME));
 			FileUtils.writeStringToFile(commentFile, comment);
-			list.put(commentFile,path);
+			list.put(commentFile,canonicalPath);
 		}
 		
 		log.info("System starting zip files...");
@@ -882,6 +894,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		}
 		binder.addAll(Space.class.getName(),spaces);
 		
+		ContentBodyMap contentBodyMap = new ContentBodyMap();
 		List<Page> sortedPages = new ArrayList<Page>();
 		List<Page> pages = pageDAO.getObjects();
 		for (Page page : pages) {
@@ -889,9 +902,10 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			//but also need avoid infinite looping, e.g, A parent is B, B parent is A, although this is unexpected, but need take care 
 			if(page.getParent() != null){
 				List<Page> parents = new ArrayList<Page>();
-				processParentPage(sortedPages, page, parents);
+				processParentPage(sortedPages, page, parents, contentBodyMap);
 			}
 			initPage(page);
+			pushContent(page, contentBodyMap);
 			sortedPages.add(page);
 		}
 		binder.addAll(Page.class.getName(),sortedPages);
@@ -900,6 +914,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		List<History> histories = historyDAO.getObjects();
 		for (History history : histories) {
 			Hibernate.initialize(history.getContent());
+			pushContent(history, contentBodyMap);
 		}
 		binder.addAll(History.class.getName(),histories);
 		
@@ -907,6 +922,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		for (Draft draft : drafts) {
 			Hibernate.initialize(draft.getPageProgress());
 			Hibernate.initialize(draft.getContent());
+			pushContent(draft, contentBodyMap);
 		}
 		binder.addAll(Draft.class.getName(),drafts);
 		
@@ -976,19 +992,51 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	
 	/**
 	 * @param page
+	 * @param contentBodys 
+	 * @param contentBodyMap 
+	 * @throws UnsupportedEncodingException 
+	 * @throws FileNotFoundException 
+	 */
+	private void pushContent(AbstractPage page, ContentBodyMap bodyMap) throws FileNotFoundException, UnsupportedEncodingException {
+		int contentId = 0;
+		PAGE_TYPE type = null;
+		String body = null;
+		if(page instanceof Page){
+			type = PAGE;
+			contentId = ((Page) page).getContent().getUid();
+			body = ((Page) page).getContent().getContent();
+		}else if(page instanceof Draft){
+			type = DRAFT;
+			contentId = ((Draft) page).getContent().getUid();
+			body = ((Draft) page).getContent().getContent();
+		}else if(page instanceof History){
+			type = HISTORY;
+			contentId = ((History) page).getContent().getUid();
+			body = ((History) page).getContent().getContent();
+		}
+		
+		bodyMap.add(contentId, type, body);
+	}
+	
+	/**
+	 * @param page
 	 * @param parent
 	 * @param parents
+	 * @param contentBodyMap 
+	 * @throws UnsupportedEncodingException 
+	 * @throws FileNotFoundException 
 	 */
-	private void processParentPage(List<Page> container, Page page, List<Page> parents) {
+	private void processParentPage(List<Page> container, Page page, List<Page> parents, ContentBodyMap contentBodyMap) throws FileNotFoundException, UnsupportedEncodingException {
 		Page parent = page.getParent();
 		if(parent != null){
 			if(parents.indexOf(parent) == -1){
 				if(container.indexOf(parent) == -1){
 					//this parent is not put into container yet
 					parents.add(parent);
-					processParentPage(container, parent, parents);
+					processParentPage(container, parent, parents, contentBodyMap);
 					
 					initPage(parent);
+					pushContent(page, contentBodyMap);
 					container.add(parent);
 				}
 			}else{
@@ -1002,13 +1050,13 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	}
 
 	/**
-	 * @param parent
+	 * @param page
 	 */
-	private void initPage(Page parent) {
-		Hibernate.initialize(parent.getPageProgress());
-		Hibernate.initialize(parent.getLinks());
-		Hibernate.initialize(parent.getContent());
-		parent.setTags(null);
+	private void initPage(Page page) {
+		Hibernate.initialize(page.getPageProgress());
+		Hibernate.initialize(page.getLinks());
+		Hibernate.initialize(page.getContent());
+		page.setTags(null);
 	}
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	private void cleanDatabase(){
@@ -1849,7 +1897,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	public void setPluginService(PluginService pluginService) {
 		this.pluginService = pluginService;
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileUtilException, IOException {
 		//TODO: this part code may move to UnitTest in future
 		List<Page> container = new ArrayList<Page>();
 		List<Page> parents = new ArrayList<Page>();
@@ -1869,7 +1917,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 //		a.setParent(d);
 		
 		BackupServiceImpl im = new BackupServiceImpl();
-		im.processParentPage(container, d, parents);
+		im.processParentPage(container, d, parents, new ContentBodyMap());
 		
 		System.out.println(Arrays.toString(container.toArray()));
 	}
