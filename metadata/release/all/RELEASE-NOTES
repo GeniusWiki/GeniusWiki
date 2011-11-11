@@ -3,6 +3,8 @@ Version 3.0
 h2. Enhancements
 * Some major third party libraries upgrades. Spring, Spring Security, Lucene etc.
 * MySQL 5.5 jump to deck. MySQL 4.x is not offically supported.
+* Comment notify email include comment body content. 
+
 
 h2. Bugs
 
