@@ -632,7 +632,6 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	
 	private Map<File, String> getSources(String dir, int options, String comment) throws IOException, FileUtilException, ParserConfigurationException, XmlPullParserException{
 		
-		
 		String binderName = FileUtil.getFullPath(dir, OBJS_BINDER_NAME);
 		
 		DataBinder binder = new DataBinder();
