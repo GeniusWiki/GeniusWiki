@@ -24,6 +24,7 @@
 package com.edgenius.wiki.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,7 +38,9 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.edgenius.core.Constants;
+import com.edgenius.core.util.AuditLogger;
 import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.util.FileUtilException;
 import com.edgenius.wiki.model.AbstractPage.PAGE_TYPE;
@@ -184,21 +187,42 @@ public class DataBinder {
 		private transient String rootPath;
 		private transient String canonialRootPath;
 		private transient XStream xstream = new XStream();
+		
 		private transient int fileIndex = 0;
 		private transient Map<File, String> fileMap = new HashMap<File, String>();
 		//transient: XML won't serialize it here together with above maps 
 		private transient ContentBodys bodys = new ContentBodys();
+		
+		//load from content body file when importing 
+		//<fileIndex,contentBodys>
+		private Map<Integer, ContentBodys> pageBodyMap = new HashMap<Integer, ContentBodys>();
+		private Map<Integer, ContentBodys> draftBodyMap = new HashMap<Integer, ContentBodys>();
+		private Map<Integer, ContentBodys> historyBodyMap = new HashMap<Integer, ContentBodys>();
 		
 		//<contentId, fileIndex>
 		private Map<Integer, Integer> pageMap = new HashMap<Integer, Integer>();
 		private Map<Integer, Integer> draftMap = new HashMap<Integer, Integer>();
 		private Map<Integer, Integer> historyMap = new HashMap<Integer, Integer>();
 		
-		
+		/**
+		 * Call by backup (export) service and will create a temporarily directory to cache the page content files.
+		 * After all page, draft, history content are processed, call finialise() and getZipMap() to put these file into 
+		 * backup zip file list.
+		 * 
+		 * @throws FileUtilException
+		 * @throws IOException
+		 */
 		public ContentBodyMap() throws FileUtilException, IOException{
 			rootPath = FileUtil.createTempDirectory(BACKUP_DIR_SUFFIX);
 			canonialRootPath  = new File(rootPath).getCanonicalPath();
 			
+		}
+		/**
+		 * Call by restore (import) service and will assume the content body files is already unzip to given rootPath. 
+		 * @param rootPath
+		 */
+		public ContentBodyMap(String rootPath) {
+			this.rootPath = rootPath;
 		}
 		public void add(Integer contentId, PAGE_TYPE type, String body) throws FileNotFoundException, UnsupportedEncodingException{
 			boolean full = bodys.add(contentId, type, body);
@@ -225,13 +249,97 @@ public class DataBinder {
 			}
 		}
 		
-		public Map<File, String> getZipMap() throws FileNotFoundException, UnsupportedEncodingException {
+		public void finalise() throws FileNotFoundException, UnsupportedEncodingException {
 			//save contentMap itself 
 			writeFile(this, BACKUP_CONTENT_MAPFILE);
-			
+		}
+		
+		public Map<File, String> getZipMap() {
 			return fileMap;
 		}
 		
+		/**
+		 * Please note - for memory sake, same contentId can not be load more than once. 
+		 * 
+		 * @param contentId
+		 * @param type
+		 * @return
+		 */
+		public String getContent(Integer contentId, PAGE_TYPE type){
+			Integer fIndex = null;
+			switch (type) {
+			case PAGE:
+				fIndex = pageMap.get(contentId);
+				break;
+			case DRAFT:
+				fIndex = draftMap.get(contentId);
+				break;
+			case HISTORY:
+				fIndex = historyMap.get(contentId);
+				break;
+			}
+			
+			if(fIndex == null){
+				//should here throw exception and stop all import process?
+				AuditLogger.error("Restore can not find fileIndex for content ID " + contentId);
+				return null;
+			}
+			
+			//try load contentBodys from cached map - if not exist, then load from XML file
+			ContentBodys contentBodys = null;
+			
+			switch (type) {
+			case PAGE:
+				contentBodys = pageBodyMap.get(fIndex);
+				break;
+			case DRAFT:
+				contentBodys = draftBodyMap.get(fIndex);
+				break;
+			case HISTORY:
+				contentBodys = historyBodyMap.get(fIndex);
+				break;
+			}
+			
+			if(contentBodys == null){
+				//load from XML file
+				contentBodys = loadFile(BACKUP_CONTENT_FILE_PREFIX+fIndex + ".xml");
+				if(contentBodys == null){
+					AuditLogger.error("Restore can not load content body file " + fIndex + " for content ID " + contentId);
+					return null;
+				}
+				
+				switch (type) {
+				case PAGE:
+					pageBodyMap.put(fIndex, contentBodys);
+					break;
+				case DRAFT:
+					draftBodyMap.put(fIndex, contentBodys);
+					break;
+				case HISTORY:
+					historyBodyMap.put(fIndex, contentBodys);
+					break;
+				}
+			}
+			
+			//please note, here use remove() rather than get() - for memory consideration
+			return contentBodys.remove(contentId, type);
+			
+		}
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// private method
+		private ContentBodys loadFile(String filename) {
+			try {
+				File file = new File(rootPath, filename);
+				FileInputStream fis = new FileInputStream(file);
+				bodys = (ContentBodys) xstream.fromXML(fis);
+				IOUtils.closeQuietly(fis);
+				
+				return bodys;
+			} catch (Exception e) {
+				Log.error("Unable to load content body file " + filename , e);
+			}
+			return null;
+		}
 		private void writeFile(Object obj, String filename) throws FileNotFoundException, UnsupportedEncodingException {
 			File file = new File(rootPath, filename);
 			FileOutputStream fos = new FileOutputStream(file);
@@ -244,7 +352,8 @@ public class DataBinder {
 			
 			fileMap.put(file, canonialRootPath);
 		}
-		
+
+	
 	}
 	public static class ContentBodys{
 		
@@ -258,6 +367,18 @@ public class DataBinder {
 		
 		private int size = 0;
 		
+		public String remove(Integer contentId, PAGE_TYPE type){
+			switch (type) {
+			case PAGE:
+				return pageBodys.remove(contentId);
+			case DRAFT:
+				return draftBodys.remove(contentId);
+			case HISTORY:
+				return historyBodys.remove(contentId);
+			}
+			
+			return null;
+		}
 		public boolean add(Integer contentId, PAGE_TYPE type, String body){
 			size += body.length();
 			

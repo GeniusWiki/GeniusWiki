@@ -129,12 +129,15 @@ import com.edgenius.wiki.model.AbstractPage;
 import com.edgenius.wiki.model.AbstractPage.PAGE_TYPE;
 import com.edgenius.wiki.model.ActivityLog;
 import com.edgenius.wiki.model.Draft;
+import com.edgenius.wiki.model.DraftContent;
 import com.edgenius.wiki.model.Friend;
 import com.edgenius.wiki.model.History;
+import com.edgenius.wiki.model.HistoryContent;
 import com.edgenius.wiki.model.Invitation;
 import com.edgenius.wiki.model.Notification;
 import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.model.PageComment;
+import com.edgenius.wiki.model.PageContent;
 import com.edgenius.wiki.model.PageLink;
 import com.edgenius.wiki.model.PageTag;
 import com.edgenius.wiki.model.Space;
@@ -345,7 +348,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			
 			if((options & BACKUP_DATA) >0){
 				time = System.currentTimeMillis();
-				importData(binder);
+				importData(binder, dir, binderVersion);
 				log.info("Restore database table took {}s", (System.currentTimeMillis() - time)/1000);
 				
 				//delete binder file after import success
@@ -643,7 +646,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		// backup database
 		Map<File, String> list = new HashMap<File, String>();
 		if((options & BACKUP_DATA) > 0){
-			exportData(binder);
+			exportData(binder, list);
 		}
 		
 		log.info("Backup successfully export data from database in {}ms", (System.currentTimeMillis() - start) );
@@ -804,7 +807,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		return canonicalPath.substring(len);
 	}
 	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
-	private void exportData(DataBinder binder) throws IOException, FileUtilException {
+	private void exportData(DataBinder binder, Map<File, String> zipFileList) throws IOException, FileUtilException {
 		//I don't use clone, as it has side effect: XStream will use ID to reference to same object, this save lots size on XML
 		//for example, if user A popup in top all XML with ID 123, then all refer same user object, XStream will use line to refer to ID 123. 
 		//If clone(), the all object won't be same (not equals(), here is object equals) and, all refer this user will expand 
@@ -928,6 +931,9 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		//put space/homepage relation after page and space
 		binder.add(DataBinder.HOME_PAGE_BINDER_NAME,homeMap);
 		
+		//after PAGE, DRAFT, HISTORY complete, finialise the ContentBody map and put all contentbody file into zip list
+		contentBodyMap.finalise();
+		zipFileList.putAll(contentBodyMap.getZipMap());
 		
 		List<PageComment> sortedComments = CommentComparator.getParentBeforeSortedList(commentDAO.getObjects());
 		binder.addAll(PageComment.class.getName(), sortedComments);
@@ -1002,16 +1008,22 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		String body = null;
 		if(page instanceof Page){
 			type = PAGE;
-			contentId = ((Page) page).getContent().getUid();
-			body = ((Page) page).getContent().getContent();
+			PageContent pcontent = ((Page) page).getContent();
+			contentId =pcontent.getUid();
+			body = pcontent.getContent();
+			pcontent.setContent(null);
 		}else if(page instanceof Draft){
 			type = DRAFT;
-			contentId = ((Draft) page).getContent().getUid();
-			body = ((Draft) page).getContent().getContent();
+			DraftContent dcontent = ((Draft) page).getContent();
+			contentId = dcontent.getUid();
+			body = dcontent.getContent();
+			dcontent.setContent(null);
 		}else if(page instanceof History){
 			type = HISTORY;
-			contentId = ((History) page).getContent().getUid();
-			body = ((History) page).getContent().getContent();
+			HistoryContent hcontent = ((History) page).getContent();
+			contentId = hcontent.getUid();
+			body = hcontent.getContent();
+			hcontent.setContent(null);
 		}
 		
 		bodyMap.add(contentId, type, body);
@@ -1120,7 +1132,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void importData(DataBinder binder) throws IOException {
+	private void importData(DataBinder binder, String rootDir, int binderVersion) throws IOException {
 		
 		log.info("Cleaning database....");
 		cleanDatabase();
@@ -1312,10 +1324,15 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			spaceDAO.saveOrUpdate(space);
 		}
 
+		ContentBodyMap contentBodyMap = new ContentBodyMap(rootDir);  
 		List<Page> pages = (List<Page>) binder.get(Page.class.getName());
 		for (Page page: pages) {
 			page.setUid(null);
 			if(page.getContent() != null){
+				//load from contentBodys file - after VERSION 3.0
+				if(binderVersion > 3000){
+					page.getContent().setContent(contentBodyMap.getContent(page.getContent().getUid(), PAGE));
+				}
 				page.getContent().setUid(null);
 			}
 			if(page.getPageProgress() != null){
@@ -1340,16 +1357,24 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		List<History> histories = (List<History>) binder.get(History.class.getName());
 		for (History history: histories) {
 			history.setUid(null);
-			if(history.getContent() != null)
+			if(history.getContent() != null){
+				if(binderVersion > 3000){
+					history.getContent().setContent(contentBodyMap.getContent(history.getContent().getUid(), HISTORY));
+				}
 				history.getContent().setUid(null);
+			}
 			historyDAO.saveOrUpdate(history);
 		}
 	
 		List<Draft> drafts = (List<Draft>) binder.get(Draft.class.getName());
 		for (Draft draft: drafts) {
 			draft.setUid(null);
-			if(draft.getContent() != null)
+			if(draft.getContent() != null){
+				if(binderVersion > 3000){
+					draft.getContent().setContent(contentBodyMap.getContent(draft.getContent().getUid(), DRAFT));
+				}
 				draft.getContent().setUid(null);
+			}
 			if(draft.getPageProgress() != null){
 				draft.getPageProgress().setUid(null);
 				pageProgressDAO.saveOrUpdate(draft.getPageProgress());
