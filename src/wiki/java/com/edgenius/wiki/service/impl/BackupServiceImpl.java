@@ -29,13 +29,11 @@ import static com.edgenius.wiki.model.AbstractPage.PAGE_TYPE.PAGE;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -730,7 +728,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		IOUtils.closeQuietly(writer);
 		IOUtils.closeQuietly(os);
 		
-		log.info("Databinder export successfully, will do proxy object removing in {}ms", binderTmp, (System.currentTimeMillis() - start) );
+		log.info("Databinder export to {} successfully in {}ms. Next will do proxy object removing", binderTmp, (System.currentTimeMillis() - start) );
 		start = System.currentTimeMillis();
 		
 		//TODO: above XML has resolves-to attribute, following code will remove them, this part code may need remove 
@@ -896,7 +894,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		}
 		binder.addAll(Space.class.getName(),spaces);
 		
-		ContentBodyMap contentBodyMap = new ContentBodyMap();
+		ContentBodyMap contentBodyMap = ContentBodyMap.initialForBackup();
 		List<Page> sortedPages = new ArrayList<Page>();
 		List<Page> pages = pageDAO.getObjects();
 		for (Page page : pages) {
@@ -999,10 +997,9 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	 * @param page
 	 * @param contentBodys 
 	 * @param contentBodyMap 
-	 * @throws UnsupportedEncodingException 
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	private void pushContent(AbstractPage page, ContentBodyMap bodyMap) throws FileNotFoundException, UnsupportedEncodingException {
+	private void pushContent(AbstractPage page, ContentBodyMap bodyMap) throws IOException {
 		int contentId = 0;
 		PAGE_TYPE type = null;
 		String body = null;
@@ -1034,10 +1031,9 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	 * @param parent
 	 * @param parents
 	 * @param contentBodyMap 
-	 * @throws UnsupportedEncodingException 
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	private void processParentPage(List<Page> container, Page page, List<Page> parents, ContentBodyMap contentBodyMap) throws FileNotFoundException, UnsupportedEncodingException {
+	private void processParentPage(List<Page> container, Page page, List<Page> parents, ContentBodyMap contentBodyMap) throws IOException {
 		Page parent = page.getParent();
 		if(parent != null){
 			if(parents.indexOf(parent) == -1){
@@ -1324,7 +1320,8 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			spaceDAO.saveOrUpdate(space);
 		}
 
-		ContentBodyMap contentBodyMap = new ContentBodyMap(rootDir);  
+		
+		ContentBodyMap contentBodyMap = ContentBodyMap.initialForRestore(rootDir);
 		List<Page> pages = (List<Page>) binder.get(Page.class.getName());
 		for (Page page: pages) {
 			page.setUid(null);

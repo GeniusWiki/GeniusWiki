@@ -29,7 +29,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +36,8 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.edgenius.core.Constants;
@@ -180,29 +181,35 @@ public class DataBinder {
 	// ContentMap - mapping contentID and its body-files name
 	// ContnetBody - the real page content text, it will split into small files(body-file) base one its size. 
 	public static class ContentBodyMap{
+		private static final Logger log = LoggerFactory.getLogger(DataBinder.class);
+		
 		private transient static final String BACKUP_CONTENT_MAPFILE = "content-map.xml";
 		private transient static final String BACKUP_DIR_SUFFIX = "_backcontent";
 		private transient static final String BACKUP_CONTENT_FILE_PREFIX = "content";
 		
+		private transient static XStream xstream = new XStream();
+		
 		private transient String rootPath;
 		private transient String canonialRootPath;
-		private transient XStream xstream = new XStream();
-		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//variables for backup  
 		private transient int fileIndex = 0;
 		private transient Map<File, String> fileMap = new HashMap<File, String>();
 		//transient: XML won't serialize it here together with above maps 
 		private transient ContentBodys bodys = new ContentBodys();
-		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//variables for restore 		
 		//load from content body file when importing 
 		//<fileIndex,contentBodys>
-		private Map<Integer, ContentBodys> pageBodyMap = new HashMap<Integer, ContentBodys>();
-		private Map<Integer, ContentBodys> draftBodyMap = new HashMap<Integer, ContentBodys>();
-		private Map<Integer, ContentBodys> historyBodyMap = new HashMap<Integer, ContentBodys>();
+		private transient Map<Integer, ContentBodys> bodyMap;
 		
 		//<contentId, fileIndex>
 		private Map<Integer, Integer> pageMap = new HashMap<Integer, Integer>();
 		private Map<Integer, Integer> draftMap = new HashMap<Integer, Integer>();
 		private Map<Integer, Integer> historyMap = new HashMap<Integer, Integer>();
+		
+		//default constructor for XStream
+		public ContentBodyMap(){};
 		
 		/**
 		 * Call by backup (export) service and will create a temporarily directory to cache the page content files.
@@ -212,19 +219,33 @@ public class DataBinder {
 		 * @throws FileUtilException
 		 * @throws IOException
 		 */
-		public ContentBodyMap() throws FileUtilException, IOException{
-			rootPath = FileUtil.createTempDirectory(BACKUP_DIR_SUFFIX);
-			canonialRootPath  = new File(rootPath).getCanonicalPath();
+		public static ContentBodyMap initialForBackup() throws FileUtilException, IOException{
+			ContentBodyMap obj = new ContentBodyMap();
+			obj.rootPath = FileUtil.createTempDirectory(BACKUP_DIR_SUFFIX);
+			obj.canonialRootPath  = new File(obj.rootPath).getCanonicalPath();
+			
+			return obj;
 			
 		}
 		/**
 		 * Call by restore (import) service and will assume the content body files is already unzip to given rootPath. 
 		 * @param rootPath
+		 * @return 
+		 * @throws FileNotFoundException 
 		 */
-		public ContentBodyMap(String rootPath) {
-			this.rootPath = rootPath;
+		public static ContentBodyMap initialForRestore(String rootPath) throws FileNotFoundException {
+			File file = new File(rootPath, BACKUP_CONTENT_MAPFILE);
+			FileInputStream fos = new FileInputStream(file);
+			ContentBodyMap obj = (ContentBodyMap) xstream.fromXML(fos);
+			obj.rootPath = rootPath;
+			IOUtils.closeQuietly(fos);
+			
+			//must initialise here rather than in class level
+			obj.bodyMap = new HashMap<Integer, ContentBodys>();
+			
+			return obj;
 		}
-		public void add(Integer contentId, PAGE_TYPE type, String body) throws FileNotFoundException, UnsupportedEncodingException{
+		public void add(Integer contentId, PAGE_TYPE type, String body) throws IOException{
 			boolean full = bodys.add(contentId, type, body);
 			switch (type) {
 			case PAGE:
@@ -241,17 +262,29 @@ public class DataBinder {
 			//if current contentBodys is full, then save and clear it.
 			if(full){
 				//save body file
-				writeFile(bodys, BACKUP_CONTENT_FILE_PREFIX+fileIndex + ".xml");
-				
+				String filename = writeFile(bodys, BACKUP_CONTENT_FILE_PREFIX+fileIndex + ".xml");
+				log.info("Write content body file {} ", filename);
 				//reset
 				bodys.clear();
 				fileIndex++;
 			}
 		}
 		
-		public void finalise() throws FileNotFoundException, UnsupportedEncodingException {
+		
+		public void finalise() throws IOException {
+			//save body file if it doesn't save yet.
+			File file = new File(rootPath, BACKUP_CONTENT_FILE_PREFIX+fileIndex + ".xml");
+			if(!fileMap.containsKey(file)){
+				String filename = writeFile(bodys, BACKUP_CONTENT_FILE_PREFIX+fileIndex + ".xml");
+				log.info("Write content body file {} ", filename);
+				
+				bodys.clear();
+				bodys = null;
+			}
+			
 			//save contentMap itself 
-			writeFile(this, BACKUP_CONTENT_MAPFILE);
+			String mapFilename = writeFile(this, BACKUP_CONTENT_MAPFILE);
+			log.info("Write content body mapping file {} ", mapFilename);
 		}
 		
 		public Map<File, String> getZipMap() {
@@ -286,20 +319,8 @@ public class DataBinder {
 			}
 			
 			//try load contentBodys from cached map - if not exist, then load from XML file
-			ContentBodys contentBodys = null;
-			
-			switch (type) {
-			case PAGE:
-				contentBodys = pageBodyMap.get(fIndex);
-				break;
-			case DRAFT:
-				contentBodys = draftBodyMap.get(fIndex);
-				break;
-			case HISTORY:
-				contentBodys = historyBodyMap.get(fIndex);
-				break;
-			}
-			
+			ContentBodys contentBodys = bodyMap.get(fIndex);
+		
 			if(contentBodys == null){
 				//load from XML file
 				contentBodys = loadFile(BACKUP_CONTENT_FILE_PREFIX+fIndex + ".xml");
@@ -308,17 +329,7 @@ public class DataBinder {
 					return null;
 				}
 				
-				switch (type) {
-				case PAGE:
-					pageBodyMap.put(fIndex, contentBodys);
-					break;
-				case DRAFT:
-					draftBodyMap.put(fIndex, contentBodys);
-					break;
-				case HISTORY:
-					historyBodyMap.put(fIndex, contentBodys);
-					break;
-				}
+				bodyMap.put(fIndex, contentBodys);
 			}
 			
 			//please note, here use remove() rather than get() - for memory consideration
@@ -331,16 +342,17 @@ public class DataBinder {
 			try {
 				File file = new File(rootPath, filename);
 				FileInputStream fis = new FileInputStream(file);
-				bodys = (ContentBodys) xstream.fromXML(fis);
+				ContentBodys contentBodys = (ContentBodys) xstream.fromXML(fis);
 				IOUtils.closeQuietly(fis);
 				
-				return bodys;
+				log.info("Loaded content body file {}", file.getCanonicalPath());
+				return contentBodys;
 			} catch (Exception e) {
 				Log.error("Unable to load content body file " + filename , e);
 			}
 			return null;
 		}
-		private void writeFile(Object obj, String filename) throws FileNotFoundException, UnsupportedEncodingException {
+		private String writeFile(Object obj, String filename) throws IOException {
 			File file = new File(rootPath, filename);
 			FileOutputStream fos = new FileOutputStream(file);
 			OutputStreamWriter writer = new OutputStreamWriter(fos, Constants.UTF8);
@@ -351,6 +363,8 @@ public class DataBinder {
 			IOUtils.closeQuietly(fos);
 			
 			fileMap.put(file, canonialRootPath);
+			
+			return file.getCanonicalPath();
 		}
 
 	
@@ -359,13 +373,13 @@ public class DataBinder {
 		
 		//2M
 		private static final int MAX_SIZE = 2 * 1024 * 1024;
+		private transient int size = 0;
 		
 		// <contentID, body>
 		private Map<Integer, String> pageBodys;
 		private Map<Integer, String> draftBodys;
 		private Map<Integer, String> historyBodys;
 		
-		private int size = 0;
 		
 		public String remove(Integer contentId, PAGE_TYPE type){
 			switch (type) {
