@@ -938,13 +938,9 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		
 		
 		List<SpaceTag> stags = spaceTagDAO.getObjects();
-//		for (SpaceTag spaceTag : stags) {
-//		}
 		binder.addAll(SpaceTag.class.getName(),stags);
 		
 		List<PageTag> ptags = pageTagDAO.getObjects();
-//		for (PageTag pageTag : ptags) {
-//		}
 		binder.addAll(PageTag.class.getName(),ptags);
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
