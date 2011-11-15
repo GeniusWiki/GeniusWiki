@@ -21,9 +21,11 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
 import org.apache.lucene.search.IndexSearcher;
+
+import com.edgenius.wiki.search.service.SearchException;
 
 /**
  * @author Dapeng.Ni

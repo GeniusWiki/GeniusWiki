@@ -21,14 +21,13 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springmodules.lucene.index.factory.LuceneIndexWriter;
 
 /**
  * @author Dapeng.Ni
@@ -38,23 +37,17 @@ public class SimpleIndexFactoryBean implements FactoryBean<SimpleIndexFactory>,I
 	private SimpleIndexFactory factory;
 	private Directory directory;
 
-	/**
-	 * @see org.springframework.beans.factory.FactoryBean#getObject()
-	 */
+	@Override
 	public SimpleIndexFactory getObject() throws Exception {
 		return factory;
 	}
 
-	/**
-	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
-	 */
+	@Override
 	public Class<SimpleIndexFactory> getObjectType() {
 		return SimpleIndexFactory.class;
 	}
 
-	/**
-	 * @see org.springframework.beans.factory.FactoryBean#isSingleton()
-	 */
+	@Override
 	public boolean isSingleton() {
 		return true;
 	}
@@ -70,7 +63,7 @@ public class SimpleIndexFactoryBean implements FactoryBean<SimpleIndexFactory>,I
 			//try to create an empty index.
 			boolean exist = IndexReader.indexExists(getDirectory());
 			if(!exist) {
-				LuceneIndexWriter writer =  this.factory.getIndexWriter();
+				IndexWriter writer =  this.factory.getIndexWriter();
 				writer.close();
 			}
 		} catch (Exception e) {

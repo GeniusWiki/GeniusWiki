@@ -21,42 +21,20 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
 import org.apache.lucene.search.IndexSearcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.edgenius.wiki.search.service.SearchException;
 
 /**
  * @author Dapeng.Ni
  */
-public class LuceneSearchSupport  {
-	private static final Logger log = LoggerFactory.getLogger(LuceneSearchSupport.class);
-	
-	private SearcherFactory searcherFactory;
+public interface SearcherFactory {
+	IndexSearcher getSearcher() throws SearchException;
 
-	protected Object search(SearcherCallback searcherCallback) throws SearchException {
-		try {
-			IndexSearcher searcher = searcherFactory.getSearcher();
-			
-			Object rs = searcherCallback.doWithSearcher(searcher);
-			
-			return rs;
-			
-		} finally{
-			try {
-				searcherFactory.close();
-			} catch (Exception e) {
-				log.error("Close IndexSearcher/IndexReader failed after search", e);
-			}
-		}
-	}
-
-	public SearcherFactory getSearcherFactory() {
-		return searcherFactory;
-	}
-
-	public void setSearcherFactory(SearcherFactory searcherFactory) {
-		this.searcherFactory = searcherFactory;
-	}
+	/**
+	 * Close IndexSearcher and IndexReader.
+	 */
+	void close() throws SearchException;
 }

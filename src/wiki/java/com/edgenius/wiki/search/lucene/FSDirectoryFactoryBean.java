@@ -21,7 +21,7 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
 import java.io.File;
 

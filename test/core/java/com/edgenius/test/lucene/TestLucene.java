@@ -45,9 +45,9 @@ import org.apache.lucene.store.LockObtainFailedException;
 import org.junit.After;
 import org.junit.Before;
 
+import com.edgenius.wiki.search.lucene.LuceneConfig;
 import com.edgenius.wiki.search.service.FieldName;
 import com.edgenius.wiki.search.service.LowerCaseAnalyzer;
-import com.edgenius.wiki.search.service.LuceneVersion;
 
 /**
  * This test is for confirm Lucene is still working expected if any lucene API upgrade.
@@ -76,7 +76,7 @@ public class TestLucene extends TestCase {
 	 * @throws IOException
 	 */
 	private void initWriter() throws CorruptIndexException, LockObtainFailedException, IOException {
-		PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneVersion.VERSION));
+		PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneConfig.VERSION));
 		analyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
 		writer = new IndexWriter(FSDirectory.open(new File(indexDir)), analyzer, true,MaxFieldLength.UNLIMITED);
 	}
@@ -90,22 +90,22 @@ public class TestLucene extends TestCase {
 		
 		//if query is part of spaceUname - won't work
 		Query q = new TermQuery(new Term(FieldName.UNSEARCH_SPACE_UNIXNAME, "world"));
-		TopDocs hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		TopDocs hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(0, hits.totalHits);
 		
 		//if query contains spaceUname - won't work
 		q = new TermQuery(new Term(FieldName.UNSEARCH_SPACE_UNIXNAME, "contain world keyword"));
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(0, hits.totalHits);
 		
 		//case sensitive - index is lowercase
 		q = new TermQuery(new Term(FieldName.UNSEARCH_SPACE_UNIXNAME, "world SPACE"));
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(0, hits.totalHits);
 		
 		//exactly match and lowercase
 		q = new TermQuery(new Term(FieldName.UNSEARCH_SPACE_UNIXNAME, "world space"));
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(1, hits.totalHits);
 		
 		//the stored unixName is still original case
@@ -116,70 +116,70 @@ public class TestLucene extends TestCase {
 	
 	//ADV_KEYWORD_TYPE
 	public void testKeywordType() throws Exception {
-		QueryParser p = new QueryParser(LuceneVersion.VERSION, "s0", new StandardAnalyzer(LuceneVersion.VERSION));
+		QueryParser p = new QueryParser(LuceneConfig.VERSION, "s0", new StandardAnalyzer(LuceneConfig.VERSION));
 		//contain any of keywords
 		Query q = p.parse("world space");
-		TopDocs hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		TopDocs hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(3, hits.totalHits);
 		
 		
 		//must contain all keywords
 		q = p.parse("+world +space");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(1, hits.totalHits);
 		
 		//the is ignored
 		q = p.parse("+the +world +\\[");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(2, hits.totalHits);
 		
 		//exact - this is not exactly match if there are stop words in query or in content, they will be ignored.
-		p = new QueryParser(LuceneVersion.VERSION, "s1", new StandardAnalyzer(LuceneVersion.VERSION));
+		p = new QueryParser(LuceneConfig.VERSION, "s1", new StandardAnalyzer(LuceneConfig.VERSION));
 		q = p.parse("\"world and space\"");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(2, hits.totalHits);
 		
 		
 		q = p.parse("\"world space\"");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(1, hits.totalHits);
 		
 		q = p.parse("\"world test space\"");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(1, hits.totalHits);
 		
 		//wildcard
 		q = p.parse("wo*ld");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(3, hits.totalHits);
 		
 		q = p.parse("wo?ld");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(3, hits.totalHits);
 	
 	}
 	//ADV_DATE
 	public void testDateRange() throws Exception {
-		QueryParser p = new QueryParser(LuceneVersion.VERSION, "date", new StandardAnalyzer(LuceneVersion.VERSION));
+		QueryParser p = new QueryParser(LuceneConfig.VERSION, "date", new StandardAnalyzer(LuceneConfig.VERSION));
 		Query q = p.parse("["+ new Date(2005,5,30).getTime() + " TO "+ new Date(2005,6,30).getTime()+"]");
-		TopDocs hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		TopDocs hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(2, hits.totalHits);
 		
 		q = p.parse("["+ new Date(2005,3,30).getTime() + " TO "+ new Date(2005,6,30).getTime()+"]");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(3, hits.totalHits);
 		
 		q = p.parse("["+ new Date(2008,3,30).getTime() + " TO "+ new Date(2008,6,30).getTime()+"]");
-		hits = searcher.search(q, LuceneVersion.MAX_RETURN);
+		hits = searcher.search(q, LuceneConfig.MAX_RETURN);
 		assertEquals(0, hits.totalHits);
 		
 	}
 	
 	//ADV_SORT
 	public void testSort() throws ParseException, IOException{
-		QueryParser p = new QueryParser(LuceneVersion.VERSION, "dsc", new StandardAnalyzer(LuceneVersion.VERSION));
+		QueryParser p = new QueryParser(LuceneConfig.VERSION, "dsc", new StandardAnalyzer(LuceneConfig.VERSION));
 		Query q = p.parse("hello");
-		TopFieldDocs hits = searcher.search(q,LuceneVersion.MAX_RETURN, new Sort(new SortField("ds",SortField.STRING)));
+		TopFieldDocs hits = searcher.search(q,LuceneConfig.MAX_RETURN, new Sort(new SortField("ds",SortField.STRING)));
 		assertEquals(4, hits.totalHits);
 		
 		assertEquals("123",searcher.doc(hits.scoreDocs[0].doc).get("ds"));

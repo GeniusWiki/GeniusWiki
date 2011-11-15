@@ -21,18 +21,23 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
-import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.index.IndexWriter;
 
 /**
  * @author Dapeng.Ni
  */
-public interface SearcherFactory {
-	IndexSearcher getSearcher() throws SearchException;
+public interface IndexFactory {
 
 	/**
-	 * Close IndexSearcher and IndexReader.
+	 * @return
 	 */
-	void close() throws SearchException;
+	IndexWriter getIndexWriter();
+
+	/**
+	 * @return
+	 */
+	IndexWriter getRebuildIndexWriter();
+
 }

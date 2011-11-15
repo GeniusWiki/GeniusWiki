@@ -29,6 +29,9 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 
+import com.edgenius.wiki.search.lucene.LuceneConfig;
+import com.edgenius.wiki.search.lucene.SearcherCallback;
+
 /**
  * @author Dapeng.Ni
  */
@@ -41,7 +44,7 @@ public class AttachmentSearchServiceImpl  extends AbstractSearchService implemen
 				try {
 					Term identifierTerm = new Term(FieldName.KEY,nodeUuid.toLowerCase());
 					TermQuery query = new TermQuery(identifierTerm);
-					TopDocs hits = searcher.search(query, LuceneVersion.MAX_RETURN);
+					TopDocs hits = searcher.search(query, LuceneConfig.MAX_RETURN);
 					Document doc = null;
 					
 					if(hits.totalHits > 0){
