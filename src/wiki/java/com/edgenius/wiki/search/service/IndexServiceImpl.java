@@ -73,8 +73,8 @@ import com.edgenius.wiki.model.Widget;
 import com.edgenius.wiki.quartz.MaintainJobInvoker;
 import com.edgenius.wiki.quartz.QuartzException;
 import com.edgenius.wiki.search.lucene.IndexFactory;
-import com.edgenius.wiki.search.lucene.LuceneIndexWriter;
 import com.edgenius.wiki.search.lucene.LuceneConfig;
+import com.edgenius.wiki.search.lucene.LuceneIndexWriter;
 import com.edgenius.wiki.search.lucene.SimpleIndexFactory;
 import com.edgenius.wiki.service.RenderService;
 import com.edgenius.wiki.service.ThemeService;
@@ -1182,7 +1182,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		Fieldable contributor = new Field(FieldName.CONTRIBUTOR, node.getCreateor(), Field.Store.YES, Field.Index.ANALYZED);
 		
 		//deleting key - must be indexed
-		Fieldable key = new Field(FieldName.KEY, node.getNodeUuid(),Field.Store.NO, Field.Index.ANALYZED);
+		Fieldable key = new Field(FieldName.KEY, node.getNodeUuid(),Field.Store.NO, Field.Index.NOT_ANALYZED);
 		
 		Fieldable uuid = new Field(FieldName.FILE_NODE_UUID, node.getNodeUuid(),Field.Store.YES, Field.Index.NO);
 		Fieldable pageUuid = new Field(FieldName.PAGE_UUID,node.getIdentifier(), Field.Store.YES, Field.Index.NO);
