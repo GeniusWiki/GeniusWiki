@@ -33,8 +33,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Fieldable;
@@ -73,8 +71,7 @@ import com.edgenius.wiki.model.Widget;
 import com.edgenius.wiki.quartz.MaintainJobInvoker;
 import com.edgenius.wiki.quartz.QuartzException;
 import com.edgenius.wiki.search.lucene.IndexFactory;
-import com.edgenius.wiki.search.lucene.LuceneConfig;
-import com.edgenius.wiki.search.lucene.LuceneIndexWriter;
+import com.edgenius.wiki.search.lucene.LuceneIndexWriterTemplate;
 import com.edgenius.wiki.search.lucene.SimpleIndexFactory;
 import com.edgenius.wiki.service.RenderService;
 import com.edgenius.wiki.service.ThemeService;
@@ -98,15 +95,15 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	private IndexFactory attachmentIndexFactory;
 	private IndexFactory widgetIndexFactory;
 	
-	private LuceneIndexWriter pageTemplate;
-	private LuceneIndexWriter commentTemplate;
-	private LuceneIndexWriter spaceTemplate;
-	private LuceneIndexWriter userTemplate;
-	private LuceneIndexWriter roleTemplate;
-	private LuceneIndexWriter pageTagTemplate;
-	private LuceneIndexWriter spaceTagTemplate;
-	private LuceneIndexWriter attachmentTemplate;
-	private LuceneIndexWriter widgetTemplate;
+	private LuceneIndexWriterTemplate pageTemplate;
+	private LuceneIndexWriterTemplate commentTemplate;
+	private LuceneIndexWriterTemplate spaceTemplate;
+	private LuceneIndexWriterTemplate userTemplate;
+	private LuceneIndexWriterTemplate roleTemplate;
+	private LuceneIndexWriterTemplate pageTagTemplate;
+	private LuceneIndexWriterTemplate spaceTagTemplate;
+	private LuceneIndexWriterTemplate attachmentTemplate;
+	private LuceneIndexWriterTemplate widgetTemplate;
 	
 	private ReentrantLock pageLock = new ReentrantLock();
 	private ReentrantLock commentLock = new ReentrantLock();
@@ -134,9 +131,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	private ThemeService themeService;
 	private AttachmentSearchService attachmentSearchService;
 	private TextExtractorService textExtractorService; 
-	//default analyzer
-	private PerFieldAnalyzerWrapper  analyzer;
-	
+
 	private MaintainJobInvoker maintainJobInvoker;
 	
 	//JDK1.6 @Override
@@ -585,7 +580,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(attachments != null){
 			attachmentLock.lock();
 			try{
-				attWriter = ((SimpleIndexFactory)attachmentIndexFactory).getRebuildIndexWriter();
+				attWriter = ((SimpleIndexFactory)attachmentIndexFactory).getIndexWriter();
 				for (CrFileNode node : attachments) {
 					if(RepositoryService.DEFAULT_SPACE_NAME.equals(node.getSpaceUname())){
 						//don't index default space stuff: it is user portrait etc.
@@ -621,7 +616,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(spaceTags != null){
 			spaceTagLock.lock();
 			try {
-				spaceTagWriter = ((SimpleIndexFactory)spaceTagIndexFactory).getRebuildIndexWriter();
+				spaceTagWriter = ((SimpleIndexFactory)spaceTagIndexFactory).getIndexWriter();
 				for (SpaceTag tag : spaceTags) {
 					try {
 						spaceTagWriter.addDocument(createSpaceTagDocument(tag));
@@ -652,7 +647,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(pageTags != null){
 			pageTagLock.lock();
 			try{
-				pageTagWriter = ((SimpleIndexFactory)pageTagIndexFactory).getRebuildIndexWriter();
+				pageTagWriter = ((SimpleIndexFactory)pageTagIndexFactory).getIndexWriter();
 				for (PageTag tag : pageTags) {
 					try {
 						pageTagWriter.addDocument(createPageTagDocument(tag));
@@ -683,7 +678,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(users != null){
 			userLock.lock();
 			try{
-				userWriter = ((SimpleIndexFactory)userIndexFactory).getRebuildIndexWriter();
+				userWriter = ((SimpleIndexFactory)userIndexFactory).getIndexWriter();
 				for (User user : users) {
 					try {
 						userWriter.addDocument(createUserDocument(user));
@@ -709,7 +704,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(roles != null){
 			roleLock.lock();
 			try{
-				roleWriter = ((SimpleIndexFactory)roleIndexFactory).getRebuildIndexWriter();
+				roleWriter = ((SimpleIndexFactory)roleIndexFactory).getIndexWriter();
 				for (Role role : roles) {
 					try {
 						roleWriter.addDocument(createRoleDocument(role));
@@ -740,7 +735,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(spaces != null){
 			spaceLock.lock();
 			try {
-				spaceWriter = ((SimpleIndexFactory)spaceIndexFactory).getRebuildIndexWriter();
+				spaceWriter = ((SimpleIndexFactory)spaceIndexFactory).getIndexWriter();
 				for (Space space : spaces) {
 					try {
 						//skip system space 
@@ -772,7 +767,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(widgets != null){
 			widgetLock.lock();
 			try {
-				widgetWriter = ((SimpleIndexFactory)widgetIndexFactory).getRebuildIndexWriter();
+				widgetWriter = ((SimpleIndexFactory)widgetIndexFactory).getIndexWriter();
 				for (Widget widget : widgets) {
 					try {
 						widgetWriter.addDocument(createWidgetDocument(widget));
@@ -803,7 +798,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		if(comments != null){
 			commentLock.lock();
 			try {
-				commentWriter = ((SimpleIndexFactory)commentIndexFactory).getRebuildIndexWriter();
+				commentWriter = ((SimpleIndexFactory)commentIndexFactory).getIndexWriter();
 				for (PageComment comment : comments) {
 					try{
 						commentWriter.addDocument(createCommentDocument(comment));
@@ -837,7 +832,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			pageLock.lock();
 			try{
 				//this will delete existed page Index
-				pageWriter = ((SimpleIndexFactory)pageIndexFactory).getRebuildIndexWriter();
+				pageWriter = ((SimpleIndexFactory)pageIndexFactory).getIndexWriter();
 				//it is memory killer if using pageDAO.getObjects(); Now read page by native SQL and initialise object manually.
 				//Current page returns:
 				//PageTitle, PageUUID, page.getContent().getContent(), 
@@ -926,27 +921,24 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			throw new BeanInitializationException("Must set indexRoot and it must be directory");
 		}
 			
-		analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneConfig.VERSION));
-		analyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
-		analyzer.addAnalyzer(FieldName.CONTRIBUTOR,new LowerCaseAnalyzer());
-		analyzer.addAnalyzer(FieldName.KEY,new LowerCaseAnalyzer());
+
 		
-		this.pageTemplate = new LuceneIndexWriter(pageIndexFactory, analyzer);
-		this.commentTemplate = new LuceneIndexWriter(commentIndexFactory, analyzer);
-		this.spaceTemplate = new LuceneIndexWriter(spaceIndexFactory, analyzer);
-		this.pageTagTemplate = new LuceneIndexWriter(pageTagIndexFactory, analyzer);
-		this.spaceTagTemplate = new LuceneIndexWriter(spaceTagIndexFactory, analyzer);
-		this.userTemplate = new LuceneIndexWriter(userIndexFactory, analyzer);
-		this.roleTemplate = new LuceneIndexWriter(roleIndexFactory, analyzer);
-		this.attachmentTemplate = new LuceneIndexWriter(attachmentIndexFactory, analyzer);
-		this.widgetTemplate = new LuceneIndexWriter(widgetIndexFactory, analyzer);
+		this.pageTemplate = new LuceneIndexWriterTemplate(pageIndexFactory);
+		this.commentTemplate = new LuceneIndexWriterTemplate(commentIndexFactory);
+		this.spaceTemplate = new LuceneIndexWriterTemplate(spaceIndexFactory);
+		this.pageTagTemplate = new LuceneIndexWriterTemplate(pageTagIndexFactory);
+		this.spaceTagTemplate = new LuceneIndexWriterTemplate(spaceTagIndexFactory);
+		this.userTemplate = new LuceneIndexWriterTemplate(userIndexFactory);
+		this.roleTemplate = new LuceneIndexWriterTemplate(roleIndexFactory);
+		this.attachmentTemplate = new LuceneIndexWriterTemplate(attachmentIndexFactory);
+		this.widgetTemplate = new LuceneIndexWriterTemplate(widgetIndexFactory);
 		
 	}
 	
 	//********************************************************************
 	//               private method
 	//********************************************************************
-	private void saveUpdate(LuceneIndexWriter template, final Document doc, final Term identifierTerm) {
+	private void saveUpdate(LuceneIndexWriterTemplate template, final Document doc, final Term identifierTerm) {
 		//so ugly code, does it can be a good way saveUpdate?
 		try {
 			template.deleteDocuments(identifierTerm);

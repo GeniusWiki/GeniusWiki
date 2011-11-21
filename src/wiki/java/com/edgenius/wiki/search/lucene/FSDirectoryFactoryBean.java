@@ -26,7 +26,6 @@ package com.edgenius.wiki.search.lucene;
 import java.io.File;
 
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.SimpleFSLockFactory;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
@@ -39,7 +38,6 @@ import org.springframework.core.io.Resource;
 public class FSDirectoryFactoryBean  implements FactoryBean<FSDirectory>, InitializingBean,DisposableBean {
 
     private Resource location;
-    private Resource lockLocation;
     private FSDirectory directory;
 
     @Override
@@ -67,20 +65,15 @@ public class FSDirectoryFactoryBean  implements FactoryBean<FSDirectory>, Initia
         if (location == null) {
             throw new BeanInitializationException("Must specify a location property");
         }
-        if(lockLocation == null){
-        	throw new BeanInitializationException("Must specify a lock location property");
-        }
         
         File locationDir = location.getFile();
         if (!locationDir.exists()){
         	locationDir.mkdirs();
         }
-        File lockDir = lockLocation.getFile();
-        if(!lockDir.exists()){
-        	lockDir.mkdirs();
-        }
-        directory = FSDirectory.open(locationDir, new SimpleFSLockFactory(lockDir));
+        directory = FSDirectory.open(locationDir);
     }
+    
+    @Override
 	public void destroy() throws Exception {
 		directory.close();
 	}
@@ -91,8 +84,5 @@ public class FSDirectoryFactoryBean  implements FactoryBean<FSDirectory>, Initia
         this.location = location;
     }
 
-	public void setLockLocation(Resource lockLocation) {
-		this.lockLocation = lockLocation;
-	}
 
 }

@@ -35,9 +35,5 @@ public interface IndexFactory {
 	 */
 	IndexWriter getIndexWriter();
 
-	/**
-	 * @return
-	 */
-	IndexWriter getRebuildIndexWriter();
 
 }

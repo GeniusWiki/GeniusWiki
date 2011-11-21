@@ -25,19 +25,26 @@ package com.edgenius.wiki.search.lucene;
 
 import java.io.IOException;
 
+import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.LogDocMergePolicy;
 import org.apache.lucene.index.LogMergePolicy;
 import org.apache.lucene.store.Directory;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+import com.allen_sauer.gwt.log.client.Log;
+import com.edgenius.wiki.search.service.FieldName;
+import com.edgenius.wiki.search.service.LowerCaseAnalyzer;
 
 
 /**
  * @author Dapeng.Ni
  */
-public class SimpleIndexFactory  implements IndexFactory  {
+public class SimpleIndexFactory  implements IndexFactory, DisposableBean, InitializingBean  {
 
 
 	private boolean useCompoundFile = false;
@@ -46,28 +53,39 @@ public class SimpleIndexFactory  implements IndexFactory  {
 	private int mergeFactor = LuceneConfig.DEFAULT_MERGE_FACTOR;
 	private int termIndexInterval = LuceneConfig.DEFAULT_TERM_INDEX_INTERVAL;
 	private int writeLockTimeout = LuceneConfig.DEFAULT_WRITE_LOCK_TIMEOUT;
-	
-	private StandardAnalyzer analyzer = new StandardAnalyzer(LuceneConfig.VERSION);
+
+	//This is not support be to set by spring
+	private PerFieldAnalyzerWrapper analyzer;
+	private IndexWriter writer;
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Properties
 	private Directory directory;
-	
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Methods
 	public SimpleIndexFactory(Directory directory) {
 		this.directory  = directory;
-	}
-
-	private void checkIndexLocking() throws IOException {
-		if( IndexWriter.isLocked(directory) ) {
-			throw new LuceneIndexAccessException("The index is locked");
-		}
+		
+		analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneConfig.VERSION));
+		analyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
+		analyzer.addAnalyzer(FieldName.CONTRIBUTOR,new LowerCaseAnalyzer());
+		analyzer.addAnalyzer(FieldName.KEY,new LowerCaseAnalyzer());
 	}
 
 
 	@Override
 	public IndexWriter getIndexWriter() {
+		if(writer != null)
+			return writer;
+		
 		try {
-			checkIndexLocking();
+			
+			if(IndexWriter.isLocked(directory)){
+				IndexWriter.unlock(directory);
+			}
 			
 			IndexWriterConfig conf = getIndexWriterConfig();
-			IndexWriter writer = new IndexWriter(directory, conf);
+			writer = new IndexWriter(directory, conf);
 			
 			return writer;
 		} catch(IOException ex) {
@@ -76,22 +94,43 @@ public class SimpleIndexFactory  implements IndexFactory  {
 	}
 
 	@Override
-	public IndexWriter getRebuildIndexWriter() {
+	public void afterPropertiesSet() throws Exception {
+		if (directory == null) {
+			throw new IllegalArgumentException("directory is required");
+		}
+		
 		try {
-			checkIndexLocking();
-			
-			IndexWriterConfig conf = getIndexWriterConfig();
-			conf.setOpenMode(OpenMode.CREATE);
-			IndexWriter writer = new IndexWriter(directory, conf);
-			
-			return writer;
-		} catch(IOException ex) {
-			throw new LuceneIndexAccessException("Error during creating the writer",ex);
+			//try to create an empty index.
+			boolean exist = IndexReader.indexExists(directory);
+			if(!exist) {
+				IndexWriter writer =  this.getIndexWriter();
+				writer.close();
+			}
+		} catch (Exception e) {
+			Log.error("Unable to create an empty index", e);
+		} finally{
+			//clean lock when factory initial
+			if(IndexWriter.isLocked(directory)){
+				IndexWriter.unlock(directory);
+			}
+		}
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		if(writer != null){
+			try {
+				writer.close();
+			} catch (Exception e) {
+				Log.error("Close IndexWriter failed", e);
+			} finally{
+				if(IndexWriter.isLocked(directory)){
+					IndexWriter.unlock(directory);
+				}
+			}
 		}
 	}
 	
-
-
 	private IndexWriterConfig getIndexWriterConfig() {
 		IndexWriterConfig conf = new IndexWriterConfig(LuceneConfig.VERSION, analyzer);
 		conf.setMaxBufferedDocs(maxBufferedDocs);
@@ -106,5 +145,8 @@ public class SimpleIndexFactory  implements IndexFactory  {
 		
 		return conf;
 	}
+
+
+	
 
 }

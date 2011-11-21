@@ -137,68 +137,59 @@
   	<!--  Directory Factory service -->  	
 	<bean id="pageFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/pages"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="commentFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/comments"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="spaceFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/spaces"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="userFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/users"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="roleFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/roles"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="pageTagFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/pagetags"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="spaceTagFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/spacetags"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="attachmentFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/attachments"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	<bean id="widgetFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
 	    <property name="location" value="${geniuswiki.data.root}data/index/widgets"/>
-	    <property name="lockLocation" value="${geniuswiki.data.root}data/index/locks"/>
 	</bean>
 	
 	<!-- IndexFactory -->
-	<bean id="pageIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="pageFsDirectory"/>
+	<bean id="pageIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<constructor-arg ref="pageFsDirectory"/>
 	</bean>
-	<bean id="commentIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="commentFsDirectory"/>
+	<bean id="commentIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="commentFsDirectory"/>
 	</bean>
-	<bean id="spaceIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="spaceFsDirectory"/>
+	<bean id="spaceIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="spaceFsDirectory"/>
 	</bean>
-	<bean id="userIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="userFsDirectory"/>
+	<bean id="userIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="userFsDirectory"/>
 	</bean>
-	<bean id="roleIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="roleFsDirectory"/>
+	<bean id="roleIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="roleFsDirectory"/>
 	</bean>
-	<bean id="pageTagIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="pageTagFsDirectory"/>
+	<bean id="pageTagIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="pageTagFsDirectory"/>
 	</bean>
-	<bean id="spaceTagIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="spaceTagFsDirectory"/>
+	<bean id="spaceTagIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="spaceTagFsDirectory"/>
 	</bean>
-	<bean id="attachmentIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="attachmentFsDirectory"/>
+	<bean id="attachmentIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="attachmentFsDirectory"/>
 	</bean>
-	<bean id="widgetIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactoryBean">
-	    <property name="directory" ref="widgetFsDirectory"/>
+	<bean id="widgetIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+	    <constructor-arg ref="widgetFsDirectory"/>
 	</bean>
 	
 	<!-- Search Factory -->
