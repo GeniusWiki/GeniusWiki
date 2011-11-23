@@ -71,7 +71,7 @@ import com.edgenius.wiki.model.Widget;
 import com.edgenius.wiki.quartz.MaintainJobInvoker;
 import com.edgenius.wiki.quartz.QuartzException;
 import com.edgenius.wiki.search.lucene.IndexFactory;
-import com.edgenius.wiki.search.lucene.LuceneIndexWriterTemplate;
+import com.edgenius.wiki.search.lucene.IndexWriterTemplate;
 import com.edgenius.wiki.search.lucene.SimpleIndexFactory;
 import com.edgenius.wiki.service.RenderService;
 import com.edgenius.wiki.service.ThemeService;
@@ -95,15 +95,15 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	private IndexFactory attachmentIndexFactory;
 	private IndexFactory widgetIndexFactory;
 	
-	private LuceneIndexWriterTemplate pageTemplate;
-	private LuceneIndexWriterTemplate commentTemplate;
-	private LuceneIndexWriterTemplate spaceTemplate;
-	private LuceneIndexWriterTemplate userTemplate;
-	private LuceneIndexWriterTemplate roleTemplate;
-	private LuceneIndexWriterTemplate pageTagTemplate;
-	private LuceneIndexWriterTemplate spaceTagTemplate;
-	private LuceneIndexWriterTemplate attachmentTemplate;
-	private LuceneIndexWriterTemplate widgetTemplate;
+	private IndexWriterTemplate pageTemplate;
+	private IndexWriterTemplate commentTemplate;
+	private IndexWriterTemplate spaceTemplate;
+	private IndexWriterTemplate userTemplate;
+	private IndexWriterTemplate roleTemplate;
+	private IndexWriterTemplate pageTagTemplate;
+	private IndexWriterTemplate spaceTagTemplate;
+	private IndexWriterTemplate attachmentTemplate;
+	private IndexWriterTemplate widgetTemplate;
 	
 	private ReentrantLock pageLock = new ReentrantLock();
 	private ReentrantLock commentLock = new ReentrantLock();
@@ -890,22 +890,22 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			
 
 		
-		this.pageTemplate = new LuceneIndexWriterTemplate(pageIndexFactory);
-		this.commentTemplate = new LuceneIndexWriterTemplate(commentIndexFactory);
-		this.spaceTemplate = new LuceneIndexWriterTemplate(spaceIndexFactory);
-		this.pageTagTemplate = new LuceneIndexWriterTemplate(pageTagIndexFactory);
-		this.spaceTagTemplate = new LuceneIndexWriterTemplate(spaceTagIndexFactory);
-		this.userTemplate = new LuceneIndexWriterTemplate(userIndexFactory);
-		this.roleTemplate = new LuceneIndexWriterTemplate(roleIndexFactory);
-		this.attachmentTemplate = new LuceneIndexWriterTemplate(attachmentIndexFactory);
-		this.widgetTemplate = new LuceneIndexWriterTemplate(widgetIndexFactory);
+		this.pageTemplate = new IndexWriterTemplate(pageIndexFactory);
+		this.commentTemplate = new IndexWriterTemplate(commentIndexFactory);
+		this.spaceTemplate = new IndexWriterTemplate(spaceIndexFactory);
+		this.pageTagTemplate = new IndexWriterTemplate(pageTagIndexFactory);
+		this.spaceTagTemplate = new IndexWriterTemplate(spaceTagIndexFactory);
+		this.userTemplate = new IndexWriterTemplate(userIndexFactory);
+		this.roleTemplate = new IndexWriterTemplate(roleIndexFactory);
+		this.attachmentTemplate = new IndexWriterTemplate(attachmentIndexFactory);
+		this.widgetTemplate = new IndexWriterTemplate(widgetIndexFactory);
 		
 	}
 	
 	//********************************************************************
 	//               private method
 	//********************************************************************
-	private void saveUpdate(LuceneIndexWriterTemplate template, final Document doc, final Term identifierTerm) {
+	private void saveUpdate(IndexWriterTemplate template, final Document doc, final Term identifierTerm) {
 		//so ugly code, does it can be a good way saveUpdate?
 		try {
 			template.deleteDocuments(identifierTerm);

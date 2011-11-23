@@ -23,18 +23,35 @@
  */
 package com.edgenius.wiki.search.lucene;
 
-import org.apache.lucene.index.IndexWriter;
-
-
 /**
  * @author Dapeng.Ni
  */
-public interface IndexCallback {
+public class IndexAccessException extends RuntimeException{
+	private static final long serialVersionUID = -3454989414096944277L;
 
-	/**
-	 * This method is good for batch add documents as it only commit once after this method.
-	 * @param writer
-	 */
-	public void addDocument(IndexWriter writer);
-	
+	public IndexAccessException() {
+		super();
+		
+	}
+	public IndexAccessException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+		
+	}
+
+	public IndexAccessException(String message, Throwable cause) {
+		super(message, cause);
+		
+	}
+
+	public IndexAccessException(String message) {
+		super(message);
+		
+	}
+
+	public IndexAccessException(Throwable cause) {
+		super(cause);
+		
+	}
+
 }

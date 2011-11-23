@@ -135,31 +135,31 @@
 
 	
   	<!--  Directory Factory service -->  	
-	<bean id="pageFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="pageFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/pages"/>
 	</bean>
-	<bean id="commentFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="commentFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/comments"/>
 	</bean>
-	<bean id="spaceFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="spaceFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/spaces"/>
 	</bean>
-	<bean id="userFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="userFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/users"/>
 	</bean>
-	<bean id="roleFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="roleFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/roles"/>
 	</bean>
-	<bean id="pageTagFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="pageTagFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/pagetags"/>
 	</bean>
-	<bean id="spaceTagFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="spaceTagFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/spacetags"/>
 	</bean>
-	<bean id="attachmentFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="attachmentFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/attachments"/>
 	</bean>
-	<bean id="widgetFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactoryBean">
+	<bean id="widgetFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
 	    <property name="location" value="${geniuswiki.data.root}data/index/widgets"/>
 	</bean>
 	

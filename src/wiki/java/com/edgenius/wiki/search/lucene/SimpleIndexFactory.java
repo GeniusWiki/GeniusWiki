@@ -90,7 +90,7 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 			
 			return writer;
 		} catch(IOException ex) {
-			throw new LuceneIndexAccessException("Error during creating the writer",ex);
+			throw new IndexAccessException("Error during creating the writer",ex);
 		}
 	}
 

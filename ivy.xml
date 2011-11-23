@@ -67,8 +67,8 @@
 		<!-- use spring-modules instead.
 		<dependency org="org/hibernate" name="hibernate-search" rev="3.0.0.b3"	conf="deploy->default;dev->source" />
 		<dependency org="org" name="compass" rev="1.2.m3"	conf="deploy->default;dev->source" />
-		 -->
 		<dependency org="org/springframework" name="spring-modules" rev="0.9"	conf="deploy->lucene;dev->lucene-source" />
+		 -->
 		<!-- 3.0.2.RELEASE  -->
 		<dependency org="org/springframework" name="spring" rev="3.1.0.RC1" conf="deploy->default;dev->source,test" /> 
 		<dependency org="org/springframework" name="security" rev="3.1.0.RC3"	conf="deploy->default;dev->source" />

@@ -23,18 +23,42 @@
  */
 package com.edgenius.wiki.search.lucene;
 
-import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.search.IndexSearcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.edgenius.wiki.search.service.SearchException;
 
 /**
  * @author Dapeng.Ni
  */
-public interface IndexCallback {
-
-	/**
-	 * This method is good for batch add documents as it only commit once after this method.
-	 * @param writer
-	 */
-	public void addDocument(IndexWriter writer);
+public class IndexSearcherSupport  {
+	private static final Logger log = LoggerFactory.getLogger(IndexSearcherSupport.class);
 	
+	private SearcherFactory searcherFactory;
+
+	protected Object search(SearcherCallback searcherCallback) throws SearchException {
+		try {
+			IndexSearcher searcher = searcherFactory.getSearcher();
+			
+			Object rs = searcherCallback.doWithSearcher(searcher);
+			
+			return rs;
+			
+		} finally{
+			try {
+				searcherFactory.close();
+			} catch (Exception e) {
+				log.error("Close IndexSearcher/IndexReader failed after search", e);
+			}
+		}
+	}
+
+	public SearcherFactory getSearcherFactory() {
+		return searcherFactory;
+	}
+
+	public void setSearcherFactory(SearcherFactory searcherFactory) {
+		this.searcherFactory = searcherFactory;
+	}
 }

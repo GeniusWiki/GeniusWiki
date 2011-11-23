@@ -63,7 +63,7 @@ import com.edgenius.core.service.UserReadingService;
 import com.edgenius.wiki.gwt.client.model.WidgetModel;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
-import com.edgenius.wiki.search.lucene.LuceneSearchSupport;
+import com.edgenius.wiki.search.lucene.IndexSearcherSupport;
 import com.edgenius.wiki.search.lucene.LuceneConfig;
 import com.edgenius.wiki.search.lucene.SearcherCallback;
 import com.edgenius.wiki.security.service.SecurityService;
@@ -71,7 +71,7 @@ import com.edgenius.wiki.security.service.SecurityService;
 /**
  * @author Dapeng.Ni
  */
-public abstract class AbstractSearchService extends LuceneSearchSupport{
+public abstract class AbstractSearchService extends IndexSearcherSupport{
 	protected static final int FRAGMENT_LEN = 200;
 
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
