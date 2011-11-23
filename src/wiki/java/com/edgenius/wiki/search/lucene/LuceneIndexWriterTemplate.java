@@ -55,6 +55,18 @@ public class LuceneIndexWriterTemplate {
 		} 
 	}
 
+	public void doIndexing(IndexCallback callback) {
+		
+		IndexWriter writer = indexFactory.getIndexWriter();
+		try {
+			callback.indexing(writer);
+			writer.commit();
+		} catch(IOException ex) {
+			log.error("Error during deleting a document", ex);
+			throw new LuceneIndexAccessException("Error during deleting a document.",ex);
+		} 
+		
+	}
 	/**
 	 * @param documentCreator
 	 */
@@ -80,6 +92,27 @@ public class LuceneIndexWriterTemplate {
 		} catch(IOException ex) {
 			log.error("Error during optimize documents", ex);
 			throw new LuceneIndexAccessException("Error optimize documents.",ex);
+		}
+	}
+
+	/**
+	 * This method will close IndexWriter. 
+	 * This method can be used to create an empty index.
+	 */
+	public void close() {
+		IndexWriter writer = indexFactory.getIndexWriter();
+		try {
+			writer.close();
+		} catch (Exception e) {
+			log.error("Unable to close Index", e);
+		} finally{
+			try {
+				if( IndexWriter.isLocked(writer.getDirectory())){
+					IndexWriter.unlock(writer.getDirectory());
+				}
+			} catch (Exception e) {
+				log.error("Unable to unlock Index", e);
+			}
 		}
 	}
 	

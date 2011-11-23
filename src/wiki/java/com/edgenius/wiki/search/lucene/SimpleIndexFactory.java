@@ -75,10 +75,11 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 
 	@Override
 	public IndexWriter getIndexWriter() {
-		if(writer != null)
-			return writer;
 		
 		try {
+			//As it doesn't have method to tell if this IndexWriter is closed, so if it is not locked, it is support to closed and will create a new one.
+			if(writer != null && IndexWriter.isLocked(directory))
+				return writer;
 			
 			if(IndexWriter.isLocked(directory)){
 				IndexWriter.unlock(directory);
@@ -144,6 +145,11 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 		conf.setMergePolicy(mergePolicy);
 		
 		return conf;
+	}
+
+
+	public Directory getDirectory() {
+		return directory;
 	}
 
 

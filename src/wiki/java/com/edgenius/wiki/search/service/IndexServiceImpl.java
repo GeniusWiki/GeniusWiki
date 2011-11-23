@@ -518,54 +518,21 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			log.error("Unable to list index root directory", e1);
 		}
 		
+		closeIndex();
+		
+	}
+	private void closeIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// initialize indexes
-		try	{
-			pageIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital page index",e);
-		}
-		
-		try	{
-			commentIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital comment index",e);
-		}
-		try	{
-			spaceIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital space index",e);
-		}
-		try	{
-			userIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital user index",e);
-		}
-		try	{
-			roleIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital role index",e);
-		}
-		try	{
-			pageTagIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital page tag index",e);
-		}
-		try	{
-			spaceTagIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital space index",e);
-		}
-		try	{
-			attachmentIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital attachment index",e);
-		}
-		try	{
-			widgetIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital widget index",e);
-		}
+		pageTemplate.close();
+		commentTemplate.close();
+		spaceTemplate.close();
+		userTemplate.close();
+		roleTemplate.close();
+		pageTagTemplate.close();
+		spaceTagTemplate.close();
+		attachmentTemplate.close();
+		widgetTemplate.close();
 		
 	}
 
