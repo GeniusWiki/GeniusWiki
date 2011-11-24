@@ -104,8 +104,7 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 			//try to create an empty index.
 			boolean exist = IndexReader.indexExists(directory);
 			if(!exist) {
-				IndexWriter writer =  this.getIndexWriter();
-				writer.close();
+				this.getIndexWriter();
 			}
 		} catch (Exception e) {
 			Log.error("Unable to create an empty index", e);
