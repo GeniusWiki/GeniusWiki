@@ -21,14 +21,21 @@ C) 2007-2011 Edgenius (http://www.edgenius.com)
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
 import org.apache.lucene.util.Version;
 /**
  * @author Dapeng.Ni
  */
-public class LuceneVersion {
+public class LuceneConfig {
 	
-	public static Version VERSION = Version.LUCENE_34;
-	public static int MAX_RETURN = 3000;
+	public final static Version VERSION = Version.LUCENE_34;
+	
+	public final static int MAX_RETURN = 3000;
+	
+	public final static int DEFAULT_MAX_BUFFERED_DOCS = 10;
+	public final static int DEFAULT_MAX_MERGE_DOCS = Integer.MAX_VALUE;
+	public final static int DEFAULT_MERGE_FACTOR = 10;
+	public final static int DEFAULT_TERM_INDEX_INTERVAL = 128; 
+	public final static int DEFAULT_WRITE_LOCK_TIMEOUT = 1000; 
 }

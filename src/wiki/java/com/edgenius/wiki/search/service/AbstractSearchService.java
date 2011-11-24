@@ -63,12 +63,15 @@ import com.edgenius.core.service.UserReadingService;
 import com.edgenius.wiki.gwt.client.model.WidgetModel;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
+import com.edgenius.wiki.search.lucene.IndexSearcherSupport;
+import com.edgenius.wiki.search.lucene.LuceneConfig;
+import com.edgenius.wiki.search.lucene.SearcherCallback;
 import com.edgenius.wiki.security.service.SecurityService;
 
 /**
  * @author Dapeng.Ni
  */
-public abstract class AbstractSearchService extends LuceneSearchSupport{
+public abstract class AbstractSearchService extends IndexSearcherSupport{
 	protected static final int FRAGMENT_LEN = 200;
 
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -103,9 +106,9 @@ public abstract class AbstractSearchService extends LuceneSearchSupport{
 							//Filter filter = new SecurityFilter(user);
 							TopDocs hits;
 							if(sort == null){
-								hits = searcher.search(queries[0], LuceneVersion.MAX_RETURN);
+								hits = searcher.search(queries[0], LuceneConfig.MAX_RETURN);
 							}else{
-								hits = searcher.search(queries[0], LuceneVersion.MAX_RETURN, sort);
+								hits = searcher.search(queries[0], LuceneConfig.MAX_RETURN, sort);
 							}
 							
 							SearchResult rs = getResult(searcher, hits, keyword, currPageNumber, returnCount, user,queries[1]);
@@ -202,7 +205,7 @@ public abstract class AbstractSearchService extends LuceneSearchSupport{
 		
 
 		keyword = QueryParser.escape(StringUtils.trimToEmpty(keyword));
-		QueryParser parser = new QueryParser(LuceneVersion.VERSION, FieldName.CONTENT,new StandardAnalyzer(LuceneVersion.VERSION));
+		QueryParser parser = new QueryParser(LuceneConfig.VERSION, FieldName.CONTENT,new StandardAnalyzer(LuceneConfig.VERSION));
 		
 		if (advKeyword == SearchService.KEYWORD_EXACT)
 			keyword = "\"" + keyword + "\"";
@@ -538,7 +541,7 @@ public abstract class AbstractSearchService extends LuceneSearchSupport{
 		if(hl == null)
 			return content;
 		
-		TokenStream tokenStream = new StandardAnalyzer(LuceneVersion.VERSION).tokenStream(FieldName.CONTENT, new StringReader(content));
+		TokenStream tokenStream = new StandardAnalyzer(LuceneConfig.VERSION).tokenStream(FieldName.CONTENT, new StringReader(content));
 		String frag;
 		try {
 			frag = hl.getBestFragments(tokenStream, content, 3, "...");

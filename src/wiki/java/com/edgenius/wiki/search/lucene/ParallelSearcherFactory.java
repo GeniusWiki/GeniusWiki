@@ -21,7 +21,7 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -35,6 +35,8 @@ import org.apache.lucene.store.Directory;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+
+import com.edgenius.wiki.search.service.SearchException;
 
 /**
  * 

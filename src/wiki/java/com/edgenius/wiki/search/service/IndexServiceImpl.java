@@ -33,11 +33,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,11 +44,6 @@ import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.Transactional;
-import org.springmodules.lucene.index.core.DefaultLuceneIndexTemplate;
-import org.springmodules.lucene.index.core.DocumentCreator;
-import org.springmodules.lucene.index.core.LuceneIndexTemplate;
-import org.springmodules.lucene.index.factory.IndexFactory;
-import org.springmodules.lucene.index.factory.LuceneIndexWriter;
 
 import com.edgenius.core.dao.CrFileNodeDAO;
 import com.edgenius.core.dao.RoleDAO;
@@ -76,6 +70,10 @@ import com.edgenius.wiki.model.SpaceTag;
 import com.edgenius.wiki.model.Widget;
 import com.edgenius.wiki.quartz.MaintainJobInvoker;
 import com.edgenius.wiki.quartz.QuartzException;
+import com.edgenius.wiki.search.lucene.IndexCallback;
+import com.edgenius.wiki.search.lucene.IndexFactory;
+import com.edgenius.wiki.search.lucene.IndexWriterTemplate;
+import com.edgenius.wiki.search.lucene.SimpleIndexFactory;
 import com.edgenius.wiki.service.RenderService;
 import com.edgenius.wiki.service.ThemeService;
 import com.edgenius.wiki.util.WikiUtil;
@@ -88,25 +86,15 @@ import com.edgenius.wiki.util.WikiUtil;
 public class IndexServiceImpl implements IndexService, InitializingBean {
 	private static final Logger log = LoggerFactory.getLogger(IndexServiceImpl.class);
 	
-	private IndexFactory pageIndexFactory;
-	private IndexFactory commentIndexFactory;
-	private IndexFactory spaceIndexFactory;
-	private IndexFactory userIndexFactory;
-	private IndexFactory roleIndexFactory;
-	private IndexFactory pageTagIndexFactory;
-	private IndexFactory spaceTagIndexFactory;
-	private IndexFactory attachmentIndexFactory;
-	private IndexFactory widgetIndexFactory;
-	
-	private LuceneIndexTemplate pageTemplate;
-	private LuceneIndexTemplate commentTemplate;
-	private LuceneIndexTemplate spaceTemplate;
-	private LuceneIndexTemplate userTemplate;
-	private LuceneIndexTemplate roleTemplate;
-	private LuceneIndexTemplate pageTagTemplate;
-	private LuceneIndexTemplate spaceTagTemplate;
-	private LuceneIndexTemplate attachmentTemplate;
-	private LuceneIndexTemplate widgetTemplate;
+	private IndexWriterTemplate pageTemplate;
+	private IndexWriterTemplate commentTemplate;
+	private IndexWriterTemplate spaceTemplate;
+	private IndexWriterTemplate userTemplate;
+	private IndexWriterTemplate roleTemplate;
+	private IndexWriterTemplate pageTagTemplate;
+	private IndexWriterTemplate spaceTagTemplate;
+	private IndexWriterTemplate attachmentTemplate;
+	private IndexWriterTemplate widgetTemplate;
 	
 	private ReentrantLock pageLock = new ReentrantLock();
 	private ReentrantLock commentLock = new ReentrantLock();
@@ -132,11 +120,10 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	
 	private RenderService renderService;
 	private ThemeService themeService;
+	
 	private AttachmentSearchService attachmentSearchService;
 	private TextExtractorService textExtractorService; 
-	//default analyzer
-	private PerFieldAnalyzerWrapper  analyzer;
-	
+
 	private MaintainJobInvoker maintainJobInvoker;
 	
 	//JDK1.6 @Override
@@ -523,54 +510,21 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			log.error("Unable to list index root directory", e1);
 		}
 		
+		closeIndex();
+		
+	}
+	private void closeIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// initialize indexes
-		try	{
-			pageIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital page index",e);
-		}
-		
-		try	{
-			commentIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital comment index",e);
-		}
-		try	{
-			spaceIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital space index",e);
-		}
-		try	{
-			userIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital user index",e);
-		}
-		try	{
-			roleIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital role index",e);
-		}
-		try	{
-			pageTagIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital page tag index",e);
-		}
-		try	{
-			spaceTagIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital space index",e);
-		}
-		try	{
-			attachmentIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital attachment index",e);
-		}
-		try	{
-			widgetIndexFactory.getIndexWriter().close();
-		} catch (Exception e) {
-			log.error("Unable inital widget index",e);
-		}
+		pageTemplate.close();
+		commentTemplate.close();
+		spaceTemplate.close();
+		userTemplate.close();
+		roleTemplate.close();
+		pageTagTemplate.close();
+		spaceTagTemplate.close();
+		attachmentTemplate.close();
+		widgetTemplate.close();
 		
 	}
 
@@ -580,30 +534,28 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildAttachmentIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// attachment
-		List<CrFileNode> attachments = crFileNodeDAO.getAllCurrentNode();
-		LuceneIndexWriter attWriter = null;
+		final List<CrFileNode> attachments = crFileNodeDAO.getAllCurrentNode();
 		if(attachments != null){
 			attachmentLock.lock();
 			try{
-				attWriter = ((SimpleIndexFactory)attachmentIndexFactory).getRebuildIndexWriter();
-				for (CrFileNode node : attachments) {
-					if(RepositoryService.DEFAULT_SPACE_NAME.equals(node.getSpaceUname())){
-						//don't index default space stuff: it is user portrait etc.
-						continue;
+				attachmentTemplate.addDocument(new IndexCallback() {
+					@Override
+					public void addDocument(IndexWriter attWriter) {
+						for (CrFileNode node : attachments) {
+							if(RepositoryService.DEFAULT_SPACE_NAME.equals(node.getSpaceUname())){
+								//don't index default space stuff: it is user portrait etc.
+								continue;
+							}
+							try {
+								FileNode fNode = FileNode.copyPersistToNode(node);
+								attWriter.addDocument(createAttachmentDocument(node.getSpaceUname(), fNode, null));
+							} catch (Exception e) {
+								log.error("Rebuild index failed on attachment" + node,e);
+							}
+						}
 					}
-					try {
-						FileNode fNode = FileNode.copyPersistToNode(node);
-						attWriter.addDocument(createAttachmentDocument(node.getSpaceUname(), fNode, null));
-					} catch (Exception e) {
-						log.error("Rebuild index failed on attachment" + node,e);
-					}
-				}
+				});
 			}finally{
-				try {
-					if(attWriter != null) attWriter.close();
-				} catch (Exception e) {
-					log.error("Close attachment index failed " , e);
-				}
 				attachmentLock.unlock();
 			}
 		}
@@ -616,25 +568,23 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildSpaceTagIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// SpaceTag
-		List<SpaceTag> spaceTags = spaceTagDAO.getObjects();
-		LuceneIndexWriter spaceTagWriter = null;
+		final List<SpaceTag> spaceTags = spaceTagDAO.getObjects();
 		if(spaceTags != null){
 			spaceTagLock.lock();
 			try {
-				spaceTagWriter = ((SimpleIndexFactory)spaceTagIndexFactory).getRebuildIndexWriter();
-				for (SpaceTag tag : spaceTags) {
-					try {
-						spaceTagWriter.addDocument(createSpaceTagDocument(tag));
-					} catch (Exception e) {
-						log.error("Rebuild index failed on space  tag" + tag, e);
+				spaceTagTemplate.addDocument(new IndexCallback() {
+					@Override
+					public void addDocument(IndexWriter spaceTagWriter) {
+						for (SpaceTag tag : spaceTags) {
+							try {
+								spaceTagWriter.addDocument(createSpaceTagDocument(tag));
+							} catch (Exception e) {
+								log.error("Rebuild index failed on space  tag" + tag, e);
+							}
+						}
 					}
-				}
+				});
 			}finally{
-				try {
-					if(spaceTagWriter != null) spaceTagWriter.close();
-				} catch (Exception e) {
-					log.error("Close Space tag index failed " , e);
-				}
 				spaceTagLock.unlock();
 			}
 		}
@@ -647,25 +597,24 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildPageTagIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// PageTag
-		List<PageTag> pageTags = pageTagDAO.getObjects();
-		LuceneIndexWriter pageTagWriter = null;
+		final List<PageTag> pageTags = pageTagDAO.getObjects();
 		if(pageTags != null){
 			pageTagLock.lock();
 			try{
-				pageTagWriter = ((SimpleIndexFactory)pageTagIndexFactory).getRebuildIndexWriter();
-				for (PageTag tag : pageTags) {
-					try {
-						pageTagWriter.addDocument(createPageTagDocument(tag));
-					} catch (Exception e) {
-						log.error("Rebuild index failed on page tag" + tag, e);
+				pageTagTemplate.addDocument(new IndexCallback() {
+					
+					@Override
+					public void addDocument(IndexWriter pageTagWriter) {
+						for (PageTag tag : pageTags) {
+							try {
+								pageTagWriter.addDocument(createPageTagDocument(tag));
+							} catch (Exception e) {
+								log.error("Rebuild index failed on page tag" + tag, e);
+							}
+						}
 					}
-				}
+				});
 			}finally{
-				try {
-					if(pageTagWriter != null) pageTagWriter.close();
-				} catch (Exception e) {
-					log.error("Close page tag index failed " , e);
-				}
 				pageTagLock.unlock();
 			}
 		}
@@ -678,25 +627,25 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildUserIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// User
-		List<User> users = userDAO.getObjects();
-		LuceneIndexWriter userWriter = null;
+		final List<User> users = userDAO.getObjects();
 		if(users != null){
 			userLock.lock();
 			try{
-				userWriter = ((SimpleIndexFactory)userIndexFactory).getRebuildIndexWriter();
-				for (User user : users) {
-					try {
-						userWriter.addDocument(createUserDocument(user));
-					} catch (Exception e) {
-						log.error("Rebuild index failed on user" + user, e);
+				userTemplate.addDocument(new IndexCallback() {
+					
+					@Override
+					public void addDocument(IndexWriter userWriter) {
+						for (User user : users) {
+							try {
+								userWriter.addDocument(createUserDocument(user));
+							} catch (Exception e) {
+								log.error("Rebuild index failed on user" + user, e);
+							}
+						}
+						
 					}
-				}
+				});
 			}finally{
-				try {
-					if(userWriter != null) userWriter.close();
-				} catch (Exception e) {
-					log.error("Close User index failed " , e);
-				}
 				userLock.unlock();
 			}
 		}
@@ -704,25 +653,24 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildRoleIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Role - only group type role is indexed
-		List<Role> roles = roleDAO.getRoles(Role.TYPE_GROUP,null);
-		LuceneIndexWriter roleWriter = null;
+		final List<Role> roles = roleDAO.getRoles(Role.TYPE_GROUP,null);
 		if(roles != null){
 			roleLock.lock();
 			try{
-				roleWriter = ((SimpleIndexFactory)roleIndexFactory).getRebuildIndexWriter();
-				for (Role role : roles) {
-					try {
-						roleWriter.addDocument(createRoleDocument(role));
-					} catch (Exception e) {
-						log.error("Rebuild index failed on role" + role, e);
+				roleTemplate.addDocument(new IndexCallback() {
+					
+					@Override
+					public void addDocument(IndexWriter roleWriter) {
+						for (Role role : roles) {
+							try {
+								roleWriter.addDocument(createRoleDocument(role));
+							} catch (Exception e) {
+								log.error("Rebuild index failed on role" + role, e);
+							}
+						}
 					}
-				}
+				});
 			}finally{
-				try {
-					if(roleWriter != null) roleWriter.close();
-				} catch (Exception e) {
-					log.error("Close Role index failed " , e);
-				}
 				roleLock.unlock();
 			}
 		}
@@ -735,28 +683,26 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildSpaceIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Space
-		List<Space> spaces = spaceDAO.getObjects();
-		LuceneIndexWriter spaceWriter = null;
+		final List<Space> spaces = spaceDAO.getObjects();
 		if(spaces != null){
 			spaceLock.lock();
 			try {
-				spaceWriter = ((SimpleIndexFactory)spaceIndexFactory).getRebuildIndexWriter();
-				for (Space space : spaces) {
-					try {
-						//skip system space 
-						if(StringUtils.equalsIgnoreCase(SharedConstants.SYSTEM_SPACEUNAME, space.getUnixName()))
-							continue;
-						spaceWriter.addDocument(createSpaceDocument(space));
-					} catch (Exception e) {
-						log.error("Rebuild space index failed " + space, e);
+				spaceTemplate.addDocument(new IndexCallback() {
+					@Override
+					public void addDocument(IndexWriter spaceWriter) {
+						for (Space space : spaces) {
+							try {
+								//skip system space 
+								if(StringUtils.equalsIgnoreCase(SharedConstants.SYSTEM_SPACEUNAME, space.getUnixName()))
+									continue;
+								spaceWriter.addDocument(createSpaceDocument(space));
+							} catch (Exception e) {
+								log.error("Rebuild space index failed " + space, e);
+							}
+						}
 					}
-				}
+				});
 			}finally{
-				try {
-					if(spaceWriter != null) spaceWriter.close();
-				} catch (Exception e) {
-					log.error("Close Space index failed " , e);
-				}
 				spaceLock.unlock();
 			}
 		}
@@ -767,25 +713,23 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildWidgetIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Space
-		List<Widget> widgets = widgetDAO.getObjects();
-		LuceneIndexWriter widgetWriter = null;
+		final List<Widget> widgets = widgetDAO.getObjects();
 		if(widgets != null){
 			widgetLock.lock();
 			try {
-				widgetWriter = ((SimpleIndexFactory)widgetIndexFactory).getRebuildIndexWriter();
-				for (Widget widget : widgets) {
-					try {
-						widgetWriter.addDocument(createWidgetDocument(widget));
-					} catch (Exception e) {
-						log.error("Rebuild widget index failed " + widget, e);
+				widgetTemplate.addDocument(new IndexCallback() {
+					@Override
+					public void addDocument(IndexWriter widgetWriter) {
+						for (Widget widget : widgets) {
+							try {
+								widgetWriter.addDocument(createWidgetDocument(widget));
+							} catch (Exception e) {
+								log.error("Rebuild widget index failed " + widget, e);
+							}
+						}
 					}
-				}
+				});
 			}finally{
-				try {
-					if(widgetWriter != null) widgetWriter.close();
-				} catch (Exception e) {
-					log.error("Close widget index failed " , e);
-				}
 				widgetLock.unlock();
 			}
 		}
@@ -798,19 +742,25 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void rebuildCommentIndex() {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// page comment
-		List<PageComment> comments = commentDAO.getObjects();
-		LuceneIndexWriter commentWriter = null;
+		final List<PageComment> comments = commentDAO.getObjects();
+		IndexWriter commentWriter = null;
 		if(comments != null){
 			commentLock.lock();
 			try {
-				commentWriter = ((SimpleIndexFactory)commentIndexFactory).getRebuildIndexWriter();
-				for (PageComment comment : comments) {
-					try{
-						commentWriter.addDocument(createCommentDocument(comment));
-					} catch (Exception e) {
-						log.error("Rebuild index failed on comment. Owner page title " + comment.getPage().getTitle(),e);
+				commentTemplate.addDocument(new IndexCallback() {
+					
+					@Override
+					public void addDocument(IndexWriter commentWriter) {
+						
+						for (PageComment comment : comments) {
+							try{
+								commentWriter.addDocument(createCommentDocument(comment));
+							} catch (Exception e) {
+								log.error("Rebuild index failed on comment. Owner page title " + comment.getPage().getTitle(),e);
+							}
+						}
 					}
-				}
+				});
 			}finally{
 				try {
 					if(commentWriter != null) commentWriter.close();
@@ -831,85 +781,85 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		// page
 		
 		//get how many page in whole system, then decide if use optimised way to build indexing
-		long size = pageDAO.getSystemPageCount();
+		final long size = pageDAO.getSystemPageCount();
 		if(size > 0){
-			LuceneIndexWriter pageWriter = null;
 			pageLock.lock();
 			try{
-				//this will delete existed page Index
-				pageWriter = ((SimpleIndexFactory)pageIndexFactory).getRebuildIndexWriter();
-				//it is memory killer if using pageDAO.getObjects(); Now read page by native SQL and initialise object manually.
-				//Current page returns:
-				//PageTitle, PageUUID, page.getContent().getContent(), 
-				//page.getSpace().getUnixName(), 
-				//page.getSpace().getHomepage().getPageUuid()
-				//page.getSpace().getUid()
-				//page.getSpace().getSetting()
-				final int returnNum = 500; 
-				int start = 0;
-				int indexedSize = 0, skipped=0;
-				Map<Integer, Space> spaceCache = new HashMap<Integer, Space>();
-				
-				//get pages by returnNum count size list and looping until all pages done
-				do{
-					List<Page> pages = pageDAO.getPageForIndexing(start, returnNum);
-					if(pages == null){
-						AuditLogger.error("PageDAO get null from PageForIndex():start" + start);
-						break;
-					}
+				pageTemplate.addDocument(new IndexCallback() {
 					
-					//insert space information - the basic assumption is, space is less. So I cache all spaces into a Hashmap.
-					for (Page page : pages) {
-						//current page only has spaceUid value
-						Space space = spaceCache.get(page.getSpace().getUid());
-						if(space == null){
-							space = spaceDAO.get(page.getSpace().getUid());
-	
-							if(space == null){
-								AuditLogger.error("Page get null space by spaceUid:" + page.getSpace().getUid());
-								continue;
+					@Override
+					public void addDocument(IndexWriter pageWriter) {
+						//it is memory killer if using pageDAO.getObjects(); Now read page by native SQL and initialise object manually.
+						//Current page returns:
+						//PageTitle, PageUUID, page.getContent().getContent(), 
+						//page.getSpace().getUnixName(), 
+						//page.getSpace().getHomepage().getPageUuid()
+						//page.getSpace().getUid()
+						//page.getSpace().getSetting()
+						final int returnNum = 500; 
+						int start = 0;
+						int indexedSize = 0, skipped=0;
+						Map<Integer, Space> spaceCache = new HashMap<Integer, Space>();
+						
+						//get pages by returnNum count size list and looping until all pages done
+						do{
+							List<Page> pages = pageDAO.getPageForIndexing(start, returnNum);
+							if(pages == null){
+								AuditLogger.error("PageDAO get null from PageForIndex():start" + start);
+								break;
 							}
-
-							spaceCache.put(space.getUid(), space);
-						}
-						page.setSpace(space);
-		
-					}
-					
-					//index current page list
-					for (Page page : pages) {
-
-						try{
-							if(WikiUtil.hasBlogRender(page, themeService)){
-								log.info("Page has blog macro, skip indexing:" + page.getTitle());
-								skipped++;
-								continue;
-							}
-							log.debug("Page index rebuilding:" + page.getTitle());
 							
-							//skip system space pages
-							if(StringUtils.equalsIgnoreCase(SharedConstants.SYSTEM_SPACEUNAME, page.getSpace() != null? page.getSpace().getUnixName():null))
-								continue;
-							pageWriter.addDocument(createPageDocument(page));
-							indexedSize++;
-						} catch (Exception e) {
-							log.error("Rebuild page index failed " + page, e);
-						}
-					}
-
-					//ready for next bundle
-					start += returnNum;
-				}while(start < size);
+							//insert space information - the basic assumption is, space is less. So I cache all spaces into a Hashmap.
+							for (Page page : pages) {
+								//current page only has spaceUid value
+								Space space = spaceCache.get(page.getSpace().getUid());
+								if(space == null){
+									space = spaceDAO.get(page.getSpace().getUid());
+			
+									if(space == null){
+										AuditLogger.error("Page get null space by spaceUid:" + page.getSpace().getUid());
+										continue;
+									}
+	
+									spaceCache.put(space.getUid(), space);
+								}
+								page.setSpace(space);
 				
-				log.info(new StringBuilder("Page index rebuild. Expected: ").append(size).append(": Actual indexed:").append(indexedSize)
-						.append(": Normal skipped:").append(skipped).append(": Failed ").append((size-indexedSize-skipped)).toString());
+							}
+							
+							//index current page list
+							for (Page page : pages) {
+	
+								try{
+									if(WikiUtil.hasBlogRender(page, themeService)){
+										log.info("Page has blog macro, skip indexing:" + page.getTitle());
+										skipped++;
+										continue;
+									}
+									log.debug("Page index rebuilding:" + page.getTitle());
+									
+									//skip system space pages
+									if(StringUtils.equalsIgnoreCase(SharedConstants.SYSTEM_SPACEUNAME, page.getSpace() != null? page.getSpace().getUnixName():null))
+										continue;
+									pageWriter.addDocument(createPageDocument(page));
+									indexedSize++;
+								} catch (Exception e) {
+									log.error("Rebuild page index failed " + page, e);
+								}
+							}
+	
+							//ready for next bundle
+							start += returnNum;
+						}while(start < size);
+						
+						log.info(new StringBuilder("Page index rebuild. Expected: ").append(size).append(": Actual indexed:").append(indexedSize)
+								.append(": Normal skipped:").append(skipped).append(": Failed ").append((size-indexedSize-skipped)).toString());
+						
+					}
+				});
 				
 			}finally{
-				try {
-					if(pageWriter != null) pageWriter.close();
-				} catch (Exception e) {
-					log.error("Close Page index failed " , e);
-				}
+				
 				pageLock.unlock();	
 				
 				log.info("Page index is rebuilt");
@@ -926,27 +876,20 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			throw new BeanInitializationException("Must set indexRoot and it must be directory");
 		}
 			
-		analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneVersion.VERSION));
-		analyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
-		analyzer.addAnalyzer(FieldName.CONTRIBUTOR,new LowerCaseAnalyzer());
-		analyzer.addAnalyzer(FieldName.KEY,new LowerCaseAnalyzer());
-		
-		this.pageTemplate = new DefaultLuceneIndexTemplate(pageIndexFactory, analyzer);
-		this.commentTemplate = new DefaultLuceneIndexTemplate(commentIndexFactory, analyzer);
-		this.spaceTemplate = new DefaultLuceneIndexTemplate(spaceIndexFactory, analyzer);
-		this.pageTagTemplate = new DefaultLuceneIndexTemplate(pageTagIndexFactory, analyzer);
-		this.spaceTagTemplate = new DefaultLuceneIndexTemplate(spaceTagIndexFactory, analyzer);
-		this.userTemplate = new DefaultLuceneIndexTemplate(userIndexFactory, analyzer);
-		this.roleTemplate = new DefaultLuceneIndexTemplate(roleIndexFactory, analyzer);
-		this.attachmentTemplate = new DefaultLuceneIndexTemplate(attachmentIndexFactory, analyzer);
-		this.widgetTemplate = new DefaultLuceneIndexTemplate(widgetIndexFactory, analyzer);
+		if(this.pageTemplate == null || this.commentTemplate == null || this.spaceTemplate == null
+			|| this.pageTagTemplate == null || this.spaceTagTemplate == null || this.userTemplate == null
+			|| this.roleTemplate == null || this.attachmentTemplate == null || this.widgetTemplate == null){
+			throw new BeanInitializationException("Must set all templates: pageTemplate, commentTemplate, spaceTemplate == null" +
+			", pageTagTemplate, spaceTagTemplate, userTemplate" +
+			", roleTemplate, attachmentTemplate, widgetTemplate");
+		}
 		
 	}
 	
 	//********************************************************************
 	//               private method
 	//********************************************************************
-	private void saveUpdate(LuceneIndexTemplate template, final Document doc, final Term identifierTerm) {
+	private void saveUpdate(IndexWriterTemplate template, final Document doc, final Term identifierTerm) {
 		//so ugly code, does it can be a good way saveUpdate?
 		try {
 			template.deleteDocuments(identifierTerm);
@@ -954,11 +897,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			log.info("Remove index failed " + e);
 		}
 
-		template.addDocument(new DocumentCreator(){
-			public Document createDocument() throws Exception {
-				return doc;
-			}
-		});
+		template.addDocument(doc);
 	}
 	
 
@@ -1186,7 +1125,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		Fieldable contributor = new Field(FieldName.CONTRIBUTOR, node.getCreateor(), Field.Store.YES, Field.Index.ANALYZED);
 		
 		//deleting key - must be indexed
-		Fieldable key = new Field(FieldName.KEY, node.getNodeUuid(),Field.Store.NO, Field.Index.ANALYZED);
+		Fieldable key = new Field(FieldName.KEY, node.getNodeUuid(),Field.Store.NO, Field.Index.NOT_ANALYZED);
 		
 		Fieldable uuid = new Field(FieldName.FILE_NODE_UUID, node.getNodeUuid(),Field.Store.YES, Field.Index.NO);
 		Fieldable pageUuid = new Field(FieldName.PAGE_UUID,node.getIdentifier(), Field.Store.YES, Field.Index.NO);
@@ -1232,33 +1171,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	// ********************************************************************
 	// set/get and inherit method
 	// ********************************************************************
-	public void setPageIndexFactory(IndexFactory pageIndexFactory) {
-		this.pageIndexFactory = pageIndexFactory;
-	}
-	public void setSpaceIndexFactory(IndexFactory spaceIndexFactory) {
-		this.spaceIndexFactory = spaceIndexFactory;
-	}
-	public void setUserIndexFactory(IndexFactory userIndexFactory) {
-		this.userIndexFactory = userIndexFactory;
-	}
-	public void setRoleIndexFactory(IndexFactory roleIndexFactory) {
-		this.roleIndexFactory = roleIndexFactory;
-	}
-	public void setPageTagIndexFactory(IndexFactory tagIndexFactory) {
-		this.pageTagIndexFactory = tagIndexFactory;
-	}
-
-	public void setAttachmentIndexFactory(IndexFactory attachmentIndexFactory) {
-		this.attachmentIndexFactory = attachmentIndexFactory;
-	}
-
-	public void setSpaceTagIndexFactory(IndexFactory spaceTagIndexFactory) {
-		this.spaceTagIndexFactory = spaceTagIndexFactory;
-	}
-
-	public void setWidgetIndexFactory(IndexFactory widgetIndexFactory) {
-		this.widgetIndexFactory = widgetIndexFactory;
-	}
+	
 	public void setAttachmentSearchService(AttachmentSearchService attachmentSearchService) {
 		this.attachmentSearchService = attachmentSearchService;
 	}
@@ -1293,11 +1206,6 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		this.crFileNodeDAO = crFileNodeDAO;
 	}
 
-	public void setCommentIndexFactory(IndexFactory commentIndexFactory) {
-		this.commentIndexFactory = commentIndexFactory;
-	}
-
-
 	public void setCommentDAO(CommentDAO commentDAO) {
 		this.commentDAO = commentDAO;
 	}
@@ -1316,7 +1224,6 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		this.textExtractorService = textExtractorService;
 	}
 
-
 	public void setMaintainJobInvoker(MaintainJobInvoker maintainJobInvoker) {
 		this.maintainJobInvoker = maintainJobInvoker;
 	}
@@ -1324,4 +1231,31 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		this.themeService = themeService;
 	}
 
+	public void setPageTemplate(IndexWriterTemplate pageTemplate) {
+		this.pageTemplate = pageTemplate;
+	}
+	public void setCommentTemplate(IndexWriterTemplate commentTemplate) {
+		this.commentTemplate = commentTemplate;
+	}
+	public void setSpaceTemplate(IndexWriterTemplate spaceTemplate) {
+		this.spaceTemplate = spaceTemplate;
+	}
+	public void setUserTemplate(IndexWriterTemplate userTemplate) {
+		this.userTemplate = userTemplate;
+	}
+	public void setRoleTemplate(IndexWriterTemplate roleTemplate) {
+		this.roleTemplate = roleTemplate;
+	}
+	public void setPageTagTemplate(IndexWriterTemplate pageTagTemplate) {
+		this.pageTagTemplate = pageTagTemplate;
+	}
+	public void setSpaceTagTemplate(IndexWriterTemplate spaceTagTemplate) {
+		this.spaceTagTemplate = spaceTagTemplate;
+	}
+	public void setAttachmentTemplate(IndexWriterTemplate attachmentTemplate) {
+		this.attachmentTemplate = attachmentTemplate;
+	}
+	public void setWidgetTemplate(IndexWriterTemplate widgetTemplate) {
+		this.widgetTemplate = widgetTemplate;
+	}
 }
