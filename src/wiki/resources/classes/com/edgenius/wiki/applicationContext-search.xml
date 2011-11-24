@@ -263,16 +263,34 @@
 		<!--  there is assumption here: all index, locks must under first level sub directory and 
 		there is not 2nd level directories as well; This assumption is for rebuild index while doing cleanIndex() -->
 	 	<property name="indexRoot" value="${geniuswiki.data.root}data/index/"/>
+	 	<property name="commentTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="commentIndexFactory"/></bean>
+	 	</property>
+	 	<property name="pageTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="pageIndexFactory"/></bean>
+	 	</property>
+	 	<property name="spaceTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="spaceIndexFactory"/></bean>
+	 	</property>
+	 	<property name="userTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="userIndexFactory"/></bean>
+	 	</property>
+	 	<property name="roleTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="roleIndexFactory"/></bean>
+	 	</property>
+	 	<property name="pageTagTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="pageTagIndexFactory"/></bean>
+	 	</property>
+	 	<property name="spaceTagTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="spaceTagIndexFactory"/></bean>
+	 	</property>
+	 	<property name="attachmentTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="attachmentIndexFactory"/></bean>
+	 	</property>
+	 	<property name="widgetTemplate">
+	 		<bean class="com.edgenius.wiki.search.lucene.IndexWriterTemplate"><constructor-arg ref="widgetIndexFactory"/></bean>
+	 	</property>
 	 	
-	 	<property name="pageIndexFactory" ref="pageIndexFactory"/>
-	 	<property name="commentIndexFactory" ref="commentIndexFactory"/>
-	 	<property name="spaceIndexFactory" ref="spaceIndexFactory"/>
-	 	<property name="userIndexFactory" ref="userIndexFactory"/>
-	 	<property name="roleIndexFactory" ref="roleIndexFactory"/>
-	 	<property name="pageTagIndexFactory" ref="pageTagIndexFactory"/>
-	 	<property name="spaceTagIndexFactory" ref="spaceTagIndexFactory"/>
-	 	<property name="attachmentIndexFactory" ref="attachmentIndexFactory"/>
-	 	<property name="widgetIndexFactory" ref="widgetIndexFactory"/>
 	 	<!-- For attachment meta data update -->
 	 	<property name="attachmentSearchService" ref="attachmentSearchService"/>
 	 	<!-- For attachment file data extract -->

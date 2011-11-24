@@ -55,7 +55,7 @@ public class IndexWriterTemplate {
 		} 
 	}
 
-	public void doIndexing(IndexCallback callback) {
+	public void addDocument(IndexCallback callback) {
 		
 		IndexWriter writer = indexFactory.getIndexWriter();
 		try {
