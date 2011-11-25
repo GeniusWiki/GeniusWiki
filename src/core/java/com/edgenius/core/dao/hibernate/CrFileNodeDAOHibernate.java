@@ -93,16 +93,16 @@ public class CrFileNodeDAOHibernate extends BaseDAOHibernate<CrFileNode> impleme
 
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getIdentifierNodes(String nodeType, String identifierUuid) {
-		return getHibernateTemplate().find(GET_IDENTIFIER_BY_ALL_NODES,new String[]{nodeType,identifierUuid});
+		return getHibernateTemplate().find(GET_IDENTIFIER_BY_ALL_NODES,new Object[]{nodeType,identifierUuid});
 	}
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getIdentifierNodes(String nodeType, String identifierUuid, String fileName) {
-		return getHibernateTemplate().find(GET_IDENTIFIER_BY_FILENAME,new String[]{nodeType,identifierUuid,fileName});
+		return getHibernateTemplate().find(GET_IDENTIFIER_BY_FILENAME,new Object[]{nodeType,identifierUuid,fileName});
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getSpaceNodes(String nodeType, String identifierUuid) {
-		return getHibernateTemplate().find(GET_SPACE_BY_ALL_NODES,new String[]{nodeType,identifierUuid});
+		return getHibernateTemplate().find(GET_SPACE_BY_ALL_NODES,new Object[]{nodeType,identifierUuid});
 	}
 
 	@SuppressWarnings("unchecked")

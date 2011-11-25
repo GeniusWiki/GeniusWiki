@@ -99,21 +99,14 @@ public class IndexWriterTemplate {
 	 * This method will close IndexWriter. 
 	 * This method can be used to create an empty index.
 	 */
-	public void close() {
-		IndexWriter writer = indexFactory.getIndexWriter();
-		try {
-			writer.close();
-		} catch (Exception e) {
-			log.error("Unable to close Index", e);
-		} finally{
-			try {
-				if( IndexWriter.isLocked(writer.getDirectory())){
-					IndexWriter.unlock(writer.getDirectory());
-				}
-			} catch (Exception e) {
-				log.error("Unable to unlock Index", e);
-			}
-		}
+	public void closeIndex() {
+		
+		indexFactory.closeIndex();
+		
+	}
+	
+	public void createEmptyIndex(){
+		indexFactory.createEmptyIndex();
 	}
 	
 }

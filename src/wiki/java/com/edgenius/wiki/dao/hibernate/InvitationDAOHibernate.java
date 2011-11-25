@@ -47,7 +47,7 @@ public class InvitationDAOHibernate extends BaseDAOHibernate<Invitation> impleme
 
 	public Invitation getByUuid(String spaceUname, String invitationUuid) {
 		@SuppressWarnings("rawtypes")
-		List list = getHibernateTemplate().find(GET_BY_SPACEUNAME_UUID,new String[]{spaceUname,invitationUuid});
+		List list = getHibernateTemplate().find(GET_BY_SPACEUNAME_UUID,new Object[]{spaceUname,invitationUuid});
 		if(list == null || list.size() == 0){
 			return null;
 		}

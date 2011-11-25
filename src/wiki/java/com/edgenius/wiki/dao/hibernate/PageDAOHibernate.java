@@ -147,7 +147,7 @@ public class PageDAOHibernate extends BaseDAOHibernate<Page> implements PageDAO 
 	}
 
 	public Page getCurrentByUnixName(String spaceUname, String unixName) {
-		List<Page> list = getHibernateTemplate().find(GET_CURRENT_BY_UXNAME,new String[]{spaceUname, unixName});
+		List<Page> list = getHibernateTemplate().find(GET_CURRENT_BY_UXNAME,new Object[]{spaceUname, unixName});
 		if(list == null || list.isEmpty())
 			return null;
 		if(list.size() > 1)
