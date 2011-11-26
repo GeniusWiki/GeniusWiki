@@ -1,0 +1,1 @@
+GeniusWiki - Arkadaşınızın ${user.fullname} davet!

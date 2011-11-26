@@ -1,0 +1,1 @@
+Merhaba WikiBlog Yöneticisi, WikiBlog sisteminin yeni sürümü ${newVer} çıkmıştır. Mevcut sürümünüz: ${currVer} Lütfen son sürümü http://www.edgenius.com sitesinden indiriniz. Saygılarımızla, WikiBlog

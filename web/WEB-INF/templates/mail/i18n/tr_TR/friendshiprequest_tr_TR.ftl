@@ -1,0 +1,1 @@
+Merhaba ${receiver} Yöneticisi, ${sender} alanı sizi kendi alanındaki arkadaş listesine ekledi. Sizin alanındaki arkadaş listenize erişmek istiyor. Lütfen aşağıdaki bağlantıya tıklayarak kabul ya da red ediniz. ${pagelink} Saygılarımızla, WikiBlog

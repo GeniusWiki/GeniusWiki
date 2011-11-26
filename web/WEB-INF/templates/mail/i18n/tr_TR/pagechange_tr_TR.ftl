@@ -1,0 +1,1 @@
+Sayın WikiBlog Kullanıcısı, ${page.space.name} (${page.space.unixName}) alanındaki ${page.title} sayfası ${modifierFullname} tarafından ${modifiedDate} tarihinde değiştirilmiştir. Sayfanın en son haline ulaşmak için ${pagelink} tıklayınız. Saygılarımızla, WikiBlog
