@@ -33,11 +33,6 @@ public class IndexAccessException extends RuntimeException{
 		super();
 		
 	}
-	public IndexAccessException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		
-	}
 
 	public IndexAccessException(String message, Throwable cause) {
 		super(message, cause);
