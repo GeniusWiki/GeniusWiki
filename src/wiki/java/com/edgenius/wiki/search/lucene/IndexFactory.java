@@ -35,5 +35,16 @@ public interface IndexFactory {
 	 */
 	IndexWriter getIndexWriter();
 
+	/**
+	 * Although this class return an IndexWriter, but never close it outside this class, use this method!
+	 * 
+	 */
+	void closeIndex();
+
+	/**
+	 * Try to create an empty index, if the directory doesn't exist Index. If index is already existed, do nothing.
+	 * After create, the IndexWriter is in close status.
+	 */
+	void createEmptyIndex();
 
 }

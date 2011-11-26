@@ -491,6 +491,16 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 	public void cleanIndexes(final IndexRebuildListener listener) {
 		//code move to AdvanceAdminAction.rebuild(), may move back until I find solution for lazy loading for each rebuild*()
 		
+		pageTemplate.closeIndex();
+		commentTemplate.closeIndex();
+		spaceTemplate.closeIndex();
+		userTemplate.closeIndex();
+		roleTemplate.closeIndex();
+		pageTagTemplate.closeIndex();
+		spaceTagTemplate.closeIndex();
+		attachmentTemplate.closeIndex();
+		widgetTemplate.closeIndex();
+		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Clean all sub directories(first level) under index root, but not delete directory itself.
 		try {
@@ -510,21 +520,16 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 			log.error("Unable to list index root directory", e1);
 		}
 		
-		closeIndex();
+		pageTemplate.createEmptyIndex();
+		commentTemplate.createEmptyIndex();
+		spaceTemplate.createEmptyIndex();
+		userTemplate.createEmptyIndex();
+		roleTemplate.createEmptyIndex();
+		pageTagTemplate.createEmptyIndex();
+		spaceTagTemplate.createEmptyIndex();
+		attachmentTemplate.createEmptyIndex();
+		widgetTemplate.createEmptyIndex();
 		
-	}
-	private void closeIndex() {
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		// initialize indexes
-		pageTemplate.close();
-		commentTemplate.close();
-		spaceTemplate.close();
-		userTemplate.close();
-		roleTemplate.close();
-		pageTagTemplate.close();
-		spaceTagTemplate.close();
-		attachmentTemplate.close();
-		widgetTemplate.close();
 		
 	}
 
@@ -557,6 +562,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				});
 			}finally{
 				attachmentLock.unlock();
+				log.info("Attachment index is rebuilt");
 			}
 		}
 	}
@@ -586,6 +592,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				});
 			}finally{
 				spaceTagLock.unlock();
+				log.info("Space tag index is rebuilt");
 			}
 		}
 	}
@@ -616,6 +623,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				});
 			}finally{
 				pageTagLock.unlock();
+				log.info("Page tag index is rebuilt");
 			}
 		}
 	}
@@ -647,6 +655,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				});
 			}finally{
 				userLock.unlock();
+				log.info("User index is rebuilt");
 			}
 		}
 	}
@@ -672,6 +681,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				});
 			}finally{
 				roleLock.unlock();
+				log.info("Role index is rebuilt");
 			}
 		}
 	}
@@ -704,6 +714,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				});
 			}finally{
 				spaceLock.unlock();
+				log.info("Space index is rebuilt");
 			}
 		}
 	}
@@ -731,6 +742,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 				});
 			}finally{
 				widgetLock.unlock();
+				log.info("Widget index is rebuilt");
 			}
 		}
 	}
@@ -768,6 +780,8 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 					log.error("Close comment index failed " , e);
 				}
 				commentLock.unlock();
+				
+				log.info("Comment index is rebuilt");
 			}
 		}
 	}

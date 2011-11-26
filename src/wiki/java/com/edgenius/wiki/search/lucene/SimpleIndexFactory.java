@@ -33,10 +33,11 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.LogDocMergePolicy;
 import org.apache.lucene.index.LogMergePolicy;
 import org.apache.lucene.store.Directory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.edgenius.wiki.search.service.FieldName;
 import com.edgenius.wiki.search.service.LowerCaseAnalyzer;
 
@@ -45,7 +46,7 @@ import com.edgenius.wiki.search.service.LowerCaseAnalyzer;
  * @author Dapeng.Ni
  */
 public class SimpleIndexFactory  implements IndexFactory, DisposableBean, InitializingBean  {
-
+	private static final Logger log = LoggerFactory.getLogger(SimpleIndexFactory.class);
 
 	private boolean useCompoundFile = false;
 	private int maxBufferedDocs = LuceneConfig.DEFAULT_MAX_BUFFERED_DOCS;
@@ -77,12 +78,16 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 	public IndexWriter getIndexWriter() {
 		
 		try {
-			//As it doesn't have method to tell if this IndexWriter is closed, so if it is not locked, it is support to closed and will create a new one.
-			if(writer != null && IndexWriter.isLocked(directory))
+			//here doesn't check IndexWriter is close or not, so it is dangerous if close IndexWriter outside this class!!! Must use this.close() to close.
+			if(writer != null)
 				return writer;
 			
-			if(IndexWriter.isLocked(directory)){
-				IndexWriter.unlock(directory);
+			try {
+				if(IndexWriter.isLocked(directory)){
+					IndexWriter.unlock(directory);
+				}
+			} catch (Exception e) {
+				log.error("Try to unlock failed" + directory, e);
 			}
 			
 			IndexWriterConfig conf = getIndexWriterConfig();
@@ -90,7 +95,7 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 			
 			return writer;
 		} catch(IOException ex) {
-			throw new IndexAccessException("Error during creating the writer",ex);
+			throw new IndexAccessException("Error during creating the writer:"+ directory,ex);
 		}
 	}
 
@@ -100,35 +105,50 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 			throw new IllegalArgumentException("directory is required");
 		}
 		
+		createEmptyIndex();
+	}
+
+
+	@Override
+	public void createEmptyIndex() {
 		try {
 			//try to create an empty index.
 			boolean exist = IndexReader.indexExists(directory);
 			if(!exist) {
-				this.getIndexWriter();
+				writer = this.getIndexWriter();
+				this.closeIndex();
+				log.info("A new Index is created on {}", directory);
 			}
 		} catch (Exception e) {
-			Log.error("Unable to create an empty index", e);
+			log.error("Unable to create an empty index:" + directory, e);
+		}
+	}
+	@Override
+	public void closeIndex() {
+		if(writer == null)
+			return;
+		
+		try {
+			writer.close();
+			writer = null;
+			
+		} catch (Exception e) {
+			log.error("Unable to close Index:" + directory, e);
 		} finally{
-			//clean lock when factory initial
-			if(IndexWriter.isLocked(directory)){
-				IndexWriter.unlock(directory);
+			try {
+				if( IndexWriter.isLocked(directory)){
+					IndexWriter.unlock(directory);
+				}
+			} catch (Exception e) {
+				log.error("Unable to unlock Index" + directory, e);
 			}
 		}
 	}
 
+
 	@Override
 	public void destroy() throws Exception {
-		if(writer != null){
-			try {
-				writer.close();
-			} catch (Exception e) {
-				Log.error("Close IndexWriter failed", e);
-			} finally{
-				if(IndexWriter.isLocked(directory)){
-					IndexWriter.unlock(directory);
-				}
-			}
-		}
+		this.closeIndex();
 	}
 	
 	private IndexWriterConfig getIndexWriterConfig() {
@@ -145,13 +165,4 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 		
 		return conf;
 	}
-
-
-	public Directory getDirectory() {
-		return directory;
-	}
-
-
-	
-
 }
