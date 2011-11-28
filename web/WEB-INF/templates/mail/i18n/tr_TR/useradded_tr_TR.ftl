@@ -1,12 +1,12 @@
-Hi ${user.fullname},
+Merhaba ${user.fullname},
 
-Your GeniusWiki account is created by administrator.
+WikiBlog Hesabınız yönetici tarafından oluşturulmuştur.
 
-Your login is: ${user.username}
-Password is ${password}
+Kullanıcı adınız: ${user.username}
+Şifreniz: ${password}
 
-You can access GeniusWiki using following link
+WikiBlog sistemine aşağıdaki bağlantıdan erişebilirsiniz.
 ${pagelink}
 
-Regards,
-GeniusWiki Team
+Saygılarımızla,
+WikiBlog Takımı

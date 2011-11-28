@@ -1,1 +1,1 @@
-GeniusWiki - Arkadaşınızın ${user.fullname} davet!
+WikiBlog - Arkadaşınız ${user.fullname} daveti

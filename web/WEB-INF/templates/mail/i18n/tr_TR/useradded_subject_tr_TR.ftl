@@ -1,1 +1,1 @@
-GeniusWiki administrator created your account
+WikiBlog yöneticisi hesabınızı oluşturmuştur.

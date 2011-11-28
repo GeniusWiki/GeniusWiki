@@ -1,1 +1,1 @@
-Sayın Wiki Blog Kullanıcısı, <#if user??>${user.fullname} kullanıcısından bir mesaj aldınız <#else>adsız</#if>. Mesaj: ${message} Lütfen Wiki Blog sitesine giriş yapıp mesajlarınız bölümünden mesajınızı kontrol ediniz. ${pagelink}
+Sayın Wiki Blog Kullanıcısı, <#if user??>${user.fullname} kullanıcısından bir mesaj aldınız <#else>adsız tarafından mesaj aldınız</#if>. Mesaj: ${message} Lütfen Wiki Blog sitesine giriş yapıp mesajlarınız bölümünden mesajınızı kontrol ediniz. ${pagelink}
