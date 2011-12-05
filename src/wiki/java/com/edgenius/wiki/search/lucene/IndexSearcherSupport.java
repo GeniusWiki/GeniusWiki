@@ -35,7 +35,7 @@ import com.edgenius.wiki.search.service.SearchException;
 public class IndexSearcherSupport  {
 	private static final Logger log = LoggerFactory.getLogger(IndexSearcherSupport.class);
 	
-	private SearcherFactory searcherFactory;
+	protected SearcherFactory searcherFactory;
 
 	protected Object search(SearcherCallback searcherCallback) throws SearchException {
 		try {

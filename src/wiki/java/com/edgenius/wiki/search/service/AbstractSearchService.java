@@ -32,7 +32,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
@@ -205,7 +204,7 @@ public abstract class AbstractSearchService extends IndexSearcherSupport{
 		
 
 		keyword = QueryParser.escape(StringUtils.trimToEmpty(keyword));
-		QueryParser parser = new QueryParser(LuceneConfig.VERSION, FieldName.CONTENT,new StandardAnalyzer(LuceneConfig.VERSION));
+		QueryParser parser = new QueryParser(LuceneConfig.VERSION, FieldName.CONTENT,searcherFactory.getAnalyzer());
 		
 		if (advKeyword == SearchService.KEYWORD_EXACT)
 			keyword = "\"" + keyword + "\"";
@@ -541,7 +540,7 @@ public abstract class AbstractSearchService extends IndexSearcherSupport{
 		if(hl == null)
 			return content;
 		
-		TokenStream tokenStream = new StandardAnalyzer(LuceneConfig.VERSION).tokenStream(FieldName.CONTENT, new StringReader(content));
+		TokenStream tokenStream = searcherFactory.getAnalyzer().tokenStream(FieldName.CONTENT, new StringReader(content));
 		String frag;
 		try {
 			frag = hl.getBestFragments(tokenStream, content, 3, "...");

@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import net.paoding.analysis.analyzer.PaodingAnalyzer;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiReader;
@@ -36,6 +40,7 @@ import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
+import com.edgenius.core.Global;
 import com.edgenius.wiki.search.service.SearchException;
 
 /**
@@ -47,6 +52,7 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 	private ExecutorService exectorService = Executors.newCachedThreadPool();
 	
 	private ThreadLocal<IndexSearcher> container = new ThreadLocal<IndexSearcher>();
+	private Analyzer analyzer;
 	
 	@Override
 	public IndexSearcher getSearcher() throws SearchException{
@@ -98,6 +104,13 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 		if(directories == null || directories.length == 0){
 			throw new BeanInitializationException("Must declare at least one directory");
 		}
+		
+
+		if("zh".equalsIgnoreCase(Global.DefaultLanguage)){
+			analyzer = new PaodingAnalyzer();
+		}else{
+			analyzer = new StandardAnalyzer(LuceneConfig.VERSION);
+		}
 	}
 
 	@Override
@@ -118,9 +131,11 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 	public void setDirectories(Directory[] directories) {
 		this.directories = directories;
 	}
-
-
-
+	@Override
+	public Analyzer getAnalyzer() {
+		
+		return analyzer;
+	}
 
 
 }

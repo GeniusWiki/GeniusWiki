@@ -23,6 +23,7 @@
  */
 package com.edgenius.wiki.search.lucene;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.IndexSearcher;
 
 import com.edgenius.wiki.search.service.SearchException;
@@ -31,6 +32,8 @@ import com.edgenius.wiki.search.service.SearchException;
  * @author Dapeng.Ni
  */
 public interface SearcherFactory {
+	Analyzer getAnalyzer();
+	
 	IndexSearcher getSearcher() throws SearchException;
 
 	/**
