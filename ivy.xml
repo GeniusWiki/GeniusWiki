@@ -104,6 +104,7 @@
         <dependency org="apache/lucene" name="contrib" rev="3.4.0" conf="deploy->highlighter;dev->highlighter-source"/>
         <!--  highlighter depends on memeoy, but to make things easy, just put it here -->
         <dependency org="apache/lucene" name="contrib" rev="3.4.0" conf="deploy->memory;dev->memory-source"/>
+        <dependency org="net/paoding" name="paoding-analysis" rev="111205" conf="deploy->default;dev->default"/>
 		
 		<dependency org="apache" name="jackrabbit" rev="1.4" conf="deploy->extractor;dev->extractor" />
 		<!-- 

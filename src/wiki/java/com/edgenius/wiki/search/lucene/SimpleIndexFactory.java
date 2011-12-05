@@ -25,6 +25,8 @@ package com.edgenius.wiki.search.lucene;
 
 import java.io.IOException;
 
+import net.paoding.analysis.analyzer.PaodingAnalyzer;
+
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexReader;
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
+import com.edgenius.core.Global;
 import com.edgenius.wiki.search.service.FieldName;
 import com.edgenius.wiki.search.service.LowerCaseAnalyzer;
 
@@ -67,7 +70,11 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 	public SimpleIndexFactory(Directory directory) {
 		this.directory  = directory;
 		
-		analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneConfig.VERSION));
+		if("zh".equalsIgnoreCase(Global.DefaultLanguage)){
+			analyzer = new PerFieldAnalyzerWrapper(new PaodingAnalyzer());
+		}else{
+			analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneConfig.VERSION));
+		}
 		analyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
 		analyzer.addAnalyzer(FieldName.CONTRIBUTOR,new LowerCaseAnalyzer());
 		analyzer.addAnalyzer(FieldName.KEY,new LowerCaseAnalyzer());
