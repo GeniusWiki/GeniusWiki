@@ -25,10 +25,6 @@ package com.edgenius.wiki.search.lucene;
 
 import java.io.IOException;
 
-import net.paoding.analysis.analyzer.PaodingAnalyzer;
-
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -37,12 +33,9 @@ import org.apache.lucene.index.LogMergePolicy;
 import org.apache.lucene.store.Directory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-
-import com.edgenius.core.Global;
-import com.edgenius.wiki.search.service.FieldName;
-import com.edgenius.wiki.search.service.LowerCaseAnalyzer;
 
 
 /**
@@ -58,26 +51,17 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 	private int termIndexInterval = LuceneConfig.DEFAULT_TERM_INDEX_INTERVAL;
 	private int writeLockTimeout = LuceneConfig.DEFAULT_WRITE_LOCK_TIMEOUT;
 
-	//This is not support be to set by spring
-	private PerFieldAnalyzerWrapper analyzer;
+	//This is not spring managed fields
 	private IndexWriter writer;
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Properties
 	private Directory directory;
+	private AnalyzerProvider analyzerProvider;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Methods
 	public SimpleIndexFactory(Directory directory) {
 		this.directory  = directory;
-		
-		if("zh".equalsIgnoreCase(Global.DefaultLanguage)){
-			analyzer = new PerFieldAnalyzerWrapper(new PaodingAnalyzer());
-		}else{
-			analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneConfig.VERSION));
-		}
-		analyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
-		analyzer.addAnalyzer(FieldName.CONTRIBUTOR,new LowerCaseAnalyzer());
-		analyzer.addAnalyzer(FieldName.KEY,new LowerCaseAnalyzer());
 	}
 
 
@@ -111,7 +95,9 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 		if (directory == null) {
 			throw new IllegalArgumentException("directory is required");
 		}
-		
+		if(analyzerProvider == null){
+			throw new BeanInitializationException("Must declare analyzerProvider");
+		}
 		createEmptyIndex();
 	}
 
@@ -159,7 +145,7 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 	}
 	
 	private IndexWriterConfig getIndexWriterConfig() {
-		IndexWriterConfig conf = new IndexWriterConfig(LuceneConfig.VERSION, analyzer);
+		IndexWriterConfig conf = new IndexWriterConfig(LuceneConfig.VERSION, analyzerProvider.getIndexAnalyzer());
 		conf.setMaxBufferedDocs(maxBufferedDocs);
 		conf.setTermIndexInterval(termIndexInterval);
 		conf.setWriteLockTimeout(writeLockTimeout);
@@ -171,5 +157,13 @@ public class SimpleIndexFactory  implements IndexFactory, DisposableBean, Initia
 		conf.setMergePolicy(mergePolicy);
 		
 		return conf;
+	}
+
+
+	/**
+	 * @param analyzerProvider the analyzerProvider to set
+	 */
+	public void setAnalyzerProvider(AnalyzerProvider analyzerProvider) {
+		this.analyzerProvider = analyzerProvider;
 	}
 }

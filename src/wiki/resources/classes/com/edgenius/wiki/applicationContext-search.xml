@@ -133,6 +133,8 @@
 	<!--  Search Bean definition -->
 	<!--  ===================================================================================  -->
 
+	<bean id="analyzerProvider" class="com.edgenius.wiki.search.lucene.AnalyzerProvider">
+	</bean>
 	
   	<!--  Directory Factory service -->  	
 	<bean id="pageFsDirectory" class="com.edgenius.wiki.search.lucene.FSDirectoryFactory">
@@ -165,35 +167,45 @@
 	
 	<!-- IndexFactory -->
 	<bean id="pageIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 		<constructor-arg ref="pageFsDirectory"/>
 	</bean>
 	<bean id="commentIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="commentFsDirectory"/>
 	</bean>
 	<bean id="spaceIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="spaceFsDirectory"/>
 	</bean>
 	<bean id="userIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="userFsDirectory"/>
 	</bean>
 	<bean id="roleIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="roleFsDirectory"/>
 	</bean>
 	<bean id="pageTagIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="pageTagFsDirectory"/>
 	</bean>
 	<bean id="spaceTagIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="spaceTagFsDirectory"/>
 	</bean>
 	<bean id="attachmentIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="attachmentFsDirectory"/>
 	</bean>
 	<bean id="widgetIndexFactory" class="com.edgenius.wiki.search.lucene.SimpleIndexFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 	    <constructor-arg ref="widgetFsDirectory"/>
 	</bean>
 	
 	<!-- Search Factory -->
 	<bean id="searcherFactory" class="com.edgenius.wiki.search.lucene.ParallelSearcherFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 		<property name="directories">
 			<list>
 				<ref local="pageFsDirectory"/>
@@ -212,6 +224,7 @@
 	</bean>
 	
 	<bean id="widgetSpaceSearcherFactory" class="com.edgenius.wiki.search.lucene.ParallelSearcherFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 		<property name="directories">
 			<list>
 				<ref local="spaceFsDirectory"/>
@@ -221,6 +234,7 @@
 	</bean>
 	
 	<bean id="spaceSearcherFactory" class="com.edgenius.wiki.search.lucene.ParallelSearcherFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 		<property name="directories">
 			<list>
 				<ref local="spaceFsDirectory"/>
@@ -228,6 +242,7 @@
 		</property>
 	</bean>
 	<bean id="userSearcherFactory" class="com.edgenius.wiki.search.lucene.ParallelSearcherFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 		<property name="directories">
 			<list>
 				<ref local="userFsDirectory"/>
@@ -235,6 +250,7 @@
 		</property>
 	</bean>
 	<bean id="roleSearcherFactory" class="com.edgenius.wiki.search.lucene.ParallelSearcherFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 		<property name="directories">
 			<list>
 				<ref local="roleFsDirectory"/>
@@ -244,6 +260,7 @@
 		</property>
 	</bean>
 	<bean id="attachmentSearcherFactory" class="com.edgenius.wiki.search.lucene.ParallelSearcherFactory">
+		<property name="analyzerProvider" ref="analyzerProvider"/>
 		<property name="directories">
 			<list>
 				<ref local="attachmentFsDirectory"/>
