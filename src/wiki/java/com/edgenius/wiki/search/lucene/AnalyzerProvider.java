@@ -23,13 +23,12 @@
  */
 package com.edgenius.wiki.search.lucene;
 
-import net.paoding.analysis.analyzer.PaodingAnalyzer;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.springframework.beans.factory.InitializingBean;
 
+import com.chenlb.mmseg4j.analysis.MMSegAnalyzer;
 import com.edgenius.core.Global;
 import com.edgenius.wiki.search.service.FieldName;
 import com.edgenius.wiki.search.service.LowerCaseAnalyzer;
@@ -45,22 +44,26 @@ public class AnalyzerProvider implements InitializingBean{
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		
+		loadAnalyzer();
+	}
+
+	public void loadAnalyzer() {
+		
+		Analyzer baseAnalyzer;
 		//index
 		if("zh".equalsIgnoreCase(Global.DefaultLanguage)){
-			indexAnalyzer = new PerFieldAnalyzerWrapper(new PaodingAnalyzer());
+			baseAnalyzer = new MMSegAnalyzer(); //PaodingAnalyzer()
 		}else{
-			indexAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(LuceneConfig.VERSION));
+			baseAnalyzer = new StandardAnalyzer(LuceneConfig.VERSION);
 		}
+		
+		indexAnalyzer = new PerFieldAnalyzerWrapper(baseAnalyzer); 
 		indexAnalyzer.addAnalyzer(FieldName.UNSEARCH_SPACE_UNIXNAME,new LowerCaseAnalyzer());
 		indexAnalyzer.addAnalyzer(FieldName.CONTRIBUTOR,new LowerCaseAnalyzer());
 		indexAnalyzer.addAnalyzer(FieldName.KEY,new LowerCaseAnalyzer());
 	
 		//search
-		if("zh".equalsIgnoreCase(Global.DefaultLanguage)){
-			searchAnalyzer = new PaodingAnalyzer();
-		}else{
-			searchAnalyzer = new StandardAnalyzer(LuceneConfig.VERSION);
-		}
+		searchAnalyzer = baseAnalyzer;
 	}
 
 	/**
