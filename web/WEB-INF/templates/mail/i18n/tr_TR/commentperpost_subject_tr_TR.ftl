@@ -1,1 +1,2 @@
-WikiBlog - sayfanıza yeni yorum bırakılmıştır.
+ikiBlog - sayfanıza yeni yorum bırakılmıştır
+

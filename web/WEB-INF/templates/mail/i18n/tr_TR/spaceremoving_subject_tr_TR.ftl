@@ -1,1 +1,3 @@
-WikiBlog - Dikkat! ${space.unixName} alanınız kaldırılmak üzeredir.
+ikiBlog - Dikkat! ${space.unixName} alanınız kaldırılmak üzeredir
+
+

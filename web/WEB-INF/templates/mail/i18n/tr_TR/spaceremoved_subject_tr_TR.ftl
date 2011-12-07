@@ -1,1 +1,2 @@
-WikiBlog - ${space.unixName} alanınız kalıcı olarak silindi.
+ikiBlog - ${space.unixName} alanınız kalıcı olarak silindi
+

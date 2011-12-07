@@ -1,1 +1,2 @@
-WikiBlog Uyarı - Kullanıcı lisans hacmi bitmiştir
+ikiBlog Uyarı - Kullanıcı lisans hacmi bitmişti
+

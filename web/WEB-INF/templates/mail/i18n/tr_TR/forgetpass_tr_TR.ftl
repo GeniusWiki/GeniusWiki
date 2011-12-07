@@ -1,1 +1,8 @@
-Sayın ${user.fullname}, WikiBlog şifreniz sıfırlanmıştır. Yeni şifreniz: ${password} Saygılarımızla, WikiBlog
+Sayın ${user.fullname},\n
+\n
+WikiBlog şifreniz sıfırlanmıştır. Yeni şifreniz: ${password}\n
+\n
+Saygılarımızla,\n
+\n
+WikiBlog
+

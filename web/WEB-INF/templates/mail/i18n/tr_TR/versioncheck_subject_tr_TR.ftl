@@ -1,1 +1,2 @@
-WikiBlog yeni bir sürümü mevcut.
+ikiBlog yeni bir sürümü mevcut
+

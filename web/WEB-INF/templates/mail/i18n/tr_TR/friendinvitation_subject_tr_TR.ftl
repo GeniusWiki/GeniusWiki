@@ -1,1 +1,2 @@
-WikiBlog - Arkadaşınız ${user.fullname} daveti
+eniusWiki - Arkadaşınızın $ {user.fullname} davet
+

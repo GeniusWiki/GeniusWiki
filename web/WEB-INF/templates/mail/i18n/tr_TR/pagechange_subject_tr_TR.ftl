@@ -1,1 +1,2 @@
-WikiBlog - Sizin izleme sayfanız değişmiştir
+ikiBlog - Sizin izleme sayfanız değişmişti
+

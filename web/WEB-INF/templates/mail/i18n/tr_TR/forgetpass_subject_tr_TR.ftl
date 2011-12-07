@@ -1,1 +1,2 @@
-WikiBlog - Parolanız sıfırlandı
+ikiBlog - Parolanız sıfırland�
+

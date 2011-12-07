@@ -1,1 +1,2 @@
-WikiBlog ${sender} tarafından arkadaşlık isteği
+ikiBlog  ${sender} tarafından arkadaşlık isteğ
+
