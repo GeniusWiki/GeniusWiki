@@ -1,2 +1,2 @@
-eniusWiki - Arkadaşınızın $ {user.fullname} davet
+ikiBlog - Arkadaşınız ${user.fullname} sizi davet etti
 
