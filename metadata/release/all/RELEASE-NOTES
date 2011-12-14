@@ -1,4 +1,4 @@
-Version 3.0
+Version 3.1
 =======================================================
 h2. Enhancements
 * Some major third party libraries upgrades. Spring, Spring Security, Lucene etc.
@@ -6,6 +6,7 @@ h2. Enhancements
 * Turkish language
 * Comment notify email include comment body content.
 * New analyzer for Chinese search indexing.
+* Memory optimsise when backup and restore system.
 
 h2. Bugs
 
