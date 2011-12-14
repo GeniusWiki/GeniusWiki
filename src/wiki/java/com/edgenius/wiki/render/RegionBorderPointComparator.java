@@ -32,7 +32,7 @@ import java.util.Comparator;
 public class RegionBorderPointComparator implements Comparator<RegionBorderPoint>, Serializable{
 	private static final long serialVersionUID = 4032071068588625412L;
 
-	//JDK1.6 @Override
+	@Override
 	public int compare(RegionBorderPoint o1, RegionBorderPoint o2) {
 		int rs = o2.getPoint() - o1.getPoint();
 		if(rs !=0)
