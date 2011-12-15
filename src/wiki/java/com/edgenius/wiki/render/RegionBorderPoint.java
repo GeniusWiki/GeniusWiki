@@ -32,12 +32,14 @@ public class RegionBorderPoint {
 	int pos2;
 	boolean start;
 	String regionKey;
+	int keyIndex;
 	
-	public RegionBorderPoint(int pos1, boolean start, int pos2, String regionKey) {
+	public RegionBorderPoint(int pos1, boolean start, int pos2, String regionKey, int keyIndex) {
 		this.pos1 = pos1;
 		this.pos2 = pos2;
 		this.start = start;
 		this.regionKey = regionKey;
+		this.keyIndex = keyIndex;
 	}
 	public String toString(){
 		return pos1+":" + pos2+":" + start+":" + regionKey;
@@ -58,6 +60,12 @@ public class RegionBorderPoint {
 	 */
 	public String getRegionKey() {
 		return regionKey;
+	}
+	/**
+	 * @return the keyIndex
+	 */
+	public int getKeyIndex() {
+		return keyIndex;
 	}
 
 }

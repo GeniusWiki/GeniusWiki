@@ -1,12 +1,22 @@
+Version 3.11
+=======================================================
+h2. Enhancements
+* Spring upgrade to 3.1. Hibernate upgrades to 4.0. 
+* Theme supports i18n
+
+h2. Bugs
+* Fix TOC macro doesn't render Heading if it wraps by other macro.
+
+
 Version 3.1
 =======================================================
 h2. Enhancements
 * Some major third party libraries upgrades. Spring, Spring Security, Lucene etc.
-* MySQL 5.5 jump to deck. MySQL 4.x is not offically supported.
+* MySQL 5.5 jump to deck. MySQL 4.x is not officially supported.
 * Turkish language
 * Comment notify email include comment body content.
 * New analyzer for Chinese search indexing.
-* Memory optimsise when backup and restore system.
+* Memory optimise when backup and restore system.
 
 h2. Bugs
 

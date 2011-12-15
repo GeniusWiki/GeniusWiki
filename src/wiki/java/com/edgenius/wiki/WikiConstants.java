@@ -86,8 +86,6 @@ public class WikiConstants {
 	//********************************************************************
 
 	public static final String I18N_HOME_PAGE_TITLE = "wiki.home.page.title";
-	public static final String I18N_WIKI_WELCOME = "wiki.home.welcome";
-	public static final String I18N_BLOG_WELCOME = "blog.home.welcome";
 	
 	public static final String I18N_BLOG_HOME_PAGE_CONTENT = "blog.home.page.content";
 	public static final String I18N_PAGE_NOT_FOUND_CONTENT = "wiki.page.not.found.content";

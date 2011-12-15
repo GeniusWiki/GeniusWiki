@@ -1,5 +1,10 @@
 ==============
-
+<div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler|ordered:false" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><ul><li><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor0" href="#"><span style="font-size:large;">Head1</span> </a></li>
+<ul><li><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor1" href="#"><span style="font-size:large;">Head1-1</span> </a></li>
+</ul><li><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor2" href="#"><span style="font-size:large;">Head2-1</span> </a></li>
+<ul><li><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor3" href="#"><span style="font-size:large;">Head2-1</span> </a></li>
+<li><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor4" href="#"><span style="font-size:large;">Head2-2</span></a></li>
+</ul></ul></div><br /><h1 id="HeaderAnchor0"><span style="font-size:large;">Head1</span> </h1><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1"><span style="font-size:large;">Head1-1</span> </h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h1 id="HeaderAnchor2"><span style="font-size:large;">Head2-1</span> </h1><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor3"><span style="font-size:large;">Head2-1</span> </h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor4"><span style="font-size:large;">Head2-2</span></h2>
 --------------
 {toc:ordered=false}
 h1. {font:size=large}Head1{font} 

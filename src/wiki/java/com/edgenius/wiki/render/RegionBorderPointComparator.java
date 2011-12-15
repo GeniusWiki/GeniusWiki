@@ -34,6 +34,8 @@ public class RegionBorderPointComparator implements Comparator<RegionBorderPoint
 
 	@Override
 	public int compare(RegionBorderPoint o1, RegionBorderPoint o2) {
+		if(o1 == o2) return 0;
+		
 		int rs = o2.getPoint() - o1.getPoint();
 		if(rs !=0)
 			return rs;
@@ -51,8 +53,13 @@ public class RegionBorderPointComparator implements Comparator<RegionBorderPoint
 		if(rs != 0)
 			return rs;
 		
-		
-		return o1.start?o1.getRegionKey().compareTo(o2.regionKey):o2.getRegionKey().compareTo(o1.regionKey);
+		//this is cooperate with RegionComparator.compare()
+		if(o1.keyIndex != -1 && o2.keyIndex != -1){
+			return (o1.start?1:-1) * (o1.keyIndex -o2.keyIndex);
+		}else{
+			//failure tolerance
+			return o1.regionKey.compareTo(o2.regionKey);
+		}
 	}
 
 }

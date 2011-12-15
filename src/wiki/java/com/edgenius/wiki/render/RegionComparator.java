@@ -45,12 +45,20 @@ public class RegionComparator implements Comparator<Region>, Serializable {
 
 	//JDK1.6 @Override
 	public int compare(Region o1, Region o2) {
+		if(o1 == o2) return 0;
+		
 		//equals must before isContain() as later method also includes equals() condition.
-		if(o1.equals(o2) && o1.getKey() != null){
+		if(o1.equals(o2)){
 			//this is cooperate with RegionBorderPointComparator.compare()
-			//if Region is equal then compare its key. 
-			return o1.getKey().compareTo(o2.getKey());
+			//if Region is equal then compare its keyIndex.
+			if(o1.getKeyIndex() != -1 && o2.getKeyIndex() != -1){
+				return (o1.getKeyIndex() - o2.getKeyIndex());
+			}else if(o1.getKey() != null){
+				//failure tolerance
+				return o1.getKey().compareTo(o2.getKey());
+			}
 		}
+		
 		if(o1.isContain(o2))
 			return 1;
 		if(o2.isContain(o1))
