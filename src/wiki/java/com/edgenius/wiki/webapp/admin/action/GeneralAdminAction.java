@@ -200,6 +200,7 @@ public class GeneralAdminAction extends BaseAction{
 					//language changed, so try to reload analyzer for different language.
 					Global.DefaultLanguage = cl[0];
 					analyzerProvider.loadAnalyzer();
+					themeService.cleanThemeCache();
 				}
 				global.setDefaultLanguage(cl[0]);
 				global.setDefaultCountry(cl[1].toUpperCase());

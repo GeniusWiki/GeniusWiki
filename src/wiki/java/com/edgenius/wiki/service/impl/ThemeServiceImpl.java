@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.zip.ZipEntry;
@@ -62,7 +63,6 @@ import com.edgenius.core.repository.RepositoryException;
 import com.edgenius.core.repository.RepositoryQuotaException;
 import com.edgenius.core.repository.RepositoryService;
 import com.edgenius.core.repository.RepositoryTiemoutExcetpion;
-import com.edgenius.core.service.MessageService;
 import com.edgenius.core.util.CompareToComparator;
 import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.util.ZipFileUtil;
@@ -89,7 +89,7 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 	private static final Logger log = LoggerFactory.getLogger(ThemeServiceImpl.class);
 	
 	private static final String INSTALL_EXT_NAME = ".zip";
-	private static final String THEME_EXT = ".xml";
+	private static final String SKIN_OR_THEME_EXT = ".xml";
 	private static final String THEME_NAME = "theme";
 	private static final String SKIN_NAME = "skin";
 	
@@ -102,7 +102,6 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 	private Resource themeExplosionRoot;
 	private Resource skinResourcesRoot;
 	private Resource skinExplosionRoot;
-	private MessageService messageService;
 	private RepositoryService repositoryService;
 	@Autowired
 	private SettingService settingService;
@@ -171,7 +170,7 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 			}else{
 				File[] deployDirs = skinExplosionRoot.getFile().listFiles((FileFilter)DirectoryFileFilter.INSTANCE);
 				for(File dir : deployDirs){
-					File file = new File(dir,SKIN_NAME+THEME_EXT);
+					File file = getSkinXML(dir);
 					
 					if(!file.exists()){
 						log.warn("Unable to find skin.xml on skin directory {}", dir.getAbsolutePath());
@@ -494,7 +493,7 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 			}
 			File[] files = themeExplosionRoot.getFile().listFiles( (FileFilter)DirectoryFileFilter.INSTANCE);
 			for(File dir : files){
-				File file = new File(dir,THEME_NAME+THEME_EXT);
+				File file = getThemeXML(dir);
 				
 				if(!file.exists()){
 					log.warn("Unable to find theme.xml on theme directory {}", dir.getAbsolutePath());
@@ -510,7 +509,7 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 						themeList.put(theme.getDisplaySequenceNumber(),theme);
 					}
 				} catch (Exception e) {
-					log.error("Failed load theme " + file.getAbsolutePath(), e);
+					log.error("Failed load theme from " + dir, e);
 				} finally{
 					IOUtils.closeQuietly(is);
 				}
@@ -659,7 +658,7 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 			File[] deployDirs = skinExplosionRoot.getFile().listFiles((FileFilter)DirectoryFileFilter.INSTANCE);
 			for(File dir : deployDirs){
 				File file = new File(dir,"init_flag");
-				File skinFile = new File(dir,SKIN_NAME+THEME_EXT);
+				File skinFile = getSkinXML(dir);
 				if(!file.exists() || !skinFile.exists()){
 					continue;
 				}
@@ -786,7 +785,11 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 		
 		return null;
 	}
-	
+
+	@Override
+	public void cleanThemeCache() {
+		themeCache.removeAll();
+	}
 	//********************************************************************
 	//               private method
 	//********************************************************************
@@ -991,7 +994,8 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 				throw new ThemeNotFoundException("Unable to locate system theme " + themeName + "on directory " +themeExplosionRoot.getFile().getAbsolutePath());
 			}
 			
-			File file = new File(root, THEME_NAME+THEME_EXT);
+			//if non-English, try find localize version.
+			File file = getThemeXML(root);
 			if(!file.exists()){
 				log.error("Unable to locate system theme {} definition file", file.getAbsolutePath());
 				throw new ThemeNotFoundException("Unable to locate system theme " + file.getAbsolutePath() + "definition file.");
@@ -1013,6 +1017,31 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 		}
 	}
 
+
+	private File getThemeXML(File root){
+		return getXML(root, THEME_NAME);
+	}
+
+
+	private File getSkinXML(File root) {
+		return getXML(root, SKIN_NAME);
+	}
+	
+	private File getXML(File root, String name) {
+		File file = null;
+		if(!Global.isLanguage(Locale.ENGLISH)){ //doesn't tell different English yet.
+			//try to find locale file, such as theme_zh_CN.xml or theme_tr_TR.xml etc.
+			file = new File(root, name+"_" + Global.DefaultLanguage.toLowerCase() + "_" + Global.DefaultCountry.toUpperCase() + SKIN_OR_THEME_EXT);
+			
+			//if not found, reset to null then try to find theme.xml
+			if(!file.exists()) file = null;
+		}
+		if(file == null){
+			file = new File(root, name+SKIN_OR_THEME_EXT);
+		}
+		return file;
+	}
+
 	//********************************************************************
 	//               set / get method
 	//********************************************************************
@@ -1024,11 +1053,6 @@ public class ThemeServiceImpl implements ThemeService, InitializingBean{
 	public void setThemeExplosionRoot(Resource themeExplosionRoot) {
 		this.themeExplosionRoot = themeExplosionRoot;
 	}
-
-	public void setMessageService(MessageService messageService) {
-		this.messageService = messageService;
-	}
-
 
 	public void setThemeCache(Cache themeCache) {
 		this.themeCache = themeCache;

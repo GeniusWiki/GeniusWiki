@@ -23,6 +23,8 @@
  */
 package com.edgenius.wiki.search.lucene;
 
+import java.util.Locale;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -51,7 +53,7 @@ public class AnalyzerProvider implements InitializingBean{
 		
 		Analyzer baseAnalyzer;
 		//index
-		if("zh".equalsIgnoreCase(Global.DefaultLanguage)){
+		if(Global.isLanguage(Locale.CHINESE)){
 			baseAnalyzer = new MMSegAnalyzer(); //PaodingAnalyzer()
 		}else{
 			baseAnalyzer = new StandardAnalyzer(LuceneConfig.VERSION);
