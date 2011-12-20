@@ -42,7 +42,7 @@
     
 	<dependencies>
 	
-		<dependency org="com.edgenius" name="libs" rev="3.0" changing="true" conf="deploy->license, highlight; dev->license, highlight" />
+		<dependency org="com.edgenius" name="libs" rev="3.1" changing="true" conf="deploy->license, highlight; dev->license, highlight" />
 		
 		<dependency org="google" name="gwt" rev="2.4" conf="deploy->default;dev->compile" />
 		<dependency org="google" name="gwt-gears" rev="1.3.0"	conf="dev->default" />
