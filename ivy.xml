@@ -59,11 +59,8 @@
 		
 		<dependency org="net/sf/ehcache" name="ehcache-core" rev="2.3.2" conf="deploy->default;dev->default"/>
 		
-		<dependency org="org/hibernate" name="hibernate" rev="3.6.1"   conf="deploy->default;" />
+		<dependency org="org/hibernate" name="hibernate" rev="4.0.0.Final"   conf="deploy->default;" />
 		<dependency org="org/hibernate" name="hibernate-tools" rev="3.2.4.ga"	conf="dev->default;" />
-		<!-- 
-		<dependency org="org/hibernate" name="hibernate-annotations" rev="3.4.0.ga"	conf="deploy->default;dev->default" />
-		 -->
 		<!-- use spring-modules instead.
 		<dependency org="org/hibernate" name="hibernate-search" rev="3.0.0.b3"	conf="deploy->default;dev->source" />
 		<dependency org="org" name="compass" rev="1.2.m3"	conf="deploy->default;dev->source" />
