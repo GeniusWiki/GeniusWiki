@@ -23,13 +23,9 @@
  */
 package com.edgenius.wiki.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
@@ -72,10 +68,10 @@ public class UserPageDAOHibernate extends BaseDAOHibernate<UserPageMark> impleme
 		List<UserPageMark> list;
 		if(up.getType() < 10){
 			//these marks are user specified
-			list = getHibernateTemplate().find(GET_BY_OBJECT,new Object[]{up.getPage(),up.getUser(),up.getType()});
+			list = find(GET_BY_OBJECT,new Object[]{up.getPage(),up.getUser(),up.getType()});
 		}else{
 			//these marks are global scope 
-			list = getHibernateTemplate().find(GET_BY_OBJECT_NO_USER,new Object[]{up.getPage(),up.getType()});
+			list = find(GET_BY_OBJECT_NO_USER,new Object[]{up.getPage(),up.getType()});
 		}
 		
 		if(list == null || list.size() == 0)
@@ -86,36 +82,30 @@ public class UserPageDAOHibernate extends BaseDAOHibernate<UserPageMark> impleme
 
 	@SuppressWarnings("unchecked")
 	public List<UserPageMark> getWatchedByPageUid(Integer uid) {
-		return  getHibernateTemplate().find(GET_WATCHED_BY_PAGE_UID,uid);
+		return  find(GET_WATCHED_BY_PAGE_UID,uid);
 	}
 
 	public int removeByPageUid(final Integer uid) {
-		return (Integer)getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				int deleted = session.createQuery(REMOVE_BY_PAGE_UID).setInteger("uid", uid).executeUpdate();
-				return deleted;
-			}
-		});
-		
+		return getCurrentSesssion().createQuery(REMOVE_BY_PAGE_UID).setInteger("uid", uid).executeUpdate();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<UserPageMark> getByUserAndPage(User user, Page page) {
-		return  getHibernateTemplate().find(GET_BY_USER_PAGE,new Object[]{user,page});
+		return  find(GET_BY_USER_PAGE,new Object[]{user,page});
 	}
 	@SuppressWarnings("unchecked")
 	public List<UserPageMark> getFavorites(String spaceUname, String username) {
 		if(StringUtils.isBlank(spaceUname))
-			return getHibernateTemplate().find(GET_FAVORITES,new Object[]{username});
+			return find(GET_FAVORITES,new Object[]{username});
 		else
-			return getHibernateTemplate().find(GET_SPACE_FAVORITES,new Object[]{spaceUname, username});
+			return find(GET_SPACE_FAVORITES,new Object[]{spaceUname, username});
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<UserPageMark> getWatched(String spaceUname, String username) {
 		if(StringUtils.isBlank(spaceUname))
-			return getHibernateTemplate().find(GET_WATCHEDS,new Object[]{username});
+			return find(GET_WATCHEDS,new Object[]{username});
 		else
-			return getHibernateTemplate().find(GET_SPACE_WATCHEDS,new Object[]{spaceUname, username});
+			return find(GET_SPACE_WATCHEDS,new Object[]{spaceUname, username});
 	}
 }

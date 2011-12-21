@@ -23,14 +23,10 @@
  */
 package com.edgenius.wiki.ext.calendar.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.ext.calendar.dao.CalendarEventDAO;
@@ -50,26 +46,19 @@ public class CalendarEventDAOHibernate extends BaseDAOHibernate<CalendarEvent> i
 	public void removeEvents(Integer calUid) {
 		//WARNING: Hibernate can not construct join properly in buldUpdate()!!! 
 		//use calendar Uid, it could be a simple query only for event table.
-		getHibernateTemplate().bulkUpdate(REMOVE_CAL_EVENTS,calUid);
+		bulkUpdate(REMOVE_CAL_EVENTS,calUid);
 		
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CalendarEvent> getEvents(final String calName, final String pageUuid, final Date start, final Date end) {
-		return (List<CalendarEvent>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(GET_CALENDAR);
-				query.setString("name", calName);
-				query.setString("pageUuid", pageUuid);
-				query.setDate("start", start);
-				query.setDate("end", end);
-				
-				return query.list();
-			}
-		});
+		Query query = getCurrentSesssion().createQuery(GET_CALENDAR);
+		query.setString("name", calName);
+		query.setString("pageUuid", pageUuid);
+		query.setDate("start", start);
+		query.setDate("end", end);
+		
+		return query.list();
 	}
-
-
-
 	
 }

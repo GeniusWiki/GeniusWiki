@@ -23,7 +23,6 @@
  */
 package com.edgenius.core.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,11 +30,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -71,23 +67,19 @@ public class UserDAOHibernate extends BaseDAOHibernate<User> implements UserDAO,
 	//JDK1.6 @Override
 	public int getUserTotalCount(final String filter) {
 		
-		return (Integer) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				String filterWith="";
-				if(!StringUtils.isBlank(filter)){
-					filterWith =" where u.username like :filter or u.fullname like :filter or u.contact.email like :filter ";
-				}
-				Query query = session.createQuery(GET_USERS_COUNT + filterWith);
-				if(!StringUtils.isBlank(filter)){
-					query.setString("filter","%"+filter.trim()+"%");
-				}
-				List list = query.list();
-				if(list != null && list.size() > 0){
-					return (int) ((Long)list.get(0)).longValue();
-				}
-				return 0;
-			}
-		});
+		String filterWith="";
+		if(!StringUtils.isBlank(filter)){
+			filterWith =" where u.username like :filter or u.fullname like :filter or u.contact.email like :filter ";
+		}
+		Query query = getCurrentSesssion().createQuery(GET_USERS_COUNT + filterWith);
+		if(!StringUtils.isBlank(filter)){
+			query.setString("filter","%"+filter.trim()+"%");
+		}
+		List list = query.list();
+		if(list != null && list.size() > 0){
+			return (int) ((Long)list.get(0)).longValue();
+		}
+		return 0;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -129,19 +121,15 @@ public class UserDAOHibernate extends BaseDAOHibernate<User> implements UserDAO,
 		}
 		
 		final String sql = SQL_GET_USERS +filterWith+orderBy;
-		return (List<User>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(sql);
-				if(!StringUtils.isBlank(filter)){
-					query.setString("filter","%"+filter.trim()+"%");
-				}
-				query.setFirstResult(start);
-				if(returnSize > 0)
-					query.setMaxResults(returnSize);
-				
-				return query.list();
-			}
-		});
+		Query query = getCurrentSesssion().createQuery(sql);
+		if(!StringUtils.isBlank(filter)){
+			query.setString("filter","%"+filter.trim()+"%");
+		}
+		query.setFirstResult(start);
+		if(returnSize > 0)
+			query.setMaxResults(returnSize);
+		
+		return query.list();
 	}
 
 
@@ -150,7 +138,7 @@ public class UserDAOHibernate extends BaseDAOHibernate<User> implements UserDAO,
      */
     @SuppressWarnings("unchecked")
 	public User getUserByName(String username) {
-        List<User> list = (List<User>) getHibernateTemplate().find(SQL_GET_BY_USERNAME,username);
+        List<User> list = (List<User>) find(SQL_GET_BY_USERNAME,username);
         User user = null;
         if(list != null && list.size() > 0){
         	user = list.get(0);
@@ -166,7 +154,7 @@ public class UserDAOHibernate extends BaseDAOHibernate<User> implements UserDAO,
 
 	@SuppressWarnings("unchecked")
 	public User getUserByEmail(String email) {
-		List<User> list = (List<User>) getHibernateTemplate().find(SQL_GET_BY_EMAIL,email);
+		List<User> list = (List<User>) find(SQL_GET_BY_EMAIL,email);
 		if(list != null && list.size() > 0){
 			return  list.get(0);
 		}
@@ -180,15 +168,15 @@ public class UserDAOHibernate extends BaseDAOHibernate<User> implements UserDAO,
      */
     public void saveUser(final User user) {
         
-        getHibernateTemplate().saveOrUpdate(user);
-        getHibernateTemplate().flush();
+        getCurrentSesssion().saveOrUpdate(user);
+        getCurrentSesssion().flush();
     }
 
     /**
      * @see com.edgenius.paradise.dao.UserDAO#removeUser(java.lang.String)
      */
     public void removeUser(String username) {
-        getHibernateTemplate().delete(getUserByName(username));
+    	getCurrentSesssion().delete(getUserByName(username));
     }
 
     /** 

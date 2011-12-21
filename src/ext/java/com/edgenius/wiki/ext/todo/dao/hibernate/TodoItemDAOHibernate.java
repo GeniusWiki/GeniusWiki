@@ -46,15 +46,15 @@ public class TodoItemDAOHibernate  extends BaseDAOHibernate<TodoItem> implements
 	public void removeItems(Integer todoUid) {
 		//WARNING: Hibernate can not construct join properly in buldUpdate()!!! 
 		//use calendar Uid, it could be a simple query only for event table.
-		getHibernateTemplate().bulkUpdate(REMOVE_TODO_ITEMS,todoUid);
+		bulkUpdate(REMOVE_TODO_ITEMS,todoUid);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<TodoItem> getItemsByNameInPage(String pageUuid, String todoName) {
-		return getHibernateTemplate().find(GET_BY_PUUID_TODONAME,new Object[]{pageUuid,todoName});
+		return find(GET_BY_PUUID_TODONAME,new Object[]{pageUuid,todoName});
 	}
 	public Map<String,Long> getStatusCount(String pageUuid, String todoName){
-		List<Object[]> rs = getHibernateTemplate().find(GET_TODO_STATUS_COUNT,new Object[]{pageUuid,todoName});
+		List<Object[]> rs = find(GET_TODO_STATUS_COUNT,new Object[]{pageUuid,todoName});
 		
 		Map<String,Long> map = new HashMap<String, Long>();
 		if(rs != null && rs.size() > 0){
