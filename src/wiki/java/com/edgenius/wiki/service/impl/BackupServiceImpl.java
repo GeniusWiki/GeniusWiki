@@ -23,6 +23,10 @@
  */
 package com.edgenius.wiki.service.impl;
 
+import static com.edgenius.wiki.model.AbstractPage.PAGE_TYPE.DRAFT;
+import static com.edgenius.wiki.model.AbstractPage.PAGE_TYPE.HISTORY;
+import static com.edgenius.wiki.model.AbstractPage.PAGE_TYPE.PAGE;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -119,14 +123,19 @@ import com.edgenius.wiki.dao.WidgetDAO;
 import com.edgenius.wiki.dao.hibernate.JDBCTemplateDAO;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.installation.UpgradeService;
+import com.edgenius.wiki.model.AbstractPage;
+import com.edgenius.wiki.model.AbstractPage.PAGE_TYPE;
 import com.edgenius.wiki.model.ActivityLog;
 import com.edgenius.wiki.model.Draft;
+import com.edgenius.wiki.model.DraftContent;
 import com.edgenius.wiki.model.Friend;
 import com.edgenius.wiki.model.History;
+import com.edgenius.wiki.model.HistoryContent;
 import com.edgenius.wiki.model.Invitation;
 import com.edgenius.wiki.model.Notification;
 import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.model.PageComment;
+import com.edgenius.wiki.model.PageContent;
 import com.edgenius.wiki.model.PageLink;
 import com.edgenius.wiki.model.PageTag;
 import com.edgenius.wiki.model.Space;
@@ -140,6 +149,7 @@ import com.edgenius.wiki.quartz.ExportedJob;
 import com.edgenius.wiki.service.BackupException;
 import com.edgenius.wiki.service.BackupService;
 import com.edgenius.wiki.service.DataBinder;
+import com.edgenius.wiki.service.DataBinder.ContentBodyMap;
 import com.edgenius.wiki.util.CommentComparator;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -336,7 +346,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			
 			if((options & BACKUP_DATA) >0){
 				time = System.currentTimeMillis();
-				importData(binder);
+				importData(binder, dir, binderVersion);
 				log.info("Restore database table took {}s", (System.currentTimeMillis() - time)/1000);
 				
 				//delete binder file after import success
@@ -634,7 +644,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		// backup database
 		Map<File, String> list = new HashMap<File, String>();
 		if((options & BACKUP_DATA) > 0){
-			exportData(binder);
+			exportData(binder, list);
 		}
 		
 		log.info("Backup successfully export data from database in {}ms", (System.currentTimeMillis() - start) );
@@ -702,14 +712,10 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		
 		log.info("Databinder successed adds external files info in {}ms", (System.currentTimeMillis() - start) );
 		start = System.currentTimeMillis();
+		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Save Data binder XML
 		//output to XML file - rather than directly using String as next SAXParser InputSource() as this way save memory!
-		
-		//this will make c:\\doc~1\\ expand to c:\\my document\\...
-		String path = new File(FileUtil.getFileDirectory(binderName)).getCanonicalPath();
-		if(!path.endsWith(File.separator))
-			path += File.separator;
 		
 		String binderTmp = FileUtil.getFullPath(dir, OBJS_BINDER_NAME+"_tmp");
 		log.info("Databinder is going to export to file {} ", binderTmp);
@@ -722,7 +728,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		IOUtils.closeQuietly(writer);
 		IOUtils.closeQuietly(os);
 		
-		log.info("Databinder export successfully, will do proxy object removing in {}ms", binderTmp, (System.currentTimeMillis() - start) );
+		log.info("Databinder export to {} successfully in {}ms. Next will do proxy object removing", binderTmp, (System.currentTimeMillis() - start) );
 		start = System.currentTimeMillis();
 		
 		//TODO: above XML has resolves-to attribute, following code will remove them, this part code may need remove 
@@ -767,18 +773,24 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		log.info("Databinder XML polished in {}ms", (System.currentTimeMillis() - start) );
 		start = System.currentTimeMillis();
 		
+		//this will make c:\\doc~1\\ expand to c:\\my document\\...
+		String canonicalPath = new File(dir).getCanonicalPath();
+		if(!canonicalPath.endsWith(File.separator))
+			canonicalPath += File.separator;
+				
+				
 		File tmp = new File(binderTmp);
 		if(!tmp.delete())
 			tmp.deleteOnExit();
 		
 		//binder XML always put into root directory in backup zip
-		list.put(new File(binderName),path);
+		list.put(new File(binderName),canonicalPath);
 
 		//Comment file
 		if(!StringUtils.isBlank(comment)){
 			File commentFile= new File(FileUtil.getFullPath(dir, COMMENT_FILE_NAME));
 			FileUtils.writeStringToFile(commentFile, comment);
-			list.put(commentFile,path);
+			list.put(commentFile,canonicalPath);
 		}
 		
 		log.info("System starting zip files...");
@@ -793,7 +805,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		return canonicalPath.substring(len);
 	}
 	@Transactional(readOnly=true, propagation=Propagation.REQUIRED)
-	private void exportData(DataBinder binder) throws IOException, FileUtilException {
+	private void exportData(DataBinder binder, Map<File, String> zipFileList) throws IOException, FileUtilException {
 		//I don't use clone, as it has side effect: XStream will use ID to reference to same object, this save lots size on XML
 		//for example, if user A popup in top all XML with ID 123, then all refer same user object, XStream will use line to refer to ID 123. 
 		//If clone(), the all object won't be same (not equals(), here is object equals) and, all refer this user will expand 
@@ -882,6 +894,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		}
 		binder.addAll(Space.class.getName(),spaces);
 		
+		ContentBodyMap contentBodyMap = ContentBodyMap.initialForBackup();
 		List<Page> sortedPages = new ArrayList<Page>();
 		List<Page> pages = pageDAO.getObjects();
 		for (Page page : pages) {
@@ -889,9 +902,10 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			//but also need avoid infinite looping, e.g, A parent is B, B parent is A, although this is unexpected, but need take care 
 			if(page.getParent() != null){
 				List<Page> parents = new ArrayList<Page>();
-				processParentPage(sortedPages, page, parents);
+				processParentPage(sortedPages, page, parents, contentBodyMap);
 			}
 			initPage(page);
+			pushContent(page, contentBodyMap);
 			sortedPages.add(page);
 		}
 		binder.addAll(Page.class.getName(),sortedPages);
@@ -900,6 +914,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		List<History> histories = historyDAO.getObjects();
 		for (History history : histories) {
 			Hibernate.initialize(history.getContent());
+			pushContent(history, contentBodyMap);
 		}
 		binder.addAll(History.class.getName(),histories);
 		
@@ -907,25 +922,25 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		for (Draft draft : drafts) {
 			Hibernate.initialize(draft.getPageProgress());
 			Hibernate.initialize(draft.getContent());
+			pushContent(draft, contentBodyMap);
 		}
 		binder.addAll(Draft.class.getName(),drafts);
 		
 		//put space/homepage relation after page and space
 		binder.add(DataBinder.HOME_PAGE_BINDER_NAME,homeMap);
 		
+		//after PAGE, DRAFT, HISTORY complete, finialise the ContentBody map and put all contentbody file into zip list
+		contentBodyMap.finalise();
+		zipFileList.putAll(contentBodyMap.getZipMap());
 		
 		List<PageComment> sortedComments = CommentComparator.getParentBeforeSortedList(commentDAO.getObjects());
 		binder.addAll(PageComment.class.getName(), sortedComments);
 		
 		
 		List<SpaceTag> stags = spaceTagDAO.getObjects();
-//		for (SpaceTag spaceTag : stags) {
-//		}
 		binder.addAll(SpaceTag.class.getName(),stags);
 		
 		List<PageTag> ptags = pageTagDAO.getObjects();
-//		for (PageTag pageTag : ptags) {
-//		}
 		binder.addAll(PageTag.class.getName(),ptags);
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -976,19 +991,55 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	
 	/**
 	 * @param page
+	 * @param contentBodys 
+	 * @param contentBodyMap 
+	 * @throws IOException 
+	 */
+	private void pushContent(AbstractPage page, ContentBodyMap bodyMap) throws IOException {
+		int contentId = 0;
+		PAGE_TYPE type = null;
+		String body = null;
+		if(page instanceof Page){
+			type = PAGE;
+			PageContent pcontent = ((Page) page).getContent();
+			contentId =pcontent.getUid();
+			body = pcontent.getContent();
+			pcontent.setContent(null);
+		}else if(page instanceof Draft){
+			type = DRAFT;
+			DraftContent dcontent = ((Draft) page).getContent();
+			contentId = dcontent.getUid();
+			body = dcontent.getContent();
+			dcontent.setContent(null);
+		}else if(page instanceof History){
+			type = HISTORY;
+			HistoryContent hcontent = ((History) page).getContent();
+			contentId = hcontent.getUid();
+			body = hcontent.getContent();
+			hcontent.setContent(null);
+		}
+		
+		bodyMap.add(contentId, type, body);
+	}
+	
+	/**
+	 * @param page
 	 * @param parent
 	 * @param parents
+	 * @param contentBodyMap 
+	 * @throws IOException 
 	 */
-	private void processParentPage(List<Page> container, Page page, List<Page> parents) {
+	private void processParentPage(List<Page> container, Page page, List<Page> parents, ContentBodyMap contentBodyMap) throws IOException {
 		Page parent = page.getParent();
 		if(parent != null){
 			if(parents.indexOf(parent) == -1){
 				if(container.indexOf(parent) == -1){
 					//this parent is not put into container yet
 					parents.add(parent);
-					processParentPage(container, parent, parents);
+					processParentPage(container, parent, parents, contentBodyMap);
 					
 					initPage(parent);
+					pushContent(page, contentBodyMap);
 					container.add(parent);
 				}
 			}else{
@@ -1002,13 +1053,13 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	}
 
 	/**
-	 * @param parent
+	 * @param page
 	 */
-	private void initPage(Page parent) {
-		Hibernate.initialize(parent.getPageProgress());
-		Hibernate.initialize(parent.getLinks());
-		Hibernate.initialize(parent.getContent());
-		parent.setTags(null);
+	private void initPage(Page page) {
+		Hibernate.initialize(page.getPageProgress());
+		Hibernate.initialize(page.getLinks());
+		Hibernate.initialize(page.getContent());
+		page.setTags(null);
 	}
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRES_NEW)
 	private void cleanDatabase(){
@@ -1073,7 +1124,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void importData(DataBinder binder) throws IOException {
+	private void importData(DataBinder binder, String rootDir, int binderVersion) throws IOException {
 		
 		log.info("Cleaning database....");
 		cleanDatabase();
@@ -1265,10 +1316,16 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 			spaceDAO.saveOrUpdate(space);
 		}
 
+		
+		ContentBodyMap contentBodyMap = ContentBodyMap.initialForRestore(rootDir);
 		List<Page> pages = (List<Page>) binder.get(Page.class.getName());
 		for (Page page: pages) {
 			page.setUid(null);
 			if(page.getContent() != null){
+				//load from contentBodys file - after VERSION 3.0
+				if(binderVersion > 3000){
+					page.getContent().setContent(contentBodyMap.getContent(page.getContent().getUid(), PAGE));
+				}
 				page.getContent().setUid(null);
 			}
 			if(page.getPageProgress() != null){
@@ -1293,16 +1350,24 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 		List<History> histories = (List<History>) binder.get(History.class.getName());
 		for (History history: histories) {
 			history.setUid(null);
-			if(history.getContent() != null)
+			if(history.getContent() != null){
+				if(binderVersion > 3000){
+					history.getContent().setContent(contentBodyMap.getContent(history.getContent().getUid(), HISTORY));
+				}
 				history.getContent().setUid(null);
+			}
 			historyDAO.saveOrUpdate(history);
 		}
 	
 		List<Draft> drafts = (List<Draft>) binder.get(Draft.class.getName());
 		for (Draft draft: drafts) {
 			draft.setUid(null);
-			if(draft.getContent() != null)
+			if(draft.getContent() != null){
+				if(binderVersion > 3000){
+					draft.getContent().setContent(contentBodyMap.getContent(draft.getContent().getUid(), DRAFT));
+				}
 				draft.getContent().setUid(null);
+			}
 			if(draft.getPageProgress() != null){
 				draft.getPageProgress().setUid(null);
 				pageProgressDAO.saveOrUpdate(draft.getPageProgress());
@@ -1849,7 +1914,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 	public void setPluginService(PluginService pluginService) {
 		this.pluginService = pluginService;
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileUtilException, IOException {
 		//TODO: this part code may move to UnitTest in future
 		List<Page> container = new ArrayList<Page>();
 		List<Page> parents = new ArrayList<Page>();
@@ -1869,7 +1934,7 @@ public class BackupServiceImpl implements InitializingBean, BackupService {
 //		a.setParent(d);
 		
 		BackupServiceImpl im = new BackupServiceImpl();
-		im.processParentPage(container, d, parents);
+		im.processParentPage(container, d, parents, new ContentBodyMap());
 		
 		System.out.println(Arrays.toString(container.toArray()));
 	}

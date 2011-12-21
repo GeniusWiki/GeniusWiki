@@ -53,6 +53,8 @@ import com.edgenius.wiki.security.WikiSecurityValues.WikiOPERATIONS;
 
 @MappedSuperclass
 public abstract class AbstractPage extends SensitiveTouchedInfo implements Cloneable,Serializable{
+	public static enum PAGE_TYPE{PAGE, DRAFT, HISTORY}; 
+	
 	@Transient
 	protected transient final Logger log = LoggerFactory.getLogger(this.getClass());
 
