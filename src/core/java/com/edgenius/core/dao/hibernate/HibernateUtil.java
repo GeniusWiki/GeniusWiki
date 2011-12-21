@@ -23,40 +23,24 @@
  */
 package com.edgenius.core.dao.hibernate;
 
-import java.sql.SQLException;
-
 import javax.annotation.Resource;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author Dapeng.Ni
  */
 @Repository
-public class HibernateUtil extends HibernateDaoSupport{
+public class HibernateUtil{
 	
 	@Resource(name="sessionFactory")
-	public void initSessionFactory(SessionFactory factory) {
-	    setSessionFactory(factory);
-	}
+	private SessionFactory sessionFactory;
 	
     /**
      * Totally clean Hibernate session.
      */
 	public void clearSession(){
-		getHibernateTemplate().execute(new HibernateCallback(){
-
-			//JDK1.6 @Override
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				session.clear();
-				return null;
-			}
-			
-		});
+		sessionFactory.getCurrentSession().clear();
 	}
 }
