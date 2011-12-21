@@ -45,6 +45,12 @@ public class PageComparator implements Comparator<Page>, Serializable{
 	}
 
 	public int compare(Page p1, Page p2) {
+		if(p1 == p2) return 0;
+		
+		//must not null, if both null, then need to do following compare.
+		if(p1.getPageUuid() != null && p1.getPageUuid().equals(p2.getPageUuid())) 
+			return 0;
+		
 		int level1,level2;
 		level1 = p1.getLevel();
 		level2 = p2.getLevel();
@@ -108,10 +114,16 @@ public class PageComparator implements Comparator<Page>, Serializable{
 	}
 
 	private int ct(Page p1, Page p2) {
-		//even title are same, are also return non-zero: This critical when deleting space
+		//even title are same, then try to compare pageUuid: This critical when deleting space
 		//if there are same title in trash bin, this can ensure deleted duplicated page is still in page list 
 		int ret = p1.getTitle() != null? p1.getTitle().compareTo(p2.getTitle()):1;
-		return (ret == 0)?1:ret; 
+		if(ret == 0 && p1.getPageUuid() != null){
+			ret = p1.getPageUuid().equals(p2.getPageUuid())?0:1;
+		}else if(ret == 0){
+			//if pageUuid is null, I assume it is different page
+			ret = 1;
+		}
+		return ret; 
 	}
 
 }

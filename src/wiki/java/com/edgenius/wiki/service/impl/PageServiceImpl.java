@@ -1816,7 +1816,6 @@ public class PageServiceImpl implements PageService {
 				
 				//because above does not deep clone parent, so here use exist page replace its lazy parent object
 				if(cPage.getParent() != null){
-					sortedSet.add(cPage);
 					for (Page parent : sortedSet) {
 						if(cPage.getParent().getUid().equals(parent.getUid())){
 							cPage.setParent(parent);

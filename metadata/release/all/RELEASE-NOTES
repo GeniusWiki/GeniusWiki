@@ -1,12 +1,13 @@
 Version 3.11
 =======================================================
 h2. Enhancements
-* Spring upgrade to 3.1. Hibernate upgrades to 4.0. 
+* Spring upgrade to 3.1. 
+* Hibernate upgrades to 4.0. 
 * Theme supports i18n
 
 h2. Bugs
 * Fix TOC macro doesn't render Heading if it wraps by other macro.
-
+* Fix duplicated title in space tree after creating a new page.
 
 Version 3.1
 =======================================================
