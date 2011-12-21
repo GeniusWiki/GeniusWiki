@@ -114,6 +114,10 @@ public interface ThemeService {
 	File downloadTheme(String name);
 	
 	void enableTheme(String name, boolean enable);
+	/**
+	 * Clean Theme cache
+	 */
+	void cleanThemeCache();
 	
 	
 }

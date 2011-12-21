@@ -23,15 +23,11 @@
  */
 package com.edgenius.wiki.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
@@ -71,32 +67,28 @@ public class HistoryDAOHibernate  extends BaseDAOHibernate<History> implements H
 	
 	@SuppressWarnings("unchecked")
 	public List<History> getByUuid(final String uuid,final int startVer, final int returnCount, final Date touchedDate) {
-		return (List<History>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query;
-				if(touchedDate == null){
-					query = session.createQuery(GET_HISTORY_BY_UUID);
-					query.setString(0, uuid);
-					query.setInteger(1, startVer <=0? Integer.MAX_VALUE:startVer);
-				}else{
-					query = session.createQuery(GET_HISTORY_BY_UUID_OLDER_DATE);
-					query.setString(0, uuid);
-					query.setDate(1, touchedDate);
-					query.setInteger(2, startVer <=0? Integer.MAX_VALUE:startVer);
-				}
-				if(returnCount > 0){
-					query.setMaxResults(returnCount);
-				}
-				return query.list(); 
-			}
-		});
+		Query query;
+		if(touchedDate == null){
+			query = getCurrentSesssion().createQuery(GET_HISTORY_BY_UUID);
+			query.setString(0, uuid);
+			query.setInteger(1, startVer <=0? Integer.MAX_VALUE:startVer);
+		}else{
+			query = getCurrentSesssion().createQuery(GET_HISTORY_BY_UUID_OLDER_DATE);
+			query.setString(0, uuid);
+			query.setDate(1, touchedDate);
+			query.setInteger(2, startVer <=0? Integer.MAX_VALUE:startVer);
+		}
+		if(returnCount > 0){
+			query.setMaxResults(returnCount);
+		}
+		return query.list(); 
 	
 	}
 
 	//JDK1.6 @Override
 	@SuppressWarnings("unchecked")
 	public History getVersionByUuid(int version, String pageUuid) {
-		List<History> list = getHibernateTemplate().find(GET_VERSION_BY_UUID,new Object[]{pageUuid,version});
+		List<History> list = find(GET_VERSION_BY_UUID,new Object[]{pageUuid,version});
 		if(list == null || list.size() == 0){
 			return null;
 		}
@@ -111,55 +103,51 @@ public class HistoryDAOHibernate  extends BaseDAOHibernate<History> implements H
 
 	@SuppressWarnings("unchecked")
 	public List<History> getUserContributedHistories(final User user) {
-		return (List<History>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query;
-				boolean anonymous = false;
-				if(user == null || user.isAnonymous()){
-					anonymous = true;
-					query = session.createQuery(GET_ANONYMOUS_CONTRIBUTED_HISTORIES);
-				}else{
-					query = session.createQuery(GET_USER_CONTRIBUTED_HISTORIES);
-					query.setEntity("user", user);
-				}
-				List<History> histories =new ArrayList<History>();
-				List<Object[]> list = query.list();
-				for (Object[] obj : list) {
-					History his = new History();
-					Space space = new Space();
-					User creator= new User();
-					User modifier= new User();
-					int idx=0;
-					
-					his.setUid((Integer) obj[idx++]);
-					his.setTitle((String) obj[idx++]);
-					his.setPageUuid((String) obj[idx++]);
-					his.setVersion((Integer) obj[idx++]);
+		Query query;
+		boolean anonymous = false;
+		if(user == null || user.isAnonymous()){
+			anonymous = true;
+			query = getCurrentSesssion().createQuery(GET_ANONYMOUS_CONTRIBUTED_HISTORIES);
+		}else{
+			query = getCurrentSesssion().createQuery(GET_USER_CONTRIBUTED_HISTORIES);
+			query.setEntity("user", user);
+		}
+		List<History> histories =new ArrayList<History>();
+		List<Object[]> list = query.list();
+		for (Object[] obj : list) {
+			History his = new History();
+			Space space = new Space();
+			User creator= new User();
+			User modifier= new User();
+			int idx=0;
+			
+			his.setUid((Integer) obj[idx++]);
+			his.setTitle((String) obj[idx++]);
+			his.setPageUuid((String) obj[idx++]);
+			his.setVersion((Integer) obj[idx++]);
 
-					space.setUnixName((String) obj[idx++]);
-					his.setSpace(space);
-					
-					if(!anonymous){
-						creator.setUsername((String) obj[idx++]);
-					}else{
-						creator.setUsername(User.ANONYMOUS_USERNAME);
-					}
-					his.setCreator(creator);;
-					his.setCreatedDate((Date) obj[idx++]);
-					if(!anonymous){
-						modifier.setUsername((String) obj[idx++]);
-					}else{
-						modifier.setUsername(User.ANONYMOUS_USERNAME);
-					}
-					his.setModifier(modifier);;
-					his.setModifiedDate((Date) obj[idx++]);
-					
-					histories.add(his);
-				}
-				
-				return histories;
+			space.setUnixName((String) obj[idx++]);
+			his.setSpace(space);
+			
+			if(!anonymous){
+				creator.setUsername((String) obj[idx++]);
+			}else{
+				creator.setUsername(User.ANONYMOUS_USERNAME);
 			}
-		});
+			his.setCreator(creator);;
+			his.setCreatedDate((Date) obj[idx++]);
+			if(!anonymous){
+				modifier.setUsername((String) obj[idx++]);
+			}else{
+				modifier.setUsername(User.ANONYMOUS_USERNAME);
+			}
+			his.setModifier(modifier);;
+			his.setModifiedDate((Date) obj[idx++]);
+			
+			histories.add(his);
+		}
+		
+		return histories;
 	}
 
 }

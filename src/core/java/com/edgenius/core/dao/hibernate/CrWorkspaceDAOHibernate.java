@@ -23,13 +23,9 @@
  */
 package com.edgenius.core.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.CrWorkspaceDAO;
@@ -49,7 +45,7 @@ public class CrWorkspaceDAOHibernate extends BaseDAOHibernate<CrWorkspace> imple
 	 * @see com.edgenius.text.engine.dao.CrWorkspaceDAO#getBySpaceName(java.lang.String)
 	 */
 	public CrWorkspace getBySpaceName(String spaceName) {
-		List list = this.getHibernateTemplate().find(GET_BY_SPACENAME,spaceName);
+		List list = this.find(GET_BY_SPACENAME,spaceName);
 		if(list == null || list.size() ==0)
 			return null;
 		
@@ -57,26 +53,17 @@ public class CrWorkspaceDAOHibernate extends BaseDAOHibernate<CrWorkspace> imple
 	}
 
 	public int updateExistWorkspacesQuota(final long size) {
-		return (Integer) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				int updates = session.createQuery(UPDATE_ALL_QUOTA).setLong(0, size).executeUpdate();
-				return Integer.valueOf(updates);
-			}
-		});
+		int updates = getCurrentSesssion().createQuery(UPDATE_ALL_QUOTA).setLong(0, size).executeUpdate();
+		return Integer.valueOf(updates);
 
 	}
 
 	public void updateWorkspacesQuota(final String spacename, final long size) {
-		getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(UPDATE_SPACE_QUOTA);
-				query.setLong(0, size);
-				query.setString(1, spacename);
-				query.executeUpdate();
-				return null;
-			}
-		});
-		
+		Query query = getCurrentSesssion().createQuery(UPDATE_SPACE_QUOTA);
+		query.setLong(0, size);
+		query.setString(1, spacename);
+		query.executeUpdate();
+
 	}
 
 }

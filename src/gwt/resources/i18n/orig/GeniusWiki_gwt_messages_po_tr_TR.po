@@ -1,0 +1,2279 @@
+# 
+# Translators:
+#   <isural@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: GeniusWiki\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-26 12:32+0000\n"
+"PO-Revision-Date: 2011-12-07 19:16+0000\n"
+"Last-Translator: isural <isural@gmail.com>\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.net/projects/p/GeniusWiki/team/tr_TR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Translate Toolkit 1.9.0\n"
+
+#: id
+msgid "ID"
+msgstr "ID"
+
+#: ok
+msgid "OK"
+msgstr "Tamam"
+
+#: cancel
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: add
+msgid "Add"
+msgstr "Ekle"
+
+#: send
+msgid "Send"
+msgstr "Gönder"
+
+#: to
+msgid "To"
+msgstr "Kime"
+
+#: update
+msgid "Update"
+msgstr "Güncelle"
+
+#: close
+msgid "Close"
+msgstr "Kapat"
+
+#: login
+msgid "Login"
+msgstr "Giriş"
+
+#: signup
+msgid "Sign up"
+msgstr "Kayıt Ol"
+
+#: logout
+msgid "Logout"
+msgstr "Çıkış"
+
+#: title
+msgid "Title"
+msgstr "Başlık"
+
+#: search
+msgid "Search"
+msgstr "Arama"
+
+#: description
+msgid "Description"
+msgstr "Açıklama"
+
+#: general
+msgid "General"
+msgstr "Genel"
+
+#: users
+msgid "Users"
+msgstr "Kullanıcılar"
+
+#: user
+msgid "User"
+msgstr "Kullanıcı"
+
+#: groups
+msgid "Groups"
+msgstr "Gruplar"
+
+#: group
+msgid "Group"
+msgstr "Grup"
+
+#: spaces
+msgid "Spaces"
+msgstr "Alanlar"
+
+#: security
+msgid "Security"
+msgstr "Güvenlik"
+
+#: advance
+msgid "Advance"
+msgstr "Gelişmiş"
+
+#: dashboard
+msgid "Dashboard"
+msgstr "Kontrol Paneli"
+
+#: access
+msgid "Access"
+msgstr "Erişim"
+
+#: offline
+msgid "Offline"
+msgstr "Çevrimdışı"
+
+#: home
+msgid "Home"
+msgstr "Ana Sayfa"
+
+#: name
+msgid "Name"
+msgstr "Ad"
+
+#: post
+msgid "Post"
+msgstr "Gönder"
+
+#: revision
+msgid "Revision"
+msgstr "Revize"
+
+#: reply
+msgid "Reply"
+msgstr "Yanıtla"
+
+#: modifier
+msgid "Modifier"
+msgstr "Düzenleyen"
+
+#: accept
+msgid "Accept"
+msgstr "Kabul Et"
+
+#: deny
+msgid "Deny"
+msgstr "Red Et"
+
+#: tags
+msgid "Tags"
+msgstr "Etiketler"
+
+#: tag
+msgid "Tag"
+msgstr "Etiket"
+
+#: comments
+msgid "Comments"
+msgstr "Yorumlar"
+
+#: history
+msgid "History"
+msgstr "Geçmiş"
+
+#: children
+msgid "Children"
+msgstr "Ağaç Yapısı"
+
+#: done
+msgid "Done"
+msgstr "Yapıldı"
+
+#: edit
+msgid "Edit"
+msgstr "Güncelle"
+
+#: upload
+msgid "Upload"
+msgstr "Yükle"
+
+#: remove
+msgid "Remove"
+msgstr "Kaldırma"
+
+#: file
+msgid "File"
+msgstr "Dosya"
+
+#: export
+msgid "Export"
+msgstr "Dışa Çıkar"
+
+#: format
+msgid "Format"
+msgstr "Biçim"
+
+#: scope
+msgid "Scope"
+msgstr "Kapsam"
+
+#: restore
+msgid "Restore"
+msgstr "Geri Yükle"
+
+#: diff
+msgid "Diff"
+msgstr "Fark"
+
+#: create
+msgid "Create"
+msgstr "Oluşturma"
+
+#: return.last
+msgid "Return"
+msgstr "Geri Dön"
+
+#: save
+msgid "Save"
+msgstr "Kaydet"
+
+#: preview
+msgid "Preview"
+msgstr "Önizleme"
+
+#: publish
+msgid "Publish"
+msgstr "Yayınla"
+
+#: resume
+msgctxt "resume"
+msgid "Resume"
+msgstr "Geri Al"
+
+#: actions
+msgid "Actions"
+msgstr "Eylemler"
+
+#: help
+msgid "Help"
+msgstr "Yardım"
+
+#: view
+msgid "View"
+msgstr "Görüntüleme"
+
+#: modify
+msgid "Modify"
+msgstr "Değiştir"
+
+#: print
+msgid "Print"
+msgstr "Çıktı Al"
+
+#: delete
+msgid "Delete"
+msgstr "Sil"
+
+#: refresh
+msgid "Refresh"
+msgstr "Yenile"
+
+#: content
+msgid "Content"
+msgstr "İçerik"
+
+#: introduction
+msgid "Introduction"
+msgstr "Giriş"
+
+#: widgets
+msgid "Widgets"
+msgstr "Modüller"
+
+#: widget
+msgid "Widget"
+msgstr "Modül"
+
+#: action
+msgid "Action"
+msgstr "Eylem"
+
+#: page
+msgid "Page"
+msgstr "Sayfa"
+
+#: comment
+msgid "Comment"
+msgstr "Yorum"
+
+#: space
+msgid "Space"
+msgstr "Alan"
+
+#: attachment
+msgid "Attachment"
+msgstr "Ekli Dosya"
+
+#: setting
+msgid "Setting"
+msgstr "Ayar"
+
+#: trash
+msgid "Trash"
+msgstr "Çöp Kutusu"
+
+#: privateK
+msgid "Private"
+msgstr "Özel"
+
+#: defaultK
+msgid "Default"
+msgstr "Varsayılan"
+
+#: restrict
+msgid "Restrict"
+msgstr "Kısıtlama"
+
+#: admin
+msgid "Admin"
+msgstr "Yönetici"
+
+#: frequency
+msgid "Frequency"
+msgstr "Sıklık"
+
+#: remover
+msgid "Remover"
+msgstr "Kaldırma"
+
+#: feedback
+msgid "Feedback"
+msgstr "Geri Bildirim"
+
+#: masks
+msgid "Masks"
+msgstr "Maskeler"
+
+#: date
+msgid "Date"
+msgstr "Tarih"
+
+#: press
+msgid "Press"
+msgstr "Bas"
+
+#: markup
+msgid "Markup"
+msgstr "İşaretleme"
+
+#: keyboard
+msgid "Keyboard"
+msgstr "Klavye"
+
+#: faq
+msgid "FAQ"
+msgstr "SSS"
+
+#: response
+msgid "Response"
+msgstr "Yanıt"
+
+#: jan
+msgid "Jan"
+msgstr "Oca"
+
+#: feb
+msgid "Feb"
+msgstr "Şub"
+
+#: mar
+msgid "Mar"
+msgstr "Mar"
+
+#: apr
+msgid "Apr"
+msgstr "Nis"
+
+#: may
+msgid "May"
+msgstr "May"
+
+#: jun
+msgid "Jun"
+msgstr "Haz"
+
+#: jul
+msgid "Jul"
+msgstr "Tem"
+
+#: aug
+msgid "Aug"
+msgstr "Ağu"
+
+#: sep
+msgid "Sep"
+msgstr "Eyl"
+
+#: oct
+msgid "Oct"
+msgstr "Eki"
+
+#: nov
+msgid "Nov"
+msgstr "Kas"
+
+#: dec
+msgid "Dec"
+msgstr "Ara"
+
+#: compare
+msgid "Compare"
+msgstr "Karşılaştır"
+
+#: latest
+msgid "Latest"
+msgstr "En son"
+
+#: comparing
+msgid "Comparing"
+msgstr "Karşılaştırılıyor"
+
+#: current
+msgid "Current"
+msgstr "Mevcut"
+
+#: loading
+msgid "Loading"
+msgstr "Yükleniyor"
+
+#: turn.on.favorite
+msgid "Add this page to the Favorite List"
+msgstr "Bu sayfayı sık kullanılanlara ekle"
+
+#: turn.off.favorite
+msgid "Remove this page from the Favorite List"
+msgstr "Bu sayfayı sık kullanılanlardan çıkar"
+
+#: turn.on.watchlist
+msgid "Add this page to the Watchlist"
+msgstr "Bu sayfayı İzlediklerim sayfasına ekle"
+
+#: turn.off.watchlist
+msgid "Remove this page from the Watchlist"
+msgstr "Bu sayfayı İzlediklerim sayfasından çıkar"
+
+#. #lower case first char
+#: none
+msgid "none"
+msgstr "boş"
+
+#: insert.anchor
+msgid "Insert anchor"
+msgstr "Çapa ekle"
+
+#: anchor.name
+msgid "Anchor name"
+msgstr "Çapa adı"
+
+#: in.space
+msgid "in space"
+msgstr "alanda"
+
+#: save.draft
+msgid "Save draft"
+msgstr "Taslağı kaydet"
+
+#: edit.sidebar
+msgid "Edit the sidebar"
+msgstr "Kenar çubuğunu güncelle"
+
+#: add.page
+msgid "Add page"
+msgstr "Sayfa ekle"
+
+#: edit.draft
+msgid "Edit draft"
+msgstr "Taslağı güncelle"
+
+#: create.homepage
+msgid "Create home page"
+msgstr "Ana sayfa oluştur"
+
+#: modified.date
+msgid "Modified date"
+msgstr "Güncelleme tarihi"
+
+#: goto.profile
+msgid "Profile"
+msgstr "Profil"
+
+#: force.save
+msgid "force to save"
+msgstr "kaydetmeye zorla"
+
+#: send.notify
+msgid "Send email to users who watching this page"
+msgstr "Bu sayfayı izleyen kullanıcılara eposta gönder"
+
+#: no.child.page
+msgid "No child page"
+msgstr "Ağaç yapısında sayfa yok"
+
+#: no.comment
+msgid "No comments"
+msgstr "Yorum bulunamadı"
+
+#: comment.no.empty
+msgid "Comment can not be empty"
+msgstr "Yorum boş olamaz"
+
+#: non.empty
+msgid "Please input non-empty value"
+msgstr "Lütfen boş olmayan bir değer giriniz"
+
+#: no.attachment.by.name
+msgid "No attachment in this file name"
+msgstr "Bu dosya adında ekli dosya bulunamadı"
+
+#: discard.comment
+msgid "Do you want to discard the comment?"
+msgstr "Yorumdan vazgeçmek istiyor musunuz?"
+
+#: post.comment
+msgid "Post comment"
+msgstr "Yorumu gönder"
+
+#: no.view.permission
+msgid "No view permission"
+msgstr "Görüntüleme izni yok"
+
+#: create.space
+msgid "Create space"
+msgstr "Alan oluştur"
+
+#: create.space.title
+msgid "Create your wiki or blog space"
+msgstr "Wiki ya da Blog alanı oluştur"
+
+#: backup.restore
+msgid "Backup & Restore"
+msgstr "Yedekle & Geri Yükle"
+
+#: default.dashboard
+msgid "Home Page"
+msgstr "Ana Sayfa"
+
+#: dashboard.preview
+msgid "Home page preview"
+msgstr "Ana sayfa önizleme"
+
+#: space.admin
+msgid "Space admin"
+msgstr "Yönetici alanı"
+
+#: system.admin
+msgctxt "system.admin"
+msgid "System admin"
+msgstr "Sistem yöneticisi"
+
+#: system.admin.title
+msgctxt "system.admin.title"
+msgid "System admin"
+msgstr "Sistem yöneticisi"
+
+#: more.spaces
+msgid "More spaces"
+msgstr "Daha fazla alan"
+
+#: more.spaces.title
+msgid "Add more spaces to your dashboard"
+msgstr "Kontrol panelinize daha fazla alan ekleyin"
+
+#: email
+msgid "Email"
+msgstr "Eposta"
+
+#: user.name
+msgid "User name"
+msgstr "Kullanıcı adı"
+
+#: password
+msgid "Password"
+msgstr "Şifre"
+
+#: remember.me
+msgid "Remember me"
+msgstr "Beni hatırla"
+
+#: forget.password
+msgid "Forgot password"
+msgstr "Şifremi unuttum"
+
+#: fail.update
+msgid "Failed on updating, please try again"
+msgstr "Güncellenirken hata oluştu, lütfen tekrar deneyiniz"
+
+#: fail.upload
+msgid "Failed on uploading image, please try again."
+msgstr "Resim yüklenirken hata oluştu, lütfen tekrar deneyiniz."
+
+#: portrait
+msgid "Portrait"
+msgstr "Vesikalık"
+
+#: user.profile
+msgid "User Profile"
+msgstr "Kullanıcı Profili"
+
+#: edit.profile
+msgid "Edit Profile"
+msgstr "Profil Güncelle"
+
+#: edit.password
+msgid "Edit Password"
+msgstr "Şifre Güncelle"
+
+#: edit.portrait
+msgid "Upload Portrait"
+msgstr "Vesikalık Yükle"
+
+#: spacekey
+msgctxt "spacekey"
+msgid "Space key"
+msgstr "Alan anahtarı"
+
+#: user.offline.disable
+msgid "User offline is not available."
+msgstr "Çevrimdışı kullanıcı mevcut değil"
+
+#: user.password.error
+msgid "Wrong user name or password."
+msgstr "Yanlış kullanıcı adı veya şifre"
+
+#: wrong.captcha
+msgid "Wrong image verification code, please try again."
+msgstr "Yanlış resim doğrulama kodu, lütfen tekrar deneyiniz."
+
+#: add.space.widget
+msgid "Add more spaces or widgets to your dashboard"
+msgstr "Kontrol panelinize daha fazla modül ya da alanlar ekleyiniz."
+
+#: with.children
+msgid "with children"
+msgstr "ağaç yapısı ile"
+
+#: invite.friends
+msgid "Invite friends"
+msgstr "Arkadaşları davet et"
+
+#: friends.email
+msgid "Friends email (Use comma to separate if multiple email)"
+msgstr "Eposta Adresleri (Çoklu adres için noktalı virgül kullanınız)"
+
+#: msg.to.friends
+msgid "Message to friends"
+msgstr "Mesaj İçeriği"
+
+#: invite.failed
+msgid ""
+"Sorry, System faced some problems while sending your invitation, please try "
+"again?"
+msgstr ""
+"Üzgünüz, davetiniz gönderilirken sistemde problem meydana geldi, lütfen daha"
+" sonra tekrar deneyiniz."
+
+#: invite.email.failed
+msgid "Your invitation email is in an incorrect format, please try again."
+msgstr ""
+"Davet epostanız hatalı bir biçimde düzenlenmiş, lütfen tekrar deneyiniz."
+
+#: invite.success
+msgid "Your invitation is sent to following email addresses:"
+msgstr "Davetiniz aşağıdaki eposta adreslerine gönderilmiştir: "
+
+#: session.expired
+msgid "You session has expired, please login again."
+msgstr "Oturumunuz zaman aşımına uğradı, lütfen tekrar oturum açınız."
+
+#: error.input.number.only
+msgid "Invalid input, only number is allowed."
+msgstr "Hatalı giriş, sadece rakam kullanılabilir."
+
+#: error.input.letter.number.only
+msgid "Only letters and digit allowed"
+msgstr "Sadece harf ve sayılar kullanılabilir."
+
+#: confirm.close.msgborard
+msgid "Do you really want to close the message board?"
+msgstr "Mesaj panosunu kapatmak istediğinizden emin misiniz?"
+
+#: confirm.password
+msgid "Re-enter"
+msgstr "Tekrar giriniz"
+
+#: login.name
+msgid "Login name"
+msgstr "Giriş adı"
+
+#: not.matched
+msgid "Not matched"
+msgstr "Eşleşmedi"
+
+#: insert.smiley
+msgid "Insert smiley"
+msgstr "İfade ekle"
+
+#: insert.table
+msgid "Insert table"
+msgstr "Tablo ekle"
+
+#: merge.cells
+msgid "Merge cells"
+msgstr "Hücreleri birleştir"
+
+#: insert.image
+msgid "Insert image"
+msgstr "Resim ekle"
+
+#: insert.link
+msgid "Insert Page link or URL"
+msgstr "Sayfa bağlantısı ya da URL ekle"
+
+#: link.url
+msgctxt "link.url"
+msgid "URL"
+msgstr "URL"
+
+#: rows
+msgid "Rows"
+msgstr "Satırlar"
+
+#: cols
+msgid "Cols"
+msgstr "Sutünlar"
+
+#: switch.editor.error
+msgid "Some errors occur during switching editor, please try again."
+msgstr ""
+"Editörler arasında geçiş yaparken hata meydana geldi, lütfen tekrar "
+"deneyiniz."
+
+#: rich.editor
+msgid "Rich Editor"
+msgstr "Zengin Editör"
+
+#: markup.editor
+msgid "Markup Editor"
+msgstr "Biçimlendirme Editörü"
+
+#: create.new.space
+msgid "Create new space"
+msgstr "Yeni alan oluştur"
+
+#: message.board
+msgid "Message board"
+msgstr "Mesaj Panosu"
+
+#: manual.draft
+msgid "Manually saved draft"
+msgstr "Elle kaydedilmiş taslak"
+
+#: auto.draft
+msgid "Automatically saved draft"
+msgstr "Otomatik kaydedilmiş taslak"
+
+#: conflict.draft
+msgid "Conflict offline version"
+msgstr "Çevrimiçi sürümü ile çatışma"
+
+#: delete.draft
+msgid "Delete this draft"
+msgstr "Bu taslağı sil"
+
+#: add.group
+msgid "Add group"
+msgstr "Grup ekle"
+
+#: group.name
+msgid "Group name"
+msgstr "Grup adı"
+
+#: add.user
+msgid "Add user"
+msgstr "Kullanıcı ekle"
+
+#: email.no.exist
+msgid "Email does not exist."
+msgstr "Eposta mevcut değil."
+
+#: email.send.failed
+msgid "Email can not be sent and password reset failed. Please try later."
+msgstr ""
+"Parola sıfırlama başarısız ve eposta gönderilemedi. Lütfen daha sonra "
+"deneyiniz."
+
+#: password.reset.success
+msgid "Your password is reset successfully. Please check your email inbox."
+msgstr "Parolanız başarıyla sıfırlandı. Lütfen epostanızı kontrol ediniz."
+
+#: sync.atts
+msgid "Sync attachments"
+msgstr "Ekleri eşleştir"
+
+#: sync.drafts
+msgid "Sync drafts"
+msgstr "Taslakları eşleştir"
+
+#: sync.histories
+msgid "Sync histories"
+msgstr "Geçmişi eşleştir"
+
+#: sync.comments
+msgid "Sync comments"
+msgstr "Yorumları eşleştir"
+
+#: disconnect.offline
+msgid "Disconnect offline"
+msgstr "Disconnect offline"
+
+#: sync.success
+msgid "Space success synchronized"
+msgstr "Alanlar başarıyla eşleştirildi"
+
+#: confirm.remove.offline.content
+msgid "Do you want to remove all offline content?"
+msgstr "Tüm çevrimdışı içeriği silmek istediğinize emin misiniz?"
+
+#: confirm.offline.space
+msgid "Do you want to send this space to your local system as offline space?"
+msgstr ""
+"Bu alanı yerel sisteminize çevrimdışı alan olarak göndermek istiyor musunuz?"
+
+#: page.not.found
+msgid "Page not found"
+msgstr "Sayfa bulunamadı"
+
+#: draft.portlet.title
+msgid "My drafts"
+msgstr "Taslaklarım"
+
+#: draft.portlet.desc
+msgid "My drafts list"
+msgstr "Taslak Listem"
+
+#: comparing.view
+msgid "You are in version comparing result view."
+msgstr "Sonuç görünümü karşılaştıran sürümdesiniz."
+
+#: loading.edit.panel.failed
+msgid "Loading edit panel failed, please try again."
+msgstr "Güncelleme paneli yüklenemedi, lütfen daha sonra tekrar deneyiniz."
+
+#: resume.draft
+msgid "resume draft"
+msgstr "Taslağa devam et"
+
+#: resume.auto.draft
+msgid "resume auto-saved draft"
+msgstr "Otomatik kaydedilen taslağa devam et"
+
+#: confirm.exit.editing
+msgid ""
+"Your page is not saved. If you made changes without saving, they will be "
+"lost."
+msgstr ""
+"Sayfanız kaydedilmedi. Eğer yaptığınız değişiklikleri kaydetmediyseniz "
+"bunlar kaybolacaktır."
+
+#: save.error
+msgid "Saving page with errors, please try again."
+msgstr "Sayfa kaydedilirken hata meydana geldi, lütfen tekrar deneyiniz."
+
+#: homepage.only
+msgid "Put to home page only"
+msgstr "Sadece ana sayfaya koy"
+
+#: default.sidebar
+msgid "As default sidebar"
+msgstr "Varsayılan kenar çubuğu"
+
+#: current.only
+msgid "Current page only"
+msgstr "Sadece mevcut sayfa"
+
+#: stick.sidebar.editing
+msgid "Stick your editing to"
+msgstr "Düzenleme"
+
+#: sidebar.tip
+msgid ""
+"Tip: The default sidebar is displayed if the page doesn't have the specified"
+" one."
+msgstr ""
+"İpucu: belirtilen bir sayfa yoksa varsayılan kenar çubuğu görüntülenir."
+
+#: choose.two
+msgid "You only can choose two items"
+msgstr "Sadece iki öğe seçebilirsiniz"
+
+#: preview.disable.link
+msgid "This link can not be redirected in preview model."
+msgstr "Bu bağlantı önizleme modunda çalışamaz."
+
+#: not.available.mode
+msgid "Not available in this mode"
+msgstr "Bu modda mevcut değildir."
+
+#: in.preview.mode
+msgid "You are in preview mode"
+msgstr "Önizleme modundasınız"
+
+#: return.latest.version
+msgid "Return latest version."
+msgstr "En son sürüme geri dön."
+
+#: view.history
+msgid "You are viewing a history version. "
+msgstr "Geçmiş sürümünü görüntülemektesiniz."
+
+#: add.attachments
+msgid "Add more attachments"
+msgstr "Dosya ekle"
+
+#: error.request
+msgid "Some errors happen during handling your request. Please try again."
+msgstr ""
+"İsteğiniz işlenirken bazı hatalar meydana geldi.Lütfen yeniden deneyin."
+
+#: no.attachment
+msgid "No attachment"
+msgstr "Ekli dosya yok"
+
+#: confirm.remove.attachment
+msgid "Do you really want to remove this attachment?"
+msgstr "Bu dosya ekini silmek istediğinizden emin misiniz?"
+
+#: bulk.upload
+msgid "Bulk upload"
+msgstr "Toplu yükleme"
+
+#: captcha.required
+msgid "You must input same verified code with image"
+msgstr "Resimdeki doğrulama kodu ile aynı kodu girmeniz gerekmektedir."
+
+#: captcha.title
+msgid "Human validation"
+msgstr "Kişi doğrulaması"
+
+#: whole.space
+msgid "Whole space"
+msgstr "Tüm alan"
+
+#: current.page
+msgid "Current page"
+msgstr "Mevcut sayfa"
+
+#: fail.export
+msgid "Export with errors, please try again."
+msgstr "Dışa aktarmada hata oluştu, lütfen tekrar deneyiniz."
+
+#: restore.title
+msgid "Use this version as latest page"
+msgstr "Bu sürümü son sayfa olarak kullan."
+
+#: diff.title
+msgid "Diff with latest version"
+msgstr "Son sürüm ile aradaki farklar"
+
+#: return.title
+msgid "Return latest version"
+msgstr "Son sürüme geri dön"
+
+#: create.page.title
+msgid "Create new page"
+msgstr "Yeni sayfa oluştur"
+
+#: edit.page.title
+msgid "Edit current page"
+msgstr "Sayfayı güncelle"
+
+#: invite.title
+msgid "Invite your friends to join your space."
+msgstr "Alanınıza eklemek için arkadaşlarınızı davet edin."
+
+#: save.sidebar.title
+msgid "Save editing sidebar"
+msgstr "Güncelleme kenar çubuğunu kaydet"
+
+#: preview.sidebar.title
+msgid "Preview sidebar"
+msgstr "Kenar çubuğu önizlemesi"
+
+#: cancel.exit.title
+msgid "Cancel editing and exit"
+msgstr "Düzenlemeyi iptal et ve çık"
+
+#: publish.title
+msgid "Publish editing page"
+msgstr "Güncellenen sayfayı yayınla"
+
+#: save.draft.exit.title
+msgid "Save draft and exit"
+msgstr "Taslak olarak kaydet ve çık"
+
+#: preview.title
+msgid "Preview current page"
+msgstr "Mevcut sayfanın önizlemesi"
+
+#: force.publish
+msgid "Force publish"
+msgstr "Zorla yayınla"
+
+#: force.publish.title
+msgid "Force publish to override"
+msgstr "Üstüne yazmak için zorla"
+
+#: resume.title
+msgctxt "resume.title"
+msgid "Resume"
+msgstr "Devam Et"
+
+#: resume.edit
+msgid "Resume edit"
+msgstr "Güncellemeye Devam"
+
+#: resume.edit.title
+msgid "Return editing page"
+msgstr "Güncellenen sayfaya devam"
+
+#: confirm.exit
+msgid "Do you want to exit without saving?"
+msgstr "Kaydetmeden çıkmak istediğinize emin misiniz?"
+
+#: version.restore
+msgid "Version is restored successfully."
+msgstr "Sürüm başarıyla geri yüklendi"
+
+#: move.to
+msgid "Move to..."
+msgstr "Taşı..."
+
+#: copy.to
+msgid "Copy to..."
+msgstr "Kopyala..."
+
+#: trash.page
+msgid "Trash page"
+msgstr "Sayfayı çöpe yolla"
+
+#: confirm.trash.page
+msgid ""
+"Do you want to move this page to trash? It can be restored only by this "
+"space administrator."
+msgstr ""
+"Sayfayı çöpe taşımak istediğinize emin misiniz? Sadece sistem yöneticileri "
+"bu sayfayı geri alabilir."
+
+#: page.restrict
+msgid "Page restrict"
+msgstr "Sayfa kısıtlamaları"
+
+#: function.title
+msgid "More functions"
+msgstr "Diğer fonksiyonlar"
+
+#: view.page.tree
+msgid "View pages tree"
+msgstr "Sayfa ağacını göster"
+
+#: view.comments
+msgid "View comments"
+msgstr "Yorumları göster"
+
+#: create.comments
+msgid "Create comments"
+msgstr "Yorum oluştur"
+
+#: refresh.tree
+msgid "Refresh failed, please try again"
+msgstr "Yenileme çalışmadı, lütfen tekrar deneyiniz"
+
+#: pretty.url
+msgid "PrettyURLs"
+msgstr "Kıssa URL"
+
+#: copy.clip
+msgid "Copy to clipboard"
+msgstr "Panoya kopyala"
+
+#: tiny.url
+msgid "Tiny URL"
+msgstr "Kıssa URL"
+
+#: meaning.url
+msgid "Meaning URL"
+msgstr "URL Anlamı"
+
+#: meaning.url.not.available
+msgid "Not available - some unsupported characters in page title or space key"
+msgstr ""
+"Mevcut değil - sayfa başlığında boşluk tuşu veya desteklenmeyen bazı "
+"karakterler"
+
+#: send.same.msg
+msgid "You can not send same message again."
+msgstr "Aynı mesajı tekrar gönderemezsiniz."
+
+#: send.notify.success
+msgid "The message sent to system administrators."
+msgstr "Mesaj sistem yöneticilerine gönderilmiştir."
+
+#: send.notify.failed
+msgid "The message sent failed, please try again."
+msgstr "Mesaj gönderimi başarısız, lütfen tekrar deneyiniz."
+
+#: choose.space.first
+msgid "Please choose target space first."
+msgstr "Lütfen öncelikle hedef boşluğu seçiniz."
+
+#: page.tree
+msgid "Page Tree"
+msgstr "Sayfa ağaç yapısı"
+
+#: goto.tagcloud
+msgid "View tag cloud"
+msgstr "Etiket bulutunu görüntüle"
+
+#: goto.owner.page
+msgid "View owner page"
+msgstr "Sayfa sahibini görüntüle"
+
+#: authored.space
+msgid "Created Space"
+msgstr "Oluşturulan Alan"
+
+#: authored.page
+msgid "Created Page"
+msgstr "Oluşturulan Sayfa"
+
+#: confirm.delete.widget
+msgid "Are you sure to delete this widget permanently?"
+msgstr "Bu eklentiyi kalıcı olarak silmek istediğinize emin misiniz?"
+
+#: edit.widget
+msgid "Edit widget"
+msgstr "Eklenti güncelle"
+
+#: space.uname
+msgctxt "space.uname"
+msgid "Space key"
+msgstr "Alan anahtarı"
+
+#: page.title
+msgid "Page title"
+msgstr "Sayfa başlığı"
+
+#: keep.private
+msgid "Keep private"
+msgstr "Gizli tut"
+
+#: page.linker
+msgid "Page linker"
+msgstr "Sayfa ilintileyici"
+
+#: markup.render
+msgid "Markup render"
+msgstr "Biçimlendirici"
+
+#: load.widget.fail
+msgid "Unable to load widget information, please try again."
+msgstr "Widget bilgisi yüklenemedi, lütfen tekrar deneyin."
+
+#: verfy.page.exist.fail
+msgid "Unable to verify if this page exists no not, please try again."
+msgstr "Sayfanın olup olmadığı doğrulanamıyor, lütfen tekrar deneyin."
+
+#: page.not.exist.fail
+msgid "The input page does not exist, please correct it first."
+msgstr "Giriş sayfası yok, lütfen öncelikle bunu düzeltin."
+
+#: more.space.dialog.title
+msgid "Select space to Dashboard"
+msgstr "Yönetmek için alanı seçin"
+
+#: search.space.widget
+msgid "Search spaces & widgets"
+msgstr "Alanlarda ve eklentilerde ara"
+
+#: input.keyword
+msgid "Write your filter, then hit Enter"
+msgstr "Filtre yazın ve Entera basın"
+
+#: create.widget
+msgid "Create your own widget"
+msgstr "Kendi eklentinizi oluşturun"
+
+#: popular.spaces
+msgid "Popular spaces "
+msgstr "Popüler Alanlar"
+
+#: search.result
+msgid "Search result"
+msgstr "Arama sonucu"
+
+#: no.result
+msgid "No matched result"
+msgstr "Eşleşme bulunamadı"
+
+#: redir.fail
+msgid "Sorry, some unexpected errors, redirect failed"
+msgstr "Üzgünüz, beklenmedik hatalar oluştu, yönlendirme başarısız "
+
+#: theme.update.fail
+msgid "Theme updated failed, please try again."
+msgstr "Güncellenen Tema başarısız oldu, lütfen tekrar deneyin."
+
+#: theme.update.success
+msgid "Theme updated."
+msgstr "Tema güncellendi."
+
+#: edit.detail
+msgid "Edit detail"
+msgstr "Bilgiyi düzelt"
+
+#: update.logo
+msgid "Update Logo"
+msgstr "Logoyu Güncelle"
+
+#: cancel.removed.space
+msgid "Cancel removed space"
+msgstr "Alan silmekten vazgeç"
+
+#: remove.space
+msgid "Remove space"
+msgstr "Alanı kaldır"
+
+#: confirm.remove.space
+msgid "Do you really want to delete this space?"
+msgstr "Bu alanı silmek istediğinizden emin misiniz?"
+
+#: author.only
+msgid "Author only"
+msgstr "Sadece yazar "
+
+#: all.contributors
+msgid "All contributors"
+msgstr "Tüm katkıda bulunanlar"
+
+#: space.administraors
+msgid "Space administrators"
+msgstr "Alan yöneticileri"
+
+#: send.to
+msgid "Send to "
+msgstr "Gönder"
+
+#: every.post
+msgid "Every post"
+msgstr "Her gönderi"
+
+#: daily.summary
+msgid "Daily summary"
+msgstr "Günlük özet"
+
+#: no.theme
+msgid "No theme available"
+msgstr "Mevcut tema yok"
+
+#: confirm.remove.page
+msgid "Do you want to delete this page permanently?"
+msgstr "Eğer bu sayfayı kalıcı olarak silmek istiyor musunuz?"
+
+#: no.trash.page
+msgid "No page in trash bin."
+msgstr "Çöp kutusunda sayfa yok."
+
+#: delete.perm
+msgid "Page is permanently deleted."
+msgstr "Sayfa kalıcı olarak silindi."
+
+#: click.remove
+msgid "Click to remove"
+msgstr "Kaldırmak için tıklayın"
+
+#: refresh.image
+msgid "Refresh image"
+msgstr "Resmi yenile"
+
+#: your.feedback
+msgid "Your feedback"
+msgstr "Geri Bildirimleriniz"
+
+#: feedback.success
+msgid "Your feedback is sent to us, Thanks!"
+msgstr "Geri bildirimleriniz bize gönderildi, teşekkürler"
+
+#: help.pop.bulk.upload
+msgid "Bored uploading one after the other? Then zip the files and upload."
+msgstr ""
+"Birbiri ardına güncellemekten sıkıldınız mı? O zaman dosyaları zipleyip "
+"gönderin."
+
+#: help.pop.private.space
+msgid ""
+"Private space is absolutely not visible for others unless the space owner "
+"manually assigns reading permission. The non-private spaces can be listed on"
+" search results."
+msgstr ""
+"Özel alan, alan sahibi tarafından okuma izni verilmediği sürece başkaları "
+"tarafından görünemez. Özel olmayan alanlar arama sonuçlarında görüntülenir."
+
+#: help.pop.general
+msgid "For more help, press F1"
+msgstr "Daha fazla yardım için F1 tuşuna basın."
+
+#: created.by
+msgid "Created by"
+msgstr "Tarafından düzenlendi"
+
+#: return.default
+msgid ""
+"Do you want to return to default content? This will overwrite your current "
+"content."
+msgstr ""
+"Varsayılan içeriğe dönmek istiyor musunuz? Bu mevcut içeriğin üzerine "
+"yazılmasını sağlar."
+
+#: confirm.publish.dashboard
+msgid ""
+"Do you confirm to publish? This takes effect immediately on the current "
+"dashboard."
+msgstr ""
+"Yayımlamayı onaylıyor musun? Bu kontrol paneli üzerinde hemen etkili olur."
+
+#: confirm.cancel
+msgid "Do you confirm to discard you current editing?"
+msgstr "Mevcut düzenlemeyi iptal etmeyi onaylıyor musunuz?"
+
+#: err.space.not.exist
+msgid "Space does not exist"
+msgstr "Alan mevcut değildir"
+
+#: err.space.save
+msgid "Space saved failed. Please try again."
+msgstr "Alan kaydedilemedi. Lütfen yeniden deneyin."
+
+#: err.dup.space.name
+msgid "Space name is already used, please try others."
+msgstr "Alan adı zaten kullanılıyor, farklı bir alan adı deneyin."
+
+#: err.dup.space.unixname
+msgid "Space key is already used, please try others."
+msgstr "Alan anahtarı zaten kullanılmakta, farklı bir anahtar değeri deneyin."
+
+#: err.remove.space
+msgid "Remove space failed."
+msgstr "Alan kaldırma işlemi başarısız oldu."
+
+#: err.save.page
+msgid "save page error"
+msgstr "Sayfa kaydetme hatası"
+
+#: err.homepage.remove
+msgid "Home page can not be removed."
+msgstr "Ana sayfa silinemez."
+
+#: err.session.expired
+msgid "You session may be expired, please login first."
+msgstr "Bu oturumun süresi dolmuş olabilir, lütfen ilk önce giriş yapınız."
+
+#: err.load.page
+msgid "Unable to load page. Try later."
+msgstr "Sayfa yüklenemiyor. Daha sonra tekrar deneyin."
+
+#: err.copy.page
+msgid "Copy page with errors."
+msgstr "Sayfayı hataları ile kopyala."
+
+#: err.move.page
+msgid "Move page with errors."
+msgstr "Sayfayı hataları ile taşı."
+
+#: err.page.not.found
+msgid "Page not found. It can not be removed."
+msgstr "Sayfa bulunamadı. Silinemez."
+
+#: err.homepage.remove.failed
+msgid "Home page removed failed."
+msgstr "Ana sayfa kaldırma başarısız oldu."
+
+#: err.same.title
+msgid ""
+"Same page title already exist in this space. Please rename page title and "
+"save."
+msgstr ""
+"Aynı sayfa başlığını zaten bu alanda var. Lütfen sayfa başlığını yeniden "
+"adlandırınız ve kaydediniz."
+
+#: err.remove.page
+msgid "Removed page failed. Please try later."
+msgstr "Sayfa kaldırma başarısız oldu. Lütfen daha sonra tekrar deneyin."
+
+#: err.save.timeout
+msgid "Saving page has timeout error. Please try later."
+msgstr ""
+"Sayfa kaydetme zaman aşımına uğradı. Lütfen daha sonra tekrar deneyin."
+
+#: err.restore.page
+msgid "Failed restore page."
+msgstr "Sayfa geri yükleme başarısız oldu."
+
+#: err.user.exist
+msgid "Login name or email is already used by another user."
+msgstr ""
+"Oturum açma adı veya e-posta, başka bir kullanıcı tarafından zaten "
+"kullanılıyor."
+
+#: err.role.name.conflict
+msgid "Group name is already used by other group, please try others."
+msgstr ""
+"Grubu adı başka bir grup tarafından kullanılıyor, başka bir grup adı "
+"deneyin."
+
+#: err.remove.user
+msgid "Unable to remove user."
+msgstr "Kullanıcı kaldırılamıyor."
+
+#: err.signup.disable
+msgid "User signup is disabled by system administrator."
+msgstr ""
+"Kullanıcı kayıt sistem yöneticisi tarafından devre dışı bırakılmıştır."
+
+#: err.over.license
+msgid "User count is over license limitation, please upgrade the license."
+msgstr ""
+"Kullanıcı sayısı lisans sınırlaması üzerinde, lütfen lisans yükseltiniz."
+
+#: err.get.attachment.meta
+msgid "Failed update attachment meta information. Please try later."
+msgstr ""
+"Dosya eki meta bilgileri güncelleme başarısız. Lütfen daha sonra tekrar "
+"deneyin."
+
+#: err.remove.attachment
+msgid "Failed remove this attachment. Please try later."
+msgstr "Bu eki kaldırmak başarısız oldu. Lütfen daha sonra tekrar deneyin."
+
+#: err.orig.page.not.found
+msgid "Original page does not found. It may be deleted by other users."
+msgstr ""
+"Orijinal sayfa bulunamadı. Diğer kullanıcılar tarafından silinmiş olabilir."
+
+#: err.version.compare
+msgid "Version comparing failed."
+msgstr "Sürüm karşılaştırması başarısız."
+
+#: err.post.comment
+msgid "Comment can not be posted by some errors. Please try later."
+msgstr "Yorum hatalar ile gönderilemez. Lütfen daha sonra tekrar deneyin."
+
+#: err.get.comment
+msgid "Unable to get page comments. Please try later."
+msgstr "Sayfa yorumları alınamadı. Lütfen daha sonra tekrar deneyin."
+
+#: err.search
+msgid "Search failed with error(s). Please try later."
+msgstr ""
+"Arama hata (lar) ile başarısız oldu. Lütfen daha sonra tekrar deneyin."
+
+#: err.upload
+msgid "Unable to complete uploading. Please try later."
+msgstr "Yükleme tamamlanamadı. Lütfen daha sonra tekrar deneyin."
+
+#: err.quota.exhaust
+msgid "You space attachment quota is exhausted and uploading is forbidden."
+msgstr "Alan ekleri için kota dolmuş ve yükleme yasak."
+
+#: err.save.system
+msgid "Unable to save system information. Please try later."
+msgstr "Sistem bilgileri kaydedilemiyor. Lütfen daha sonra tekrar deneyin."
+
+#: err.read.rss
+msgid "Reading space RSS feed failed, try later."
+msgstr "Alan RSS okuması başarısız, tekrar deneyiniz."
+
+#: err.not.friend
+msgid "You are not friend with this space yet."
+msgstr "Henüz bu alan ile arkadaş değilsiniz"
+
+#: err.friend.wait.approve
+msgid "Your friendship request is waiting for approval."
+msgstr "Arkadaşlık isteğiniz onay için bekliyor."
+
+#: err.friend.reject
+msgid "Sorry, your friendship request is rejected."
+msgstr "Üzgünüz, arkadaşlık isteğiniz rededildi."
+
+#: err.no.perm.on.message
+msgid "Sorry, you do not have enough permission to read this message."
+msgstr "Üzgünüz, bu mesajı okumak için yeterli izne sahip değilsiniz."
+
+#: err.message.exist
+msgid "Sorry, message does not exist."
+msgstr "Üzgünüz, ileti mevcut değil."
+
+#: err.invite.fail
+msgid ""
+"Sorry, your invitation failed with unexpected errors, please try again."
+msgstr ""
+"Maalesef davetiye beklenmeyen hatalar ile başarısız oldu, lütfen tekrar "
+"deneyin."
+
+#: err.history.restore
+msgid "Sorry, history restoration failed, please try again."
+msgstr "Üzgünüz, geçmiş geri yükleme başarısız oldu, lütfen tekrar deneyin."
+
+#: err.history.dup.title
+msgid ""
+"There are same title pages existing for this version, history can not be "
+"restored."
+msgstr ""
+"Bu sürüm için aynı başlık sayfaları vardır, geçmiş sürüm geri alınamaz."
+
+#: err.restore.history.timeout
+msgid "Restore history has timed out. Please try again."
+msgstr "Geri yükleme zaman aşımına uğradı. Lütfen yeniden deneyin."
+
+#: err.get.history
+msgid "Unable to get this version history page. Please try later."
+msgstr "Sayfanın sürüm geçmişi alınamıyor. Lütfen daha sonra tekrar deneyin."
+
+#: err.no.perm.on.space
+msgid "You don't have read permission on this space."
+msgstr "Bu alan üzerinde okuma izniniz yoktur."
+
+#: err.unsupport.offline
+msgid "Unsupported offline widget."
+msgstr "Desteklenmeyen çevrimdışı eklenti."
+
+#: err.role.prefix.not.allow
+msgid "This prefix is not allowed in group name, please try others. "
+msgstr ""
+"Grup adında bu ön ekin kullanılmasına izin yok, lütfen diğerlerini deneyin."
+
+#: err.fail.download
+msgid "Failed download resource"
+msgstr "Başarısız indirme kaynağı"
+
+#: err.init.widget
+msgid ""
+"Unable to initialize this widget. This may be caused if it is already "
+"disabled or deleted."
+msgstr ""
+"Bu eklenti başlatılamadı. Bunun nedeni etiket devre dışı bırakılmış ya da "
+"silinmiş olabilir."
+
+#: err.portal.load
+msgid "Portal loading failed, please refresh page to retry."
+msgstr ""
+"Portal yükleme başarısız oldu, lütfen tekrar denemek için sayfayı "
+"yenileyiniz."
+
+#: err.phase.render.no.allow
+msgid "No view permission on included content"
+msgstr "Dahili içeriğe ilişkin herhangi bir görüntüleme izni yok"
+
+#: err.phase.render.no.page
+msgid "Included page does not exist "
+msgstr "Dahili sayfa mevcut değil"
+
+#: err.phase.render.no.phase
+msgid "Included phase does not exist"
+msgstr "Dahili faz mevcut değil"
+
+#: err.phase.render.failed
+msgid "Include macro loading failed."
+msgstr "Dahili makro yükleme başarısız oldu."
+
+#: unknown.error
+msgid "Unknown errors"
+msgstr "Bilinmeyen hatalar"
+
+#. #-- {0} and (1} is messageWidget parameter - don't put it into
+#. ParamsMessage.properties
+#: err.newer.version
+msgid "a saved version is newer than yours, do you want to {0} or {1}?"
+msgstr ""
+"kaydedilmiş bir sürüm sizinkinden daha yeni, istediğiniz {0} veya {1}?"
+
+#: open.new.window
+msgid "Open in new window"
+msgstr "Yeni pencerede aç"
+
+#: online.help
+msgid "Online help"
+msgstr "Çevrimiçi yardım"
+
+#: your.email
+msgid "Your email"
+msgstr "Epostanız"
+
+#: search.groups
+msgid "Search groups"
+msgstr "Grup ara"
+
+#: search.users
+msgid "Search users"
+msgstr "Kullanıcı ara"
+
+#: cell.spacing
+msgid "Cell spacing"
+msgstr "Hücre aralığı"
+
+#: bk.color
+msgid "Background color"
+msgstr "Arka plan rengi"
+
+#: border.color
+msgid "Border color"
+msgstr "Kenarlık rengi"
+
+#: has.caption
+msgid "Has caption"
+msgstr "Başlığı var"
+
+#: first.row.title
+msgid "First row as title"
+msgstr "Birinci sıra başlık olarak"
+
+#: border.size
+msgid "Border size"
+msgstr "Kenarlık boyutu"
+
+#: palette
+msgid "Palette"
+msgstr "Palet"
+
+#: border
+msgid "Border"
+msgstr "Sınır"
+
+#: current.space
+msgid "Current space"
+msgstr "Mevcut alan"
+
+#: http.prefix
+msgid "http://"
+msgstr "http://"
+
+#: error.invalid.url
+msgid "Invalid URL format"
+msgstr "Geçersiz URL formatı"
+
+#: error.invalid.url.or.page
+msgid "Please input valid URL or page title"
+msgstr "Lütfen geçerli bir URL veya sayfa başlığı giriniz"
+
+#: image
+msgid "Image"
+msgstr "Resim"
+
+#: attach.url
+msgid "Attached file name or URL"
+msgstr "Ekli dosya adı ya da URL"
+
+#: tag.on.space
+msgid "Tag on space"
+msgstr "Alan üzerine etiket"
+
+#: tag.on.page
+msgid "Tag on page"
+msgstr "Sayfa üzerinde etiket"
+
+#: err.empty.title
+msgid "Title can not be empty"
+msgstr "Başlık boş olamaz"
+
+#: required
+msgid "Required"
+msgstr "Zorunlu"
+
+#: confirm
+msgid "Confirm"
+msgstr "Onayla"
+
+#: alert
+msgid "Alert"
+msgstr "Uyarı"
+
+#: goto.space
+msgid "Go to space "
+msgstr "Alana git"
+
+#: reset
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: space.list
+msgid "Space list"
+msgstr "Alan listesi"
+
+#: modified.on
+msgid "Modified on"
+msgstr "Tarihinde güncellenmiştir"
+
+#: contributed.versions
+msgid "Contributed versions"
+msgstr "Katkıda bulunanların sürümleri"
+
+#: created.date
+msgid "Created date"
+msgstr "Oluşturma tarihi"
+
+#: initial
+msgid "initial"
+msgstr "İlk"
+
+#: full.name
+msgid "Full name"
+msgstr "Tam Adı"
+
+#: user.status.hint
+msgid ""
+"Your current status. It is automatically saved when this dialog is closed."
+msgstr ""
+"Mevcut durumunuz. Bu dialog kapatıldığında otomatik olarak kaydedilir."
+
+#: must_words
+msgid "Must contain all words"
+msgstr "Tüm sözcükleri içermeli"
+
+#: any_words
+msgid "Contain any of words"
+msgstr "Sözcüklerden herhangi birini içerir"
+
+#: exact_words
+msgid "Exact match whole filter"
+msgstr "Filtrede tam eşleşme"
+
+#: all_spaces
+msgid "All spaces"
+msgstr "Tüm boşluklar"
+
+#: type
+msgid "Type"
+msgstr "Tip"
+
+#: filter
+msgid "Filter"
+msgstr "Filtre"
+
+#: all
+msgid "All"
+msgstr "Tüm"
+
+#: from_space
+msgid "From space"
+msgstr "Alandan"
+
+#: sortby
+msgid "Sort by"
+msgstr "Sırala"
+
+#: favorite
+msgid "Favorite"
+msgstr "Favorilerime Ekle"
+
+#: watch
+msgid "Watch"
+msgstr "Izle"
+
+#: attach.quota
+msgid "Attachment quota"
+msgstr "Eklenti kotası"
+
+#: none.upper
+msgid "None"
+msgstr "Hiçbiri"
+
+#: unknown
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: unlimited
+msgid "Unlimited"
+msgstr "Sınırsız"
+
+#: space.tagcolud.title
+msgid "Tags on spaces "
+msgstr "Alandaki etiketler"
+
+#: page.tagcolud.title
+msgid "Tags on pages"
+msgstr "Sayfalardaki etiketler"
+
+#: recent.update.pages
+msgid "Recent updated pages"
+msgstr "Son güncellenen sayfalar"
+
+#: optional
+msgid "Optional"
+msgstr "Isteğe bağlı"
+
+#: insert
+msgid "Insert"
+msgstr "Ekle"
+
+#: macro
+msgid "Macro"
+msgstr "Makro"
+
+#: download.attachment
+msgid "Download the attachment"
+msgstr "Eklentiyi indir"
+
+#: view.page
+msgid "View page"
+msgstr "Sayfayı görüntüle"
+
+#: err.widget.not.found
+msgid "Widget not available now. It maybe removed. "
+msgstr "Eklenti mevcut değil. Belki de kaldırıldı."
+
+#: err.multiple.portal.in.dashboard
+msgid ""
+"There are multiple portal in your Dashboard. Please go to Dashboard and add "
+"this widget in one given portal."
+msgstr ""
+"Kontrol panelinizde birden fazla portal var. Kontrol panelinize gidin ve tek"
+" bir portala bu eklentiyi ekleyin."
+
+#: err.no.allow.widget.to.anonymous
+msgid "Anonymous doesn't allow to add widget from here. Please login first."
+msgstr ""
+"Misafir kullanıcının buradan eklenti eklemeye yetkisi yok. Lütfen ilk önce "
+"giriş yapın."
+
+#: add.to.dashboard
+msgid "Add to dashboard"
+msgstr "Kontrol Paneline ekle"
+
+#: attach.hint
+msgid "Optional,e.g., *.doc,*.xls"
+msgstr "İsteğe bağlı, örneğin, *. doc, *. xls"
+
+#: gallery.hint
+msgid "Optional,e.g., *.png,*.gif"
+msgstr "İsteğe bağlı, örneğin, *. png, *. gif"
+
+#: levels
+msgid "Levels"
+msgstr "Seviyeler"
+
+#: numbers
+msgid "Numbers"
+msgstr "Sayılar"
+
+#: bullets
+msgid "Bullets"
+msgstr "Madde İşaretleri"
+
+#: toc.levels.exceed.scope
+msgid "Level must between 1 and 6"
+msgstr "Seviye 1 ve 6 arasında olmalıdır"
+
+#: sharing.all.spaces
+msgid "Sharing across all spaces"
+msgstr "Tüm alanlar arasında paylaş"
+
+#: page.templates
+msgid "Page templates"
+msgstr "Sayfa şablonları"
+
+#: confirm.delete.templ
+msgid "Do you confirm to delete this template?"
+msgstr "Bu şablonu silmeyi onaylıyor musunuz?"
+
+#: yes
+msgid "Yes"
+msgstr "Evet"
+
+#: no
+msgid "No"
+msgstr "Hayır"
+
+#: create.template
+msgid "Create template"
+msgstr "Şablon oluştur"
+
+#: err.no.perm.view.templates
+msgid "No view permission on this space templates"
+msgstr "Bu alan şablonunda görüntüleme izniniz yok"
+
+#: shared
+msgid "Shared"
+msgstr "Paylaşılan"
+
+#: creator
+msgid "Creator"
+msgstr "Oluşturan"
+
+#: templates
+msgid "Templates"
+msgstr "Şablonlar"
+
+#: replace.content.by.templ
+msgid "Do you want to replace the current content by this template?"
+msgstr "Mevcut içeriği bu şablonla değiştirmek istiyor musunuz?"
+
+#: err.load.templates
+msgid "Load this template failed, please try again."
+msgstr "Şablon yükleme başarısız oldu, lütfen tekrar deneyin."
+
+#: select.template
+msgid "Select template"
+msgstr "Şablonu seçin"
+
+#: from
+msgid "From"
+msgstr "Kimden"
+
+#: hide
+msgid "Hide"
+msgstr "Gizle"
+
+#: show
+msgid "Show"
+msgstr "Göster"
+
+#: err.hide.perm.comment
+msgid "You don't have permission to hide or show this comment."
+msgstr "Yorumu gizlemek veya göstermek için izniniz yok."
+
+#: err.hide.comment
+msgid "Hide/Show this comment failed."
+msgstr "Yorumu göster / gizle başarısız oldu."
+
+#: modified.by
+msgid "Modified by"
+msgstr "Değiştiren"
+
+#: search.space.user
+msgid "Search users or spaces"
+msgstr "Kullanıcı veya alan ara"
+
+#: tweet.all.desc
+msgid "All users"
+msgstr "Tüm kullanıcılar"
+
+#: choose
+msgid "Choose"
+msgstr "Seç"
+
+#: title.send.msg.to.user
+msgid "Send message to this user"
+msgstr "Bu kullanıcıya mesaj gönder"
+
+#: title.send.msg.to.space
+msgid "Send message to the contributors of this space"
+msgstr "Bu alan katılımcılarına mesaj gönder"
+
+#: by
+msgid "by"
+msgstr "tarafından"
+
+#: on
+msgid "on"
+msgstr "üzerinde"
+
+#: just.now
+msgid "just now"
+msgstr "hemen şimdi"
+
+#: back.to.space.security
+msgid "Back to space security"
+msgstr "Alan güvenliğine geri dön"
+
+#: new.page.default.title
+msgid "New page"
+msgstr "Yeni sayfa"
+
+#: as.table
+msgid "As table"
+msgstr "Tablo gibi"
+
+#: as.grid
+msgid "As grid layout"
+msgstr "Izgara düzeni olarak"
+
+#: no.template
+msgid "No template available"
+msgstr "Mevcut şablon yok"
+
+#: no.perm.upload
+msgid "No permission to upload"
+msgstr "Yükleme izni yok"
+
+#: err.failed.plugin.service
+msgid "Service failed."
+msgstr "Servis başarısız oldu."
+
+#: err.failed.load.plugin
+msgid "This service module can not be loaded."
+msgstr "Bu hizmet modülü yüklenemedi."
+
+#: ext.cal.edit.event
+msgid "Edit Event"
+msgstr "Etkinliği Düzenle"
+
+#: ext.cal.view.event
+msgid "View Event"
+msgstr "Etkinliği Görüntüle"
+
+#: ext.cal.new.event
+msgid "New Event"
+msgstr "Yeni Etkinlik"
+
+#: get.blogs
+msgid "Get blogs list"
+msgstr "Bloglar listesini al"
+
+#: post.to.linked.blog
+msgid "Post to linked blog"
+msgstr "Bağlantılı bloga gönder"
+
+#: url
+msgctxt "url"
+msgid "URL"
+msgstr "URL"
+
+#: linked.blog
+msgid "Linked blog"
+msgstr "Bağlantılı günlük"
+
+#: help.pop.link.blog
+msgid ""
+"A bidirectional space with your blog.  Any new page is synchronized to the "
+"blog. The new post in the blog is saved to this space. Managing your blog in"
+" wiki style.  "
+msgstr ""
+"Blogunuz ile iki yönlü bir alan. Herhangi bir yeni bir sayfa bloga "
+"eşitlenir. Blog yeni yazılan bu alana kaydedilir. Blogunuzu wiki tarzında "
+"yönetme."
+
+#: excerpt
+msgid "Excerpt"
+msgstr "Alıntı"
+
+#: categories
+msgid "Categories"
+msgstr "Kategoriler"
+
+#: err.need.blog.selected
+msgid "Please select a blog you want to link."
+msgstr "Lütfen bağlamak istediğiniz bir blog seçiniz."
+
+#: private.space
+msgid "Private space"
+msgstr "Özel alan"
+
+#: logo
+msgid "Logo"
+msgstr "Logo"
+
+#: confirm.disconnect.blog
+msgid "Do you want to disconnect this space from the blog?"
+msgstr "Bu alan bağlantısını blogunuzdan koparmak istiyor musunuz?"
+
+#: current.blog
+msgid "Current blog"
+msgstr "Mevcut Günlük"
+
+#: edit.blog
+msgid "Edit linked blog"
+msgstr "Bağlantılı Blogu Düzenle"
+
+#: must.select.blogtype
+msgid "Please select a blog type."
+msgstr "Lütfen bir blog türü seçin."
+
+#: link.more.blogs
+msgid "Link to more blogs"
+msgstr "Daha fazla bloga bağlantı"
+
+#: find.people
+msgid "Find people"
+msgstr "Arkadaş bulun"
+
+#: send.message
+msgid "Send message"
+msgstr "Mesaj gönder"
+
+#: message
+msgid "Message"
+msgstr "Mesaj"
+
+#: pin.to.top
+msgid "Pin to top"
+msgstr "Üste al"
+
+#: remove.pin
+msgid "Remove the pin"
+msgstr "Üste almayı iptal et"
+
+#: blog.url
+msgid "Blog Address"
+msgstr "Blog (Web Günlüğü) Adresi"
+
+#: admin.name
+msgid "Admin name"
+msgstr "Yönetici adı"
+
+#: quick.note
+msgid "Quick note"
+msgstr "Hızlı not"
+
+#: quick.note.default.msg
+msgid "Click here to edit your personal quick note."
+msgstr "Kişisel notu düzenlemek için buraya tıklayın."
+
+#: activity.log
+msgid "Recently update"
+msgstr "Son güncellenen"
+
+#: follow
+msgid "Follow"
+msgstr "İzle"
+
+#: unfollow
+msgid "Unfollow"
+msgstr "İzlemeyi bırak"
+
+#: following
+msgid "Following"
+msgstr "İzlediklerim"
+
+#: followers
+msgid "Followers"
+msgstr "Beni izleyenler"
+
+#: activity
+msgid "Activity"
+msgstr "Etkinlik"
+
+#: confirm.delete.message
+msgid "Do you want to delete this message?"
+msgstr "Bu mesajı silmek istediğinizden emin misiniz?"
+
+#: more
+msgid "More"
+msgstr "Daha fazla"
+
+#: less
+msgid "Less"
+msgstr "Daha az"
+
+#: quick.send.tip
+msgid "Ctrl+Enter to send"
+msgstr "Göndermek için Ctrl+Enter"
+
+#: linked
+msgid "Linked"
+msgstr "Bağlı"
+
+#: skins
+msgid "Skins"
+msgstr "Şablonlar"
+
+#: themes
+msgid "Themes"
+msgstr "Temalar"
+
+#: file.name
+msgid "File name"
+msgstr "Dosya adı"
+
+#: author
+msgid "Author"
+msgstr "Yazar"
+
+#: size
+msgid "Size"
+msgstr "Boyut"
+
+#: space.contribution
+msgid "Space contribution"
+msgstr "Alana katkı sağlayanlar "
+
+#: page.contribution
+msgid "Page contribution"
+msgstr "Sayfaya katkı sağlayanlar"
+
+#: activities
+msgid "Activities"
+msgstr "Etkinlikler"
+
+#: network
+msgid "Network"
+msgstr "Ağ"
+
+#: what
+msgid "What"
+msgstr "Ne"
+
+#: when
+msgid "When"
+msgstr "Ne zaman"
+
+#: where
+msgid "Where"
+msgstr "Nerede"
+
+#: all.day.event
+msgid "All day event"
+msgstr "Tüm gün etkinliği"
+
+#: signup.now
+msgid "Sign up now"
+msgstr "Şimdi kaydolun"
+
+#: login.now
+msgid "Login now"
+msgstr "Şimdi giriş yapın"
+
+#: msg.to.admin
+msgid "Message to system administrator"
+msgstr "Sistem yöneticisine mesaj"
+
+#: space.uname.invalid.chars
+msgid "Less than 25 characters. No spaces; Only letters, numbers and hyphens."
+msgstr "25 karakterden daha az. Boşluk yok; Sadece harfler, sayılar ve tire."
+
+#: space.uname.invalid.start
+msgid "Hyphens can not be first or last character."
+msgstr "Tire ilk veya son karakter olamaz."
+
+#: login.name.invalid.start
+msgid "Hyphens, dots or underline can not be first or last character."
+msgstr "Tire, nokta veya alt çizgi, ilk veya son karakter olamaz."
+
+#: shell
+msgid "Shell"
+msgstr "Kabuk"
+
+#: link.to.shell
+msgid "Link to shell"
+msgstr "Kabuğa bağlantı"
+
+#: link
+msgid "Link"
+msgstr "Bağlantı"
+
+#: do.later
+msgid "Do later"
+msgstr "Daha sonra"
+
+#: shell.link.failed
+msgid ""
+"<h2>Sorry, an error occurs when linking to the Shell.</h2> <p>However, you "
+"can try this later from space admin panel.</p>"
+msgstr ""
+"<h2> Üzgünüz, Shell bağlarken bir hata oluştu. </h2><p> Ancak, alan yönetim "
+"panelinden daha sonra bunu deneyebilirsiniz. </p>"
+
+#: shell.url
+msgid "Shell URL"
+msgstr "Shell URL"
+
+#: email.it
+msgid "Email it"
+msgstr "Eposta at"
+
+#: shell.url.not.available
+msgid "Shell service is not enabled"
+msgstr "Shell hizmeti etkin değil"
+
+

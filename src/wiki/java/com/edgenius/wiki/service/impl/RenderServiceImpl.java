@@ -118,11 +118,12 @@ public class RenderServiceImpl implements RenderService{
 	 * 
 	 * Basically, they all need implement toString() method to let Search Engine filter out the pure text for search usage.
 	 */
-	//JDK1.6 @Override
+	@Override
 	public List<RenderPiece> renderHTML(String target, AbstractPage page) {
 		//hostAppURL is null, then it will get value from WebUtil.getHostAppURL(), i.e., current website URL;
 		return this.renderHTML(target, null, page);
 	}
+	@Override
 	public List<RenderPiece> renderHTML(String target, String hostAppURL, AbstractPage page) {
 		
 		long s = 0;
@@ -223,7 +224,7 @@ public class RenderServiceImpl implements RenderService{
 		
 	}
 
-	//JDK1.6 @Override
+	@Override
 	public List<RenderPiece> renderHTML(String target, String spaceUname, String pageUuid, String markupText, String[] visibleAttachmentNodeList) {
 		Page page = new Page();
 		page.setPageUuid(pageUuid);
@@ -236,10 +237,12 @@ public class RenderServiceImpl implements RenderService{
 		
 		return renderHTML(target, page);
 	}
-	//JDK1.6 @Override
+	
+	@Override
 	public List<RenderPiece> renderHTML(String markupText) {
 		return renderHTML(RenderContext.RENDER_TARGET_PLAIN_VIEW, markupText);
 	}
+	@Override
 	public List<RenderPiece> renderHTML(String target, String markupText) {
 		Page page = new Page();
 		Space space = new Space();
@@ -253,7 +256,7 @@ public class RenderServiceImpl implements RenderService{
 	}
 	
 	
-	//JDK1.6 @Override
+	@Override
 	public String renderNativeHTML(String spaceUname, String pageUuid, List<RenderPiece> pieces) {
 		StringBuffer sb = new StringBuffer();
 
@@ -278,7 +281,7 @@ public class RenderServiceImpl implements RenderService{
 		
 	}
 	
-	//JDK1.6 @Override
+	@Override
 	public String renderRichHTML(String spaceUname, String pageUuid,  List<RenderPiece> pieces) {
 		StringBuffer sb = new StringBuffer();
 
@@ -301,7 +304,7 @@ public class RenderServiceImpl implements RenderService{
 
 		return sb.toString();
 	}
-	//JDK1.6 @Override
+	@Override
 	public String renderPureText(AbstractPage page) {
 	
 		List<RenderPiece> pieces = page.getRenderPieces();
@@ -330,7 +333,7 @@ public class RenderServiceImpl implements RenderService{
 	/**
 	 * Convert HTML to Wiki markup
 	 */
-	//JDK1.6 @Override
+	@Override
 	public String renderHTMLtoMarkup(String spaceUname, String htmlText) {
 		RenderContext context = new RenderContextImpl();
 		((RenderContextImpl)context).setSpaceUname(spaceUname);
@@ -339,7 +342,7 @@ public class RenderServiceImpl implements RenderService{
 		
 	}
 	
-	//JDK1.6 @Override
+	@Override
 	public String changeLinkTitle(String content, String spaceUname, String toSpaceUname, String oldLink, String newLink) {
 		//initial Replacer object and initial context
 		RenderContext context  = new RenderContextImpl();
@@ -356,7 +359,7 @@ public class RenderServiceImpl implements RenderService{
 		return linkReplacerEngine.render(content, context);
 	}
 
-	//JDK1.6 @Override
+	@Override
 	public String changeLinkSpace(String content, String fromSpaceUname, String toSpaceUname) {
 		//initial Replacer object and initial context
 		RenderContext context  = new RenderContextImpl();

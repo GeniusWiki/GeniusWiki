@@ -21,12 +21,13 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.search.service;
+package com.edgenius.wiki.search.lucene;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiReader;
@@ -35,6 +36,8 @@ import org.apache.lucene.store.Directory;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+
+import com.edgenius.wiki.search.service.SearchException;
 
 /**
  * 
@@ -45,6 +48,7 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 	private ExecutorService exectorService = Executors.newCachedThreadPool();
 	
 	private ThreadLocal<IndexSearcher> container = new ThreadLocal<IndexSearcher>();
+	private AnalyzerProvider analyzerProvider;
 	
 	@Override
 	public IndexSearcher getSearcher() throws SearchException{
@@ -96,6 +100,10 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 		if(directories == null || directories.length == 0){
 			throw new BeanInitializationException("Must declare at least one directory");
 		}
+
+		if(analyzerProvider == null){
+			throw new BeanInitializationException("Must declare analyzerProvider");
+		}
 	}
 
 	@Override
@@ -104,7 +112,10 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 		exectorService.shutdown();
 	}
 
-
+	@Override
+	public Analyzer getAnalyzer() {
+		return analyzerProvider.getSearchAnalyzer();
+	}
 	//********************************************************************
 	//               Set / Get
 	//********************************************************************
@@ -116,9 +127,13 @@ public class ParallelSearcherFactory implements InitializingBean, DisposableBean
 	public void setDirectories(Directory[] directories) {
 		this.directories = directories;
 	}
-
-
-
+	/**
+	 * @param analyzerProvider the analyzerProvider to set
+	 */
+	public void setAnalyzerProvider(AnalyzerProvider analyzerProvider) {
+		this.analyzerProvider = analyzerProvider;
+	}
+	
 
 
 }

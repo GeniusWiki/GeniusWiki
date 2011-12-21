@@ -23,15 +23,11 @@
  */
 package com.edgenius.wiki.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
@@ -59,59 +55,46 @@ public class ActivityLogDAOHibernate extends BaseDAOHibernate<ActivityLog>  impl
 					
 	@SuppressWarnings("unchecked")
 	public List<ActivityLog> getByTarget(int typeCode, int subTypeCode, int tgtResourceType, String tgtResourceName) {
-		return getHibernateTemplate().find(GET_BY_TARGET,new Object[]{typeCode,subTypeCode,tgtResourceType,tgtResourceName});
+		return find(GET_BY_TARGET,new Object[]{typeCode,subTypeCode,tgtResourceType,tgtResourceName});
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ActivityLog> getBySource(int typeCode, int subTypeCode, int srcResourceType, String srcResourceName) {
-		return getHibernateTemplate().find(GET_BY_SOURCE,new Object[]{typeCode,subTypeCode,srcResourceType,srcResourceName});
+		return find(GET_BY_SOURCE,new Object[]{typeCode,subTypeCode,srcResourceType,srcResourceName});
 	}
 
 	public void removeOldByDays(final int days) {
-		getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Date date = DateUtils.addDays(new Date(), -days);
-				session.createQuery(REMOVE_BY_AGE).setDate("cDate", date).executeUpdate();
-				return null;
-			}
-		});
+		Date date = DateUtils.addDays(new Date(), -days);
+		getCurrentSesssion().createQuery(REMOVE_BY_AGE).setDate("cDate", date).executeUpdate();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ActivityLog> getByCount(final int start, final int count) {
-		return (List<ActivityLog>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(GET_BY_COUNT);
-				if(start > 0)
-					query.setFirstResult(start);
-				if(count > 0)
-					 query.setMaxResults(count);
-				
-				return query.list(); 
-			}
-		});
+		Query query = getCurrentSesssion().createQuery(GET_BY_COUNT);
+		if(start > 0)
+			query.setFirstResult(start);
+		if(count > 0)
+			 query.setMaxResults(count);
+		
+		return query.list(); 
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ActivityLog> getByUser(final int start, final int count, final User user) {
 
-		return (List<ActivityLog>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query;
-				if(user == null || user.isAnonymous()){
-					query = session.createQuery(GET_BY_ANONYMOUS_COUNT);
-				}else{
-					query = session.createQuery(GET_BY_USER_COUNT);
-					query.setInteger("user", user.getUid());
-				}
-				if(start > 0)
-					query.setFirstResult(start);
-				if(count > 0)
-					 query.setMaxResults(count);
-				
-				return query.list(); 
-			}
-		});
+		Query query;
+		if(user == null || user.isAnonymous()){
+			query = getCurrentSesssion().createQuery(GET_BY_ANONYMOUS_COUNT);
+		}else{
+			query = getCurrentSesssion().createQuery(GET_BY_USER_COUNT);
+			query.setInteger("user", user.getUid());
+		}
+		if(start > 0)
+			query.setFirstResult(start);
+		if(count > 0)
+			 query.setMaxResults(count);
+		
+		return query.list(); 
 	}
 
 

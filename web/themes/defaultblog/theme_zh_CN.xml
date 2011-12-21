@@ -1,0 +1,43 @@
+<Theme>
+  <version>1</version>
+  <name>defaultblog</name>
+  <title>缺省博客</title>
+  <description>缺省博客主题</description>
+  <author>Edgenius</author>
+  <category>blog</category>
+  <displaySequenceNumber>1</displaySequenceNumber>
+  <previewImageName>preview.png</previewImageName>
+  <largeLogo>logo.png</largeLogo>
+  <smallLogo>small-logo.png</smallLogo>
+  <updateDate>2008-09-23 10:40:36.328 EDT</updateDate>
+  <pageThemes>
+      <PageTheme>
+        <scope>home</scope>
+        <welcome>这是你的Blog空间首页。使用“创建”按钮来创建你的第一个帖子。需要更多的帮助，请按"F1"。</welcome>
+        <bodyMarkup>{blog:count=10}{page-attribute:attachment=no|tag=no|creator=no|modifier=no|comment=no|history=no|edit=no|under_tab_bar=no}{$BODY}</bodyMarkup>
+        <spaceMenuMarkup>
+		{menu}
+		</spaceMenuMarkup>
+        <sidebarMarkup><![CDATA[{panel:title=Share|background-color:#fff}
+{sharethis}
+{panel}]]>
+        </sidebarMarkup>
+      </PageTheme>
+      <PageTheme>
+        <scope>any</scope>
+        <!--Default body-->
+		<!--<bodyMarkup>{$BODY}</bodyMarkup>-->
+		<spaceMenuMarkup>
+		{menu}
+		</spaceMenuMarkup>
+        <sidebarMarkup><![CDATA[{panel:title=Authors|background-color:#fff}
+{pageinfo:type=creator}
+{pageinfo:type=modifier}
+{panel}
+{panel:title=Share|background-color:#fff}
+{sharethis}
+{panel}]]>
+		</sidebarMarkup>
+      </PageTheme>
+  </pageThemes>
+</Theme>

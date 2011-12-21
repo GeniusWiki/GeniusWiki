@@ -88,11 +88,14 @@ public class MarkupRenderEngineImpl  implements RenderEngine{
 			text = filter.filter(text, context);
 		}
 		
+		//!!!Don't change sequence of below 3 processXXX() methods:
+		
 		text = processRegions(text, context, filters);
 
-		//replace to new line
+		//process objects place holder
 		List<RenderPiece> pieces = processObjects(context, text);
 		
+		//replace reference to real text.
 		pieces = processReferences(context,pieces);
 		
 		log.info(new StringBuilder("Render markup content takes: ").append(System.currentTimeMillis() - codeStart).append("ms").toString());
@@ -176,6 +179,7 @@ public class MarkupRenderEngineImpl  implements RenderEngine{
 						}
 						buffer.insert(seq,body);
 					}else{
+						//if regionKey is not found in main text, then it is supposed to embedded into other region. 
 						//region embedded - a region is inside another region 
 						for (Region reg : context.getRegions()) {
 							if(reg.getBody().indexOf(regionKey) != -1){
@@ -211,9 +215,6 @@ public class MarkupRenderEngineImpl  implements RenderEngine{
 			return text;
 		}
 	}
-
-	
-	
 
 	/**
 	 * @param page
@@ -350,6 +351,8 @@ public class MarkupRenderEngineImpl  implements RenderEngine{
 		//skip these keys when try to add RenderPiece to reference text body.
 		Set<String> hasAlreadyFillin = new HashSet<String>();
 		StringBuilder text;
+		
+		//Find out the reference object real text content.
 		for (RenderPiece renderPiece : pieces) {
 			
 			hasAlreadyFillin.clear();
@@ -433,7 +436,7 @@ public class MarkupRenderEngineImpl  implements RenderEngine{
 					+ (context.getPageTitle() != null?context.getPageTitle():"Unknown"));
 		}
 		
-		//OK, now try to find referKey in text model
+		//OK, now try to find referKey in text model, then replace it by real text.
 		
 		LinkModel link;
 		for (ListIterator<RenderPiece> iter = pieces.listIterator();iter.hasNext();) {

@@ -34,6 +34,7 @@ public class Region implements Cloneable{
 	
 	private static final Logger log = LoggerFactory.getLogger(Region.class);
 	private String key;
+	private int keyIndex = -1;
 	
 	private RegionContentFilter filter;
 	
@@ -201,6 +202,18 @@ public class Region implements Cloneable{
 		return start;
 	}
 
+	/**
+	 * @return the keyIndex
+	 */
+	public int getKeyIndex() {
+		return keyIndex;
+	}
+	/**
+	 * @param keyIndex the keyIndex to set
+	 */
+	public void setKeyIndex(int keyIndex) {
+		this.keyIndex = keyIndex;
+	}
 	public int getEnd() {
 		return end;
 	}

@@ -291,6 +291,14 @@ public class Global implements Serializable{
 		return new Locale(Global.DefaultLanguage!=null?Global.DefaultLanguage:"en",
 				Global.DefaultCountry!=null?Global.DefaultCountry:"AU");
 	}
+	
+	/**
+	 * @param locale only include language part but not country info
+	 * @return
+	 */
+	public static boolean isLanguage(Locale locale){
+		return locale.equals(new Locale(Global.DefaultLanguage));
+	}
 	public String getDefaultCountry() {
 		return DefaultCountry;
 	}

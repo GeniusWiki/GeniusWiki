@@ -56,12 +56,12 @@ public class CommentDAOHibernate extends BaseDAOHibernate<PageComment> implement
 	
 	@SuppressWarnings("unchecked")
 	public List<PageComment> getCommentsByPageUid(Integer pageUid) {
-		return getHibernateTemplate().find(GET_BY_PAGE_UID,pageUid);
+		return find(GET_BY_PAGE_UID,pageUid);
 	}
 
 	@SuppressWarnings("unchecked")
 	public int getCommentCountByPageUid(Integer pageUid) {
-		List list = getHibernateTemplate().find(GET_COUNT_BY_PAGE_UID,pageUid);
+		List list = find(GET_COUNT_BY_PAGE_UID,pageUid);
 		if(list != null && list.size() > 0){
 			return (int) ((Long)list.get(0)).longValue();
 		}
@@ -71,7 +71,7 @@ public class CommentDAOHibernate extends BaseDAOHibernate<PageComment> implement
 	//JDK1.6 @Override
 	@SuppressWarnings("unchecked")
 	public int getUserCommentSize(String username) {
-		List list = getHibernateTemplate().find(GET_COUNT_BY_USER_AUTHORED,username);
+		List list = find(GET_COUNT_BY_USER_AUTHORED,username);
 		if(list != null && list.size() > 0){
 			return (int) ((Long)list.get(0)).longValue();
 		}
@@ -81,18 +81,18 @@ public class CommentDAOHibernate extends BaseDAOHibernate<PageComment> implement
 	@SuppressWarnings("unchecked")
 	//JDK1.6 @Override
 	public List<Integer> getNeedNotifyCommentPageUids() {
-		return getHibernateTemplate().find(GET_NEED_DAILY_NOTIFY_PAGE_UIDS);
+		return find(GET_NEED_DAILY_NOTIFY_PAGE_UIDS);
 	}
 
 	//JDK1.6 @Override
 	public void cleanNotifyFlag() {
-		getHibernateTemplate().bulkUpdate(RESET_NOTIFY_FLAG);
+		bulkUpdate(RESET_NOTIFY_FLAG);
 	}
 
 	//JDK1.6 @Override
 	@SuppressWarnings("unchecked")
 	public int getNotifySentCount(Integer pageUid) {
-		List list = getHibernateTemplate().find(GET_COUNT_SENT_BY_TODAY,pageUid);
+		List list = find(GET_COUNT_SENT_BY_TODAY,pageUid);
 		if(list != null && list.size() > 0){
 			return (int) ((Long)list.get(0)).longValue();
 		}

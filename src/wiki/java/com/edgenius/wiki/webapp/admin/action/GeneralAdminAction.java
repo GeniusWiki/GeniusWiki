@@ -42,6 +42,7 @@ import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.quartz.QuartzException;
 import com.edgenius.wiki.quartz.VersionCheckJobInvoker;
+import com.edgenius.wiki.search.lucene.AnalyzerProvider;
 import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.service.SettingServiceException;
 import com.edgenius.wiki.service.ThemeService;
@@ -103,6 +104,7 @@ public class GeneralAdminAction extends BaseAction{
 	private JavaMailSenderImpl mailSender;
 	private WidgetService widgetService;
 	
+	private AnalyzerProvider  analyzerProvider;
 	//********************************************************************
 	//               function methods
 	//********************************************************************
@@ -194,6 +196,12 @@ public class GeneralAdminAction extends BaseAction{
 			global.setDetectLocaleFromRequest(detectLocale);
 			String[] cl = sysLang.split("_");
 			if(cl.length == 2){
+				if(!StringUtils.equalsIgnoreCase(global.getDefaultLanguage(), cl[0])){
+					//language changed, so try to reload analyzer for different language.
+					Global.DefaultLanguage = cl[0];
+					analyzerProvider.loadAnalyzer();
+					themeService.cleanThemeCache();
+				}
 				global.setDefaultLanguage(cl[0]);
 				global.setDefaultCountry(cl[1].toUpperCase());
 			}
@@ -434,6 +442,13 @@ public class GeneralAdminAction extends BaseAction{
 
 	public void setSmtpConnectType(int smtpConnectType) {
 		this.smtpConnectType = smtpConnectType;
+	}
+
+	/**
+	 * @param analyzerProvider the analyzerProvider to set
+	 */
+	public void setAnalyzerProvider(AnalyzerProvider analyzerProvider) {
+		this.analyzerProvider = analyzerProvider;
 	}
 
 	public String getSmtpJNDI() {

@@ -23,14 +23,10 @@
  */
 package com.edgenius.wiki.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
@@ -47,7 +43,7 @@ public class InvitationDAOHibernate extends BaseDAOHibernate<Invitation> impleme
 
 	public Invitation getByUuid(String spaceUname, String invitationUuid) {
 		@SuppressWarnings("rawtypes")
-		List list = getHibernateTemplate().find(GET_BY_SPACEUNAME_UUID,new String[]{spaceUname,invitationUuid});
+		List list = find(GET_BY_SPACEUNAME_UUID,new Object[]{spaceUname,invitationUuid});
 		if(list == null || list.size() == 0){
 			return null;
 		}
@@ -58,14 +54,8 @@ public class InvitationDAOHibernate extends BaseDAOHibernate<Invitation> impleme
 
 	public void removeOldInvitations(final int olderThanHours) {
 		
-		getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Date date = DateUtils.addHours(new Date(), -olderThanHours);
-				session.createQuery(REMOVE_BY_AGE).setDate("cDate", date).executeUpdate();
-				
-				return null;
-			}
-		});
+		Date date = DateUtils.addHours(new Date(), -olderThanHours);
+		getCurrentSesssion().createQuery(REMOVE_BY_AGE).setDate("cDate", date).executeUpdate();
 	}
 
 	

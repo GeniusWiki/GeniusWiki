@@ -32,12 +32,18 @@ public class RegionBorderPoint {
 	int pos2;
 	boolean start;
 	String regionKey;
+	//the reason I add integrate format keyIndex is sort region by order. This is good in some same region scenarios. 
+	//For example, h2. {font}Header{font}.  FontRegion and HeadingRegion could be same, but I want to HeadingRegion wraps FontRegion.
+	//Otherwise, TOC macro won't work as ReferenceObject links to FontRegion. 
+	//Although relay on Region filter order is not good practice, but now it works as expected...
+	int keyIndex; 
 	
-	public RegionBorderPoint(int pos1, boolean start, int pos2, String regionKey) {
+	public RegionBorderPoint(int pos1, boolean start, int pos2, String regionKey, int keyIndex) {
 		this.pos1 = pos1;
 		this.pos2 = pos2;
 		this.start = start;
 		this.regionKey = regionKey;
+		this.keyIndex = keyIndex;
 	}
 	public String toString(){
 		return pos1+":" + pos2+":" + start+":" + regionKey;
@@ -58,6 +64,12 @@ public class RegionBorderPoint {
 	 */
 	public String getRegionKey() {
 		return regionKey;
+	}
+	/**
+	 * @return the keyIndex
+	 */
+	public int getKeyIndex() {
+		return keyIndex;
 	}
 
 }

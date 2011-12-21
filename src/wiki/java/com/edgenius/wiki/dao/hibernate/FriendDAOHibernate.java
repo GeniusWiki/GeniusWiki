@@ -41,7 +41,7 @@ public class FriendDAOHibernate extends BaseDAOHibernate<Friend>  implements Fri
 
 	@SuppressWarnings("unchecked")	
 	public Friend getFriendship(String sender, String receiver) {
-		List<Friend> friends = getHibernateTemplate().find(GET_HISTORY_BY_UUID,new Object[]{sender,receiver});
+		List<Friend> friends = find(GET_HISTORY_BY_UUID,new Object[]{sender,receiver});
 		if(friends == null || friends.size() == 0)
 			return null;
 		

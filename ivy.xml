@@ -42,7 +42,7 @@
     
 	<dependencies>
 	
-		<dependency org="com.edgenius" name="libs" rev="3.0" changing="true" conf="deploy->license, highlight; dev->license, highlight" />
+		<dependency org="com.edgenius" name="libs" rev="3.1" changing="true" conf="deploy->license, highlight; dev->license, highlight" />
 		
 		<dependency org="google" name="gwt" rev="2.4" conf="deploy->default;dev->compile" />
 		<dependency org="google" name="gwt-gears" rev="1.3.0"	conf="dev->default" />
@@ -59,18 +59,15 @@
 		
 		<dependency org="net/sf/ehcache" name="ehcache-core" rev="2.3.2" conf="deploy->default;dev->default"/>
 		
-		<dependency org="org/hibernate" name="hibernate" rev="3.6.1"   conf="deploy->default;" />
+		<dependency org="org/hibernate" name="hibernate" rev="4.0.0.Final"   conf="deploy->default;" />
 		<dependency org="org/hibernate" name="hibernate-tools" rev="3.2.4.ga"	conf="dev->default;" />
-		<!-- 
-		<dependency org="org/hibernate" name="hibernate-annotations" rev="3.4.0.ga"	conf="deploy->default;dev->default" />
-		 -->
 		<!-- use spring-modules instead.
 		<dependency org="org/hibernate" name="hibernate-search" rev="3.0.0.b3"	conf="deploy->default;dev->source" />
 		<dependency org="org" name="compass" rev="1.2.m3"	conf="deploy->default;dev->source" />
-		 -->
 		<dependency org="org/springframework" name="spring-modules" rev="0.9"	conf="deploy->lucene;dev->lucene-source" />
+		 -->
 		<!-- 3.0.2.RELEASE  -->
-		<dependency org="org/springframework" name="spring" rev="3.1.0.RC1" conf="deploy->default;dev->source,test" /> 
+		<dependency org="org/springframework" name="spring" rev="3.1.0.RELEASE" conf="deploy->default;dev->source,test" /> 
 		<dependency org="org/springframework" name="security" rev="3.1.0.RC3"	conf="deploy->default;dev->source" />
 		
 		
@@ -104,6 +101,8 @@
         <dependency org="apache/lucene" name="contrib" rev="3.4.0" conf="deploy->highlighter;dev->highlighter-source"/>
         <!--  highlighter depends on memeoy, but to make things easy, just put it here -->
         <dependency org="apache/lucene" name="contrib" rev="3.4.0" conf="deploy->memory;dev->memory-source"/>
+<!--         <dependency org="net/paoding" name="paoding-analysis" rev="111205" conf="deploy->default;dev->default"/> -->
+        <dependency org="com/chenlb" name="mmseg4j" rev="1.8.5" conf="deploy->default;dev->default"/>
 		
 		<dependency org="apache" name="jackrabbit" rev="1.4" conf="deploy->extractor;dev->extractor" />
 		<!-- 

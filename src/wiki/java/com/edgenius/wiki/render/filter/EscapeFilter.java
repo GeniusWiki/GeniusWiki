@@ -42,7 +42,7 @@ public class EscapeFilter extends BasePatternFilter {
 	
 	@Override
 	public String filter(String input, RenderContext context){
-		
+
 		//escape
 		input = EscapeUtil.escapeHTML(input);
 		//!!!must after EscapeUtil.escapeHTML() so that "&" cannot be replaced again 

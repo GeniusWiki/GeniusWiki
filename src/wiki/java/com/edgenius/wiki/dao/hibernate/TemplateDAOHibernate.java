@@ -49,12 +49,12 @@ public class TemplateDAOHibernate extends BaseDAOHibernate<Template> implements 
 	@SuppressWarnings("unchecked")
 	public List<Template> getSpaceTemplates(String spaceUname, boolean withAllShared) {
 		if(StringUtils.isBlank(spaceUname) ||SharedConstants.SYSTEM_SPACEUNAME.equals(spaceUname))
-			return getHibernateTemplate().find(GET_ALL);
+			return find(GET_ALL);
 		if(!withAllShared)
-			return getHibernateTemplate().find(GET_BY_SPACE,spaceUname);
+			return find(GET_BY_SPACE,spaceUname);
 		
 		List<Template> list = new ArrayList<Template>();
-		List<Template> permList = getHibernateTemplate().find(GET_BY_SPACE_WITH_SHARED,spaceUname);
+		List<Template> permList = find(GET_BY_SPACE_WITH_SHARED,spaceUname);
 		//put all given spaceUname template ahead others.
 		int pointer = 0;
 		for (Template templ : permList) {
@@ -72,7 +72,7 @@ public class TemplateDAOHibernate extends BaseDAOHibernate<Template> implements 
 		//WARNING: Hibernate can not construct join properly in buldUpdate()!!! 
 		//if using spaceUname, SQL should be a join-sql,unfortunately, it cause exception.
 		//use spaceUid, it could be a simple query only for template table.
-		getHibernateTemplate().bulkUpdate(REMOVE_SPACE_TEMPLATES,spaceUid);
+		bulkUpdate(REMOVE_SPACE_TEMPLATES,spaceUid);
 		
 	}
 

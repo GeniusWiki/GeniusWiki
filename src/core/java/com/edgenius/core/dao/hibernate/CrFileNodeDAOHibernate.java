@@ -23,14 +23,10 @@
  */
 package com.edgenius.core.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.CrFileNodeDAO;
@@ -72,37 +68,33 @@ public class CrFileNodeDAOHibernate extends BaseDAOHibernate<CrFileNode> impleme
 	
 	@SuppressWarnings("unchecked")
 	public CrFileNode getBaseByNodeUuid(final String nodeUuid) {
-		return (CrFileNode) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(GET_BASE_BY_NODE_UUID);
-				query.setString("uuid", nodeUuid);
-				query.setMaxResults(1);
-				List list = query.list();
-				if(list == null || list.size() == 0)
-					return null;
-					
-				return list.get(0);
-			}
-		});
+		Query query = getCurrentSesssion().createQuery(GET_BASE_BY_NODE_UUID);
+		query.setString("uuid", nodeUuid);
+		query.setMaxResults(1);
+		List list = query.list();
+		if(list == null || list.size() == 0)
+			return null;
+			
+		return (CrFileNode) list.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getByNodeUuid(String nodeUuid) {
-		return getHibernateTemplate().find(GET_BY_NODE_UUID,nodeUuid);
+		return find(GET_BY_NODE_UUID,nodeUuid);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getIdentifierNodes(String nodeType, String identifierUuid) {
-		return getHibernateTemplate().find(GET_IDENTIFIER_BY_ALL_NODES,new String[]{nodeType,identifierUuid});
+		return find(GET_IDENTIFIER_BY_ALL_NODES,new Object[]{nodeType,identifierUuid});
 	}
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getIdentifierNodes(String nodeType, String identifierUuid, String fileName) {
-		return getHibernateTemplate().find(GET_IDENTIFIER_BY_FILENAME,new String[]{nodeType,identifierUuid,fileName});
+		return find(GET_IDENTIFIER_BY_FILENAME,new Object[]{nodeType,identifierUuid,fileName});
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getSpaceNodes(String nodeType, String identifierUuid) {
-		return getHibernateTemplate().find(GET_SPACE_BY_ALL_NODES,new String[]{nodeType,identifierUuid});
+		return find(GET_SPACE_BY_ALL_NODES,new Object[]{nodeType,identifierUuid});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -110,7 +102,7 @@ public class CrFileNodeDAOHibernate extends BaseDAOHibernate<CrFileNode> impleme
 		if(version == null){
 			return getBaseByNodeUuid(nodeUuid);
 		}
-		List<CrFileNode>  list = getHibernateTemplate().find(GET_BY_NODE_UUID_VER,new Object[]{nodeUuid,version});
+		List<CrFileNode>  list = find(GET_BY_NODE_UUID_VER,new Object[]{nodeUuid,version});
 		if(list == null || list.size() == 0)
 			return null;
 			
@@ -122,44 +114,31 @@ public class CrFileNodeDAOHibernate extends BaseDAOHibernate<CrFileNode> impleme
 	}
 
 	public boolean removeByNodeUuid(final String nodeUuid) {
-		return (Boolean) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(REMOVE_BY_NODE_UUID);
-				query.setString("uuid", nodeUuid);
-				query.executeUpdate();
-				return true;
-			}
-		});
+		Query query = getCurrentSesssion().createQuery(REMOVE_BY_NODE_UUID);
+		query.setString("uuid", nodeUuid);
+		query.executeUpdate();
+		return true;
 	}
 
 	public boolean removeVersion(final String nodeUuid, final Integer version) {
-		return (Boolean) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(REMOVE_BY_NODE_UUID_VER);
+				Query query = getCurrentSesssion().createQuery(REMOVE_BY_NODE_UUID_VER);
 				query.setString("uuid", nodeUuid);
 				query.setInteger("version", version);
 				int size = query.executeUpdate();
 				return size > 0?true:false;
-				
-			}
-		});
 	}
 
 	public boolean removeByIdentifier(final String identifierUuid) {
-		return (Boolean) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(REMOVE_BY_IDENTIFIER_UUID);
-				query.setString("identifierUuid", identifierUuid);
-				int size = query.executeUpdate();
-				return size > 0?true:false;
-			}
-		});
-		
+		Query query = getCurrentSesssion().createQuery(REMOVE_BY_IDENTIFIER_UUID);
+		query.setString("identifierUuid", identifierUuid);
+		int size = query.executeUpdate();
+		return size > 0 ? true : false;
+
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<CrFileNode> getAllCurrentNode() {
-		List<CrFileNode> list = getHibernateTemplate().find(GET_ALL_NODE);
+		List<CrFileNode> list = find(GET_ALL_NODE);
 		if(list == null || list.size() == 0)
 			return null;
 		

@@ -44,7 +44,7 @@ public class PageTagDAOHibernate  extends BaseDAOHibernate<PageTag> implements P
 
 	@SuppressWarnings("unchecked")
 	public PageTag getByName(String spaceUname, String tagName) {
-		List<PageTag> list = getHibernateTemplate().find(GET_BY_NAME,new Object[]{spaceUname,tagName});
+		List<PageTag> list = find(GET_BY_NAME,new Object[]{spaceUname,tagName});
 		if(list == null || list.size() == 0)
 			return null;
 		return list.get(0);
@@ -52,13 +52,13 @@ public class PageTagDAOHibernate  extends BaseDAOHibernate<PageTag> implements P
 
 	@SuppressWarnings("unchecked")
 	public List<PageTag> getSpaceTags(String spaceUname) {
-		return getHibernateTemplate().find(GET_ALL_TAG_OF_SPACE,new Object[]{spaceUname});
+		return find(GET_ALL_TAG_OF_SPACE,new Object[]{spaceUname});
 	}
 
 	@SuppressWarnings("unchecked")
 	public void removeTagsInSpace(final String spaceUname) {
-		Collection entities = getHibernateTemplate().find(GET_TAGS_IN_SAPCE,new Object[]{spaceUname});;
-		getHibernateTemplate().deleteAll(entities );
+		Collection entities = find(GET_TAGS_IN_SAPCE,new Object[]{spaceUname});;
+		deleteAll(entities);
 
 	}
 

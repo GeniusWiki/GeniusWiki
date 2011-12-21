@@ -1,0 +1,2133 @@
+# 
+# Translators:
+#   <isural@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: GeniusWiki\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-26 12:32+0000\n"
+"PO-Revision-Date: 2011-12-07 19:08+0000\n"
+"Last-Translator: isural <isural@gmail.com>\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.net/projects/p/GeniusWiki/team/tr_TR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Translate Toolkit 1.9.0\n"
+
+#. # ---------- General info  ---------------
+#: app.name
+msgid "GeniusWiki"
+msgstr "WikiBlog"
+
+#: metadata.description
+msgid "Diversify your website | GeniusWiki"
+msgstr "Web 2.0 araçları | WikiBlog"
+
+#. #!!! This can not be changed
+#: metadata.keyword
+msgid ""
+"GeniusWiki, wiki, blog, blogger, knowledge management, business wiki, "
+"business collaboration, wiki software, content management, document "
+"management, web2.0, Edgenius"
+msgstr ""
+"WikiBlog, wiki, blog, blogger, bilgi yönetimi, işletme wiki, ticari "
+"işbirliği, wiki yazılımı, içerik yönetimi, doküman yönetimi, web2.0, "
+"Edgenius"
+
+#. # ---------- Widgets info  ---------------
+#: watch.list.title
+msgid "My watchlist"
+msgstr "İzleme Listem"
+
+#: watch.list.desc
+msgid "My watchlist pages"
+msgstr "İzleme Sayfalarım"
+
+#: message.board.title
+msgctxt "message.board.title"
+msgid "Message board"
+msgstr "Mesaj Panosu"
+
+#: message.board.desc
+msgctxt "message.board.desc"
+msgid "Message board"
+msgstr "Mesaj Panosu"
+
+#: favorite.list.title
+msgid "My favorite"
+msgstr "Favorim"
+
+#: favorite.list.desc
+msgid "My favorite pages"
+msgstr "Favori sayfalarım"
+
+#: draft.list.title
+msgid "My drafts"
+msgstr "Taslaklarım"
+
+#: draft.list.desc
+msgid "My drafts list"
+msgstr "Taslak Listem"
+
+#. # ---------- Render error: will show on renderred HTML page ---------------
+#: render.image.not.found
+msgid "File {0} not found in attachment list"
+msgstr "Dosya {0} eklenti listesinde bulunamadı"
+
+#: anonymous.user.name
+msgid "anonymous user"
+msgstr "anonim kullanıcı"
+
+#: invite.msg
+msgid "GeniusWiki is a very good wiki and blog website. Please give it a try."
+msgstr "WikiBlog çok iyi bir wiki ve blog web sitesidir. Lütfen deneyiniz."
+
+#. # ---------- Page Title ---------------
+#: page.title.errorpage
+msgid "Error Page"
+msgstr "Hata Sayfası"
+
+#: page.title.403
+msgid "Access Denied"
+msgstr "Erişim Engellendi"
+
+#: page.title.404
+msgid "Page Not Found"
+msgstr "Sayfa Bulunamadı"
+
+#: page.message.404
+msgid ""
+"The page your requested was not found. <br><br><a href=\"{0}\">Return "
+"Home</a>."
+msgstr ""
+"Talep ettiğiniz sayfa bulunamadı. <br><br> <a href=\"{0}\">Ana sayfaya "
+"dön</a> ."
+
+#: page.message.403
+msgid ""
+"Your current role does not allow you to view this page. Please contact your "
+"system administrator if you believe you should have access. Return <a "
+"href=\"{0}\">Home</a>."
+msgstr ""
+"Rolünüz bu sayfayı görüntülemenize izin vermemektedir. Eğer erişim "
+"yetkinizin olduğunuza inanıyorsanız lütfen sistem yöneticisi ile irtibata "
+"geçiniz. Dön <a href=\"{0}\">Ana Sayfa</a> ."
+
+#: page.message.error
+msgid "An error has occurred. Please try again. Reason for error: {0}"
+msgstr "Bir hata oluştu. Lütfen yeniden deneyin. Hata Nedeni: {0}"
+
+#. # ---- customised page title -------------
+#: page.title.tagcloud
+msgid "Tag Cloud on space {0}"
+msgstr "Alan üzerinde {0} etiket bulutu"
+
+#: page.title.space.tagcloud
+msgid "Tag clouds on spaces"
+msgstr "Alanlar üzerinde etiket bulutları"
+
+#: page.title.userprofile
+msgid "User profile - {0}  "
+msgstr "Kullanıcı profili - {0}"
+
+#: page.title.search.result
+msgid "Search on - {0}"
+msgstr "Ara - {0}"
+
+#: page.title.space.friends
+msgid "{0} friends"
+msgstr "{0} arkadaş"
+
+#: page.title.space.group.users
+msgid "Users of Group {0} "
+msgstr "{0} Grubun Kullanıcıları"
+
+#: page.title.message.board
+msgctxt "page.title.message.board"
+msgid "Message board"
+msgstr "Mesaj Panosu"
+
+#: page.title.space.admin
+msgid "Space admin of {0}"
+msgstr "{0} Alan yöneticileri"
+
+#: page.title.notify.sysadmin
+msgid "Send a message to system administrators"
+msgstr "Sistem yöneticilerine için bir mesaj gönderin"
+
+#. # --- default message on new space -------
+#: wiki.home.page.title
+msgid "Home of {0}"
+msgstr "{0} Anasayfa"
+
+#: wiki.home.welcome
+msgid ""
+"This is your WIKI space home page. Using \"Edit\" button to edit this page, "
+"or \"Create\" button to create child page. For more help, press \"F1\"."
+msgstr ""
+"Burası WIKI alan sayfanız. Bu sayfaya alt sayfa oluşturmak için \"Oluştur\" "
+"düğmesini düzenlemek için \"Düzenle\" düğmesini kullanınız. Daha fazla "
+"yardım için, \"F1\" tuşuna basın."
+
+#. #!!! This can not be change
+#: blog.home.page.content
+msgid ""
+"{blog:count=10}{page-"
+"attribute:attachment=no|tag=no|creator=no|modifier=no|comment=no|history=no|edit=no|under_tab_bar=no}"
+msgstr ""
+"{blog:count=10}{page-"
+"attribute:attachment=no|tag=no|creator=no|modifier=no|comment=no|history=no|edit=no|under_tab_bar=no}"
+
+#: blog.home.welcome
+msgid ""
+"This is your Blog space home page. Using \"Create\" button to create your "
+"post. For more help, press \"F1\"."
+msgstr ""
+"Burası Blog (Web Günlüğü) alan sayfanız. Bu sayfaya alt sayfa oluşturmak "
+"için \"Oluştur\" düğmesini düzenlemek için \"Düzenle\" düğmesini kullanınız."
+" Daha fazla yardım için, \"F1\" tuşuna basın."
+
+#: wiki.page.not.found.content
+msgid "Page not found, do you want to [create it > {0}]?"
+msgstr "Sayfa bulunamadı [oluşturmak > {0}] istiyor musunuz?"
+
+#: wiki.page.not.found.content.readonly
+msgid "Page not found."
+msgstr "Sayfa bulunamadı."
+
+#: wiki.homepage.not.found.title
+msgid "Home page"
+msgstr "Ana Sayfa"
+
+#. # --- JSP -------
+#: yes
+msgid "Yes"
+msgstr "Evet"
+
+#: no
+msgid "No"
+msgstr "Hayır"
+
+#: upload
+msgid "Upload"
+msgstr "Yükle"
+
+#: cancel
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: change
+msgid "Change"
+msgstr "Değiştir"
+
+#: detail
+msgid "Detail"
+msgstr "Detay"
+
+#: url
+msgid "URL"
+msgstr "URL"
+
+#: authentication
+msgid "Authentication"
+msgstr "Kimlik Doğrulama"
+
+#: password
+msgid "Password"
+msgstr "Şifre"
+
+#: hours
+msgid "Hours"
+msgstr "Saat"
+
+#: minutes
+msgid "Minutes"
+msgstr "Dakika"
+
+#: logo
+msgid "LOGO"
+msgstr "LOGO"
+
+#: logout
+msgid "Logout"
+msgstr "Çıkış"
+
+#: backup
+msgid "Backup"
+msgstr "Yedek"
+
+#: size
+msgid "Size"
+msgstr "Boyut"
+
+#: download
+msgid "Download"
+msgstr "Indir"
+
+#: restore
+msgid "Restore"
+msgstr "Geri Yükle"
+
+#: name
+msgid "Name"
+msgstr "Ad"
+
+#: description
+msgid "Description"
+msgstr "Açıklama"
+
+#: info
+msgid "Info"
+msgstr "Bilgi"
+
+#: title
+msgid "Title"
+msgstr "Başlık"
+
+#: tags
+msgid "Tags"
+msgstr "Etiket"
+
+#: functions
+msgid "Functions"
+msgstr "Fonksiyonlar"
+
+#: pages
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: portrait
+msgid "Portrait"
+msgstr "Portre"
+
+#: statistic
+msgid "Statistic"
+msgstr "Istatistik"
+
+#: disable
+msgid "Disable"
+msgstr "Devre Dışı Bırak"
+
+#: enable
+msgid "Enable"
+msgstr "Etkinleştir"
+
+#: edit
+msgid "Edit"
+msgstr "Düzenle"
+
+#: submit
+msgid "Submit"
+msgstr "Gönder"
+
+#: retry
+msgid "Retry"
+msgstr "Tekrar Dene"
+
+#: database
+msgid "Database"
+msgstr "Veritabanı"
+
+#: host
+msgid "Host"
+msgstr "Host"
+
+#: confirm
+msgid "Confirm"
+msgstr "Onayla"
+
+#: upgrade
+msgid "Upgrade"
+msgstr "Sürüm Yükselt"
+
+#: login
+msgid "Login"
+msgstr "Giriş"
+
+#: offline
+msgid "Offline"
+msgstr "Çevrimdışı"
+
+#: dashboard
+msgid "Dashboard"
+msgstr "Kontrol Paneli"
+
+#: friends
+msgid "Friends"
+msgstr "Arkadaş"
+
+#: undefined
+msgid "Undefined"
+msgstr "Tanımlanmamış"
+
+#: update
+msgid "Update"
+msgstr "Güncelle"
+
+#: weekly
+msgid "Weekly"
+msgstr "Haftalık"
+
+#: monthly
+msgid "Monthly"
+msgstr "Aylık"
+
+#: daily
+msgid "Daily"
+msgstr "Günlük"
+
+#: hour
+msgid "Hour"
+msgstr "Saat"
+
+#: minute
+msgid "Minute"
+msgstr "Dakika"
+
+#: date
+msgid "Date"
+msgstr "Tarih"
+
+#: done
+msgid "Done"
+msgstr "Yapıldı"
+
+#: mon
+msgid "MON"
+msgstr "PZT"
+
+#: Monday
+msgid "Monday"
+msgstr "Pazartesi"
+
+#: tue
+msgid "TUE"
+msgstr "SAL"
+
+#: Tuesday
+msgid "Tuesday"
+msgstr "Salı"
+
+#: wed
+msgid "WED"
+msgstr "ÇAR"
+
+#: Wednesday
+msgid "Wednesday"
+msgstr "Çarşamba"
+
+#: thu
+msgid "THU"
+msgstr "PER"
+
+#: Thursday
+msgid "Thursday"
+msgstr "Perşembe"
+
+#: fri
+msgid "FRI"
+msgstr "CUM"
+
+#: Friday
+msgid "Friday"
+msgstr "Cuma"
+
+#: sat
+msgid "SAT"
+msgstr "CTS"
+
+#: Saturday
+msgid "Saturday"
+msgstr "Cumartesi"
+
+#: sun
+msgid "SUN"
+msgstr "PAZ"
+
+#: Sunday
+msgid "Sunday"
+msgstr "Pazar"
+
+#: users
+msgid "Users"
+msgstr "Kullanıcılar"
+
+#: comment
+msgid "Comment"
+msgstr "Yorum"
+
+#. #-- lower case first letter
+#: none
+msgid "none"
+msgstr "hiçbiri"
+
+#: or
+msgid "or"
+msgstr "veya"
+
+#: none.upper
+msgid "None"
+msgstr "Hiçbiri"
+
+#: backup.schedule
+msgid "Backup schedule"
+msgstr "Geri yüklemeyi zamanla"
+
+#: tag.cloud
+msgid "Tag Cloud"
+msgstr "Etiket Bulutu"
+
+#: user.profile
+msgid "User Profile"
+msgstr "Kullanıcı Profili"
+
+#: search.result
+msgid "Search Result"
+msgstr "Arama Sonucu"
+
+#: group.users
+msgid "Group users"
+msgstr "Grup Kullanıcıları"
+
+#: space.admin
+msgid "Space Admin"
+msgstr "Alan Yöneticileri"
+
+#: send.msg.to.admin
+msgid "Send a message to system admin"
+msgstr "Sistem yöneticisine bir mesaj gönder"
+
+#: message.board
+msgctxt "message.board"
+msgid "Message board"
+msgstr "Mesaj panosu"
+
+#: space.uname
+msgid "Space key"
+msgstr "Alan anahtarı"
+
+#: create.user
+msgid "Create user"
+msgstr "Kullanıcı oluştur"
+
+#: create.space
+msgid "Create space"
+msgstr "Alan oluştur"
+
+#: user.name
+msgid "User name"
+msgstr "Kullanıcı adı"
+
+#: full.name
+msgid "Full name"
+msgstr "Tam adı"
+
+#: not.found
+msgid "Not found"
+msgstr "Bulunamadı"
+
+#: email
+msgid "Email"
+msgstr "Eposta"
+
+#: registered.date
+msgid "Registered time"
+msgstr "Kayıt zamanı"
+
+#: total.users
+msgid "Total users ... {0}"
+msgstr "Toplam kullanıcı ... {0}"
+
+#: total.roles
+msgid "Total groups ... {0}"
+msgstr "Toplam grup ... {0}"
+
+#: total.spaces
+msgid "Total spaces ... {0}"
+msgstr "Toplam alan ... {0}"
+
+#: confirm.leave.to.profile
+msgid "Do you want to leave this page and go to user profile page?"
+msgstr ""
+"Bu sayfayı terk etmek ve kullanıcı profil sayfasına gitmek istiyor musunuz?"
+
+#: space.quota.integer
+msgid "Space quota must be an integer."
+msgstr "Alan kotası bir tamsayı olmalıdır."
+
+#: space.remove.delay.integer
+msgid "Space remove delay time must be an integer."
+msgstr "Alan kaldırma gecikme süresi bir tamsayı olmalıdır."
+
+#: offline.sync.integer
+msgid "Offline sync frequency must be an integer."
+msgstr "Çevrimdışı senkronizasyon sıklığı bir tamsayı olmalıdır."
+
+#: logo.desc
+msgid ""
+"Please resize LOGO to proper size before uploading. For example, the default"
+" logo size is 310x60."
+msgstr ""
+"Lütfen LOGO boyutlarını yüklemeden önce uygun hale getiriniz. Varsayılan "
+"logo ebatları: 310x60"
+
+#: system.title
+msgid "Slogan"
+msgstr "Slogan"
+
+#: system.title.desc
+msgid ""
+"The site's motto, tag line, or catchphrase. It will be displayed alongside "
+"the title of the site. "
+msgstr "Sitenin sloganı bu sitenin başlığı ile birlikte gösterilecektir."
+
+#: email.smtp.host
+msgid "Email SMTP host"
+msgstr "Eposta SMTP sunucusu"
+
+#: email.desc
+msgid ""
+"Email SMTP server or JNDI information. Email is sent when users register, "
+"favorite pages updated, friends invited, etc."
+msgstr ""
+"Eposta SMTP sunucusu veya JNDI bilgisi. Kullanıcılar kayıt olurken "
+"güncellenen favori sayfaları, davet, arkadaşlar, vb. bilgiler eposta ile "
+"gönderilir."
+
+#: out.email
+msgid "Outgoing Email address"
+msgstr "Giden eposta adresi"
+
+#: out.email.desc
+msgid ""
+"System sends out email when new users sign up, for change notifications, "
+"etc.  This is the \"From\" address in these e-mails.  Normally, you won't "
+"need to monitor this address."
+msgstr ""
+"Sistem yeni bir kullanıcı kayıt olduğunda, bildirimler düzenlendiğinde vb. "
+"durumlarda eposta göndermektedir. Bu eposta hesaplarında \"Kime\" bölümüdür."
+" Normalde, bu adresi izlemek istemezsiniz."
+
+#: in.email
+msgid "Incoming Email address"
+msgstr "Gelen eposta adresi"
+
+#: cc.sys.admin
+msgid "CC system administrators"
+msgstr "CC sistem yöneticileri"
+
+#: in.email.desc
+msgid ""
+"This e-mail receives feedback (by feedback macro), or messages to system "
+"administrators etc. Normally, system administrators must monitor this mail. "
+"If CC system administrators option is checked, all system administrators "
+"will receive a copy of messages."
+msgstr ""
+"Bu eposta adresine (geribildirim macrosu tarafından ) geri bildirim, ya da "
+"sistem yöneticisine mesaj ulaşmaktadır. Normalde sistem yöneticileri bu "
+"eposta hesabını kontrol etmelidirler. Eğer CC sistem yöneticileri işaretli "
+"ise, tüm sistem yöneticileri bu postanın bir kopyasını alacaklardır"
+
+#: space.quota
+msgid "Space attachment quota"
+msgstr "Alan eklenti kotası"
+
+#: update.exist.quota
+msgid "Update existing spaces quota"
+msgstr "Mevcut alan kotasını güncelle"
+
+#: quota.desc
+msgid ""
+"The maximum size of attachments in a space. If you select Update existing "
+"spaces quota, all existing space attachment quota are also adjusted to the "
+"indicated size.  Otherwise, only new spaces are impacted."
+msgstr ""
+"Alandaki maximum eklenti büyüklüğü. Eğer önceki alan kotasını güncelleyi "
+"seçtiyseniz, tüm alanların eklenti kotası bu ayarlamadan etkilenecektir. "
+"Aksi halde sadece yeni alanlar etkilenecektir."
+
+#: space.remove.delay
+msgid "Space remove delay"
+msgstr "Alan kaldırma gecikmesi"
+
+#: space.remove.delay.desc
+msgid ""
+"This is helpful to prevent malicious deletion of spaces. Only after the "
+"indicated delay will the space be permanently deleted. During this period, a"
+" notification e-mail will be sent to all space administrations.  If the "
+"value is 0, spaces are deleted immediately."
+msgstr ""
+"Bu alanların yanlışlıkla silinmesini önlemek için yararlı bir uygulamadır. "
+"Belirtilen gecikme süresi sonrasında alan kalıcı olarak silinir. Bu dönemde,"
+" tüm alan yöneticilerine bir bildirim e-postası gönderilecektir. Değeri 0 "
+"ise, alanlar hemen silinir."
+
+#: offline.sync.freq
+msgid "Offline Sync frequency"
+msgstr "Çevrimdışı Sync sıklığı"
+
+#: offline.sync.desc
+msgid ""
+"Frequency that your system will check for updated pages, comments, etc. for "
+"offline downloading."
+msgstr ""
+"Sistemi çevrimdışı indirmek için güncellenen sayfaları, yorumlar, vb kontrol"
+" edecek sıklık"
+
+#: allow.public
+msgid "Allow public registration"
+msgstr "Herkesin kayıt olmasına izin ver"
+
+#: allow.public.desc
+msgid ""
+"If toggled, then public visitors can sign up to the system. Otherwise, new "
+"users can be created only by a system administrator."
+msgstr ""
+"İşaretli ise, ziyaretçi sisteme kayıt yapabilir. Aksi takdirde, yeni "
+"kullanıcılar, sadece sistem yöneticisi tarafından oluşturulabilir."
+
+#: allow.se
+msgid "Allow public search engine index"
+msgstr "Ziyaretci arama motoru indeksine izin ver"
+
+#: allow.se.desc
+msgid ""
+"If you want to allow public search engines, such as Google, Yahoo etc. to "
+"index your pages, please turn on this option."
+msgstr ""
+"Genel arama motorlarının Google, Yahoo gibi sayfalarınızı indekslemesine "
+"izin vermek istiyorsanız lütfen bu seçeneği açınız."
+
+#: rebuid.index
+msgid "Rebuild search index"
+msgstr "Arama dizini yeniden oluştur"
+
+#: rebuid.index.desc
+msgid ""
+"This action will rebuild search index from database. Please note, it may "
+"take minutes depending on your current data volume."
+msgstr ""
+"Bu eylem veritabanı arama indeksini yeniden inşa edecek. Lütfen dikkat, "
+"mevcut veri hacmine bağlı olarak dakikalarca sürebilir."
+
+#: clean.cache
+msgid "Clean system cache"
+msgstr "Sistem önbelleğini temizle"
+
+#. # the is "\" of line is connect of line
+#: clean.cache.desc
+msgid ""
+"System uses lots cache to improve system performance. Clean cache may slow "
+"down performance a while.  Don't suggest to use this action except when you "
+"believe system does not work well. Such as page tree does not display the "
+"latest new pages etc. In this case, please use \"Print cache\" function "
+"first, then submit a bug with log file to GeniusWiki."
+msgstr ""
+"Sistem, sistem performansını artırmak için birçok önbellek kullanır. "
+"Önbelleği temizlemek performansı bir süre düşürebilir. Sistemin iyi "
+"çalışmadığını düşünüyorsanız bu seçeneği kullanın, bunun dışında bu eylemini"
+" kullanmayı önermiyoruz. sayfa ağaç yapısında yeni sayfalar görüntülemediği "
+"durumlarda ilk önce  \"Önbelleği yazdır\" işlevini kullanın, sonra "
+"WikiBlogiki log dosyası ile bir hata gönderin."
+
+#: backup.now
+msgid "Backup now"
+msgstr "Şimdi yedekle"
+
+#: restore.now
+msgid "Restore now"
+msgstr "Şimdi geri yükle"
+
+#: file.name
+msgid "File name"
+msgstr "Dosya adı"
+
+#: last.modify.date
+msgid "Last modified date"
+msgstr "Son değiştirilme tarihi"
+
+#: create.group
+msgid "Create group"
+msgstr "Grup oluştur"
+
+#: last.modify.page
+msgid "Last update page"
+msgstr "Son güncellenen sayfa"
+
+#: goto.space
+msgid "go to space"
+msgstr "alana git"
+
+#: goto.space.admin
+msgid "go to space admin page"
+msgstr "alan yönetici sayfasına gidin"
+
+#: remove.warn
+msgid "This space will be removed in {0} hours"
+msgstr "Bu alan {0} saat içinde silinecektir"
+
+#: created.by
+msgid "Created by"
+msgstr "Tarafından düzenlendi"
+
+#: created.on
+msgid "Created on"
+msgstr "Oluşturulma tarihi"
+
+#: page.as.author
+msgid "How many pages created ... {0}"
+msgstr "Kaç sayfa oluşturuldu ... {0}"
+
+#: page.as.modifier
+msgid "How many pages modified ... {0}"
+msgstr "Kaç sayfaları güncellendi ... {0}"
+
+#: space.as.author
+msgid "How many spaces created ... {0}"
+msgstr "Kaç alan oluşturuldu ... {0}"
+
+#: comment.as.author
+msgid "How many comment created ... {0}"
+msgstr "Kaç yorum oluşturuldu ... {0}"
+
+#: joined.group
+msgid "Joined groups ({0})"
+msgstr "Üyelik grupları ({0})"
+
+#: goto.profile
+msgid "go to profile"
+msgstr "profile git"
+
+#: upload.file
+msgid "Upload file"
+msgstr "Dosya yükle"
+
+#: widget.display.model
+msgid "Widget display model"
+msgstr "Eklenti ekran modeli"
+
+#: sort.by.modify.date
+msgid "Display page titles sorted by modified date"
+msgstr "Değiştirilme tarihine göre sıralanmış sayfa başlıklarını göster"
+
+#: sort.by.create.date
+msgid "Display page titles sorted by created date"
+msgstr "Oluşturulma tarihine göre sıralanmış sayfa başlıklarını görüntüleyin"
+
+#: display.homepage
+msgid "Display home page content"
+msgstr "Ana sayfa içeriğini göster"
+
+#: widget.display.desc
+msgid ""
+"Spaces are displayed on dashboard as a drag-and-drop widgets. You can choose"
+" what and how content is displayed. <br> IMPORTANT: First 2 options impact "
+"your RSS feed sorted method, i.e., RSS is also sorted by created date if you"
+" choose the widget is sorted by created date."
+msgstr ""
+"Alanlar kontrol panelinde sürükle bırak modülleri gibi gösterilirler. "
+"Nelerin ve hangi içeriğin nasıl görüntüleneceğini seçebilirsiniz. "
+
+#: comment.to
+msgid "Comment notification to"
+msgstr "Yorum bildirimi"
+
+#: to.creators
+msgid "Email to page creators"
+msgstr "Sayfa oluşturucularına eposta ile gönder"
+
+#: to.contributors
+msgid "Email to all contributors "
+msgstr "Tüm katkıda bulunanlara eposta ile gönder"
+
+#: to.admins
+msgid "Email to space administrators"
+msgstr "Alan yöneticilerine eposta ile gönder"
+
+#: comment.to.desc
+msgid "If page receives a new comment, who will receive email notification."
+msgstr "Yeni bir yorum sayfaya eklenirse, kim eposta bildirimi alacak."
+
+#: comment.feq
+msgid "Comment notification frequency"
+msgstr "Yorum bildirim sıklığı"
+
+#: per.post
+msgid "Per post"
+msgstr "Her bir gönderi"
+
+#: max.per.day
+msgid "max sending per day"
+msgstr "günlük ortalama maksimum gönderme"
+
+#: daily.summary
+msgid "Daily summary"
+msgstr "Günlük özet"
+
+#: comment.feq.desc
+msgid ""
+"If page receives a new comment, how often to send out email notification."
+msgstr ""
+"Yeni bir yorum sayfaya eklenirse, ne sıklıkta eposta bildirimi gönderilecek."
+
+#: system.admin
+msgid "System Admin"
+msgstr "Sistem Yöneticisi"
+
+#: step.1
+msgid "Step 1/6: Set data root directory"
+msgstr "Adım 1 / 6: Veri kök dizinini ayarla"
+
+#: step.1.tip
+msgid ""
+"Tips: GeniusWiki need a directory to save configuration file, attachment, "
+"RSS, indexing and theme etc. For example, in windows, you may set "
+"\"c:\\mydata\\geniuswiki\" or in Linux, set \"/var/data/geniuswiki\". We "
+"recommend you put this directory outside your webapp directory for backup "
+"sake."
+msgstr ""
+"Tips: WikiBlog need a directory to save configuration file, attachment, RSS,"
+" indexing and theme etc. For example, in windows, you may set "
+"\"c:\\mydata\\geniuswiki\" or in Linux, set \"/var/data/geniuswiki\". We "
+"recommend you put this directory outside your webapp directory for backup "
+"sake."
+
+#: step.2
+msgid "Step 2/6: Choose your license"
+msgstr "Adım 2 / 6: Lisans seçin"
+
+#: step.2.tip
+msgid ""
+"You can continue to use community license that has no limitation on use. "
+"Please go to <a href=\"http://www.geniuswiki.com\">our website</a> to apply "
+"a commercial license if you need the commercial support."
+msgstr ""
+"You can continue to use community license that has no limitation on use. "
+"Please go to <a href=\"http://www.geniuswiki.com\">our website</a> to apply "
+"a commercial license if you need the commercial support."
+
+#: step.3
+msgid "Step 3/6: MQ Server information"
+msgstr "Adım 3 / 6: MQ Sunucu bilgisi"
+
+#: step.3.tip
+msgid ""
+"Tips: GeniusWiki is rely on MQ system to creating index, sending email or "
+"creating RSS etc. You may setup an external MQ server or just use GeniusWiki"
+" embedded MQ server. Please don't change default setting except when you "
+"know what you are doing. <br>If You choose embedded MQ server, you must "
+"confirm the port is not occupied by other programs.<br>If You choose "
+"external MQ server, the external MQ server must start-up before your web "
+"server start."
+msgstr ""
+"Tips: WikiBlog is rely on MQ system to creating index, sending email or "
+"creating RSS etc. You may setup an external MQ server or just use GeniusWiki"
+" embedded MQ server. Please don't change default setting except when you "
+"know what you are doing. <br>If You choose embedded MQ server, you must "
+"confirm the port is not occupied by other programs.<br>If You choose "
+"external MQ server, the external MQ server must start-up before your web "
+"server start."
+
+#: step.4
+msgid "Step 4/6: Create database and user"
+msgstr "Adım 4 / 6: veri tabanı ve kullanıcı oluştur"
+
+#: step.4.tip
+msgid ""
+"Tips: If you choose MySQL database, this step can help you create database "
+"and user. For other databases, please ask your DBA to create them. <br> "
+"MySQL and PostgreSQL database driver is already included. For other "
+"databases, please copy driver JAR file to your web server library directory."
+" For example, Tomcat's /common/lib/ directory. Restart is required."
+msgstr ""
+"İpucu: Eğer MySQL veri tabanını seçtiyseniz, bu adım kullanıcı adı ve şifre "
+"oluşturmanıza yardımcı olacak. Diğer veri tabanları için lütfen Veri tabanı "
+"yöneticinize hesap bilgilerini oluşturması için sorunuz. <br> MySQL ve "
+"PostgreSQL veri tabanı sürücüleri şu anda mecvut. Diğer veri tabanları için "
+"sürücü JAR dosyasını web sunucu kütüphanesine (library) copyalayınız. "
+"Örneğin Tomcat's /common/lib/ klasörü. Web sunucusunu yeniden başlatmanız "
+"gerekecek."
+
+#: step.5
+msgid "Step 5/6: Connect database and create tables"
+msgstr "Adım 5/6: Veri tabanına bağlan ve tablo oluştur"
+
+#: step.5.tip
+msgid ""
+"Tips: You need tell GeniusWiki how to connect database. Please leave "
+"database schema blank if you want to use default schema. Normally <a "
+"href=\"javascript:;\" onclick=\"downloadScript()\"><font "
+"color=\"blue\"><b><u>this SQL script</u></b></font></a> will be executed in "
+"this step. Please tick off \"Do not create tables\" option if you want to "
+"only set up connection but create tables and initial data yourself. <br> "
+"<span style=\"font-weight:bold\">This step may take a few minutes to "
+"complete if you choose creating tables, please wait in patience.</span>"
+msgstr ""
+"İpucu: WikiBlog sunucusunun veri tabanına nasıl bağlanacağını göstermeniz "
+"gerekiyor. Lütfen varsayılan veri tabanı şemasını kullanmak istiyorsanız boş"
+" bırakınız. Normalde bu adımda <a href=\"javascript:;\" "
+"onclick=\"downloadScript()\"><font color=\"blue\"><b><u>SQL "
+"scripiti</u></b></font></a> çalıştırılacak. Lütfen tabloları kendiniz "
+"oluşturacaksanız \"Tabloları oluşturma\" kutusunu seçimini kaldırınız. <br> "
+"<span style=\"font-weight:bold\">Bu adım tablo oluşturma alanını seçtiyseniz"
+" biraz uzun sürebilir, lütfen bekleyiniz.</span>"
+
+#: step.6
+msgid "Step 6/6: Create administrator account"
+msgstr "Adım 6/6: Yönetici hesabı oluştur"
+
+#: step.6.tip
+msgid ""
+"Tips: Administrator is super user in your system, please take care of your "
+"password. <br> <span style=\"font-weight:bold\"> Please wait in patient "
+"after submit as it may take a few minutes when system is reloaded.</span> "
+msgstr ""
+"İpucu: Yöneticiler sistemde süper kullanıcı yetkilerine sahiptirler. Lütfen "
+"şifrenizi koruyunuz. <br> <span style=\"font-weight:bold\"> Lütfen göndere "
+"bastıktan sonra sabırla bekleyiniz. Sistemin yüklenmesi zaman "
+"alacaktır.</span> "
+
+#: username.not.blank
+msgid "User name can not be blank."
+msgstr "Kullanıcı adı alanı boş olamaz"
+
+#: password.not.blank
+msgid "Password can not be blank."
+msgstr "Şifre alanı boş olamaz"
+
+#: email.not.blank
+msgid "Email can not be blank."
+msgstr "Eposta alanı boş olamaz"
+
+#: fullname.not.blank
+msgid "Full name can not be blank."
+msgstr "Ad soyad alanı boş olamaz"
+
+#: password.same
+msgid "Password must be same."
+msgstr "Şifreler aynı olmalıdır"
+
+#: skip.admin.confirm
+msgid ""
+"Do you really want to skip this step? You may not have any super user to "
+"control this system."
+msgstr ""
+"Bu adımı geçmek istediğinize emin misiniz? Bu sistemi kontrol edecek "
+"herhangi bir süper kullanıcınız olmayabilir."
+
+#: re.password
+msgid "Re-type password"
+msgstr "Şifreyi tekrar giriniz"
+
+#: fullname
+msgid "Full name "
+msgstr "Ad Soyad"
+
+#: ignore.step
+msgid "ignore error and go to next step"
+msgstr "hatayı göz ardı et ve sonraki adıma geç"
+
+#: skip.step
+msgid "skip to next step"
+msgstr "bir sonraki adıma geç"
+
+#: host.not.blank
+msgid "Host can not be blank."
+msgstr "Host alanı boş olamaz"
+
+#: db.not.blank
+msgid "Database name can not be blank."
+msgstr "Veritabanı adı boş olamaz"
+
+#: root.not.blank
+msgid "Root user name can not be blank."
+msgstr "Yönetici kullanıcı adı boş olamaz"
+
+#: confirm.delete.db
+msgctxt "confirm.delete.db"
+msgid ""
+"This will delete all existed tables in database, do you confirm to do this?"
+msgstr ""
+"Bu seçenek veri tabanınızdaki mevcut tüm tabloları silecek, onaylıyor "
+"musunuz?"
+
+#. #-- around desc2, there are href link; Before desc4, there is br
+#: mysql.desc1
+msgid ""
+"You need provide a user who has \"Database Create\" permission. For example,"
+" in MYSQL, this user is normally known as \"root\". This step also try to "
+"create a new user and grant all necessary permissions. Refer to"
+msgstr ""
+"\"Veri tabanı oluşturma\" yetkisine sahip bir kullanıcı belirtmelisiniz. "
+"Örneğin MySQL veri tabanında bu kullanıcı genelde root olarak bilinir. Bu "
+"adım aynı zamanda yeni kullanıcı oluşturup gerekli yetkileri vermeyi kapsar."
+
+#: mysql.desc2
+msgid "this SQL script"
+msgstr "bu SQL betiği"
+
+#: mysql.desc3
+msgid "for detail "
+msgstr "detaylar için"
+
+#: mysql.desc4
+msgid ""
+"For your safety, system won't save any \"root\" information except this "
+"setup process."
+msgstr ""
+"Güvenliğiniz için sistem bu kurulum hariç hiçbir \"root\" şifresini "
+"kaydetmemektedir. "
+
+#: db.name
+msgid "DB name "
+msgstr "DB adı"
+
+#: db.schema
+msgid "DB schema"
+msgstr "DB şema"
+
+#: root.username
+msgid "Root user name"
+msgstr "Yönetici kullanıcı adı"
+
+#: root.password
+msgid "Root password"
+msgstr "Yönetici şifre"
+
+#: recommended.url
+msgid "Recommended URL"
+msgstr "Tevsiye edilen URL"
+
+#: license.not.blank
+msgid "License can not be blank."
+msgstr "Lisans boş olamaz"
+
+#: free.license
+msgid "Free community license"
+msgstr "Free community license"
+
+#: input.license
+msgid "Input my commercial license"
+msgstr "Ticari lisansımı kullan"
+
+#: mq.not.blank
+msgid "MQ Server URL can not be blank."
+msgstr "MQ sunucu URL adresi boş olamaz"
+
+#: embed.mq
+msgid "Use embedded ActiveMQ server"
+msgstr "Gömülü ActiveMQ sunucuyu kullan"
+
+#: mq.url
+msgid "ActiveMQ server URL"
+msgstr "ActiveMQ sunucu URL"
+
+#: confirm.skip.step
+msgid "Do you really want to skip this step?"
+msgstr "Bu adımı geçmek istediğinizden emin misiniz?"
+
+#: dataroot.not.blank
+msgid "Data directory can not be blank"
+msgstr "Veri dizini boş olamaz"
+
+#: data.root
+msgid "Data root directory"
+msgstr "Veri kök dizini"
+
+#: datasource.not.blank
+msgid "Datasource can not be blank"
+msgstr "Verikaynağı boş olamaz"
+
+#: confirm.delete.tables
+msgctxt "confirm.delete.tables"
+msgid ""
+"This will delete all existed tables in database, do you confirm to do this?"
+msgstr ""
+"Bu seçenek veri tabanınızdaki önceki tabloları silecek, bunu onaylıyor "
+"musunuz?"
+
+#: connect.type
+msgid "Connection type"
+msgstr "Bağlantı tipi"
+
+#: no.delete.tables
+msgid "Do not create tables"
+msgstr "Tablo oluşturma"
+
+#: jndi.name
+msgid "JDNI Name"
+msgstr "JDNI Adı"
+
+#: invalid.license
+msgid "Invalid license"
+msgstr "Geçersiz Lisans"
+
+#: invalid.license.reason
+msgid ""
+"GeniusWiki cannot start successfully. This may be caused by the following "
+"reasons:"
+msgstr ""
+"WikiBlog başarılı bir şekilde başlatılamadı. Hatanın nedeni şunlar olabilir:"
+" "
+
+#: invalid.license.reason.1
+msgid ""
+"The users exceeded the license limited. Please contact Edgenius to upgrade "
+"license."
+msgstr ""
+"Lisansta belirtilen kullanıcı sınırı aşıldı. Lütfen sistem yöneticisine "
+"lisansı güncellemesi için irtibata geçiniz."
+
+#: invalid.license.reason.2
+msgid ""
+"You installed a new version but the license does not support his version."
+msgstr "Yeni bir sürüm yüklediniz fakat lisans bu sürümü desteklememektedir."
+
+#: invalid.license.action
+msgid ""
+"Please go to <a href=\"http://www.edgenius.com/pricing\">our website and "
+"update your license</a>."
+msgstr ""
+"Lisansı güncellemek için <a "
+"href=\"http://www.edgenius.com/pricing\">sayfasını ziyaret edin</a>."
+
+#: confirm.skip.to.done
+msgid ""
+"This may make your system work abnormally except when you know what you are "
+"doing! "
+msgstr ""
+"Bu ne yaptığınızı bildiğiniz durumlar haricinde sistemin anormal çalışmasına"
+" neden olur."
+
+#: upgrade.error.1
+msgid "Upgrade verification with errors"
+msgstr "Yükseltme doğrulaması hatalarla sonuçlandı"
+
+#: upgrade.error.1.desc
+msgid ""
+"We detect following errors while upgrading. We recommend you to go through "
+"all setup steps to be able to help you fix these error(You won't lost your "
+"original data)."
+msgstr ""
+"Yükseltme esnasında şu hatalarla karşılaştık. Tüm adımlara tek tek gitmenizi"
+" ve bu hataları gidermenizi öneriyoruz (Orjinal verinizi "
+"kaybetmeyeceksiniz)."
+
+#: upgrade.to.next
+msgid "Yes, take me to others setup steps"
+msgstr "Evet, beni diğer kurulum adımlarınına götür"
+
+#: upgrade.to.done
+msgid "No, I know what I am doing, please complete installation."
+msgstr "Hayır, ben ne yapıyorum biliyorum, lütfen kurulumu tamamla."
+
+#: upgrade.desc
+msgid ""
+"The running version is {0}, but the existed version \"{1}\" is found in root"
+" directory \"{2}\". Do you want to do upgrade rather than a fresh "
+"installation?"
+msgstr ""
+"Çalışan sürüm {0}, fakat \"{2}\" kök dizininde \"{1}\" sürümü bulundu. Temiz"
+" kurulum yerine sürüm güncellemek istiyor musunuz?"
+
+#: upgrade.go
+msgid "Yes, please upgrade"
+msgstr "Evet lütfen, sürüm yükselt"
+
+#: upgrade.from.start
+msgid "No, I want to go through all the setup steps"
+msgstr "Hayır, tüm kurulum adımlarını gerçekleştirmek istiyorum"
+
+#: setup.welcome.title
+msgid "Welcome to {0} setup wizard"
+msgstr "{0} kurulum sihirbazına hoş geldiniz."
+
+#: setup.desc
+msgid ""
+"Please follow the next 6 steps to complete the setup. If you are doing "
+"upgrade,\tonly first step is mandatory."
+msgstr ""
+"Lütfen kurulumu tamamlamak için sıradaki 6 adımı izleyiniz. Eğer güncelleme "
+"yapıyorsanız sadece ilk adım zorunludur."
+
+#: next.step
+msgid "Next step"
+msgstr "Sonraki adım"
+
+#: setup.step.1
+msgid "Create data root directory"
+msgstr "Veri kök dizini oluşturun"
+
+#: setup.step.2
+msgid "Choose license"
+msgstr "Lisansı seçin"
+
+#: setup.step.3
+msgid "Setup ActiveMQ server"
+msgstr "ActiveMQ sunucusu kur"
+
+#: setup.step.4
+msgid "Create database"
+msgstr "Veritabanı oluştur"
+
+#: setup.step.5
+msgid "Create tables"
+msgstr "Tabloları oluştur"
+
+#: setup.step.6
+msgid "Setup administrator user"
+msgstr "Kurulum yönetici hesabı"
+
+#: error.restore
+msgid "Restore failed with unexpected errors."
+msgstr "Beklenmedik hatalar ile geri yükleme başarısız oldu."
+
+#: restore.success
+msgid "System restore successes."
+msgstr "Sistem geri yükleme başarılı."
+
+#: restore.failed
+msgid "System restore failed."
+msgstr "Sistem geri yükleme başarısız oldu."
+
+#: choose.file.first
+msgid "Please choose a file first"
+msgstr "Lütfen önce bir dosya seçin"
+
+#: restore.file.no.exist
+msgid "Restore file not found, please refresh page and try again."
+msgstr ""
+"Geri Yükleme dosyası bulunamadı lütfen, sayfayı yenileyin ve tekrar deneyin."
+
+#: backup.file.no.exist
+msgid "Backup file not found, please refresh page and try again."
+msgstr ""
+"Yedekleme dosyası bulunamadı lütfen, sayfayı yenileyin ve tekrar deneyin."
+
+#: backup.failed
+msgid "Backup failed with unexpected errors."
+msgstr "Yedekleme, beklenmeyen hatalar ile başarısız oldu."
+
+#: backup.success
+msgid "Backup successes. The backup file name is {0}."
+msgstr "Yedekleme başarılı. Yedekleme dosya adı {0}."
+
+#: schedule.failed
+msgid "Schedule setup failed, please try again."
+msgstr "Zamanlandırma kurulumu hatalı, lütfen tekrar deneyiniz."
+
+#: edit.schedule
+msgid "Edit backup schedule"
+msgstr "Yedekleme zamanlayıcısını güncelle"
+
+#: valid.hour
+msgid "Hour must between 0 to 23"
+msgstr "Saat 0 ile 23 arasında olmak zorunda"
+
+#: valid.minute
+msgid "Minute must between 0 to 59"
+msgstr "Dakika 0 ile 59 arasında olmak zorunda"
+
+#: valid.dayofmonth
+msgid "Day of Month must between 0 to 31"
+msgstr "Ayın günleri 0 ile 31 arasında olmak zorunda"
+
+#: readonly.link
+msgid "Page not found and no permission to create."
+msgstr "Sayfa bulunamadı ve oluşturmak için yetki yok"
+
+#: indexing.started
+msgid ""
+"Rebuild searching index process started. It may take few minutes to complete"
+" and depends on the volume of your system."
+msgstr ""
+"Arama indeksinin oluşturulması başlatıldı. Tamamlanması birkaç dakika "
+"alabilir."
+
+#: indexing.failed
+msgid "Rebuild searching index failed, please try later."
+msgstr ""
+"Arama indeksinin oluşturulması başarısız oldu, lütfen tekrar deneyiniz."
+
+#: cache.printed
+msgid "Please find your latest log files now and submit the issue."
+msgstr "Lütfen en son log kayıt dosyasını bulun ve sorunu gönderin."
+
+#: cache.cleaned
+msgid "Cache is cleaned."
+msgstr "Önbellek temizlendi"
+
+#: not.available
+msgid "N/A"
+msgstr "Uygulanamaz"
+
+#: add.user.to.role
+msgid "Add user to group"
+msgstr "Kullanıcıyı gruba ekle"
+
+#: user.create.success
+msgid "User is created successfully."
+msgstr "Kullanıcı başarıyla oluşturuldu"
+
+#: group.create.success
+msgid "Group is created successfully."
+msgstr "Grup başarıyla oluşturuldu"
+
+#: space.create.success
+msgid "Space is created successfully."
+msgstr "Alan başarıyla oluşturuldu"
+
+#: confirm.remove.user.from.role
+msgid "Do you want to remove this user from the current group?"
+msgstr "Mevcut gruptan kullanıcıyı silmek istediğinizden emin misiniz?"
+
+#: admin.role.must.one.user
+msgid "System administrator group must have at least one user."
+msgstr "Sistem grubu en az bir kullanıcıya sahip olmalıdır."
+
+#: private.space
+msgid "Private space"
+msgstr "Özel alan"
+
+#: attach.quota
+msgid "Attachment quota"
+msgstr "Eklenti kotası"
+
+#: unknown
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: unlimited
+msgid "Unlimited"
+msgstr "Sınırsız"
+
+#: space.quota.data
+msgid "{0} available in {1}"
+msgstr "{1} de {0} mevcut"
+
+#: license.information
+msgid "License information"
+msgstr "Lisans bilgisi"
+
+#: license.owner
+msgid "License owner"
+msgstr "Lisans sahibi"
+
+#: license.expired.date
+msgid "License expired date"
+msgstr "Lisans bitiş tarihi"
+
+#: maximum.users
+msgid "Maximum users"
+msgstr "Maximum kullanıcı sayısı"
+
+#: save
+msgid "Save"
+msgstr "Kaydet"
+
+#: status
+msgid "Status"
+msgstr "Durum"
+
+#: valid
+msgid "Valid"
+msgstr "Geçerli"
+
+#: invalid.license.reason.3
+msgid "License is expired."
+msgstr "Lisans "
+
+#: sent.msg.title
+msgid "User sent a message to you"
+msgstr "Kullanıcı size bir mesaj gönderdi"
+
+#: sent.by
+msgid "sent by"
+msgstr "gönderen"
+
+#: change.quota
+msgid "Change quote"
+msgstr "Alıntıyı değiştir"
+
+#: zero.unlimited
+msgid "Unlimited if set to 0"
+msgstr "0 olarak atanırsa sınırsız"
+
+#: restore.confirm
+msgid ""
+"Very important: your current data will be overwritten by the restore data. "
+"Do you confirm to continue? "
+msgstr ""
+"Çok önemli: Geri yükleme verileri mevcut verilerinizin üzerine yazılacaktır."
+" Devam etmeyi onaylıyor musunuz?"
+
+#: toc
+msgid "Table of Contents"
+msgstr "İçindekiler"
+
+#: no.header.for.toc
+msgid "No heading found"
+msgstr "Başlık bulunamadı"
+
+#: template.list
+msgid "Template list"
+msgstr "Şablon listesi"
+
+#: create.template
+msgid "Create template"
+msgstr "Şablon oluştur"
+
+#: edit.template
+msgid "Edit template"
+msgstr "Şablonu güncelle"
+
+#: comment.body.hidden
+msgid "This comment is hidden."
+msgstr "Yorum gizlidir"
+
+#: widget.show.portrait
+msgid "Show portrait"
+msgstr "Fotoğrafı Göster"
+
+#: widget.show.portrait.desc
+msgid "Display the page author's portrait."
+msgstr "Sayfa yazarının fotoğrafını göster."
+
+#: new.message.notify.mail.subject
+msgid "You received a message"
+msgstr "Bir mesajınız var"
+
+#: driver.type
+msgid "Driver type"
+msgstr "Sürücü tipi"
+
+#: friendship.rejected
+msgid "The friendship is rejected."
+msgstr "Arkadaşlık isteği red edildi."
+
+#: friendship.accepted
+msgid "The friendship is accepted."
+msgstr "Arkadaşlık isteği kabul edildi."
+
+#: friendship.processed
+msgid "The friendship is already processed or does not exist."
+msgstr "Arkadaşlık isteği daha önce yanıtlanmış ya da öyle bir istek yok."
+
+#: friendship.no.permission
+msgid "You don't have permission to view this page."
+msgstr "Bu sayfayı görüntüleme yetkiniz yok."
+
+#: wait.patient
+msgid "Wait in patient, system is reloading."
+msgstr "Lütfen bekleyiniz, sistem tekrar yükleniyor."
+
+#: err.invalid.blog.info
+msgid ""
+"Unable to connect the blog, do you input correct URL, user or password?"
+msgstr ""
+"Bloga bağlanılamadı. URL adresi, kullanıcı adı veya şifreyi doğru "
+"girdiğinize emin misiniz? "
+
+#: backup.confirm
+msgid "Do you want to backup now?"
+msgstr "Şimdi yedekleme yapmak istiyor musunuz?"
+
+#: update.failed
+msgid "Update failed."
+msgstr "Güncelleme başarısız"
+
+#: filter
+msgid "Filter"
+msgstr "Filtre"
+
+#: delete
+msgid "Delete"
+msgstr "Sil"
+
+#: delete.confirm
+msgid "Do you want to delete this file?"
+msgstr "Bu dosyayı silmek istediğinize emin misiniz?"
+
+#: version.check
+msgid "New version check"
+msgstr "Yeni sürüm kontrolü"
+
+#: version.check.desc
+msgid ""
+"Allow system automatically check latest version. A message sends to system "
+"administrator if the new version is found."
+msgstr ""
+"Sistemin yeni bir sürümünü otomatik olarak kontrol etmesine izin verir. Yeni"
+" bir sürüm bulunursa sistem yöneticilerine bir mesaj gönderilir."
+
+#: invite.accepted.to.sender
+msgid ""
+"Your invitation to {0}({1}) is accepted. He/she has read permission on your "
+"space. You can assign more permission from Space Admin -> Permission."
+msgstr ""
+"{0}({1}) olan davetiniz kabul edildi. Kullanıcının alanınızda okuma yetkisi "
+"var. Daha fazla yetki atamak için Alan Yöneticisi -> Yetkiler bölümünü "
+"kullanınız."
+
+#: invitation
+msgid "Invitation"
+msgstr "Davet"
+
+#: invite.space.not.exist
+msgid "Space {0} doesn't exist for this invitation."
+msgstr "{0} alanı bu davet için mevcut değildir."
+
+#: invite.not.exist
+msgid "Invitation doesn't exist."
+msgstr "Davet mevcut değildir."
+
+#: invite.accept.anonymous
+msgid ""
+"Your friend {0} invited you join his/her space {1} in {2}. You will get "
+"initial space read permission once you accept this invitation. Please ask "
+"space administrator for further permission. Please note, this invitation "
+"will be expired in 72 hours."
+msgstr ""
+"Arkadaşınız {0} sizi {1}  {2} alanına katılmaya davet ediyor. Bu daveti "
+"kabul ettiğinizde alanı okuma iznine sahip olacaksınız. Lütfen alan "
+"yöneticisine daha fazla yetki için iletişime geçiniz. Bu davetin süresi 72 "
+"saat geçerlidir."
+
+#: invite.accept.loginuser
+msgid ""
+"Hi {3},<p> Your friend {0} invited you join his/her space {1} in {2}. You "
+"will get initial space read permission once you accept this invitation. "
+"Please ask space administrator for further permission. Please note, this "
+"invitation will be expired in 72 hours.</p>"
+msgstr ""
+"Merhaba {3},<p> Arkadaşınız {0} sizi {1}  {2} alanına katılmaya davet "
+"ediyor. Bu daveti kabul ettiğinizde alanı okuma iznine sahip olacaksınız. "
+"Lütfen alan yöneticisine daha fazla yetki için iletişime geçiniz. Bu davetin"
+" süresi 72 saat geçerlidir."
+
+#: invite.accepted.or.email.invalid
+msgid ""
+"Hi {0},<p>Did you already accepted this invitation? This invitation doesn''t"
+" match your current login email address {1}. You don''t accept this "
+"invitation, please</p>  "
+msgstr ""
+"Merhaba {0}, <p> Bu daveti daha önce kabul etmiş miydiniz? Bu davet sizin "
+"giriş epostanız olan {1} ile eşleşmemektedir."
+
+#: invite.accepted
+msgid ""
+"Hi {0},<p>Welcome to {1}. You can <a href=\"{2}\">click here</a> to enter "
+"your friend space.</p>"
+msgstr ""
+"Merhaba {0}, <p> {1} e hoş geldiniz. Arkadaşlarınızın alanına girmek için "
+"buraya <a href=\"{2}\"> tıklayabilirsiniz.</a>"
+
+#: invite.unexpect.error
+msgid ""
+"Sorry, we get some unexpected errors. Please try again or contact system "
+"administrator."
+msgstr ""
+"Üzgünüz, beklenmeyen hatalar meydana geldi. Lütfen tekrar deneyiniz ya da "
+"sistem yöneticisi ile iletişime geçiniz."
+
+#: yes.overwrite
+msgid "Yes,overwrite"
+msgstr "Evet, Üstüne yaz"
+
+#: quicknote.title
+msgid "Quick note"
+msgstr "Hızlı not"
+
+#: quicknote.desc
+msgid "Personal quick note"
+msgstr "Kişisel bilgi notu"
+
+#: widget.activies.title
+msgid "Recently update"
+msgstr "Son zamanlarda güncellenen"
+
+#: widget.activies.desc
+msgid "Recently update activities."
+msgstr "Güncellenen etkinlikler"
+
+#: activity.page.create
+msgid "Created page {0} {1}."
+msgstr "Oluşturulan sayfa {0}{1} "
+
+#: activity.page.update
+msgid "Updated page {0} {1}."
+msgstr "Güncellenen sayfa {0}{1} "
+
+#: activity.page.restore
+msgid "Restored page {0} {1} from trash bin."
+msgstr "Geri dönüşüm kutusundan yüklenen sayfa {0}{1}."
+
+#: activity.page.delete
+msgid "Put page {0} {1} to trash bin."
+msgstr "Sayfa {0}{1} çöp kutusuna taşı."
+
+#: activity.page.permanent_delete
+msgid "Deleted page {0} permanently {1}."
+msgstr "Sayfa {0} kalıcı olarak sil {1}."
+
+#: activity.page.revert
+msgid "Reverts page {0} from history version {1} {2}."
+msgstr "{0} sayfasını {1} {2} geçmiş sürümünden geri al."
+
+#: activity.page.move
+msgid "Moved page {0} to {1} in space {2}."
+msgstr "{2} alanında {0} sayfası {1} alanına taşındı"
+
+#: activity.page.copy
+msgid "Copied page {0} to {1} in space {2}."
+msgstr "{2} alanında sayfayı {0} dan {1} e kopyalar ."
+
+#: activity.comment.create
+msgid "Posts comment on page {0} {1}."
+msgstr "{0} {1} sayfasına yorum gönderir."
+
+#: activity.comment.update
+msgid "Updates comment on page {0} {1}."
+msgstr "{0} {1} sayfasındaki yorumları günceller."
+
+#: activity.attachment.create
+msgid "Uploads attachment {0} to page {1} {2}."
+msgstr "{0} dosya ekini {1} {2} sayfalarına yükler."
+
+#: activity.attachment.delete
+msgid "Deletes attachment {0} from page {1} {2}."
+msgstr "{0} ekli dosyasını {1} {2} sayfasından siler."
+
+#: activity.space.create
+msgid "Creates new space {0} {1}."
+msgstr "Yeni alan oluşturur {0} {1}."
+
+#: activity.space.permanent_delete
+msgid "Deleted space {0} permanently {1}."
+msgstr "{0} alanı tamamen silindi {1}"
+
+#: activity.space.delete
+msgid "Set space {0} removing mark {1}."
+msgstr "{0} alanına kaldırma işareti {1} ata"
+
+#: activity.space.restore
+msgid "Restored space {0} {1}."
+msgstr "Geri yüklenen alan {0} {1}."
+
+#: activity.user.create
+msgid "Sign-up {0}."
+msgstr "Kayıt ol {0}."
+
+#: activity.user.update
+msgid "Updates status to \"{0}\" {1}."
+msgstr "Durum \"{0}\" {1} güncellendi."
+
+#: activity.user.follow
+msgid "{0} follows {1} {2}."
+msgstr "{0} izliyor {1} {2}."
+
+#: activity.user.unfollow
+msgid "{0} stops following {1} {2}."
+msgstr "{0} izlemeyi bıraktı {1} {2}."
+
+#: activity.system.version_ping
+msgid "GeniusWiki has new version {0} available."
+msgstr "WikiBlog sisteminin yeni bir sürümü {0} mevcut"
+
+#: activity.system.rebuild_index
+msgid "System index was rebuilt successfully {0}."
+msgstr "Sistem indeksi {0} başarıyla tekrar oluşturuldu."
+
+#: activity.system.redeploy_shell
+msgid "All non-private spaces are deployed to Shell website {0}."
+msgstr "Özel olmayan alanlar Kabuk site {0} yayınlandı."
+
+#: at.time
+msgid "at {0}"
+msgstr "{0}"
+
+#: on.time
+msgid "on {0}"
+msgstr "{0}"
+
+#: today
+msgid "today"
+msgstr "bugün"
+
+#: less.a.minute.ago
+msgid "less a minute ago"
+msgstr "bir dk.dan az bir süre önce"
+
+#: minute.ago
+msgid "{0} minute ago"
+msgstr "{0} dakika önce"
+
+#: minutes.ago
+msgid "{0} minutes ago"
+msgstr "{0} dakika önce"
+
+#: hour.ago
+msgid "{0} hour ago"
+msgstr "{0} saat önce"
+
+#: hours.ago
+msgid "{0} hours ago"
+msgstr "{0} saat önce"
+
+#. #hh:mm yesterday
+#: yesterday.ago
+msgid "{0} yesterday"
+msgstr "{0} dün"
+
+#. #hh:mm 2 days ago
+#: days.ago
+msgid "{0} {1} days ago"
+msgstr "{0} {1} gün önce"
+
+#: connection.type
+msgid "Connection Type"
+msgstr "Bağlantı türü"
+
+#: port
+msgid "Port"
+msgstr "Port"
+
+#: authentication.required
+msgid "Authentication required"
+msgstr "Kimlik doğrulaması gerekli"
+
+#: smtp.port.integer
+msgid "SMTP port must be an integer."
+msgstr "SMTP portu tamsayı olmalıdır."
+
+#: smtp.jndi.required
+msgid "SMTP JNDI name is required."
+msgstr "SMTP JNDI adı gereklidir."
+
+#: smtp.host.required
+msgid "SMTP host name is required."
+msgstr "SMTP sunucu adı gereklidir."
+
+#: base.url
+msgid "Base URL"
+msgstr "Temel URL"
+
+#: base.url.desc
+msgid ""
+"Many resources is related to this application base URL, such as system level"
+" LOGO, attachment URL and RSS etc. Normally it looks like "
+"http://localhost:8080, http://www.yourdomain.com, or "
+"http://www.yourdomain.com/geniuswiki etc."
+msgstr ""
+"Birçok kaynak bu uygulama temel URL adresinde dayanmaktadır. Örneğin sistem "
+"LOGOsu, ekli dosya adresleri ve RSS vb.. Normalde bu adres "
+"http://localhost:8080, http://www.alanadınız.com ya da "
+"http://www.alanadınız.com/wikiblog gibidir."
+
+#: setup.lower.appversion.title
+msgid "Warning: Application version is lower than existing data"
+msgstr "Uyarı: Uygulama sürümü mevcut veriden daha eski"
+
+#: setup.lower.appversion.desc
+msgid ""
+"The application version that you are installing is {0} lower than your "
+"existing date version {1}.  Downgrade is not allowed. Please download latest"
+" version from <a "
+"href=\"http://www.edgenius.com\">http://www.edgenius.com</a> and try again."
+msgstr ""
+"Kurmakta olduğunuz uygulama sürümü {0} önceki sürümden {1} daha düşük. Sürüm"
+" düşürme izni yok. Lütfen son sürümü <a "
+"href=\"http://www.edgenius.com\">http://www.edgenius.com</a> indirip tekrar "
+"deneyiniz."
+
+#: log.dir
+msgid "Find your log files from this directory:<p> {0} </p>"
+msgstr "Loglarınızı bu klasörde bulun:<p> {0} </p>"
+
+#: submit.log
+msgid "Dump logs for bug report"
+msgstr "Hata raporu için logların dökümünü al"
+
+#: submit.log.desc
+msgid ""
+"If your system doesn't run well, click this link that will dump some "
+"information to log files, then submit your issue with latest log files to <a"
+" href=\"mailto:support@edgenius.com\">support@edgenius.com</a>."
+msgstr ""
+"Eğer sisteminiz düzgün çalışmıyorsa, bu bağlantıya tıklayarak bazı log "
+"bilgilerinin dökümünü alınız, daha sonra bu sorunları <a "
+"href=\"mailto:support@edgenius.com\">support@edgenius.com</a> a mail ile "
+"bildiriniz."
+
+#: step.4.needdb
+msgid ""
+"Please ensure the database and user are already created before next step."
+msgstr ""
+"Lütfen sonraki adımdan önce veri tabanı ve kullanıcısının oluşturulmuş "
+"olduğuna emin olunuz."
+
+#: print.author.info
+msgid "Create by {0} on {1} - Last updated by {2} on {3}"
+msgstr ""
+"{1} tarihinde {0} tarafından oluşturuldu. Son güncelleme {3}, {2} tarafından"
+
+#: theme.file.no.exist
+msgid "Theme file doesn't exist. "
+msgstr "Şablon dosyası mevcut değil."
+
+#: skin.file.no.exist
+msgid "Skin file doesn't exist. "
+msgstr "Görünüm dosyası mevcut değil"
+
+#: actions
+msgid "Actions"
+msgstr "Eylemler"
+
+#: apply
+msgid "Apply"
+msgstr "Uygula"
+
+#: applied
+msgid "Applied"
+msgstr "Uygulandı"
+
+#: deployed
+msgid "Deployed"
+msgstr "Yüklenmiş"
+
+#: upload.skin
+msgid "Upload Skin"
+msgstr "Görünümü Yükle"
+
+#: upload.theme
+msgid "Upload Theme"
+msgstr "Şablonu Yükle"
+
+#: version
+msgid "Version"
+msgstr "Sürüm"
+
+#: author
+msgid "Author"
+msgstr "Yazar"
+
+#: disabled
+msgid "Disabled"
+msgstr "Pasif"
+
+#: enabled
+msgid "Enabled"
+msgstr "Aktif"
+
+#: delete.theme.confirm
+msgid ""
+"Are you sure to delete this theme? The spaces are using this theme may be "
+"messed up."
+msgstr ""
+"Bu şablonu silmek istediğinizden emin misiniz? Bu temayı kullanan alanlar "
+"bozulabilir."
+
+#: delete.skin.confirm
+msgid "Are you sure to delete this skin?"
+msgstr "Bu görünümü silmek istediğinizden emin misiniz?"
+
+#: press.help
+msgid "Press F1 for Help!"
+msgstr "Yardım için F1 tuşuna basın!"
+
+#: msg.to.admin
+msgid "Message to administrators"
+msgstr "Yöneticilere mesaj"
+
+#: power.by
+msgid "Power by"
+msgstr "Destekleyen"
+
+#: change.lang
+msgid "Change language"
+msgstr "Dil değiştir"
+
+#: lang.en.au
+msgid "Australia English"
+msgstr "İngilizce"
+
+#: lang.zh.cn
+msgid "Simplified Chinese"
+msgstr "Çince"
+
+#: lang.tr.tr
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: detect.locale
+msgid "Detect locale from request"
+msgstr "Dili tarayıcı isteğinden algıla"
+
+#: detect.locale.desc
+msgid ""
+"If this option is on, system will detect country and language according to "
+"user request. It will display user's language if its translation is "
+"available."
+msgstr ""
+"Eğer bu seçenek işaretli ise, sistem bölgesel ve dil ayarlarınızı tanıyacak "
+"ve dil yüklü ise siteyi o dilde gösterecektir."
+
+#: undo.remove
+msgid "Undo remove"
+msgstr "Silmeyi geri al"
+
+#: remove
+msgid "Remove"
+msgstr "Kaldır"
+
+#: sysadmin.to.home
+msgid "Do you want to leave this page and go to space home page?"
+msgstr "Bu sayfadan ayrılmak ve alan ana sayfasına geçmek istiyor musunuz?"
+
+#: sysadmin.to.spaceadmin
+msgid "Do you want to leave this page and go to space admin?"
+msgstr "Bu sayfadan ayrılmak ve alan yönetimine geçmek istiyor musunuz?"
+
+#: change.lang.desc
+msgid ""
+"Change system default language. You need to manually refresh browser to see "
+"final result."
+msgstr ""
+"Sistem varsayılan dilini değiştir. Sonucu görmek için tarayıcınızı manuel "
+"yenilemeniz gerekmektedir."
+
+#: contact
+msgid "Contact"
+msgstr "İletişim"
+
+#: social
+msgid "Social"
+msgstr "Sosyal"
+
+#: phone
+msgid "Phone"
+msgstr "Telefon"
+
+#: website
+msgid "Website"
+msgstr "Web Sitesi"
+
+#: im
+msgid "IM"
+msgstr "IM"
+
+#: no.perm.download
+msgid "Sorry, you don't have the permission to download this file."
+msgstr "Üzgünüz, bu dosyayı indirme yetkisine sahip değilsiniz."
+
+#: no.file.download
+msgid "Sorry, we can not find the file by given file ID."
+msgstr "Üzgünüz, verilen dosya IDsi ile dosya bulunamadı."
+
+#. #webservice.disabled=Webservice is disabled, please contact administrator.
+#: system.services
+msgid "System services"
+msgstr "Sistem servisleri"
+
+#: soap.service
+msgid "SOAP web service"
+msgstr "SOAP web servisi"
+
+#: rest.service
+msgid "REST web service"
+msgstr "REST web servisi"
+
+#: shell.service
+msgid "Shell service"
+msgstr "Kabuk Servisi"
+
+#: service.desc
+msgid ""
+"SOAP or REST web service is able to let third party programs to invoke "
+"system functions, such as creating a space, retrieving pages etc. Shell "
+"Service is special function in GeniusWiki that is able to clone a space to "
+"an independent read-only website. Shell function requires REST services "
+"enabled."
+msgstr ""
+"SOAP veya REST web servisi üçüncü parti programların sistem fonksiyonlarını "
+"çağırması, örneğin alanın oluşturulması, sayfaların geri alınması vb..izin "
+"verir. Kabuk servisi WikiBlog sisteminde özel bir fonksiyon olup alanın "
+"bağımsız salt okunur web sayfasına klonlanmasını sağlayabilir. "
+
+#: redeploy.shell
+msgid "Redeploy the shell"
+msgstr "Kabuğu yeniden dağıt"
+
+#: redeploy.shell.desc
+msgid ""
+"Deploy all spaces to shell clone website again. Only the spaces and pages "
+"that are visible to public user will be deployed. This request may take "
+"minutes to complete depending on your current data volume.<br>Please note, "
+"Shell service option must be enabled in General setting page. "
+msgstr ""
+"Tüm alanları yeniden kabuk klon web sitesine dağıtın. Sadece tüm "
+"kullanıcılara görünür olan alanlar ve sayfalar dağıtılacaktır. Bu istek, "
+"mevcut veri hacmine bağlı olarak tamamlanması dakikalar alabilir. <br> Not "
+"ediniz, Genel ayar sayfasında Shell servis seçeneği etkin olmalıdır."
+
+#: redeploy.shell.invoked
+msgid ""
+"System is deploying spaces to shell, however this may take minutes to "
+"complete depending on your current data volume."
+msgstr ""
+"Sistem kabuğa alanları dağıtmaktadır, ancak bu mevcut veri hacmine bağlı "
+"olarak tamamlanması dakikalar alabilir."
+
+#: last.updated.by
+msgid "Last updated by"
+msgstr "Son güncelleyen"
+
+#: enable.shell
+msgid "Enable Shell"
+msgstr "Kabuğu Eetkinleştir"
+
+#: disable.shell
+msgid "Disable Shell"
+msgstr "Kabuğu Pasifleştir"
+
+#: change.shell.theme
+msgid "Change Shell theme"
+msgstr "Kabuk temasını değiştir"
+
+#: header.linked.shell
+msgid "Linked Shell"
+msgstr "Bağlantılı Kabuk"
+
+#: shell.desc
+msgid ""
+"Shell is a read-only mirror website from this space. It is better way to "
+"share the content because Shell has diversified themes and better SEO "
+"optimization."
+msgstr ""
+"Kabul bu alanın salt okunur web sayfası yansımasıdır. Shell çeşitlendirilmiş"
+" temalar ve daha iyi SEO optimizasyon barındırdığından içerik paylaşmak için"
+" daha iyi bir yoldur."
+
+#: space.disable.shell.confirm
+msgid ""
+"Do you want to disable space Shell function? This will also remove all "
+"existed pages in Shell."
+msgstr ""
+"Alan kabuk özelliğini pasifleştirmek istiyor musunuz? Bu işlem kabuktaki "
+"mevcut sayfaları kaldıracaktır."
+
+#: space.enable.shell.confirm
+msgid "Do you want to enable space Shell function?"
+msgstr "Alan kabuk özelliğini etkinleştirmek istiyor musunuz?"
+
+#: space.deploy.shell.confirm
+msgid "Do you want to deploy all pages in this space to Shell again?"
+msgstr "Bu alandaki tüm sayfaları Kabuğa tekrar dağıtmak ister misiniz?"
+
+#: reset
+msgid "Reset"
+msgstr "Sıfırla"
+
+

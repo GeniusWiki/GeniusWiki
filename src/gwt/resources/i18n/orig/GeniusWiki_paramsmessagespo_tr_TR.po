@@ -1,0 +1,242 @@
+# 
+# Translators:
+#   <isural@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: GeniusWiki\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-26 12:32+0000\n"
+"PO-Revision-Date: 2011-11-22 21:24+0000\n"
+"Last-Translator: isural <isural@gmail.com>\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.net/projects/p/GeniusWiki/team/tr_TR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Translate Toolkit 1.9.0\n"
+
+#. #Intended half sentence - appending other part in program. The tailing part
+#. is " resume draft?"
+#: resume.draft
+msgid "You have a draft saved on {0} , do you want to"
+msgstr ""
+"{0} tarihinde kaydedilen bir taslağınız var, bunu yapmak istiyor musunuz? "
+
+#. #Intended half sentence - appending other part in program. The tailing part
+#. is " resume auto-saved draft?"
+#: resume.auto.draft
+msgid "It has an auto saved page on {0} , do you want to"
+msgstr ""
+"{0} tarihinde otomatik kaydedilen bir sayfa yoktur, bunu yapmak istiyor "
+"musunuz?"
+
+#: system.busy
+msgid ""
+"The application is out of date, please click the refresh button on your "
+"browser. If the problem persists, please report to {0} administrator. "
+msgstr ""
+"Başvuru tarihi geçmiş, lütfen tarayıcınızın yenile butonuna tıklayınız. "
+"Sorun devam ederse, {0} yöneticinize rapor edin."
+
+#: confirm.delete.draft
+msgid "Do you really want to delete draft \"{0}\"?"
+msgstr "\"{0}\" taslağını silmek istediğinizden emin misiniz?"
+
+#: confirm.close.portlet
+msgid "Do you really want to close this [{0}]?"
+msgstr "[{0}] kapatmak istiediğinizden emin misiniz?"
+
+#: welcome.app
+msgid "Welcome {0}!"
+msgstr "{0} Hoşgeldiniz!"
+
+#: login.for.help
+msgid "Welcome {0}. Please login to see more help."
+msgstr "Hoşgeldiniz {0}. Daha fazla yardım görmek için giriş yapınız."
+
+#: confirm.sync.space
+msgid "Synchronizing space {0}"
+msgstr "{0} Alanı senkronize ediliyor"
+
+#: post.by
+msgid "Post by <span id=\"{0}\"></span>  on {1}"
+msgstr "Gönderen <span id=\"{0}\"></span> {1} tarihinde"
+
+#: title.length
+msgid "Title size can not be over {0} characters."
+msgstr "Başlık boyutu {0} karakterden daha uzun olamaz."
+
+#: auto.save.at
+msgid "auto saved at {0}"
+msgstr "{0} otomatik kaydedilmiş"
+
+#: draft.save.at
+msgid "draft saved at {0}"
+msgstr "Taslak {0} tarihinde kaydedildi"
+
+#: overwrite.latest
+msgid "Do you really want to use history version {0} to latest page?"
+msgstr "{0} geçmiş sürümünü en son sayfaya uygulamak istiyor musunuz?"
+
+#: add.widget.title
+msgid "Add {0} to your Dashboard"
+msgstr "{0} Kontrol Paneline ekle"
+
+#: total.result
+msgid "Total results - {0}"
+msgstr "Toplam sonuç - {0}"
+
+#: required
+msgid "Please enter {0}."
+msgstr "Lütfen {0} giriniz."
+
+#: min.length
+msgid "The {0} must have at least {1} characters."
+msgstr "{0} en az {1} karakterden az olamaz."
+
+#: max.length
+msgid "The max length of {0} is {1} characters."
+msgstr "{0} maksimum uzunluğu {1} karakterdir."
+
+#: invalid.char
+msgid "The {0} includes invalid characters \"{1}\"."
+msgstr "{0} geçersiz bir karakter \"{1}\" içerir."
+
+#: invalid.input
+msgid "Please enter a valid {0}."
+msgstr "Geçerli bir {0} giriniz."
+
+#: remove.delay
+msgid "This Space will be permanently removed in {0} hours later."
+msgstr "Bu alan {0} saat sonra kalıcı olarak silinecektir."
+
+#: restore.no.exist.confirm
+msgid ""
+"Page \"{0}\" may be already restored or permanently deleted. Do you want to "
+"continue?"
+msgstr ""
+"\"{0}\" sayfası geri yüklenmiş ya da kalıcı olarak silinmiş olabilir. Devam "
+"etmek istiyor musunuz?"
+
+#: restore.replace.homepage
+msgid "Do you want to replace the current home page by page \"{0}\"?"
+msgstr "Mevcut ana sayfayı \"{0}\" sayfası ile değiştirmek istiyor musunuz?"
+
+#: restore.home.to.general
+msgid "Do you want to restore original home page \"{0}\" to a non-home page?"
+msgstr ""
+"\"{0}\" ana sayfayı, orjinal olmayan bir ana sayfa ile geri yüklemek istiyor"
+" musunuz?"
+
+#: restore.home.rename
+msgid ""
+"You are restoring space home page. But same title pages exist in the space. "
+"Restored page will be renamed to \"{0}\". Do you want to continue?"
+msgstr ""
+"Alan ana sayfasını geri yüklemektesiniz. Fakat alanda aynı başlıkta başka "
+"bir sayfa var. Geri yüklenen sayfa \"{0}\" ismi ile adlandırılacak. Devam "
+"etmek istiyor musunuz?"
+
+#: restore.home
+msgid "Do you want to restore space home page \"{0}\"?"
+msgstr "\"{0}\" alan ana sayfasını geri yüklemek istediğinize emin misiniz?"
+
+#: restore.rename
+msgid ""
+"Same title pages existed in the space. Restored page will be renamed to "
+"\"{0}\". Do you want to continue?"
+msgstr ""
+"Alanda bazı başlık sayfaları mevcut. Geri yükleme sayfası \"{0}\" ismi ile "
+"adlandırılacak. Devam etmek istiyor musunuz?"
+
+#: restore.confirm
+msgid "Do you want to restore page \"{0}\"?"
+msgstr "\"{0}\" sayfasını geri yüklemek istiyor musunuz?"
+
+#: restore.success
+msgid "Page \"{0}\" is restored successfully."
+msgstr "Sayfa \"{0}\" başarılı bir şekilde geri yüklendi."
+
+#: send.by
+msgid "Sent by {0} on {1}"
+msgstr "{0} tarafından {1} da gönderildi"
+
+#: no.role.user.select
+msgid "Please add at least one {0}."
+msgstr "Lütfen en az bir {0} ekleyiniz."
+
+#: resume.manual.draft
+msgid ""
+"You have a draft saved on {0} , do you want to resume editing from this "
+"draft?"
+msgstr ""
+"{0} tarihinde kaydeilmiş taslağınız var, bu taslağı düzenlemeye devam etmek "
+"istiyor musunuz?"
+
+#: attach.quota
+msgid "Free {1}/{0} "
+msgstr "Boş {1} / {0}"
+
+#. #last.updated.at=last updated at {0}
+#: registered.at
+msgid "{0} registered at {1}"
+msgstr " {0}, {1} zamanında kayıt oldu."
+
+#. # at time
+#: at
+msgid "at {0}"
+msgstr "{0}"
+
+#: updated.by
+msgid "{0} updated by"
+msgstr "{0} tarafından güncellendi"
+
+#: created.by
+msgid "{0} created by"
+msgstr "{0} tarafından oluşturuldu"
+
+#: confirm.hide.comment
+msgid "Do you want to {0} this comment?"
+msgstr "Bu yorumu {0} istiyor musunuz?"
+
+#. #someone is editing this page (in 2 minutes ago)/(just now)
+#: page.editing.warn
+msgid "is editing this page {0}"
+msgstr "Bu sayfayı düzenlemektedir {0}"
+
+#: in.minutes.ago
+msgid "in {0} minutes ago"
+msgstr "{0} dakika önce"
+
+#: group.users
+msgid "Users in group {0}"
+msgstr "{0} kullanıcı grubunda"
+
+#: error.invalid.character
+msgid "Invalid characters {0}"
+msgstr "Geçersiz karakterler {0}"
+
+#: can.be.empty
+msgid "{0} can not be empty."
+msgstr "{0} boş olamaz."
+
+#: send.message.to
+msgid "Send message to {0}"
+msgstr "{0} mesaj gönder"
+
+#: on
+msgid "on {0}"
+msgstr "{0}"
+
+#: shell.link.success
+msgid ""
+"<h2>Congratulation, your space successfully linked to Shell.</h2> <p>Address"
+" is <a href=\"{0}\" target=\"_blank\">{0}</a></p><p>You can manage Shell "
+"website options from space admin panel.</p>"
+msgstr ""
+"<h2> Tebrikler, alan kabuğa başarıyla bağlandı. </h2><p> Adresiniz <a "
+"href=\"{0}\" target=\"_blank\">{0}</a> </p><p> Web sitesini alan yönetim "
+"panelinden yönetebilirsiniz. </p>"
+
+

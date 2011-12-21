@@ -39,7 +39,7 @@ public class ConfigurationDAOHibernate extends BaseDAOHibernate<Configuration> i
 	
 	@SuppressWarnings("unchecked")
 	public Configuration getByType(String type) {
-		List<Configuration> list = getHibernateTemplate().find(GET_BY_TYPE,type);
+		List<Configuration> list = find(GET_BY_TYPE,type);
 		if(list == null || list.size() == 0)
 			return null;
 		return list.get(0);

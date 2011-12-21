@@ -121,7 +121,7 @@ public class TestSearchService{
 		user.setCreatedDate(now);
 		indexService.saveOrUpdateUser(user);
 		
-		rs = searchService.search("userI", 0	, Integer.MAX_VALUE, TestUtil.getAdminUser());
+		rs = searchService.search("userI", 0, Integer.MAX_VALUE, TestUtil.getAdminUser());
 		
 		Assert.assertEquals(1, rs.getTotalItem());
 		SearchResultItem item = rs.getItems().get(0);

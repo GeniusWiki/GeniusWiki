@@ -41,7 +41,7 @@ public class SpaceTagDAOHibernate  extends BaseDAOHibernate<SpaceTag> implements
 	//JDK1.6 @Override
 	@SuppressWarnings("unchecked")
 	public SpaceTag getByName(String tagName) {
-		List<SpaceTag> list = getHibernateTemplate().find(GET_BY_NAME,new Object[]{tagName});
+		List<SpaceTag> list = find(GET_BY_NAME,new Object[]{tagName});
 		if(list == null || list.size() == 0)
 			return null;
 		return list.get(0);

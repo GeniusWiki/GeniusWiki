@@ -284,23 +284,24 @@ public class RenderUtil {
 			String newlineFix = new StringBuilder(text.subSequence(start, end)).indexOf("\n") == -1?"":newlineKey;
 			String regionKey = key + index + newlineFix;
 			region.setKey(index + newlineFix);
+			region.setKeyIndex(index);
 			//~~~~~~~~~ start
 			Set<RegionBorderPoint> list = borders.get(start);
 			if(list == null){
 				list = new TreeSet<RegionBorderPoint>(new RegionBorderPointComparator());
-				list.add(new RegionBorderPoint(start,true,end,regionKey));
+				list.add(new RegionBorderPoint(start,true,end,regionKey, index));
 				borders.put(start, list);
 			}else{
-				list.add(new RegionBorderPoint(start,true,end,regionKey));
+				list.add(new RegionBorderPoint(start,true,end,regionKey, index));
 			}
 			//~~~~~~~~~ end
 			list = borders.get(end);
 			if(list == null){
 				list = new TreeSet<RegionBorderPoint>(new RegionBorderPointComparator());
-				list.add(new RegionBorderPoint(end,false,start,regionKey));
+				list.add(new RegionBorderPoint(end,false,start,regionKey, index));
 				borders.put(end, list);
 			}else{
-				list.add(new RegionBorderPoint(end,false,start,regionKey));
+				list.add(new RegionBorderPoint(end,false,start,regionKey, index));
 			}
 			index++;
 		}
