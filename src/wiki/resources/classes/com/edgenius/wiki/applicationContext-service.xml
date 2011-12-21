@@ -35,7 +35,7 @@
 	<!--  I test in large volume data, however, page index rebuid method still throw lazyLoadingException when checking if space home page has blog macro. I use @transaction to avoid this. 
 		 	However, transaction is not quite necessary, and page index is possible throw transction rollback exception.  I still need investigate what is better way to achieve this -->
 		
-<!--		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.search.service.IndexServiceImpl.rebuild*(..))"/> -->
+<!-- 		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.search.service.IndexServiceImpl.rebuild*(..))"/> -->
 <!-- 		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.service.impl.NotifyMQConsumer.handleMessage(..))"/> -->
 <!-- 		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.search.interceptor.IndexMQConsumer.handleMessage(..))"/> -->
 <!-- 		<aop:advisor advice-ref="openSessionInMethodInterceptor" pointcut="execution(* *..wiki.rss.RSSServiceImpl.createFeed(..))"/> -->

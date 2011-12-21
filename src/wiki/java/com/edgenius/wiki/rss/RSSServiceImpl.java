@@ -51,6 +51,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -84,6 +86,7 @@ import com.sun.syndication.io.SyndFeedOutput;
 /**
  * @author Dapeng.Ni
  */
+@Transactional(readOnly=true, propagation=Propagation.REQUIRES_NEW, noRollbackFor=Exception.class)
 public class RSSServiceImpl implements RSSService, InitializingBean{
 	private static final Logger log = LoggerFactory.getLogger(RSSServiceImpl.class);
 	private static final String RSS_OUTPUT_TYPE = "rss_2.0";

@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edgenius.core.dao.CrFileNodeDAO;
@@ -71,9 +72,7 @@ import com.edgenius.wiki.model.Widget;
 import com.edgenius.wiki.quartz.MaintainJobInvoker;
 import com.edgenius.wiki.quartz.QuartzException;
 import com.edgenius.wiki.search.lucene.IndexCallback;
-import com.edgenius.wiki.search.lucene.IndexFactory;
 import com.edgenius.wiki.search.lucene.IndexWriterTemplate;
-import com.edgenius.wiki.search.lucene.SimpleIndexFactory;
 import com.edgenius.wiki.service.RenderService;
 import com.edgenius.wiki.service.ThemeService;
 import com.edgenius.wiki.util.WikiUtil;
@@ -82,7 +81,7 @@ import com.edgenius.wiki.util.WikiUtil;
  * @author Dapeng.Ni
  */
 
-@Transactional(readOnly=true)
+@Transactional(readOnly=true, propagation=Propagation.REQUIRES_NEW, noRollbackFor=Exception.class)
 public class IndexServiceImpl implements IndexService, InitializingBean {
 	private static final Logger log = LoggerFactory.getLogger(IndexServiceImpl.class);
 	
