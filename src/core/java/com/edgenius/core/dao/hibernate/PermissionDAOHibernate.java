@@ -51,12 +51,12 @@ public class PermissionDAOHibernate extends BaseDAOHibernate<Permission>  implem
 	@SuppressWarnings("unchecked")
 	public List<Permission> getByResource(String resourceName) {
 		
-		return getHibernateTemplate().find(GET_BY_RESOURCE,resourceName);
+		return find(GET_BY_RESOURCE,resourceName);
 	}
 
 	@SuppressWarnings("unchecked")
 	public Permission getByOperationResource(OPERATIONS operation, String resourceName) {
-		List<Permission> list = getHibernateTemplate().find(GET_BY_OPERATION_RESOURCE,new Object[]{operation,resourceName});
+		List<Permission> list = find(GET_BY_OPERATION_RESOURCE,new Object[]{operation,resourceName});
 		if(list == null || list.size() == 0)
 			return null;
 		return list.get(0);
@@ -64,11 +64,11 @@ public class PermissionDAOHibernate extends BaseDAOHibernate<Permission>  implem
 
 	@SuppressWarnings("unchecked")
 	public List<Permission> getByRoleOperation(String roleName, OPERATIONS operation) {
-		return getHibernateTemplate().find(GET_BY_ROLE_OPERATION,new Object[]{operation,roleName});
+		return find(GET_BY_ROLE_OPERATION,new Object[]{operation,roleName});
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Permission> getByRoleResource(String roleName, String resourceName){
-		return getHibernateTemplate().find(GET_BY_ROLE_RESOURCE,new Object[]{roleName,resourceName});
+		return find(GET_BY_ROLE_RESOURCE,new Object[]{roleName,resourceName});
 	}
 }

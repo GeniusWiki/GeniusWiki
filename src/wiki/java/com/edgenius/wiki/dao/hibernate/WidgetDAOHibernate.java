@@ -41,7 +41,7 @@ public class WidgetDAOHibernate extends BaseDAOHibernate<Widget> implements Widg
 	@SuppressWarnings("unchecked")
 	//JDK1.6 @Override
 	public Widget getByUUID(String key) {
-		List<Widget> list = getHibernateTemplate().find(GET_BY_UUID,key);
+		List<Widget> list = find(GET_BY_UUID,key);
 		if(list == null || list.isEmpty())
 			return null;
 		

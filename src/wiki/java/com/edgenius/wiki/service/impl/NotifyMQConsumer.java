@@ -36,6 +36,8 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edgenius.core.Global;
 import com.edgenius.core.model.User;
@@ -67,6 +69,7 @@ import com.edgenius.wiki.util.WikiUtil;
  * 
  * @author Dapeng.Ni
  */
+@Transactional(readOnly=true, propagation=Propagation.REQUIRES_NEW, noRollbackFor=Exception.class)
 public class NotifyMQConsumer {
 	private static final Logger log = LoggerFactory.getLogger(NotifyMQConsumer.class);
 	

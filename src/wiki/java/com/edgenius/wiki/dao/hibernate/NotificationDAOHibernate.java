@@ -23,16 +23,12 @@
  */
 package com.edgenius.wiki.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.SecurityValues;
@@ -56,67 +52,63 @@ public class NotificationDAOHibernate extends BaseDAOHibernate<Notification>  im
 	@SuppressWarnings("unchecked")
 	public List<Notification> getResourceMessages(final User user, final boolean sysAdmin, final List<Resource> spaceResList, 
 			final List<Resource> adminResList, final int start, final int retCount) {
-		return (List<Notification>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				StringBuffer sql = new StringBuffer(GET_MESSAGES_PREFIX);
+		StringBuffer sql = new StringBuffer(GET_MESSAGES_PREFIX);
+		
+		Map<Integer,String> queryParams = new HashMap<Integer,String>();
+		int queryPos = 0;
+		//if users is instance admin, then get all messages... is it good????
+		if(!sysAdmin){
+			//first, get messages to all users and specified to given user
+			sql.append(" where n.targetType=").append(SharedConstants.MSG_TARGET_ALL_USERS).append(" or ");
+			sql.append(" (n.targetType=").append(SharedConstants.MSG_TARGET_USER).append(" and n.targetName=:p")
+				.append(queryPos).append(") ");
+			queryParams.put(queryPos++, user.getUsername());
+			
+			if(adminResList != null && adminResList.size() > 0){
+				sql.append(" or ");
 				
-				Map<Integer,String> queryParams = new HashMap<Integer,String>();
-				int queryPos = 0;
-				//if users is instance admin, then get all messages... is it good????
-				if(!sysAdmin){
-					//first, get messages to all users and specified to given user
-					sql.append(" where n.targetType=").append(SharedConstants.MSG_TARGET_ALL_USERS).append(" or ");
-					sql.append(" (n.targetType=").append(SharedConstants.MSG_TARGET_USER).append(" and n.targetName=:p")
-						.append(queryPos).append(") ");
-					queryParams.put(queryPos++, user.getUsername());
-					
-					if(adminResList != null && adminResList.size() > 0){
-						sql.append(" or ");
-						
-						for (int idx=0;idx< adminResList.size();idx++) {
-							Resource resource = adminResList.get(idx);
-							if(SecurityValues.RESOURCE_TYPES.SPACE.equals(resource.getType())){
-								//spaces admin permissions
-								sql.append(" (n.targetType=").append(SharedConstants.MSG_TARGET_SPACE_ADMIN_ONLY).append(" and ");
-								sql.append(" n.targetName=:p").append(queryPos + idx).append(") or ");
-								queryParams.put(queryPos + idx, resource.getResource());
-							}
-						}
-						//remove last "or"
-						sql.delete(sql.length() - 3,sql.length());
+				for (int idx=0;idx< adminResList.size();idx++) {
+					Resource resource = adminResList.get(idx);
+					if(SecurityValues.RESOURCE_TYPES.SPACE.equals(resource.getType())){
+						//spaces admin permissions
+						sql.append(" (n.targetType=").append(SharedConstants.MSG_TARGET_SPACE_ADMIN_ONLY).append(" and ");
+						sql.append(" n.targetName=:p").append(queryPos + idx).append(") or ");
+						queryParams.put(queryPos + idx, resource.getResource());
 					}
-					
-					if(spaceResList != null && spaceResList.size() > 0){
-						sql.append(" or ");
-						queryPos = queryParams.size();
-						for (int idx=0;idx< spaceResList.size();idx++) {
-							Resource resource = spaceResList.get(idx);
-							if(SecurityValues.RESOURCE_TYPES.SPACE.equals(resource.getType())){
-								//spaces all users
-								sql.append(" (n.targetType=").append(SharedConstants.MSG_TARGET_SPACE_CONTRIBUTE_USERS).append(" and ");
-								sql.append(" n.targetName=:p").append(queryPos+idx).append(") or ");
-								queryParams.put(queryPos+idx, resource.getResource());
-							}
-						}
-						//remove last "or"
-						sql.delete(sql.length() - 3,sql.length());
-					}
-					
 				}
-
-				sql.append(GET_MESSAGES_SUFFIX);
-				Query query = session.createQuery(sql.toString());
-				for (Entry<Integer,String>entry: queryParams.entrySet()) {
-					query.setString("p"+entry.getKey(), entry.getValue());
-				}
-				
-				if(start > 0)
-					query.setFirstResult(start);
-				if(retCount > 0)
-					query.setMaxResults(retCount);
-				
-				return query.list();
+				//remove last "or"
+				sql.delete(sql.length() - 3,sql.length());
 			}
-		});
+			
+			if(spaceResList != null && spaceResList.size() > 0){
+				sql.append(" or ");
+				queryPos = queryParams.size();
+				for (int idx=0;idx< spaceResList.size();idx++) {
+					Resource resource = spaceResList.get(idx);
+					if(SecurityValues.RESOURCE_TYPES.SPACE.equals(resource.getType())){
+						//spaces all users
+						sql.append(" (n.targetType=").append(SharedConstants.MSG_TARGET_SPACE_CONTRIBUTE_USERS).append(" and ");
+						sql.append(" n.targetName=:p").append(queryPos+idx).append(") or ");
+						queryParams.put(queryPos+idx, resource.getResource());
+					}
+				}
+				//remove last "or"
+				sql.delete(sql.length() - 3,sql.length());
+			}
+			
+		}
+
+		sql.append(GET_MESSAGES_SUFFIX);
+		Query query = getCurrentSesssion().createQuery(sql.toString());
+		for (Entry<Integer,String>entry: queryParams.entrySet()) {
+			query.setString("p"+entry.getKey(), entry.getValue());
+		}
+		
+		if(start > 0)
+			query.setFirstResult(start);
+		if(retCount > 0)
+			query.setMaxResults(retCount);
+		
+		return query.list();
 	}
 }

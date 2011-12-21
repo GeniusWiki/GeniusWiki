@@ -28,7 +28,6 @@ import java.util.List;
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.ext.todo.dao.TodoDAO;
 import com.edgenius.wiki.ext.todo.model.Todo;
-import com.edgenius.wiki.ext.todo.model.TodoItem;
 
 /**
  * @author Dapeng.Ni
@@ -39,12 +38,12 @@ public class TodoDAOHibernate extends BaseDAOHibernate<Todo> implements TodoDAO 
 
 	@SuppressWarnings("unchecked")
 	public List<Todo> getPageTodos(String pageUuid) {
-		return getHibernateTemplate().find(GET_PAGE_TODOS, pageUuid);
+		return find(GET_PAGE_TODOS, pageUuid);
 	}
 
 	@SuppressWarnings("unchecked")
 	public Todo getByNameInPage(String pageUuid, String todoName) {
-		List<Todo> list = getHibernateTemplate().find(GET_TODO, new Object[]{pageUuid, todoName});
+		List<Todo> list = find(GET_TODO, new Object[]{pageUuid, todoName});
 		if(list == null || list.size() == 0){
 			return null;
 		}

@@ -40,7 +40,7 @@ public class PageProgressDAOHibernate extends BaseDAOHibernate<PageProgress> imp
 
 	@SuppressWarnings("unchecked")
 	public PageProgress getByExtLinkID(String extLinkID) {
-		List<PageProgress> list = getHibernateTemplate().find(GET_EXT_LINK_ID,extLinkID);
+		List<PageProgress> list = find(GET_EXT_LINK_ID,extLinkID);
 		if(list == null || list.size() == 0)
 			return null;
 		return list.get(0);

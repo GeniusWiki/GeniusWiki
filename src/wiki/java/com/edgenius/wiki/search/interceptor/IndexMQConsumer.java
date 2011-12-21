@@ -26,6 +26,8 @@ package com.edgenius.wiki.search.interceptor;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edgenius.core.dao.RoleDAO;
 import com.edgenius.core.model.Role;
@@ -52,6 +54,7 @@ import com.edgenius.wiki.security.service.SecurityService;
 /**
  * @author Dapeng.Ni
  */
+@Transactional(readOnly=true, propagation=Propagation.REQUIRES_NEW, noRollbackFor=Exception.class)
 public class IndexMQConsumer {
 	private static final Logger log = LoggerFactory.getLogger(IndexMQConsumer.class);
 	

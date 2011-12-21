@@ -69,7 +69,7 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 			//in postgresql, if owner is null, SQL will throw exception.
 			return null;
 		}
-		List<Object[]> list = getHibernateTemplate().find(HAS_DRAFT_BY_TITLE,new Object[]{spaceUname, title,owner});
+		List<Object[]> list = find(HAS_DRAFT_BY_TITLE,new Object[]{spaceUname, title,owner});
 		if(list == null || list.isEmpty())
 			return null;
 		
@@ -95,14 +95,14 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 	public List<Draft> getDrafts(String spaceUname, String username, int type) {
 		if(type == 0){
 			if(StringUtils.isBlank(spaceUname))
-				return getHibernateTemplate().find(GET_ALL_DRAFTS,new Object[]{username});
+				return find(GET_ALL_DRAFTS,new Object[]{username});
 			else
-				return getHibernateTemplate().find(GET_SPACE_ALL_DRAFTS,new Object[]{spaceUname, username});
+				return find(GET_SPACE_ALL_DRAFTS,new Object[]{spaceUname, username});
 		}else{
 			if(StringUtils.isBlank(spaceUname))
-				return getHibernateTemplate().find(GET_DRAFTS,new Object[]{username,type});
+				return find(GET_DRAFTS,new Object[]{username,type});
 			else
-				return getHibernateTemplate().find(GET_SPACE_DRAFTS,new Object[]{spaceUname, username,type});
+				return find(GET_SPACE_DRAFTS,new Object[]{spaceUname, username,type});
 		}
 	}
 	
@@ -113,12 +113,12 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 			//in postgresql, if owner is null, SQL will throw exception.
 			return null;
 		}
-		List<Draft> list = getHibernateTemplate().find(GET_DRAFT_BY_UUID,new Object[]{spaceUname,uuid,owner,type});
+		List<Draft> list = find(GET_DRAFT_BY_UUID,new Object[]{spaceUname,uuid,owner,type});
 		Draft draft = null;
 		if(list != null && list.size() > 0){
 			draft  = (Draft)list.get(0);
 			log.info("Remove "+ list.size() +  " drafts for page " + uuid + " on space " + spaceUname);
-			getHibernateTemplate().deleteAll(list);
+			deleteAll(list);
 		}
 		return draft;
 	}
@@ -131,7 +131,7 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 			return null;
 		}
 		
-		List<Draft> list = getHibernateTemplate().find(GET_DRAFT_BY_UUID,new Object[]{spaceUname, uuid,owner,type});
+		List<Draft> list = find(GET_DRAFT_BY_UUID,new Object[]{spaceUname, uuid,owner,type});
 		if(list == null || list.isEmpty())
 			return null;
 		if(list.size() > 1)
@@ -143,7 +143,7 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 		//WARNING: Hibernate can not construct join properly in buldUpdate()!!! 
 		//if using spaceUname, SQL should be a join-sql,unfortunately, it cause exception.
 		//use spaceUid, it could be a simple query only for draft table.
-		getHibernateTemplate().bulkUpdate(REMOVE_SPACE_DRAFTS,spaceUid);
+		bulkUpdate(REMOVE_SPACE_DRAFTS,spaceUid);
 	}
 	
 }

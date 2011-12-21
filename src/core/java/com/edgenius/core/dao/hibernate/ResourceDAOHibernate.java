@@ -46,7 +46,7 @@ public class ResourceDAOHibernate extends BaseDAOHibernate<Resource> implements 
 		if(resourceName == null)
 			return null;
 		
-    	List<Resource> list = getHibernateTemplate().find(GET_BY_NAME,resourceName);
+    	List<Resource> list = find(GET_BY_NAME,resourceName);
     	if(list == null || list.size() == 0)
     		return null;
         return (Resource) list.get(0);
@@ -57,7 +57,7 @@ public class ResourceDAOHibernate extends BaseDAOHibernate<Resource> implements 
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Resource> getReources() {
-		return getHibernateTemplate().find(GET_SORTED_RESOURCE);
+		return find(GET_SORTED_RESOURCE);
 	}
 
 }

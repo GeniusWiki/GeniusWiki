@@ -42,7 +42,7 @@ public class PageLinkDAOHibernate extends BaseDAOHibernate<PageLink> implements 
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PageLink> getLinksFromSpace(String spaceUname, String link) {
-		return getHibernateTemplate().find(GET_BY_NAME,new Object[]{PageLink.TYPE_INTERNAL, spaceUname,link});
+		return find(GET_BY_NAME,new Object[]{PageLink.TYPE_INTERNAL, spaceUname,link});
 	}
 
 }

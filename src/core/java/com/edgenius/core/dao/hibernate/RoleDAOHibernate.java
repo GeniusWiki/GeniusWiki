@@ -23,16 +23,12 @@
  */
 package com.edgenius.core.dao.hibernate;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.RoleDAO;
@@ -59,7 +55,7 @@ public class RoleDAOHibernate extends BaseDAOHibernate<Role> implements RoleDAO 
 	 
     @SuppressWarnings("unchecked")
 	public Role getByName(String rolename) {
-    	List<Role> list = getHibernateTemplate().find(GET_BY_NAME,rolename);
+    	List<Role> list = find(GET_BY_NAME,rolename);
     	if(list == null || list.size() == 0)
     		return null;
         return (Role) list.get(0);
@@ -67,45 +63,41 @@ public class RoleDAOHibernate extends BaseDAOHibernate<Role> implements RoleDAO 
 
     public Role saveRole(Role role) {
         
-    	getHibernateTemplate().saveOrUpdate(role);
+    	getCurrentSesssion().saveOrUpdate(role);
     	
     	return role;
     }
 
     public void removeByName(String rolename) {
        Role role = getByName(rolename);
-       getHibernateTemplate().delete(role);
+       getCurrentSesssion().delete(role);
     }
 
 	@SuppressWarnings("unchecked")
 	public List<Role> getAllRoles() {
-		  return getHibernateTemplate().find(GET_ALL);
+		  return find(GET_ALL);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Role> getRoles(final int roleType, final String filter) {
 	
-		return (List<Role>) getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				String filterWith = "";
-				if(!StringUtils.isBlank(filter)){
-					filterWith = " and (r.displayName like :filter or r.description like :filter) ";
-				}
-				Query query = session.createQuery(GET_BY_TYPE + filterWith + GET_BY_TYPE_ORDERBY);
-				query.setInteger("type", roleType);
-				if(!StringUtils.isBlank(filter)){
-					query.setString("filter","%"+filter.trim()+"%");
-				}
-				
-				return query.list();
-			}
-		});
+		String filterWith = "";
+		if(!StringUtils.isBlank(filter)){
+			filterWith = " and (r.displayName like :filter or r.description like :filter) ";
+		}
+		Query query = getCurrentSesssion().createQuery(GET_BY_TYPE + filterWith + GET_BY_TYPE_ORDERBY);
+		query.setInteger("type", roleType);
+		if(!StringUtils.isBlank(filter)){
+			query.setString("filter","%"+filter.trim()+"%");
+		}
+		
+		return query.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	public Map<Integer, Long> getRolesUsersCount() {
 		
-		List<Object[]> list = getHibernateTemplate().find(GET_ROLES_USERS_COUNT);
+		List<Object[]> list = find(GET_ROLES_USERS_COUNT);
 		
 		Map<Integer, Long> usersCount = new HashMap<Integer, Long>();
 		if(list == null){

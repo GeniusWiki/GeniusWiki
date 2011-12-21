@@ -39,12 +39,12 @@ public class CalendarDAOHibernate extends BaseDAOHibernate<Calendar> implements 
 
 	@SuppressWarnings("unchecked")
 	public List<Calendar> getPageCalendars(String pageUuid) {
-		return getHibernateTemplate().find(GET_PAGE_CALENDARS, pageUuid);
+		return find(GET_PAGE_CALENDARS, pageUuid);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Calendar getCalendar(String pageUuid, String calendarName) {
-		List<Calendar> cals  = getHibernateTemplate().find(GET_CALENDAR, new Object[]{pageUuid,calendarName});
+		List<Calendar> cals  = find(GET_CALENDAR, new Object[]{pageUuid,calendarName});
 		if(cals != null && cals.size() > 0)
 			return cals.get(0);
 		
