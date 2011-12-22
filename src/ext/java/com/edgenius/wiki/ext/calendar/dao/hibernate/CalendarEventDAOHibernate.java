@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.ext.calendar.dao.CalendarEventDAO;
@@ -35,6 +36,7 @@ import com.edgenius.wiki.ext.calendar.model.CalendarEvent;
 /**
  * @author Dapeng.Ni
  */
+@Repository("calendarEventDAO")
 public class CalendarEventDAOHibernate extends BaseDAOHibernate<CalendarEvent> implements CalendarEventDAO {
 	private static final String REMOVE_CAL_EVENTS = "delete " + CalendarEvent.class.getName() + " as e where e.calendar.uid=?";
 	

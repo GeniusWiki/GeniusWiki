@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.ext.todo.dao.TodoItemDAO;
 import com.edgenius.wiki.ext.todo.model.TodoItem;
@@ -34,6 +36,7 @@ import com.edgenius.wiki.ext.todo.model.TodoItem;
 /**
  * @author Dapeng.Ni
  */
+@Repository("todoItemDAO")
 public class TodoItemDAOHibernate  extends BaseDAOHibernate<TodoItem> implements TodoItemDAO {
 	private static final String REMOVE_TODO_ITEMS = "delete " + TodoItem.class.getName() + " as e where e.todo.uid=?";
 	private static final String GET_BY_PUUID_TODONAME = "from "+ TodoItem.class.getName() + " as e where e.todo.pageUuid=? " +
