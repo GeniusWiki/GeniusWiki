@@ -123,6 +123,7 @@
 		<mkdir dir="${std.dir}"/>
 		<mkdir dir="${std.dir}/${app.name.lowcase}"/>
 		<mkdir dir="${std.dir}/${app.name.lowcase}/temp"/>
+		<mkdir dir="${std.dir}/${app.name.lowcase}/logs"/>
 		<mkdir dir="${std.dir}/${app.name.lowcase}/webapps"/>
 		<mkdir dir="${std.dir}/${app.name.lowcase}/webapps/ROOT"/>
 		<mkdir dir="${std.dir}/data"/>
@@ -150,6 +151,11 @@
 				<include name="**" />
 			</fileset>
 		</copy>
+		
+		<touch file="${std.dir}/${app.name.lowcase}/logs/THIS.IS.LOG.DIR">
+  	    </touch>
+		<touch file="${std.dir}/${app.name.lowcase}/temp/THIS.IS.TMP.DIR">
+  	    </touch>
 		
 		<!--  Copy logback.xml to bin/logback-test.xml for silence install use -->
 		<copy tofile="${std.dir}/bin/logback-test.xml" file="${src.dir}/wiki/resources/classes/logback.xml">

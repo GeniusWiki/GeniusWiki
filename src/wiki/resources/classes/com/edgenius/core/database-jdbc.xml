@@ -22,8 +22,8 @@
         <property name="removeAbandonedTimeout" value="60"/>
         <property name="logAbandoned" value="true"/>
         <property name="testOnBorrow" value="true"/>
-        <property name="validationQuery" value="select 1"/>
-<!--         <property name="validationQuery" value="select 1 from @TOKEN.TABLE.PREFIX@SPACES where UNIX_NAME='$SYSTEM$'"/> -->
+<!--         <property name="validationQuery" value="select 1"/> does not work for HSQL-->
+        <property name="validationQuery" value="select 1 from @TOKEN.TABLE.PREFIX@SPACES where UNIX_NAME='$SYSTEM$'"/>
     </bean>
     
     <bean id="quartzDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -40,7 +40,7 @@
         <property name="removeAbandonedTimeout" value="60"/>
         <property name="logAbandoned" value="true"/>
         <property name="testOnBorrow" value="true"/>
-        <property name="validationQuery" value="select 1"/>
+        <property name="validationQuery" value="select 1 from QRTZ_LOCKS"/>
     </bean>
 
 </beans>

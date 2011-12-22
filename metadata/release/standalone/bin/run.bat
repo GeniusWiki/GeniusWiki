@@ -16,7 +16,8 @@ setlocal ENABLEDELAYEDEXPANSION
 
 REM logback-test.xml in bin directory for silence install log
 set CLASSPATH=.;../geniuswiki/webapps/ROOT/WEB-INF/classes
-for %%G in (../geniuswiki/webapps/ROOT/WEB-INF/lib/*.jar) DO set CLASSPATH=!CLASSPATH!;../geniuswiki/webapps/ROOT/WEB-INF/lib/%%G
+set CLASSPATH=%CLASSPATH%;../geniuswiki/webapps/ROOT/WEB-INF/lib/*
+REM for %%G in (../geniuswiki/webapps/ROOT/WEB-INF/lib/*.jar) DO set CLASSPATH=!CLASSPATH!;../geniuswiki/webapps/ROOT/WEB-INF/lib/%%G
 java -cp %CLASSPATH%  %LOG_ROOT% %DATA_ROOT% com.edgenius.wiki.installation.SilenceInstall %~dp0\setup-variables.properties
 ENDLOCAL
 
