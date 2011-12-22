@@ -13,7 +13,7 @@ LOG_ROOT=-Dgeniuswiki.log.dir="${ROOT}/geniuswiki/logs"
 DATA_ROOT="-Ddata.root=${ROOT}/data/"
 
 cd ../database
-java -cp ../geniuswiki/webapps/ROOT/WEB-INF/lib/hsqldb-1.8.0-10.jar org.hsqldb.Server  -port ${DATABASE_PORT} -database.0 database -dbname.0 geniuswiki &
+java -cp ../geniuswiki/webapps/ROOT/WEB-INF/lib/hsqldb-2.2.6.jar org.hsqldb.Server  -port ${DATABASE_PORT} -database.0 database -dbname.0 geniuswiki &
 cd ../bin
 
 echo Initialise GeniusWiki...

@@ -133,10 +133,6 @@
 		<dependency org="database/driver" name="mysql" rev="5.1.12" conf="deploy->default"/>
 		<dependency org="database/driver" name="postgresql" rev="9.0-801.jdbc4" conf="deploy->default"/>
 		
-		<!-- 
-		<dependency org="database/driver" name="hsqldb" rev="5.0.5" conf="deploy->default"/>
-		 -->
-		
 		<dependency org="google" name="gson" rev="1.4" conf="deploy->default"/>
 
 		<!--  for pdf export -->
@@ -185,8 +181,7 @@
 		<dependency org="org" name="easymock" rev="2.5.2" conf="dev->classextension"/>
 		
 		<!--  Only for database test -->
-		<!-- hsqldb 1.9.0-rc4 uses jdk6 compiled! -->
-		<dependency org="org/hsqldb" name="hsqldb" rev="1.8.0-10" conf="database->default"/>
+		<dependency org="org/hsqldb" name="hsqldb" rev="2.2.6" conf="database->default"/>
 		<dependency org="database/driver" name="oracle" rev="10g2" conf="database->default"/>
 		<dependency org="database/driver" name="db2" rev="4.0.100" conf="database->default"/>
 		

@@ -8,7 +8,7 @@ set LOG_ROOT=-Dgeniuswiki.log.dir=%~dp0../geniuswiki/logs
 set DATA_ROOT=-Ddata.root=%~dp0../data/
 
 cd %~dp0\../database
-start java -cp %~dp0\../geniuswiki/webapps/ROOT/WEB-INF/lib/hsqldb-1.8.0-10.jar org.hsqldb.Server  -port %DATABASE_PORT% -database.0 database -dbname.0 geniuswiki
+start java -cp %~dp0\../geniuswiki/webapps/ROOT/WEB-INF/lib/hsqldb-2.2.6.jar org.hsqldb.Server  -port %DATABASE_PORT% -database.0 database -dbname.0 geniuswiki
 cd %~dp0\../bin
 
 echo Initialise GeniusWiki...
