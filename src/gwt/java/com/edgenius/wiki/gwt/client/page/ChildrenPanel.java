@@ -36,7 +36,7 @@ import com.edgenius.wiki.gwt.client.widgets.UserProfileLink;
 import com.edgenius.wiki.gwt.client.widgets.ZebraTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.Label;
 
 /**
@@ -107,7 +107,7 @@ public class ChildrenPanel extends PinPanel implements AsyncCallback<PageItemLis
 				final PageItemModel item = (PageItemModel) model.itemList.get(idx);
 				
 				Label modifiedDate = new Label(GwtClientUtils.toDisplayDate(item.modifiedDate));
-				Hyperlink titleLink = new Hyperlink(item.title,GwtUtils.getSpacePageToken(main.getSpaceUname(), item.title)); 
+				EventfulHyperLink titleLink = new EventfulHyperLink(item.title,GwtUtils.getSpacePageToken(main.getSpaceUname(), item.title)); 
 			
 				UserProfileLink modifier = new UserProfileLink(item.modifier, main.getSpaceUname(),item.modifierUsername,item.modifierPortrait);
 				int row = start + idx;

@@ -61,7 +61,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -192,7 +191,7 @@ public class PageRender implements RenderWidgetListener{
 								tokenName = GwtUtils.getSpacePageToken(linkSpaceUname, tokenName);
 							
 							tokenName += (anchorTxt==""?"":"#"+anchorTxt);
-							Hyperlink link = new Hyperlink(ln.getView(), true, tokenName);
+							EventfulHyperLink link = new EventfulHyperLink(ln.getView(), true, tokenName);
 							panel.add(link);
 						}
 					}

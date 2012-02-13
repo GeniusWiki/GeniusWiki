@@ -34,8 +34,8 @@ import com.edgenius.wiki.gwt.client.render.WikiRenderPanel;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 
 /**
  * @author Dapeng.Ni
@@ -72,7 +72,7 @@ public class SideBar extends PinPanel{
 				sidebarFuncPanel.clear();
 				content.add(sidebarFuncPanel);
 				
-				Hyperlink editSidebar = new Hyperlink(Msg.consts.edit_sidebar(),
+				EventfulHyperLink editSidebar = new EventfulHyperLink(Msg.consts.edit_sidebar(),
 						GwtUtils.buildToken(PageMain.TOKEN_EDIT_SIDEBAR, model.spaceUname,model.pageUuid));
 				
 				//add a separator

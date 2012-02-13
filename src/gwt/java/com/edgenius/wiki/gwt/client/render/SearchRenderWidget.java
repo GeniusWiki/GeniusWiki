@@ -59,13 +59,13 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DeckPanel;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -240,12 +240,12 @@ public class SearchRenderWidget extends SimplePanel implements AsyncCallback<Sea
 			
 			
 			if(item.type == SharedConstants.SEARCH_PAGE){
-				Hyperlink hLink = new Hyperlink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
+				EventfulHyperLink hLink = new EventfulHyperLink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
 				hLink.setTitle(Msg.consts.view_page());
 				firstLine.add(typeImg);
 				firstLine.add(hLink);
 				firstLine.add(new HTML(" ("));
-				Hyperlink sLink = new Hyperlink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname,null));
+				EventfulHyperLink sLink = new EventfulHyperLink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname,null));
 				sLink.setTitle(Msg.consts.goto_space());
 				firstLine.add(sLink);
 				firstLine.add(new HTML(")"));
@@ -256,7 +256,7 @@ public class SearchRenderWidget extends SimplePanel implements AsyncCallback<Sea
 				
 
 			}else if(item.type == SharedConstants.SEARCH_COMMENT){
-				Hyperlink hLink = new Hyperlink(item.title,GwtUtils.buildToken(PageMain.TOKEN_COMMENT, item.spaceUname,item.title,item.itemUid));
+				EventfulHyperLink hLink = new EventfulHyperLink(item.title,GwtUtils.buildToken(PageMain.TOKEN_COMMENT, item.spaceUname,item.title,item.itemUid));
 				hLink.setTitle(Msg.consts.goto_owner_page());
 				firstLine.add(typeImg);
 				firstLine.add(hLink);
@@ -267,7 +267,7 @@ public class SearchRenderWidget extends SimplePanel implements AsyncCallback<Sea
 				
 			}else if(item.type == SharedConstants.SEARCH_SPACE){
 				//goto home page of space
-				Hyperlink hLink = new Hyperlink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,null));
+				EventfulHyperLink hLink = new EventfulHyperLink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,null));
 				hLink.setTitle(Msg.consts.goto_space());
 				firstLine.add(typeImg);
 				firstLine.add(hLink);
@@ -278,7 +278,7 @@ public class SearchRenderWidget extends SimplePanel implements AsyncCallback<Sea
 				
 			}else if(item.type == SharedConstants.SEARCH_PAGE_TAG){
 
-				Hyperlink tagCloud = new Hyperlink(item.title,
+				EventfulHyperLink tagCloud = new EventfulHyperLink(item.title,
 						GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_TAG_CLOUD), item.spaceUname));
 				tagCloud.setTitle(Msg.consts.goto_tagcloud());
 				
@@ -286,7 +286,7 @@ public class SearchRenderWidget extends SimplePanel implements AsyncCallback<Sea
 				firstLine.add(tagCloud);
 				
 				firstLine.add(new HTML(" ("));
-				Hyperlink sLink = new Hyperlink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname,null));
+				EventfulHyperLink sLink = new EventfulHyperLink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname,null));
 				sLink.setTitle(Msg.consts.goto_space());
 				firstLine.add(sLink);
 				firstLine.add(new HTML(")"));
@@ -298,7 +298,7 @@ public class SearchRenderWidget extends SimplePanel implements AsyncCallback<Sea
 				fragment = null;
 			}else if(item.type == SharedConstants.SEARCH_SPACE_TAG){
 				firstLine.add(typeImg);
-				Hyperlink tagCloud = new Hyperlink(item.title, GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_TAG_CLOUD)));
+				EventfulHyperLink tagCloud = new EventfulHyperLink(item.title, GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_TAG_CLOUD)));
 				tagCloud.setTitle(Msg.consts.goto_tagcloud());
 				firstLine.add(tagCloud);
 				
@@ -343,7 +343,7 @@ public class SearchRenderWidget extends SimplePanel implements AsyncCallback<Sea
 				FlexTable mainLine = new FlexTable();
 				String username = item.title;
 				String userFullname = item.contributor;
-				Hyperlink link = new Hyperlink(Msg.consts.goto_profile(), GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_USER_PROFILE), username));
+				EventfulHyperLink link = new EventfulHyperLink(Msg.consts.goto_profile(), GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_USER_PROFILE), username));
 				
 				mainLine.setWidget(0, 0, typeImg);
 				mainLine.getFlexCellFormatter().setRowSpan(0, 0, 4);

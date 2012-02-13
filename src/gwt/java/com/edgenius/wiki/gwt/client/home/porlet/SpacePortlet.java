@@ -46,7 +46,7 @@ import com.edgenius.wiki.gwt.client.widgets.IconBundle;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
@@ -94,7 +94,7 @@ public class SpacePortlet extends PageListPortlet implements AsyncCallback<Portl
 		clearControl();
 		
 		//RSS feed
-		Hyperlink homeLink = new Hyperlink(Msg.consts.home(), GwtUtils.getSpacePageToken(model.space.unixName, null));
+		EventfulHyperLink homeLink = new EventfulHyperLink(Msg.consts.home(), GwtUtils.getSpacePageToken(model.space.unixName, null));
 		Image homeImg = new Image(IconBundle.I.get().home());
 		homeImg.setStyleName(Css.PORTLET_FOOT_IMG);
 		addControl(homeImg);
@@ -120,7 +120,7 @@ public class SpacePortlet extends PageListPortlet implements AsyncCallback<Portl
 				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				//               admin button
 				addSeparator();
-				Hyperlink adminLink = new Hyperlink(Msg.consts.admin(),FunctionWidget.viewSpaceAdminToken(portletModel.key));
+				EventfulHyperLink adminLink = new EventfulHyperLink(Msg.consts.admin(),FunctionWidget.viewSpaceAdminToken(portletModel.key));
 				Image adminImg = ButtonIconBundle.adminImage();
 				addControl(adminImg);
 				addControl(adminLink);

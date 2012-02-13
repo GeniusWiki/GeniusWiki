@@ -43,11 +43,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -135,7 +135,7 @@ public class TemplateListRenderWidget extends SimplePanel implements AsyncCallba
 						}
 					}
 				});
-				Hyperlink editLink = new Hyperlink(Msg.consts.edit(), GwtUtils.buildToken(PageMain.TOKEN_EDIT_TEMPLATE,spaceUname, String.valueOf(model.id)));
+				EventfulHyperLink editLink = new EventfulHyperLink(Msg.consts.edit(), GwtUtils.buildToken(PageMain.TOKEN_EDIT_TEMPLATE,spaceUname, String.valueOf(model.id)));
 				actionP.add(delLink);
 				actionP.add(new Label(" | "));
 				actionP.add(editLink);

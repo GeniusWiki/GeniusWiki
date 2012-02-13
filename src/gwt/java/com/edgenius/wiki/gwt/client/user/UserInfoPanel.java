@@ -45,10 +45,10 @@ import com.edgenius.wiki.gwt.client.widgets.Popup;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -129,7 +129,7 @@ public class UserInfoPanel extends SimplePanel implements AsyncCallback<PageItem
 		if (pages != null && pages.size() > 0) {
 			for (Iterator<PageItemModel> iter = pages.iterator(); iter.hasNext();) {
 				PageItemModel item = iter.next();
-				Hyperlink link = new Hyperlink(item.title,GwtUtils.getSpacePageToken(item.spaceUname, item.title));
+				EventfulHyperLink link = new EventfulHyperLink(item.title,GwtUtils.getSpacePageToken(item.spaceUname, item.title));
 				if(parent instanceof Popup){
 					link.addClickHandler(new ClickHandler(){
 						public void onClick(ClickEvent event) {
@@ -165,7 +165,7 @@ public class UserInfoPanel extends SimplePanel implements AsyncCallback<PageItem
 			
 			//so far, have to block profile page in offline model as the macro render logic is on MacroHandler side, it is not easy to do in 
 			//offline model.
-			Hyperlink link = new Hyperlink(Msg.consts.goto_profile(), 
+			EventfulHyperLink link = new EventfulHyperLink(Msg.consts.goto_profile(), 
 					GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_USER_PROFILE), username));
 			if(parent instanceof Popup){
 				link.addClickHandler(new ClickHandler(){

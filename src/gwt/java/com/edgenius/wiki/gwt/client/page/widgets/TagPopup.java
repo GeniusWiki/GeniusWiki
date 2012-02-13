@@ -38,9 +38,9 @@ import com.edgenius.wiki.gwt.client.widgets.Popup;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -68,7 +68,7 @@ public class TagPopup extends Popup implements AsyncCallback<PageItemListModel> 
 		if(!AbstractEntryPoint.isOffline()){
 			//so far, have to block tag cloud in offline model as the macro render logic is on MacroHandler side, it is not easy to do in 
 			//offline model.
-			Hyperlink tagCloud = new Hyperlink(Msg.consts.goto_tagcloud(),
+			EventfulHyperLink tagCloud = new EventfulHyperLink(Msg.consts.goto_tagcloud(),
 					GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_TAG_CLOUD), spaceUname));
 			tagCloud.addClickHandler(new ClickHandler(){
 				public void onClick(ClickEvent event) {
@@ -101,7 +101,7 @@ public class TagPopup extends Popup implements AsyncCallback<PageItemListModel> 
 		
 		pagesPanel.clear();
 		for(PageItemModel item : model.itemList){
-			Hyperlink link = new Hyperlink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
+			EventfulHyperLink link = new EventfulHyperLink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
 			link.addClickHandler(new ClickHandler(){
 				public void onClick(ClickEvent event) {
 					TagPopup.this.hide();

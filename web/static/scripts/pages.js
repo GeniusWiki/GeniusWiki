@@ -6,6 +6,16 @@ var DEFAULT_MENU_TOP = 38 + 40;
 var LENGHT_MIN_SIDE_BTN = '20px';
 var LENGHT_MAX_SIDE_BTN = '45px';
 
+// This method is call once after GWT complete initialized. Note The $(document).ready() will trigger before GWT initialized! 
+function documentReadyCallback() {
+	bindSidebarButtons();
+
+	History.Adapter.bind(window,'statechange',function(){ 
+		var state = History.getState(); 
+		alert("state change:" + state.url);
+	});
+}
+
 function bindSidebarButtons(){
 	$('div.left-sidebar-btn').click(function(){
 		toggleSidebar(0);

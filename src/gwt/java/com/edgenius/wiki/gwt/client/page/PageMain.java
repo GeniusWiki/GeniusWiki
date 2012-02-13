@@ -354,14 +354,18 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 	private void exposeJSMethods() {
 		CalendarDetailDialog.bindJsMethod();
 		ShellDialog.bindJsMethod();
+		PageMain.bindJsMethod(this);
 	}
 
 	/**
 	 * 
 	 * Monitoring all HyperLink click 
 	 */
+	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
-		String token = event.getValue();
+		onValueChange(event.getValue());
+	}
+	public void onValueChange(String token) {
 		//page#/xxx - xxx must do URLEncode otherwise it will broken URL even its value in anchor part
 		//I found FF looks OK if there is no this decode, but Chrome does work. Anyway, it is safe to decode here and no side-effect.
 		token = URL.decodeQueryString(token);
@@ -888,5 +892,12 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 			}
 		}
 	}
-
+	/**
+	 * For Space admin Shell setting bind to change theme.
+	 */
+	public static native void bindJsMethod(PageMain pageMain) /*-{
+		$wnd.gwtTokenChange = function(token) {
+			pageMain.@com.edgenius.wiki.gwt.client.page.PageMain::onValueChange(Ljava/lang/String;)(token);
+		};
+	}-*/;
 }

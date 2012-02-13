@@ -60,13 +60,13 @@ import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -183,7 +183,7 @@ public class UserProfileRenderWidget extends SimplePanel implements AsyncCallbac
 		int col = 0;
 		if(model.following.size() > 0){
 			for (UserModel fer: model.following) {
-				Hyperlink link = new Hyperlink(GwtUtils.getUserPortraitHTML(fer.getPortrait(),fer.getFullname(),55), true,
+				EventfulHyperLink link = new EventfulHyperLink(GwtUtils.getUserPortraitHTML(fer.getPortrait(),fer.getFullname(),55), true,
 						GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_USER_PROFILE), fer.getLoginname()));
 				followingP.setWidget(row,col,link);
 				if(++col > 2){
@@ -207,7 +207,7 @@ public class UserProfileRenderWidget extends SimplePanel implements AsyncCallbac
 		row = 1;col = 0;
 		if(model.followers.size() > 0){
 			for (UserModel fer: model.followers) {
-				Hyperlink link = new Hyperlink(GwtUtils.getUserPortraitHTML(fer.getPortrait(),fer.getFullname(),55), true,
+				EventfulHyperLink link = new EventfulHyperLink(GwtUtils.getUserPortraitHTML(fer.getPortrait(),fer.getFullname(),55), true,
 						GwtUtils.buildToken(GwtUtils.getCPageToken(SharedConstants.CPAGE_USER_PROFILE), fer.getLoginname()));
 				followerP.setWidget(row,col,link);
 				if(++col > 2){
@@ -264,7 +264,7 @@ public class UserProfileRenderWidget extends SimplePanel implements AsyncCallbac
 		row++;
 		if(spaces != null && spaces.size() > 0){
 			for(final SpaceModel item : spaces){
-				Hyperlink link = new Hyperlink(item.name,GwtUtils.getSpacePageToken(item.unixName,null));
+				EventfulHyperLink link = new EventfulHyperLink(item.name,GwtUtils.getSpacePageToken(item.unixName,null));
 				spaceP.setWidget(row, 0, link);
 				Label dl = new Label(GwtClientUtils.toDisplayDate(item.createdDate));
 				spaceP.setWidget(row, 1, dl);
@@ -295,12 +295,12 @@ public class UserProfileRenderWidget extends SimplePanel implements AsyncCallbac
 		if(pages != null && pages.size() > 0){
 			for(final PageItemModel item : pages){
 				//MUST bring space in Token, because it maybe different space with current
-				Hyperlink link = new Hyperlink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
+				EventfulHyperLink link = new EventfulHyperLink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
 				
 				pageP.setWidget(row, 0, link);
 				
 				//space
-				link = new Hyperlink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname, null));
+				link = new EventfulHyperLink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname, null));
 				pageP.setWidget(row, 1, link);
 				
 				FlowPanel versPanel = new FlowPanel();
@@ -318,19 +318,19 @@ public class UserProfileRenderWidget extends SimplePanel implements AsyncCallbac
 						if(item.version == 1){
 							creatorAndNoHistory = true;
 							//This user is creator and current page version number is 1, this mean this page no history yet.
-							link = new Hyperlink(Msg.consts.initial(),GwtUtils.getSpacePageToken(item.spaceUname,item.title));
+							link = new EventfulHyperLink(Msg.consts.initial(),GwtUtils.getSpacePageToken(item.spaceUname,item.title));
 						}
 					}else if(entry.getKey() == Integer.MAX_VALUE){
 						if(!creatorAndNoHistory){
 							//if this page no history yet, then only display "inital" is enough - don't want to display initial and current 
 							//but point to same current page.
-							link = new Hyperlink(Msg.consts.current().toLowerCase(),GwtUtils.getSpacePageToken(item.spaceUname,item.title));
+							link = new EventfulHyperLink(Msg.consts.current().toLowerCase(),GwtUtils.getSpacePageToken(item.spaceUname,item.title));
 						}
 					}else{
 						if(entry.getValue().version == 1){
-							link = new Hyperlink(Msg.consts.initial(),GwtUtils.buildToken(PageMain.TOKEN_HISTORY,item.spaceUname,String.valueOf(entry.getValue().uid)));
+							link = new EventfulHyperLink(Msg.consts.initial(),GwtUtils.buildToken(PageMain.TOKEN_HISTORY,item.spaceUname,String.valueOf(entry.getValue().uid)));
 						}else{
-							link = new Hyperlink(entry.getKey()+"",GwtUtils.buildToken(PageMain.TOKEN_HISTORY,item.spaceUname, String.valueOf(entry.getValue().uid)));
+							link = new EventfulHyperLink(entry.getKey()+"",GwtUtils.buildToken(PageMain.TOKEN_HISTORY,item.spaceUname, String.valueOf(entry.getValue().uid)));
 						}
 					}
 					

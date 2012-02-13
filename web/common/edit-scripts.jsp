@@ -6,7 +6,7 @@
 		<!--  flash copy text -->
  		<script language='javascript' type="text/javascript" src='${ctxPath}/widgets/zeroclipboard/ZeroClipboard.js?v=@TOKEN.SITE.VERSION@'></script>
  		
- 		<script language='javascript' type="text/javascript" src='${ctxPath}/web/static/scripts/editor.js?v=@TOKEN.SITE.VERSION@'></script>
+ 		<script language='javascript' type="text/javascript" src='${ctxPath}/static/scripts/editor.js?v=@TOKEN.SITE.VERSION@'></script>
  		
 
 		

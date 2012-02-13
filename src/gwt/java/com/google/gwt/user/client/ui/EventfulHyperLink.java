@@ -25,41 +25,43 @@ package com.google.gwt.user.client.ui;
 
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.HasMouseOverHandlers;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 
 /**
  * This HyperLink can accept Mouse over and out event.
  * @author Dapeng.Ni
  */
-public class EventfulHyperLink extends Hyperlink implements HasMouseOutHandlers, HasMouseOverHandlers{
+public class EventfulHyperLink extends Anchor implements HasMouseOutHandlers, HasMouseOverHandlers{
 	
+	public EventfulHyperLink(String text, boolean asHTML, String token){
+		super(text, asHTML, token);
+		this.addStyleName("ajaxlink");
+//		sinkEvents(Event.ONMOUSEOUT);
+//		sinkEvents(Event.ONMOUSEOVER);
+	}
 	public EventfulHyperLink(String text, String token){
-		super(text,token);
-		sinkEvents(Event.ONMOUSEOUT);
-		sinkEvents(Event.ONMOUSEOVER);
+		this(text, false, token);
 	}
-
-	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
-		return this.addHandler(handler, MouseOverEvent.getType());
+	@Override
+	public void setStyleName(String style){
+		super.setStyleName(style);
+		this.addStyleName("ajaxlink");
 	}
-
-	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
-		return this.addHandler(handler, MouseOutEvent.getType());
-	}
-	public void onBrowserEvent(Event event) {
-		if(DOM.eventGetType(event) == Event.ONMOUSEOUT) {
-			MouseOutEvent.fireNativeEvent(event, this);
-			DOM.eventPreventDefault(event);
-		}else if(DOM.eventGetType(event) == Event.ONMOUSEOVER) {
-			MouseOverEvent.fireNativeEvent(event, this);
-			DOM.eventPreventDefault(event);
-		}
-	}
+//
+//	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+//		return this.addHandler(handler, MouseOverEvent.getType());
+//	}
+//
+//	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+//		return this.addHandler(handler, MouseOutEvent.getType());
+//	}
+//	public void onBrowserEvent(Event event) {
+//		if(DOM.eventGetType(event) == Event.ONMOUSEOUT) {
+//			MouseOutEvent.fireNativeEvent(event, this);
+//			DOM.eventPreventDefault(event);
+//		}else if(DOM.eventGetType(event) == Event.ONMOUSEOVER) {
+//			MouseOverEvent.fireNativeEvent(event, this);
+//			DOM.eventPreventDefault(event);
+//		}
+//	}
 
 }

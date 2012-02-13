@@ -59,12 +59,12 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -434,7 +434,7 @@ public class Portlet  extends SimplePanel implements AsyncCallback<PortletModel>
 		private void setTitle(String shortTitle,String title, final String token) {
 			titlePanel.clear();
 			if(token != null && token.trim().length() > 0){
-				Hyperlink titleLink = new Hyperlink(shortTitle,token);
+				EventfulHyperLink titleLink = new EventfulHyperLink(shortTitle,token);
 				if(title != null && title.trim().length() > 0){
 					titleLink.setTitle(title);
 				}

@@ -55,12 +55,12 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -429,7 +429,7 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 	private void historyDiffMessage(String spaceUname,String currentTitle) {
 		message.cleanMessage();
 		HorizontalPanel msgPanel = new HorizontalPanel();
-		Hyperlink retCurrentVerBtn = new Hyperlink(Msg.consts.return_latest_version()
+		EventfulHyperLink retCurrentVerBtn = new EventfulHyperLink(Msg.consts.return_latest_version()
 				, GwtUtils.getSpacePageToken(spaceUname,currentTitle));
 		msgPanel.add(new Label(Msg.consts.view_history()));
 		msgPanel.add(retCurrentVerBtn);

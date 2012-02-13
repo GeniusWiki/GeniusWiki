@@ -48,8 +48,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -163,13 +163,13 @@ public class HistoryPanel extends PinPanel implements AsyncCallback<PageItemList
 				}
 			});
 			HTML rev;
-			Hyperlink title;
+			EventfulHyperLink title;
 			if(history.isCurrent){
 				rev = new HTML("<b>"+Msg.consts.current()+"</b>");
-				title = new Hyperlink(history.title,GwtUtils.getSpacePageToken(history.spaceUname, history.title));
+				title = new EventfulHyperLink(history.title,GwtUtils.getSpacePageToken(history.spaceUname, history.title));
 			}else{
 				rev = new HTML("<b>"+Integer.valueOf(history.version).toString()+"</b>");
-				title = new Hyperlink(history.title,GwtUtils.buildToken(PageMain.TOKEN_HISTORY,history.spaceUname, String.valueOf(history.uid)));
+				title = new EventfulHyperLink(history.title,GwtUtils.buildToken(PageMain.TOKEN_HISTORY,history.spaceUname, String.valueOf(history.uid)));
 			}
 			rev.setStyleName(Css.NOWRAP);
 			

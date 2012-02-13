@@ -36,6 +36,9 @@ import com.edgenius.wiki.gwt.client.model.UserModel;
  */
 public class GwtUtils {
 	
+	//now , not / before token
+	private static final String TOKEN_LEAD_SLASH = "";
+	
 	public static String renderErrorText(String errorText){
 		//plus [ text ] : &#91 == [,  &#93 == ]
 		 return "&#91;<span aid=\""+ SharedConstants.RENDER_ERROR_TAG + "\" class='renderError' hint='"+errorText+"'>" + errorText + "</span>&#93;"; 
@@ -261,7 +264,7 @@ public class GwtUtils {
 	 */
 	public static String buildToken(String actionIdentifier, String...params) {
 		if(params == null)
-			return "/"+actionIdentifier;
+			return TOKEN_LEAD_SLASH +actionIdentifier;
 		if(actionIdentifier == null){
 			if(params.length != 2){
 				//this is unexpected case: Otherwise, this method has actionIdentifier, or it has space/page params
@@ -281,7 +284,7 @@ public class GwtUtils {
 		for(int idx=1;idx<strs.length;idx++){
 			strs[idx] = EscapeUtil.escapeToken(params[idx-1]);
 		}
-		return "/" + StringUtil.join("/", strs);
+		return TOKEN_LEAD_SLASH + StringUtil.join("/", strs);
 		
 			
 	}
@@ -309,7 +312,7 @@ public class GwtUtils {
 		if(url.charAt(len-1) == '/')
 			url.delete(len-1, len);
 		
-		return url.insert(0, "/").toString();
+		return url.insert(0, TOKEN_LEAD_SLASH).toString();
 	}
 
 

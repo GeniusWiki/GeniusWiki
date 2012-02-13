@@ -45,11 +45,11 @@ import com.edgenius.wiki.gwt.client.widgets.ZebraTable;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -210,9 +210,9 @@ public class TagCloudRenderWidget extends SimplePanel implements AsyncCallback<T
 			
 			if(model.itemList != null && model.itemList.size() > 0){
 				for(PageItemModel item : model.itemList){
-					Hyperlink link = new Hyperlink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
+					EventfulHyperLink link = new EventfulHyperLink(item.title,GwtUtils.getSpacePageToken(item.spaceUname,item.title));
 					listsPanel.setWidget(row, 0, link);
-					link = new Hyperlink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname,null));
+					link = new EventfulHyperLink(item.spaceUname,GwtUtils.getSpacePageToken(item.spaceUname,null));
 					listsPanel.setWidget(row, 1, link);
 					listsPanel.setWidget(row, 2, new Label(GwtClientUtils.toDisplayDate(item.modifiedDate)));
 					
@@ -252,7 +252,7 @@ public class TagCloudRenderWidget extends SimplePanel implements AsyncCallback<T
 			
 			if(model.spaceList != null && model.spaceList.size() > 0){
 				for(SpaceModel item : model.spaceList){
-					Hyperlink link = new Hyperlink(item.name,GwtUtils.getSpacePageToken(item.unixName, null));
+					EventfulHyperLink link = new EventfulHyperLink(item.name,GwtUtils.getSpacePageToken(item.unixName, null));
 					listsPanel.setWidget(row, 0, link);
 					listsPanel.setWidget(row, 1, new Label(GwtClientUtils.toDisplayDate(item.createdDate)));
 					row++;

@@ -28,7 +28,7 @@ import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
@@ -38,7 +38,7 @@ public class NavItem extends SimplePanel{
 	
 	private String view;
 	private ClickLink nav1 = null;
-	private Hyperlink nav2 = null;
+	private EventfulHyperLink nav2 = null;
 	private String relativeUrlOrToken;
 	
 	public NavItem(ClickLink nav){
@@ -69,7 +69,7 @@ public class NavItem extends SimplePanel{
 			});
 			this.setWidget(nav1);
 		}else{
-			nav2 =new Hyperlink(view,relativeUrlOrToken);
+			nav2 =new EventfulHyperLink(view,relativeUrlOrToken);
 			if(!StringUtil.isBlank(toolTip)){
 				nav2.setTitle(toolTip);
 			}

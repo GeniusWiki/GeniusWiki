@@ -44,10 +44,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.EventfulHyperLink;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -91,7 +91,7 @@ public abstract class PageListPortlet extends Portlet{
 					}
 					itemPanel.add(dot);
 				}
-				Hyperlink title;
+				EventfulHyperLink title;
 				if(fillType == FILL_TYPE_DRAFT){
 					title = getDraftLink(item);
 				}else{
@@ -168,16 +168,6 @@ public abstract class PageListPortlet extends Portlet{
 	}
 
 
-//	/**
-//	 * @param item
-//	 * @return
-//	 */
-//	private Hyperlink getMessageLink(final PageItemModel item) {
-//		String token = SharedConstants.CPAGE_MESSAGE_BOARD+ PageMain.TOKEN_CPAGE + item.uuid;
-//		Hyperlink title = new Hyperlink(item.title,token);
-//		return title;
-//	}
-
 	/**
 	 * Display (none) in porlet.
 	 */
@@ -190,17 +180,16 @@ public abstract class PageListPortlet extends Portlet{
 	 * @param item
 	 * @return
 	 */
-	private Hyperlink getPageLink(final PageItemModel item) {
+	private EventfulHyperLink getPageLink(final PageItemModel item) {
 		String token = GwtUtils.getSpacePageToken(item.spaceUname, item.title);
-		Hyperlink title = new Hyperlink(item.title,token);
-		return title;
+		return new EventfulHyperLink(item.title,token);
 	}
 	/**
 	 * @param item
 	 * @return
 	 */
-	private Hyperlink getDraftLink(final PageItemModel item) {
-		return new Hyperlink(item.title, GwtUtils.buildToken(PageMain.TOKEN_DRAFT, item.spaceUname,String.valueOf(item.type), String.valueOf(item.uid)));
+	private EventfulHyperLink getDraftLink(final PageItemModel item) {
+		return new EventfulHyperLink(item.title, GwtUtils.buildToken(PageMain.TOKEN_DRAFT, item.spaceUname,String.valueOf(item.type), String.valueOf(item.uid)));
 	}
 	
 	private class RefreshDraftAsync implements AsyncCallback<PageModel>{
