@@ -25,6 +25,8 @@ package com.edgenius.wiki.ext.calendar.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.ext.calendar.dao.CalendarDAO;
 import com.edgenius.wiki.ext.calendar.model.Calendar;
@@ -32,6 +34,7 @@ import com.edgenius.wiki.ext.calendar.model.Calendar;
 /**
  * @author Dapeng.Ni
  */
+@Repository("calendarDAO")
 public class CalendarDAOHibernate extends BaseDAOHibernate<Calendar> implements CalendarDAO {
 
 	private final static String GET_PAGE_CALENDARS = "from " + Calendar.class.getName() + " as c where c.pageUuid=?";

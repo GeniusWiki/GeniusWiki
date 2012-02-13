@@ -25,6 +25,8 @@ package com.edgenius.wiki.ext.todo.dao.hibernate;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.wiki.ext.todo.dao.TodoDAO;
 import com.edgenius.wiki.ext.todo.model.Todo;
@@ -32,6 +34,7 @@ import com.edgenius.wiki.ext.todo.model.Todo;
 /**
  * @author Dapeng.Ni
  */
+@Repository("todoDAO")
 public class TodoDAOHibernate extends BaseDAOHibernate<Todo> implements TodoDAO {
 	private final static String GET_PAGE_TODOS = "from " + Todo.class.getName() + " as t where t.pageUuid=?";
 	private static final String GET_TODO = "from " + Todo.class.getName() + " as t where t.pageUuid=? and t.name=?";
