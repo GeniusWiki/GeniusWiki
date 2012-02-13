@@ -18,4 +18,7 @@
 
 <script>
 	window.onhelp = new Function("return false;");
+
+	var ctxPath= "${ctxPath}";
+	var skinPath = "${skinPath}";
 </script>
