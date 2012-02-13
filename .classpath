@@ -12,6 +12,6 @@
 	<classpathentry kind="src" path="test/ext/java"/>
 	<classpathentry kind="src" path="test/sandbox/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?ivyXmlPath=ivy.xml&amp;confs=deploy%2Cdatabase%2Cdev"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?ivyXmlPath=ivy.xml&amp;confs=deploy%2Cdev"/>
 	<classpathentry kind="output" path="dev/WEB-INF/classes"/>
 </classpath>
