@@ -218,6 +218,7 @@ public class WebUtil {
 			if(user.indexOf("crawl") != -1 
 				|| user.indexOf("spider") != -1
 				|| user.indexOf("check") != -1
+				|| user.indexOf("heritrix") != -1
 				|| user.indexOf("bot") != -1){
 				return true;
 			}else if(user.indexOf("mozilla") != -1
