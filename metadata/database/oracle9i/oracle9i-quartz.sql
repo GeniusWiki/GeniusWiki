@@ -8,29 +8,52 @@
 -- runing in dedicated mode, so only consider the above as a hint ;-)
 --
 
-delete from qrtz_fired_triggers;
-delete from qrtz_simple_triggers;
-delete from qrtz_simprop_triggers;
-delete from qrtz_cron_triggers;
-delete from qrtz_blob_triggers;
-delete from qrtz_triggers;
-delete from qrtz_job_details;
-delete from qrtz_calendars;
-delete from qrtz_paused_trigger_grps;
-delete from qrtz_locks;
-delete from qrtz_scheduler_state;
+--delete from qrtz_fired_triggers;
+--delete from qrtz_simple_triggers;
+--delete from qrtz_simprop_triggers;
+--delete from qrtz_cron_triggers;
+--delete from qrtz_blob_triggers;
+--delete from qrtz_triggers;
+--delete from qrtz_job_details;
+--delete from qrtz_calendars;
+--delete from qrtz_paused_trigger_grps;
+--delete from qrtz_locks;
+--delete from qrtz_scheduler_state;
 
-drop table qrtz_calendars;
-drop table qrtz_fired_triggers;
-drop table qrtz_blob_triggers;
-drop table qrtz_cron_triggers;
-drop table qrtz_simple_triggers;
-drop table qrtz_simprop_triggers;
-drop table qrtz_triggers;
-drop table qrtz_job_details;
-drop table qrtz_paused_trigger_grps;
-drop table qrtz_locks;
-drop table qrtz_scheduler_state;
+drop table qrtz_calendars cascade constraints;
+drop table qrtz_fired_triggers cascade constraints;
+drop table qrtz_blob_triggers cascade constraints;
+drop table qrtz_cron_triggers cascade constraints;
+drop table qrtz_simple_triggers cascade constraints;
+drop table qrtz_simprop_triggers cascade constraints;
+drop table qrtz_triggers cascade constraints;
+drop table qrtz_job_details cascade constraints;
+drop table qrtz_paused_trigger_grps cascade constraints;
+drop table qrtz_locks cascade constraints;
+drop table qrtz_scheduler_state cascade constraints;
+
+drop index idx_qrtz_j_req_recovery;
+drop index idx_qrtz_j_grp;
+
+drop index idx_qrtz_t_j;
+drop index idx_qrtz_t_jg;
+drop index idx_qrtz_t_c;
+drop index idx_qrtz_t_g;
+drop index idx_qrtz_t_state;
+drop index idx_qrtz_t_n_state;
+drop index idx_qrtz_t_n_g_state;
+drop index idx_qrtz_t_next_fire_time;
+drop index idx_qrtz_t_nft_st;
+drop index idx_qrtz_t_nft_misfire;
+drop index idx_qrtz_t_nft_st_misfire;
+drop index idx_qrtz_t_nft_st_misfire_grp;
+
+drop index idx_qrtz_ft_trig_inst_name;
+drop index idx_qrtz_ft_inst_job_req_rcvry;
+drop index idx_qrtz_ft_j_g;
+drop index idx_qrtz_ft_jg;
+drop index idx_qrtz_ft_t_g;
+drop index idx_qrtz_ft_tg;
 
 
 CREATE TABLE qrtz_job_details
