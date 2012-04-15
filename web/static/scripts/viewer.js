@@ -7,11 +7,13 @@ function renderCallback(renderPanelID){
 		return false; 
 	}); 
 
-	/** only FF (test in 3.5) automatically eval script when inserts script in render panel.
+	<%-- only FF (test in 3.5) automatically eval script when inserts script in render panel.
 	To avoid duplicated execute same script in FF, it won't run this piece code. 
 	If runs duplciated, some script won't work. For example, datepicker, it won't display.
-	jQuery.support.scriptEval only return false for IE **/
-	if(!jQuery.browser.mozilla){
+	jQuery.support.scriptEval only return false for IE 
+	2012/04/15 - after FF 4, above is not true anymore, so here also check version.
+	--%>
+	if( !jQuery.browser.mozilla || parseFloat(jQuery.browser.version) >= 2.0){
 		$("#"+renderPanelID).find("script").each(function(){
 			if ( $(this).attr("src") ) {
 				jQuery.ajax({

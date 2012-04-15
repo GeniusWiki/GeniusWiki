@@ -32,6 +32,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.edgenius.core.Constants;
+import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
 
@@ -48,6 +49,11 @@ public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 	public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
 			throws IOException {
 
+		if(!WebUtil.isAjaxRequest(request)){
+			super.sendRedirect(request, response, url);
+			return;
+		}
+		
 		String username = request.getParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
 		if(url.indexOf(defaultFailureUrl) == -1){
 			//login success
