@@ -1,3 +1,5 @@
+- Source from http://code.google.com/p/xgcalendar/
+
 - update jquery.calendar.js
 
 Add below to  quickAdd() after line $(document.body).append(tempquickAddHanler); before line  buddle = $("#bbit-cal-buddle");
