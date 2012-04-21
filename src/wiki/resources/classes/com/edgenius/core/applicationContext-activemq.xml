@@ -14,6 +14,13 @@
 
 
 	<!--  Spring JmsTemplate config -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+			</bean>
+		</property>
+	</bean>
 	<bean id="mailJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory">
 			<bean class="org.springframework.jms.connection.SingleConnectionFactory">

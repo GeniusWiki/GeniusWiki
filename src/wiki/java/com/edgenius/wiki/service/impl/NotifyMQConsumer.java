@@ -23,6 +23,8 @@
  */
 package com.edgenius.wiki.service.impl;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,7 @@ import com.edgenius.core.model.User;
 import com.edgenius.core.service.MailService;
 import com.edgenius.core.service.UserReadingService;
 import com.edgenius.core.util.AuditLogger;
+import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.Shell;
 import com.edgenius.wiki.SpaceSetting;
 import com.edgenius.wiki.WikiConstants;
@@ -90,6 +94,25 @@ public class NotifyMQConsumer {
 		try {
 			if(msg instanceof NotifyMQObject){
 				mqObj = (NotifyMQObject) msg;
+				if(mqObj.getType() == NotifyMQObject.TYPE_SYSTEM_STATUS_CHECK){
+					//send a http response to confirm JMS received
+					String url = WebUtil.getHostAppURL() + "status?uuid=" + mqObj.getSpaceUname();
+					try {
+						HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+						conn.setRequestMethod("GET");
+						conn.setReadTimeout(20000);
+						if(log.isDebugEnabled()){
+							String uuid = IOUtils.toString(conn.getInputStream());
+							log.debug("Recieved system status JMS check UUID {}", uuid);
+						}
+						if(HttpURLConnection.HTTP_OK != conn.getResponseCode()){
+							log.warn("Unable get response from system status JMS  confirm URL {}", url);
+						}
+					} catch (Exception e) {
+						log.error("Unable to send satus confirm URL " + url , e);
+					}
+					return;
+				}
 				securityService.proxyLogin(mqObj.getUsername());
 				
 				if(mqObj.getType() == NotifyMQObject.TYPE_PAGE_UPDATE){

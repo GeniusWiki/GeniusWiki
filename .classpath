@@ -11,7 +11,7 @@
 	<classpathentry kind="src" path="test/wiki/java"/>
 	<classpathentry kind="src" path="test/ext/java"/>
 	<classpathentry kind="src" path="test/sandbox/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?ivyXmlPath=ivy.xml&amp;confs=deploy%2Cdev"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 6 (MacOS X Default)"/>
 	<classpathentry kind="output" path="dev/WEB-INF/classes"/>
 </classpath>

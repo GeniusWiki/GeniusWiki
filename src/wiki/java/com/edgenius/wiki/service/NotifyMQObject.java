@@ -42,6 +42,8 @@ public class NotifyMQObject implements Serializable{
 	public static final int TYPE_EXT_REMOVE_POST = 7;
 	public static final int TYPE_SPACE_MEUN_UPDATED = 8;
 	
+	public static final int TYPE_SYSTEM_STATUS_CHECK = 100;
+	
 	private int type;
 	
 
