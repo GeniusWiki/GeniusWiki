@@ -28,11 +28,11 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.edgenius.core.Constants;
-import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
 
@@ -42,14 +42,17 @@ import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
  */
 public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 	private static final String defaultFailureUrl = "/login_error"; //there is same value in applicationContext-security.xml
+
+	private static final String EXTERNAL_LOGIN_FORM = "external_login_form";
 	
 	private CaptchaReqiredFilterService captchaReqiredFilterService;
 	
 	@Override
 	public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
 			throws IOException {
-
-		if(!WebUtil.isAjaxRequest(request)){
+		
+		//This parameter allow customers enable an external login form, but not from system default Ajax style login form.
+		if(StringUtils.isNotEmpty(request.getParameter(EXTERNAL_LOGIN_FORM))){
 			super.sendRedirect(request, response, url);
 			return;
 		}
