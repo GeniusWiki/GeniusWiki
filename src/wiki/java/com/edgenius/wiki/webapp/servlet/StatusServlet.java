@@ -94,10 +94,10 @@ public class StatusServlet extends BaseServlet {
 			}
 			
 			if(running == null)
-				response.getWriter().write("<!--OK--><span style='color:#00FF333'>Running</span>");
+				response.getWriter().write("<!--OK--><span style='color:#00FF333'>Running</span><!--V1-->");
 			else{
 				log.warn("System status check failed: {}", running);
-				response.getWriter().write("<!--FAILED--><span style='color:#CC3300'>"+running+"</span>");
+				response.getWriter().write("<!--FAILED--><span style='color:#CC3300'>"+running+"</span><!--V1-->");
 			}
 		}
 	}
