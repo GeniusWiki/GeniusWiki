@@ -42,6 +42,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.edgenius.core.Version;
 import com.edgenius.core.webapp.BaseServlet;
 import com.edgenius.wiki.service.NotifyMQObject;
 import com.edgenius.wiki.service.SpaceService;
@@ -113,10 +114,10 @@ public class StatusServlet extends BaseServlet {
 			}
 			
 			if(running == null)
-				response.getWriter().write("<!--OK--><span style='color:#00FF333'>Running</span><!--V1-->");
+				response.getWriter().write("<!--OK--><!--V1:"+Version.VERSION+"--><span style='color:#05BF54'>Running</span>");
 			else{
 				log.warn("System status check failed: {}", running);
-				response.getWriter().write("<!--FAILED--><span style='color:#CC3300'>"+running+"</span><!--V1-->");
+				response.getWriter().write("<!--FAILED--><!--V1:"+Version.VERSION+"--><span style='color:#CC3300'>"+running+"</span>");
 			}
 		}
 	}
