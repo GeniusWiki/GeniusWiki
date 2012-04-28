@@ -23,6 +23,25 @@
  */
 package com.edgenius.wiki.webapp.servlet;
 
+import java.io.IOException;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import javax.jms.Queue;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.edgenius.core.webapp.BaseServlet;
 import com.edgenius.wiki.service.NotifyMQObject;
 import com.edgenius.wiki.service.SpaceService;
