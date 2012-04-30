@@ -133,7 +133,7 @@
 		<dependency org="google" name="gson" rev="1.4" conf="deploy->default"/>
 
 		<!--  for pdf export -->
-		<dependency org="org/jtidy" name="jtidy" rev="r7" conf="deploy->default"/>
+		<dependency org="org/jtidy" name="jtidy" rev="r938" conf="deploy->default"/>
 		<dependency org="apache" name="xalan" rev="2.7.1" conf="deploy->default"/>
 		<dependency org="org/xhtmlrender" name="xhtmlrender" rev="r8p2" conf="deploy->default"/>
 		<dependency org="com/lowagie" name="itext" rev="2.0.4" conf="deploy->default"/>
