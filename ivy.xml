@@ -59,7 +59,7 @@
 		
 		<dependency org="net/sf/ehcache" name="ehcache-core" rev="2.3.2" conf="deploy->default;dev->default"/>
 		
-		<dependency org="org/hibernate" name="hibernate" rev="4.0.0.Final"   conf="deploy->default;" />
+		<dependency org="org/hibernate" name="hibernate" rev="4.1.2.Final"   conf="deploy->default;" />
 		
 		<dependency org="org/hibernate" name="hibernate-tools" rev="3.2.4.ga"	conf="dev->default;" />
 		<!-- Hiberate tools doesn't support Hibernate4 now - it looks doesn't update since 2011 May! 
@@ -71,9 +71,10 @@
 		<dependency org="org" name="compass" rev="1.2.m3"	conf="deploy->default;dev->source" />
 		<dependency org="org/springframework" name="spring-modules" rev="0.9"	conf="deploy->lucene;dev->lucene-source" />
 		 -->
-		<dependency org="org/springframework" name="spring" rev="3.1.0.RELEASE" conf="deploy->default;dev->source,test" /> 
-		<dependency org="org/springframework" name="security" rev="3.1.0.RC3"	conf="deploy->default;dev->source" />
-		
+		<dependency org="org/springframework" name="spring" rev="3.1.1.RELEASE" conf="deploy->default;dev->source,test" /> 
+		<dependency org="org/springframework" name="security" rev="3.1.0.RELEASE"	conf="deploy->default;dev->source" />
+		<dependency org="org/springframework" name="spring-security-captcha-sandbox" rev="3.1.0.RELEASE"	conf="deploy->default;dev->source" />
+		<dependency org="cglib" name="cglib" rev="2.2.2" conf="deploy->nodep;dev->nodep"/>		
 		
 		<dependency org="javax" name="mail" rev="1.4" conf="deploy->default" />
 		<dependency org="javax" name="jstl" rev="1.1.2" conf="deploy->default" />
@@ -120,6 +121,7 @@
 		<dependency org="apache" name="commons-pool" rev="1.5.4" conf="deploy->default;dev->source" />
 		<dependency org="apache" name="commons-beanutils" rev="1.7" conf="deploy->default;dev->default" />
 		<dependency org="apache" name="commons-lang" rev="2.4" conf="deploy->default;dev->source"/>
+		<dependency org="apache" name="commons-collections" rev="3.2.1" conf="deploy->default;dev->default"/>
 		<dependency org="apache" name="activemq" rev="5.4.0" conf="deploy->core;dev->core"/>
 
 		<!--  Web service  -->		
