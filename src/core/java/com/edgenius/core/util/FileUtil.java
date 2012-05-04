@@ -70,7 +70,10 @@ public class FileUtil {
 		String tempSysDirName = TEMP_DIR;
 		if ( tempSysDirName == null )
 			throw new FileUtilException("No temporary directory known to the server. [System.getProperty( \"java.io.tmpdir\" ) returns null. ]\n Cannot create file.");
-
+		
+		File tempDir = new File(TEMP_DIR);
+		if(!tempDir.exists()) tempDir.mkdirs();
+		
 		return new File(tempSysDirName+File.separator + System.currentTimeMillis()+ suffix);
 		
 	}
