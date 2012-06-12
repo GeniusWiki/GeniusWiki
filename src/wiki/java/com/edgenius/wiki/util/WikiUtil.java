@@ -23,6 +23,7 @@
  */
 package com.edgenius.wiki.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -36,6 +37,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -45,6 +47,7 @@ import org.springframework.security.captcha.CaptchaServiceProxy;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.edgenius.core.Constants;
+import com.edgenius.core.DataRoot;
 import com.edgenius.core.UserSetting;
 import com.edgenius.core.model.SensitiveTouchedInfo;
 import com.edgenius.core.model.TouchedInfo;
@@ -55,11 +58,13 @@ import com.edgenius.core.repository.RepositoryService;
 import com.edgenius.core.repository.RepositoryTiemoutExcetpion;
 import com.edgenius.core.service.UserReadingService;
 import com.edgenius.core.util.AuditLogger;
+import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.PageTheme;
 import com.edgenius.wiki.WikiConstants;
 import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
 import com.edgenius.wiki.gwt.client.model.LinkModel;
+import com.edgenius.wiki.gwt.client.model.TextModel;
 import com.edgenius.wiki.gwt.client.server.utils.EscapeUtil;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.LinkUtil;
@@ -561,10 +566,20 @@ public class WikiUtil {
 	 * @return
 	 */
 	public static String getAdsenseHTML(String spaceUname, Page page) {
+		String root = DataRoot.getDataRoot();
+		if(FileUtil.exist(root+"ad.html")){
+			//This is a trick, allow user put external HTML to display AD
+			try {
+				File adfile = FileUtil.getFile(root+"ad.html");
+				return FileUtils.readFileToString(adfile);
+			} catch (IOException e) {
+				log.error("Unable to read ad.html", e);
+			}
+		}
 		String viewURL = getFullURL(WebUtil.getHostAppURL(), SharedConstants.URL_VIEW, spaceUname, page.getTitle(), page.getPageUuid(), null);
 		return new StringBuffer("<iframe id=\"googlead\" name=\"googlead\" src=\"")
-			.append(viewURL)
-			.append("\"  width=\"100%\" height=\"92\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\"></iframe>").toString();
+				.append(viewURL)
+				.append("\"  width=\"100%\" height=\"92\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\"></iframe>").toString();
 	}
 
 	public static LinkModel createUserLinkModel(User user) {

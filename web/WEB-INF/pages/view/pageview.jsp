@@ -28,6 +28,8 @@
 			<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 			<table height="100px"><tr><td></td></tr></table>
 		</c:if>
+		${adtext}
+		
 		<table class="content-container" cellpadding="0" border="0" width="820px" align="center">
 			<tr><td>
 			<div class="render-title" style="float:none;margin:10px;">${page.title}</div>

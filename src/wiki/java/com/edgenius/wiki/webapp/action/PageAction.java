@@ -23,16 +23,20 @@
  */
 package com.edgenius.wiki.webapp.action;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
 import com.edgenius.core.Constants;
+import com.edgenius.core.DataRoot;
 import com.edgenius.core.Global;
 import com.edgenius.core.model.User;
+import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.webapp.taglib.PageInfo;
 import com.edgenius.wiki.InstanceSetting;
 import com.edgenius.wiki.Shell;
@@ -279,7 +283,22 @@ public class PageAction extends BaseAction {
 			String content = renderService.renderNativeHTML(contentPage.getSpace().getUnixName(), contentPage.getPageUuid(), contentPage.getRenderPieces());
 			contentPage.getContent().setContent(content);
 			getRequest().setAttribute(WikiConstants.ATTR_PAGE, contentPage);
-			getRequest().setAttribute("adsense", Global.ADSENSE);
+			
+			if(Global.ADSENSE){
+				String root = DataRoot.getDataRoot();
+				if(FileUtil.exist(root+"ad.html")){
+					//This is a trick, allow user put external HTML to display AD
+					try {
+						File adfile = FileUtil.getFile(root+"ad.html");
+						String adtext = FileUtils.readFileToString(adfile);
+						getRequest().setAttribute("adtext", adtext);
+					} catch (IOException e) {
+						log.error("Unable to read ad.html", e);
+					}
+				}else{
+					getRequest().setAttribute("adsense", Global.ADSENSE);
+				}
+			}
 			getRequest().setAttribute("origLink", WikiUtil.getPageRedirFullURL(s, p, contentPage.getPageUuid()));
 			if(Shell.enabled){
 				getRequest().setAttribute("shellLink", Shell.getPageShellURL(s, p));
