@@ -59,7 +59,7 @@
 		
 		<dependency org="net/sf/ehcache" name="ehcache-core" rev="2.3.2" conf="deploy->default;dev->default"/>
 		
-		<dependency org="org/hibernate" name="hibernate" rev="4.1.2.Final"   conf="deploy->default;" />
+		<dependency org="org/hibernate" name="hibernate" rev="4.1.4.Final"   conf="deploy->default;" />
 		
 		<dependency org="org/hibernate" name="hibernate-tools" rev="3.2.4.ga"	conf="dev->default;" />
 		<!-- Hiberate tools doesn't support Hibernate4 now - it looks doesn't update since 2011 May! 
