@@ -148,8 +148,7 @@
 		<dependency org="com/sun" name="rome" rev="1.0RC1" conf="deploy->default;dev->source"/>
 		<dependency org="com/sun" name="rome-fetcher" rev="0.9" conf="deploy->default;dev->default"/>
 
-		<!--  test 3.5.2, but insert cursor failed again if page end with table!!! -->
-		<dependency org="nonjava" name="tinymce" rev="3.4.5" conf="nonjava->default"/>
+		<dependency org="nonjava" name="tinymce" rev="3.5.2" conf="nonjava->default"/>
 		<dependency org="nonjava" name="dp_syntaxhighlighter" rev="1.5.1" conf="nonjava->default"/>
 		
 		<!--  don't maintain by ivy, directly copy to target directory
