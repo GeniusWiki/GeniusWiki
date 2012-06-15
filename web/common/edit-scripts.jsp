@@ -21,7 +21,7 @@
 		        <%-- The reason use token rather put plugins here is for ant script will unzip tinyMCE from Ivy nonjava dependencies,
 		        ant properties decides which plugin will be in tinyMCE plugin directory. This especially useful for offline mode, as it need 
 		        download entire tinyMCE library --%>
-		        plugins : "wbimage,wbplaintext,wblink,wbanchor,wbemotions,wbremovenonedit,wbmacros,table,contextmenu@TOKEN.TINYMCE.PLUGIN@",
+		        plugins : "wbimage,wbplaintext,wblink,wbanchor,wbemotions,wbremovenonedit,wbmacros,trailing,table,contextmenu@TOKEN.TINYMCE.PLUGIN@",
 		        theme_advanced_buttons1 : "cut,copy,paste,|,bold,italic,underline,strikethrough,sub,sup,|,bullist,numlist"+
 			        ",|,justifyleft,justifycenter,justifyright,|,link,unlink,anchor,|,formatselect,fontselect,fontsizeselect,forecolor,backcolor,|,removeformat",
 		        theme_advanced_buttons2 :  "undo,redo,|,table,delete_col,delete_row,col_after,col_before,row_after,row_before,split_cells,merge_cells,|,"+
