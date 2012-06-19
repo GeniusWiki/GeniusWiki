@@ -145,6 +145,20 @@ public interface PageDAO extends DAO<Page>{
 	long getUserModifiedSize(String username);
 
 	/**
+	 * Return for sitemap - only include these field:
+	 * <li>Page uid</li>
+	 * <li>Page uuid</li>
+	 * <li>Page title</li>
+	 * <li>Page modified date</li>
+	 * <li>Space Uname</li>
+	 * @param lastModifiedDate 
+	 * @param start
+	 * @param returnNum
+	 * @return
+	 */
+	List<Page> getPageForSitemap(Date lastModifiedDate, final int start, final int returnNum);
+	
+	/**
 	 * Return a manually created Page object(comparing Hibernate), which only include
 	 * PageTitle, PageUUID, page.getContent().getContent() and page.getSpace().getUid();
 	 * 

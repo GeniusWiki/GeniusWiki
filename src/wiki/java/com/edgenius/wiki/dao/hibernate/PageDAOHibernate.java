@@ -62,6 +62,9 @@ public class PageDAOHibernate extends BaseDAOHibernate<Page> implements PageDAO 
 					+ " as p where p.pageUuid=? and p.removed=0 ";
 	
 	
+	private static final String GET_FOR_SITE_MAP = "select p.uid, p.pageUuid, p.title, p.modifiedDate, p.space.unixName from " + Page.class.getName() 
+			+ " as p where lastModifiedDate > :lastModifiedDate and p.removed=0";
+	
 	private static final String GET_TREE = "select p.uid, p.pageUuid, p.title, p.parent.uid, p.level from " + Page.class.getName() 
 						+ " as p where p.space.unixName=?  and p.removed=0";
 	
@@ -344,11 +347,56 @@ public class PageDAOHibernate extends BaseDAOHibernate<Page> implements PageDAO 
 		return 0;
 	}
 
+	public List<Page> getPageForSitemap(Date lastModifiedDate,  final int start, final int returnNum) {
+		Query query = getCurrentSesssion().createQuery(GET_FOR_SITE_MAP);
+		query.setParameter("lastModifiedDate", lastModifiedDate);
+		
+		
+		if(start > 0)
+			query.setFirstResult(start);
+		
+		List<Object[]> list;
+		if(returnNum >  0){
+			list =  query.setMaxResults(returnNum).list();
+		}else{
+			list =  query.list();
+		}
+		if(list == null){
+			return null;
+		}
+		
+		List<Page> pageList = new ArrayList<Page>(list.size());
+		for (Object[] objects : list) {
+			Page page = new Page();
+			int idx=0;
+			//pageUuid, title, spaceUid, and content
+			page.setUid((Integer) objects[idx++]);
+			page.setPageUuid((String) objects[idx++]);
+			page.setTitle((String) objects[idx++]);
+			page.setModifiedDate((Date) objects[idx++]);
+
+			Space space = new Space();
+			space.setUnixName((String) objects[idx++]);
+			page.setSpace(space);
+			
+			pageList.add(page);
+		}
+		return pageList;
+
+		
+	}
 	public List<Page> getPageForIndexing(final int start, final int returnNum) {
 		Query query = getCurrentSesssion().createQuery(GET_PAGE_FOR_INDEXING);
 		if(start > 0)
 			query.setFirstResult(start);
-		List<Object[]> list =  query.setMaxResults(returnNum).list(); 
+		
+		List<Object[]> list;
+		if(returnNum >  0){
+			list =  query.setMaxResults(returnNum).list();
+		}else{
+			list =  query.list();
+		}
+		 
 		if(list == null){
 			return null;
 		}

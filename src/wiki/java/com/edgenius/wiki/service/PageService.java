@@ -585,6 +585,12 @@ public interface PageService {
 	List<Page> getPinTopPages(Integer spaceUid, String spaceUname, User viewer);
 
 
+	/**
+	 * 
+	 */
+	List<Page> getPageForSitemap(Date lastModifiedDate);
+
+
 	
 
 }

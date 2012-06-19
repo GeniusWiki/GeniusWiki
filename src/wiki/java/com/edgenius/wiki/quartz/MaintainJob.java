@@ -32,6 +32,7 @@ import com.edgenius.core.Global;
 import com.edgenius.wiki.search.service.IndexService;
 import com.edgenius.wiki.service.ActivityLogService;
 import com.edgenius.wiki.service.FriendService;
+import com.edgenius.wiki.service.SitemapService;
 
 
 /**
@@ -50,7 +51,7 @@ public class MaintainJob  extends AuthenticatedQuartzJobBean {
 				ActivityLogService activityLog = (ActivityLogService) applicationContext.getBean(ActivityLogService.SERVICE_NAME);
 				activityLog.purgeActivityLog(Global.PurgeDaysOldActivityLog); //days
 			}catch (Exception e) {
-				log.error("Unable to complet maintain job for purgeActivityLog",e);
+				log.error("Unable to complete maintain job for purgeActivityLog",e);
 			}
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,7 +60,7 @@ public class MaintainJob  extends AuthenticatedQuartzJobBean {
 			FriendService friendService = (FriendService) applicationContext.getBean(FriendService.SERVICE_NAME);
 			friendService.removeExpiredInvitations(72); //hours
 		}catch (Exception e) {
-			log.error("Unable to complet maintain job for removeExpiredInvitations",e);
+			log.error("Unable to complete maintain job for removeExpiredInvitations",e);
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//  Optimise Search Index
@@ -69,9 +70,20 @@ public class MaintainJob  extends AuthenticatedQuartzJobBean {
 			indexService.optimize();
 			log.info("Index optimize complete successfully.");
 		}catch (Exception e) {
-			log.error("Unable to complet maintain job for Index optimize",e);		
+			log.error("Unable to complete maintain job for Index optimize",e);		
 		}finally{
 			logout();
+		}
+		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//  Sitemap generator
+		if(Global.ADSENSE){
+			try{
+				SitemapService sitemapService = (SitemapService) applicationContext.getBean(SitemapService.SERVICE_NAME);
+				sitemapService.createSitemap();
+			}catch (Exception e) {
+				log.error("Unable to complete sitemap generation job",e);
+			}
 		}
 	}
 	

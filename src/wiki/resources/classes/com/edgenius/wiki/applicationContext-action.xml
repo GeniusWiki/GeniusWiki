@@ -43,7 +43,9 @@
     </bean>
 	<bean id="rssFeedAction" class="com.edgenius.wiki.webapp.action.RSSFeedAction" scope="prototype">
     </bean>
-
+	<bean id="sitemapAction" class="com.edgenius.wiki.webapp.action.SitemapAction" scope="prototype">
+    </bean>
+    
 	<!--  admin functions -->
 	<bean id="generalAdminAction" class="com.edgenius.wiki.webapp.admin.action.GeneralAdminAction" scope="prototype">
     </bean>

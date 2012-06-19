@@ -24,6 +24,7 @@
 package com.edgenius.wiki.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -1567,6 +1568,18 @@ public class PageServiceImpl implements PageService {
 	}
 
 
+	@Override
+	public List<Page> getPageForSitemap(Date lastModifiedDate) {
+		if(lastModifiedDate == null){
+			java.util.Calendar cal = Calendar.getInstance();
+			cal.set(1970, 0, 1);
+			lastModifiedDate = cal.getTime();
+		}
+		return pageDAO.getPageForSitemap(lastModifiedDate, 0, 0);
+	}
+
+
+
 	//********************************************************************
 	//               Private Methods
 	//********************************************************************
@@ -2115,6 +2128,5 @@ public class PageServiceImpl implements PageService {
 	public void setEventContainer(EventContainer eventContainer) {
 		this.eventContainer = eventContainer;
 	}
-
 
 }

@@ -52,10 +52,8 @@ public class GZIPResponseStream extends ServletOutputStream {
             ByteArrayOutputStream baos = (ByteArrayOutputStream) bufferedOutput;
 
             // prepare a gzip stream
-            ByteArrayOutputStream compressedContent =
-                new ByteArrayOutputStream();
-            GZIPOutputStream gzipstream =
-                new GZIPOutputStream(compressedContent);
+            ByteArrayOutputStream compressedContent = new ByteArrayOutputStream();
+            GZIPOutputStream gzipstream = new GZIPOutputStream(compressedContent);
             byte[] bytes = baos.toByteArray();
             gzipstream.write(bytes);
             gzipstream.finish();

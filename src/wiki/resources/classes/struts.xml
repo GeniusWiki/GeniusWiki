@@ -41,7 +41,11 @@
         </action> 
  		<action name="captcha" class="captchaImageAction">
         </action> 
-    	 <action name="invite" class="inviteAction"> 
+    	
+    	<action name="sitemap" class="sitemapAction">
+        </action>
+        
+    	<action name="invite" class="inviteAction"> 
              <result name="friendship">/WEB-INF/pages/friendship.jsp</result> 
              <result name="invitation">/WEB-INF/pages/invitation.jsp</result> 
         </action>

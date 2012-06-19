@@ -100,7 +100,7 @@
 		<to type="forward" last="true">/login/login.do</to>
 	</rule>
 	<rule>
-		<!--login   -->
+		<!--signup   -->
 		<from>^/register(?:$)</from>
 		<to type="forward" last="true">/login/login.do?register=true</to>
 	</rule>
@@ -109,6 +109,13 @@
 		<from>^/sysadmin(?:$)</from>
 		<to type="forward" last="true">/instance/admin.do</to>
 	</rule>
-
-
+	<!-- ====================== Sitemap etc. ======================== -->
+	<rule>
+		<from>^/(robots.txt)</from>
+		<to type="redirect" last="true">/sitemap?file=$1</to>
+	</rule>
+	<rule>
+		<from>^/(sitemap.*)</from>
+		<to type="redirect" last="true">/sitemap?file=$1</to>
+	</rule>
 </urlrewrite>
