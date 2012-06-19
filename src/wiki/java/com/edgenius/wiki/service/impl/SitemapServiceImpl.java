@@ -32,6 +32,8 @@ import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,7 +44,6 @@ import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,6 @@ import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.service.PageService;
 import com.edgenius.wiki.service.SitemapService;
 import com.edgenius.wiki.util.WikiUtil;
-import com.ibm.icu.util.Calendar;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -128,7 +128,7 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		
 		String pageUrl = metadata.getPageUrl(pageUuid);
 		
-		Pattern sitemapElementPattern = Pattern.compile("<url>.+"+Pattern.quote(pageUrl)+".+</url>");
+		Pattern sitemapElementPattern = Pattern.compile("<url>[^(?:<url>)]+"+Pattern.quote(pageUrl)+"[^(?:</url>)]+</url>");
 		String body = IOUtils.toString(bis);
 		Matcher matcher = sitemapElementPattern.matcher(body);
 		body = matcher.replaceAll("");
@@ -164,25 +164,32 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 	//               Private
 	//********************************************************************
 	private void appendSitemapIndex(String sitemap) throws IOException {
-		File sitemapIndexFile = new File(mapResourcesRoot.getFile(),SITEMAP_INDEX_NAME);
+		File sitemapIndexFile = new File(mapResourcesRoot.getFile(), SITEMAP_INDEX_NAME);
 		
-		List<String> lines = FileUtils.readLines(sitemapIndexFile);
+		List<String> lines;
 		int removeIdx = -1;
-		if(lines.size() > 0){
-			//remove last tag: </sitemapindex>
-			for(int idx = lines.size()-1; idx >= 0;idx--){
-				if("</sitemapindex>".equals(lines.get(idx).trim())){
-					removeIdx = idx;
-					break;
+		if(sitemapIndexFile.exists()){
+			lines = FileUtils.readLines(sitemapIndexFile);
+			if(lines.size() > 0){
+				//remove last tag: </sitemapindex>
+				for(int idx = lines.size()-1; idx >= 0;idx--){
+					if("</sitemapindex>".equals(lines.get(idx).trim())){
+						removeIdx = idx;
+						break;
+					}
+				}
+				if(removeIdx != -1){
+					lines.remove(removeIdx);
 				}
 			}
-			if(removeIdx != -1){
-				lines.remove(removeIdx);
-			}else{
-				//assume a new file - this may be cause problem if sitemap crashed.
-				lines.add("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-				lines.add("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
-			}
+		}else{
+			lines = new ArrayList<String>();
+		}
+		
+		if(removeIdx == -1){
+			//assume a new file - this may be cause problem if sitemap crashed.
+			lines.add("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+			lines.add("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 		}
 		
 		lines.add("   <sitemap>");
@@ -257,7 +264,11 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		 * @return
 		 */
 		public String getPageUrl(String pageUuid) {
-			// TODO Auto-generated method stub
+			String value = pageMap.get(pageUuid);
+			String[] str = StringUtils.split(value, SEP);
+			if(str != null && str.length == 2){
+				return str[1];
+			}
 			return null;
 		}
 
@@ -266,7 +277,11 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		 * @return
 		 */
 		public String getSitemapIndex(String pageUuid) {
-			// TODO Auto-generated method stub
+			String value = pageMap.get(pageUuid);
+			String[] str = StringUtils.split(value, SEP);
+			if(str != null && str.length == 2){
+				return str[0];
+			}
 			return null;
 		}
 
@@ -305,7 +320,7 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 				SitemapMetadata meta = (SitemapMetadata) xs.fromXML(fis);
 				return meta;
 			} catch (FileNotFoundException e) {
-				log.error("Unable to read sitemap-metadata.xml",e);
+				log.warn("Sitemap-metadata.xml not found");
 			} finally{
 				IOUtils.closeQuietly(fis);
 			}

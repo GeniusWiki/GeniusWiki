@@ -87,10 +87,10 @@
 	<bean id="spaceService" class="com.edgenius.wiki.service.impl.SpaceServiceImpl">
   	</bean>
   	
-  	<bean id="sitemapService" class="com.edgenius.wiki.service.impl.SitemapServiceImpl" init-method="init">
+  	<bean id="sitemapService" class="com.edgenius.wiki.service.impl.SitemapServiceImpl" lazy-init="false">
 		<property name="mapResourcesRoot" value="${geniuswiki.data.root}data/index/sitemap" />
-		<property name="mapExplosionRoot" value="/" />
 	</bean>
+	
 	<bean id="themeService" class="com.edgenius.wiki.service.impl.ThemeServiceImpl" init-method="init">
 		<property name="themeResourcesRoot" value="${geniuswiki.data.root}data/themes" />
 		<property name="themeExplosionRoot" value="/themes" />

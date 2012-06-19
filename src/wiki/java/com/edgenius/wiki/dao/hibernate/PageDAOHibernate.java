@@ -63,7 +63,7 @@ public class PageDAOHibernate extends BaseDAOHibernate<Page> implements PageDAO 
 	
 	
 	private static final String GET_FOR_SITE_MAP = "select p.uid, p.pageUuid, p.title, p.modifiedDate, p.space.unixName from " + Page.class.getName() 
-			+ " as p where lastModifiedDate > :lastModifiedDate and p.removed=0";
+			+ " as p where p.modifiedDate > :lastModifiedDate and p.removed=0 order by p.modifiedDate desc";
 	
 	private static final String GET_TREE = "select p.uid, p.pageUuid, p.title, p.parent.uid, p.level from " + Page.class.getName() 
 						+ " as p where p.space.unixName=?  and p.removed=0";
