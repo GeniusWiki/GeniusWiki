@@ -104,8 +104,13 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		return true;
 	}
 
-	public void removePage(String pageUuid) throws IOException{
+	public boolean removePage(String pageUuid) throws IOException{
+		boolean removed = false;
 		String sitemapIndex = metadata.getSitemapIndex(pageUuid);
+		if(sitemapIndex == null){
+			log.warn("Page {} does not exist in sitemap", pageUuid);
+			return removed;
+		}
 		
 		String sitemapZip = SITEMAP_NAME_PREFIX+sitemapIndex+".xml.gz";
 		File sizemapZipFile = new File(mapResourcesRoot.getFile(), sitemapZip);
@@ -127,14 +132,22 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		IOUtils.closeQuietly(gzipstream);
 		
 		String pageUrl = metadata.getPageUrl(pageUuid);
-		
-		Pattern sitemapElementPattern = Pattern.compile("<url>[^(?:<url>)]+"+Pattern.quote(pageUrl)+"[^(?:</url>)]+</url>");
 		String body = IOUtils.toString(bis);
-		Matcher matcher = sitemapElementPattern.matcher(body);
-		body = matcher.replaceAll("");
+		int loc = body.indexOf("<loc>"+pageUrl+"</loc>");
+		if(loc != -1){
+			int start = StringUtils.lastIndexOf(body, "<url>", loc);
+			int end = StringUtils.indexOf(body, "</url>", loc);
+			if(start != -1 && end != -1){
+				//remove this URL
+				body = StringUtils.substring(body, start, end+6);
+				zipToFile(sizemapZipFile, body.getBytes());
+				removed = true;
+			}
+		}
 		
-		zipToFile(sizemapZipFile, body.getBytes());
 		metadata.removePageMap(pageUuid);
+		
+		return removed;
 	}
 	
 	@Override
