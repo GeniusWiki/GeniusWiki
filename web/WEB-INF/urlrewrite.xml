@@ -111,11 +111,11 @@
 	</rule>
 	<!-- ====================== Sitemap etc. ======================== -->
 	<rule>
-		<from>^/(robots.txt)</from>
-		<to type="redirect" last="true">/sitemap?file=$1</to>
+		<from>^/(robots\.txt)</from>
+		<to type="forward" last="true">/searchengine.do?file=$1</to>
 	</rule>
 	<rule>
-		<from>^/(sitemap.*)</from>
-		<to type="redirect" last="true">/sitemap?file=$1</to>
+		<from>^/sitemap/(.+)</from>
+		<to type="forward" last="true">/searchengine.do?file=$1</to>
 	</rule>
 </urlrewrite>

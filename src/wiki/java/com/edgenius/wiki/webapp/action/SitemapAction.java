@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.edgenius.wiki.service.SitemapService;
 
@@ -42,7 +43,7 @@ public class SitemapAction extends BaseAction{
 	private static final Logger log = LoggerFactory.getLogger(SitemapAction.class);
 	
 	private String file;
-	private SitemapService sitemapService;
+	@Autowired private SitemapService sitemapService;
 	
 	public String execute(){
 		try {
@@ -61,6 +62,9 @@ public class SitemapAction extends BaseAction{
 		return null;
 	}
 	
+	//********************************************************************
+	//               Set / Get
+	//********************************************************************
 	public String getFile() {
 		return file;
 	}

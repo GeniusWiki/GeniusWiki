@@ -42,7 +42,7 @@
  		<action name="captcha" class="captchaImageAction">
         </action> 
     	
-    	<action name="sitemap" class="sitemapAction">
+    	<action name="searchengine" class="sitemapAction">
         </action>
         
     	<action name="invite" class="inviteAction"> 

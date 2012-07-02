@@ -224,6 +224,19 @@
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/robots.txt</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>rewriteFilter</filter-name>
+        <url-pattern>/sitemap/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    
     <!-- Must after rewrite filter for /view -> pages/pages.do?r=true -->
     <filter-mapping>
         <filter-name>seFilter</filter-name>

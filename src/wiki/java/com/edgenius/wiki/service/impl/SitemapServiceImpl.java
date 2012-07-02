@@ -35,7 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -56,15 +55,23 @@ import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.service.PageService;
 import com.edgenius.wiki.service.SitemapService;
 import com.edgenius.wiki.util.WikiUtil;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * 
  * @author Dapeng.Ni
  */
 public class SitemapServiceImpl implements SitemapService, InitializingBean {
-	private static final Logger log = LoggerFactory.getLogger(SitemapServiceImpl.class);
+	/**
+	 * 
+	 */
+	private static final String SITEMAP_URL_CONTEXT = "sitemap/";
+
+	/**
+	 * 
+	 */
+	private static final String ROBOTS_TXT = "robots.txt";
+
+	static final Logger log = LoggerFactory.getLogger(SitemapServiceImpl.class);
 	
 	public static final String SITEMAP_INDEX_NAME = "sitemap.xml";
 	public static final String SITEMAP_NAME_PREFIX = "sitemap-";
@@ -157,12 +164,12 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		}
 		
 		//copy existed sitemap file to explode directory
-		File robotFile = new File(mapResourcesRoot.getFile(),"Robots.txt");
+		File robotFile = new File(mapResourcesRoot.getFile(),ROBOTS_TXT);
 		if(!robotFile.exists()){
-			FileUtils.writeStringToFile(robotFile, "Sitemap: " + WebUtil.getHostAppURL()+SITEMAP_INDEX_NAME);
+			FileUtils.writeStringToFile(robotFile, "Sitemap: " + WebUtil.getHostAppURL()+ SITEMAP_URL_CONTEXT + SITEMAP_INDEX_NAME);
 		}
 		
-		metadata = new SitemapMetadata().load(mapResourcesRoot.getFile());
+		metadata = SitemapMetadata.load(mapResourcesRoot.getFile());
 		
 		try{
 			this.createSitemap();
@@ -204,7 +211,7 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		}
 		
 		lines.add("   <sitemap>");
-		lines.add("     <loc>" + WebUtil.getHostAppURL()+sitemap+"</loc>");
+		lines.add("     <loc>" + WebUtil.getHostAppURL() + SITEMAP_URL_CONTEXT + sitemap + "</loc>");
 		lines.add("     <lastmod>"+TIME_FORMAT.format(new Date())+" </lastmod>");
 		lines.add("   </sitemap>");
 		
@@ -254,110 +261,9 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
         IOUtils.closeQuietly(gzos);
 	}
 	
-
 	//********************************************************************
-	//               Private class
+	//  Set / Get
 	//********************************************************************
-	@XStreamAlias("SitemapMetadata")
-	private class SitemapMetadata{
-		private static final String SEP = "|";
-		
-		private Date modifiedDate;
-		//Save the page into which sitemap. Key: pageUuid, Value: sitemapIndex
-		private LinkedHashMap<String, String> pageMap = new LinkedHashMap<String, String>();
-		
-		public void addPageMap(String pageUuid, String sitemapIndex, String pageurl){
-			pageMap.put(pageUuid, sitemapIndex + SEP + pageurl);
-		}
-		
-		/**
-		 * @param pageUuid
-		 * @return
-		 */
-		public String getPageUrl(String pageUuid) {
-			String value = pageMap.get(pageUuid);
-			String[] str = StringUtils.split(value, SEP);
-			if(str != null && str.length == 2){
-				return str[1];
-			}
-			return null;
-		}
-
-		/**
-		 * @param pageUuid
-		 * @return
-		 */
-		public String getSitemapIndex(String pageUuid) {
-			String value = pageMap.get(pageUuid);
-			String[] str = StringUtils.split(value, SEP);
-			if(str != null && str.length == 2){
-				return str[0];
-			}
-			return null;
-		}
-
-		public void removePageMap(String pageUuid){
-			pageMap.remove(pageUuid);
-		}
-		
-		public void save(File root) {
-			
-			File sitemapIndexFile = new File(root,"sitemap-metadata.xml");
-			FileOutputStream fos = null;
-			try {
-				
-				modifiedDate = new Date();
-				
-				fos = new FileOutputStream(sitemapIndexFile);
-				XStream xs = new XStream();
-				xs.processAnnotations(SitemapMetadata.class);
-				xs.toXML(this, fos);
-			} catch (FileNotFoundException e) {
-				log.error("Unable to write sitemap-metadata.xml",e);
-			} finally{
-				IOUtils.closeQuietly(fos);
-			}
-			
-		}
-		
-		public SitemapMetadata load(File root){
-			
-			File sitemapIndexFile = new File(root,"sitemap-metadata.xml");
-			FileInputStream fis = null;
-			try {
-				fis = new FileInputStream(sitemapIndexFile);
-				XStream xs = new XStream();
-				xs.processAnnotations(SitemapMetadata.class);
-				SitemapMetadata meta = (SitemapMetadata) xs.fromXML(fis);
-				return meta;
-			} catch (FileNotFoundException e) {
-				log.warn("Sitemap-metadata.xml not found");
-			} finally{
-				IOUtils.closeQuietly(fis);
-			}
-			return new SitemapMetadata(); 
-		}
-
-		public Date getModifiedDate() {
-			return modifiedDate;
-		}
-
-		public void setModifiedDate(Date modifiedDate) {
-			this.modifiedDate = modifiedDate;
-		}
-
-		public LinkedHashMap<String, String> getPageMap() {
-			return pageMap;
-		}
-
-		public void setPageMap(LinkedHashMap<String, String> pageMap) {
-			this.pageMap = pageMap;
-		}
-	}
-	//********************************************************************
-	//               Set / Get
-	//********************************************************************
-
 	public void setMapResourcesRoot(Resource mapResourcesRoot) {
 		this.mapResourcesRoot = mapResourcesRoot;
 	}
