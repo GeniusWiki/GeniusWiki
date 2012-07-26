@@ -73,12 +73,10 @@ public class PlainEditor extends SimplePanel implements SwitchEditorListener, Ha
 	// TextArea
 	private TextArea textArea = new TextArea();
 	private String id = HTMLPanel.createUniqueId();
-	private Editor editor;
 	//********************************************************************
 	//               method
 	//********************************************************************
 	public PlainEditor(final Editor editor){
-		this.editor = editor;
 		textArea.addKeyPressHandler(new ContentChangeListener());
 		textArea.addKeyDownHandler(new ContentChangeListener());
 		textArea.addKeyPressHandler(new QuickHelpKeyListener());

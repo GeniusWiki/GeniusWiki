@@ -25,7 +25,7 @@
 		        theme_advanced_buttons1 : "cut,copy,paste,|,bold,italic,underline,strikethrough,sub,sup,|,bullist,numlist"+
 			        ",|,justifyleft,justifycenter,justifyright,|,link,unlink,anchor,|,formatselect,fontselect,fontsizeselect,forecolor,backcolor,|,removeformat",
 		        theme_advanced_buttons2 :  "undo,redo,|,table,delete_col,delete_row,col_after,col_before,row_after,row_before,split_cells,merge_cells,|,"+
-			         "image,hr,charmap,emotions,|,wbmacros,|,@TOKEN.GWT.DEBUG.TINYMCE.CODE@wbplaintext",
+			         "image,hr,charmap,emotions,|,fullscreen,|,wbmacros,|,@TOKEN.GWT.DEBUG.TINYMCE.CODE@wbplaintext",
 		        theme_advanced_buttons3 : "",
 		        <%--disable more colors(palette) to avoid trouble:
 		        * Default color picker is already change for gwt popup dialog for table bg and border color usage.

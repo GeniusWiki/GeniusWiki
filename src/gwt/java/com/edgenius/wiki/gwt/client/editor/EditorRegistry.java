@@ -89,7 +89,8 @@ public class EditorRegistry {
 	}
 	
 	private void onInit(String id){
-		editors.get(id).richEditor.onInit();
+	    //disable this for tinyMCE.fullscreen conflict, looks fullscreen can not support editors.get(id)?
+//		editors.get(id).richEditor.onInit();
 	}
 	private void onChange(String id){
     	editors.get(id).richEditor.onChange();
