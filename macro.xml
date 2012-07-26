@@ -155,6 +155,7 @@
 					<exclude name="${tinymce.plugin.2}/**"/>
 					<exclude name="${tinymce.plugin.3}/**"/>
 					<exclude name="${tinymce.plugin.4}/**"/>
+					<exclude name="${tinymce.plugin.5}/**"/>
 					<exclude name="wb*/**"/>
 				</fileset>
 			</delete>
