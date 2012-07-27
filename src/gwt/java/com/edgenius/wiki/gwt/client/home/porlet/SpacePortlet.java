@@ -31,7 +31,6 @@ import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.PortletModel;
 import com.edgenius.wiki.gwt.client.model.SpacePagesModel;
-import com.edgenius.wiki.gwt.client.offline.SyncButton;
 import com.edgenius.wiki.gwt.client.page.widgets.FunctionWidget;
 import com.edgenius.wiki.gwt.client.page.widgets.RSSFeedButton;
 import com.edgenius.wiki.gwt.client.portal.PortletListener;
@@ -127,13 +126,14 @@ public class SpacePortlet extends PageListPortlet implements AsyncCallback<Portl
 				adminImg.setStyleName(Css.PORTLET_FOOT_IMG);
 			}
 			
-			if(model.space.permissions[ClientConstants.OFFLINE] == 1){
-				addSeparator();
-				SyncButton offlineBtn = new SyncButton(viewUser, model.space.unixName,false);
-				addControl(offlineBtn);
-				//special style, there is conflict with login panel offlineBtn, so here I have to add special CSS
-				DOM.setStyleAttribute(offlineBtn.getElement(), "verticalAlign", "bottom");
-			}
+			 //remove some offline_code here(0726)
+//			if(model.space.permissions[ClientConstants.OFFLINE] == 1){
+//				addSeparator();
+//				SyncButton offlineBtn = new SyncButton(viewUser, model.space.unixName,false);
+//				addControl(offlineBtn);
+//				//special style, there is conflict with login panel offlineBtn, so here I have to add special CSS
+//				DOM.setStyleAttribute(offlineBtn.getElement(), "verticalAlign", "bottom");
+//			}
 		}
 		if(model.isPrivate){
 			Image privateImg = new Image(IconBundle.I.get().lock());

@@ -46,7 +46,8 @@ public class InstanceSecurityPanel extends AbstractSecurityPanel {
 		table.setText(row,col++,Msg.consts.access());
 		table.setText(row,col++,Msg.consts.create_space());
 		table.setText(row,col++,Msg.consts.system_admin());
-		table.setText(row,col++,Msg.consts.offline());
+		//remove some offline_code here(0726)
+//		table.setText(row,col++,Msg.consts.offline());
 		
 		return ++row;
 	}
@@ -54,7 +55,8 @@ public class InstanceSecurityPanel extends AbstractSecurityPanel {
 	public int[] getValidOperations() {
 		//HARDCODE: ordinal of SecurityValues.OPERATIONS
 //		for instance [0,1,3](read,write and admin)
-		return new int[]{ClientConstants.READ,ClientConstants.WRITE,ClientConstants.ADMIN, ClientConstants.OFFLINE};
+	    //remove some offline_code here(0726)
+		return new int[]{ClientConstants.READ,ClientConstants.WRITE,ClientConstants.ADMIN}; 
 	}
 
 	public boolean getRoleAdminReadonly(int operation) {

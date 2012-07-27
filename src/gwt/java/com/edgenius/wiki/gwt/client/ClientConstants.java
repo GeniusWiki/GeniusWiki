@@ -39,7 +39,8 @@ public class ClientConstants {
 		public static final int COMMENT_WRITE = 5;
 		public static final int EXPORT = 6;
 		public static final int RESTRICT = 7;
-	    public static final int OFFLINE = 8;
+		 //remove some offline_code here(0726)
+//	    public static final int OFFLINE = 8;
 	    
 		public static final int SPACE_BASE = SharedConstants.PERM_SPACE_BASE;
 		

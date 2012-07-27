@@ -14,9 +14,6 @@
 	<!--  initGlobal() method needs to be executed even settingService is not reference, so set lazy-init to false. -->
   	<bean id="settingService" class="com.edgenius.wiki.service.impl.SettingServiceImpl" lazy-init="false">
   		<property name="globalConf" value="${geniuswiki.data.root}global.xml"/>
-  		<property name="gearsConf" value="classpath:geniuswiki/gears.properties"/>
-  		<property name="offlineDBVersion" value="@TOKEN.GEARS.DB.VERSION@"/>
-  		<property name="offlineDefaultDBVersion" value="@TOKEN.GEARS.MAIN.DB.VERSION@"/>
   	</bean>
   		  
 	<bean id="messageService" class="com.edgenius.core.service.impl.MessageServiceImpl">

@@ -26,8 +26,6 @@ package com.edgenius.wiki.gwt.client.login;
 import com.allen_sauer.gwt.log.client.Log;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
-import com.edgenius.wiki.gwt.client.offline.OfflineConstants;
-import com.edgenius.wiki.gwt.client.offline.OfflineLoginService;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.edgenius.wiki.gwt.client.widgets.Button;
@@ -44,7 +42,6 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -132,27 +129,28 @@ public class LoginForm extends Composite implements SubmitHandler, SubmitComplet
 
 
 	public void onSubmit(SubmitEvent event) {
-		if(offline){
-			
-			String userN = username.getText();
-			if(StringUtil.isBlank(userN)){
-				username.setError(Msg.params.required(Msg.consts.user_name()));
-				event.cancel();
-				return;
-			}
-			String retEvent;
-			if(!OfflineLoginService.login(userN)){
-				//login failed
-				retEvent = SharedConstants.FORM_RET_HEADER+SharedConstants.FORM_RET_HEADER_ERROR_IN_USERPASS;
-			}else{
-				Cookies.setCookie(OfflineConstants.COOKIE_LOGIN, userN);
-				retEvent = "";
-			}
-			//simulate login
-			doLogin(retEvent);
-			//always cancel
-			event.cancel();
-		}else{
+	    //remove some offline_code here(0726)
+//		if(offline){
+//			
+//			String userN = username.getText();
+//			if(StringUtil.isBlank(userN)){
+//				username.setError(Msg.params.required(Msg.consts.user_name()));
+//				event.cancel();
+//				return;
+//			}
+//			String retEvent;
+//			if(!OfflineLoginService.login(userN)){
+//				//login failed
+//				retEvent = SharedConstants.FORM_RET_HEADER+SharedConstants.FORM_RET_HEADER_ERROR_IN_USERPASS;
+//			}else{
+//				Cookies.setCookie(OfflineConstants.COOKIE_LOGIN, userN);
+//				retEvent = "";
+//			}
+//			//simulate login
+//			doLogin(retEvent);
+//			//always cancel
+//			event.cancel();
+//		}else{
 			if(StringUtil.isBlank(username.getText())){
 				username.setError(Msg.params.required(Msg.consts.user_name()));
 				event.cancel();
@@ -166,7 +164,7 @@ public class LoginForm extends Composite implements SubmitHandler, SubmitComplet
 			
 			if(sender != null)
 				sender.setEnabled(false);
-		}
+//		}
 	}
 	
 	//see AuthenticationProcessingFilter.sendRedirect();

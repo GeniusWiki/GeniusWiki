@@ -52,16 +52,6 @@ public interface SettingService {
 	//***********************************************************
 	// Service methods
 	//***********************************************************
-
-	/**
-	 * The reason for this method is {GWT Module}.nocahce.menifest file requests web context part to fill in some 
-	 * URL information. As web context is only decide after system installed, so we can not hard code in deployed package.
-	 * This menifest file will be update every system restarted.  
-	 * 
-	 * This method will call inside <code>StarupListener</code> while system startup.
-	 * @param absolutePath
-	 */
-	void expandOfflineUrls(String absolutePath);
 	
 	GlobalSetting getGlobalSetting();
 	void saveOrUpdateGlobalSetting(GlobalSetting setting) throws SettingServiceException;

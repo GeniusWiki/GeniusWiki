@@ -305,19 +305,22 @@ pre.macroPreview{
 	font-weight:bold;
 	border-bottom: 1px solid #000;
 	margin-bottom: 15px;
-	
+	line-height: 40px;
 }
 .macroPageIndexKey{
 	font-size:25px;
 	font-weight:bold;
 	border-bottom: 1px dotted #CCC;
 	margin-bottom: 6px;
+	line-height: 40px;
 	
 }
 .macroPageIndexKey img{
 	float:right;
 }
-
+.macroPageIndexLink{
+	line-height: 25px;
+}
 .macroPageinfo{
 	text-align:center;
 	font-size: 12px;

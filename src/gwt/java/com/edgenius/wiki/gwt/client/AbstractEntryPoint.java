@@ -28,8 +28,6 @@ import java.util.Date;
 import com.edgenius.wiki.gwt.client.model.JsInfoModel;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 
 /**
  * @author Dapeng.Ni
@@ -43,14 +41,15 @@ public abstract class AbstractEntryPoint  implements EntryPoint{
 	 */
 	public static boolean isOffline() {
 
-		// hidden type
-		Element offlineDiv = DOM.getElementById("offlineDiv");
-		if(offlineDiv != null){
-			String offlineStr = DOM.getElementAttribute(offlineDiv, "value");
-	
-			if ("true".equalsIgnoreCase(offlineStr))
-				return true;
-		}
+	    //remove some offline_code here(0726)
+//		// hidden type
+//		Element offlineDiv = DOM.getElementById("offlineDiv");
+//		if(offlineDiv != null){
+//			String offlineStr = DOM.getElementAttribute(offlineDiv, "value");
+//	
+//			if ("true".equalsIgnoreCase(offlineStr))
+//				return true;
+//		}
 		
 		return false;
 	}

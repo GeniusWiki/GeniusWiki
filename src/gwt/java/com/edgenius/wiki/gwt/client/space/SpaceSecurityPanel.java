@@ -45,7 +45,7 @@ public class SpaceSecurityPanel extends AbstractSecurityPanel{
 
 		return new int[]{ClientConstants.READ,ClientConstants.WRITE,ClientConstants.REMOVE,ClientConstants.RESTRICT
 				,ClientConstants.COMMENT_READ,ClientConstants.COMMENT_WRITE
-				,ClientConstants.ADMIN, ClientConstants.OFFLINE};
+				,ClientConstants.ADMIN};
 	}
 
 	public int buildTableHeader(int startCol) {
@@ -58,7 +58,7 @@ public class SpaceSecurityPanel extends AbstractSecurityPanel{
 		table.setText(row, col, Msg.consts.comment());
 		table.getFlexCellFormatter().setColSpan(row, col++, 2);
 		table.setText(row, col, Msg.consts.space());
-		table.getFlexCellFormatter().setColSpan(row, col++, 2);
+		table.getFlexCellFormatter().setColSpan(row, col++, 1);
 		
 		//another new row
 		row++;
@@ -80,8 +80,9 @@ public class SpaceSecurityPanel extends AbstractSecurityPanel{
 //		table.setText(row,col++,"export");
 		table.getFlexCellFormatter().setStyleName(row, col, Css.NOWRAP);
 		table.setText(row,col++,Msg.consts.admin());
-		table.getFlexCellFormatter().setStyleName(row, col, Css.NOWRAP);
-		table.setText(row,col++,Msg.consts.offline());
+		//remove some offline_code here(0726)
+//		table.getFlexCellFormatter().setStyleName(row, col, Css.NOWRAP);
+//		table.setText(row,col++,Msg.consts.offline());
 		
 		return ++row;
 	}

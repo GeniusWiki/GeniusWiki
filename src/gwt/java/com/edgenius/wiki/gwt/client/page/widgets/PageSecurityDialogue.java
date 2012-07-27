@@ -66,7 +66,8 @@ public class PageSecurityDialogue extends DialogBox{
 			table.setText(row,col++,Msg.consts.remove());
 			table.setText(row,col++,Msg.consts.view_comments());
 			table.setText(row,col++,Msg.consts.create_comments());
-			table.setText(row,col++,Msg.consts.offline());
+		     //remove some offline_code here(0726)
+//			table.setText(row,col++,Msg.consts.offline());
 			
 			return ++row;
 		}
@@ -81,8 +82,9 @@ public class PageSecurityDialogue extends DialogBox{
 
 		public int[] getValidOperations() {
 			//READ,WRITE,REMOVE,COMMENTS_READ,COMMENTS_WRITE,OFFLINE
+		    //remove some offline_code here(0726)
 			return new int[]{ClientConstants.READ,ClientConstants.WRITE,ClientConstants.REMOVE,ClientConstants.COMMENT_READ
-					,ClientConstants.COMMENT_WRITE,ClientConstants.OFFLINE};
+					,ClientConstants.COMMENT_WRITE};
 		}
 		public int getRsourceTypeOrdinal() {
 //			SecurityValues.RESOURCE_TYPES.PAGE

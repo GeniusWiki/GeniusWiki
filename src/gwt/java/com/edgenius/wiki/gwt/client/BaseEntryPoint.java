@@ -30,9 +30,6 @@ import com.allen_sauer.gwt.log.client.Log;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.login.LoginDialog;
 import com.edgenius.wiki.gwt.client.model.UserModel;
-import com.edgenius.wiki.gwt.client.offline.OfflineLoginService;
-import com.edgenius.wiki.gwt.client.offline.OfflineUtil;
-import com.edgenius.wiki.gwt.client.offline.Sync;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.page.PinPanel;
 import com.edgenius.wiki.gwt.client.page.PinPanelListener;
@@ -65,7 +62,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -670,24 +666,25 @@ public abstract class BaseEntryPoint extends AbstractEntryPoint implements Nativ
 			//put it to static, so that if session logout, or other case, the signup button is not show up
 			AbstractEntryPoint.setSuppress(user.getSuppress());
 			
-			if(!isOffline() && OfflineUtil.isReadyForUser(user.getUid())){
-				Timer syncTimer = new Timer(){
-					public void run() {
-						//Check current login user's offline status, do download sync if need download.
-						Sync sync = new Sync();
-						sync.sync(user, null);
-					}
-				};
-				
-				//run immediately, then schedule run in period
-				syncTimer.run();
-				if(user.getDelaySyncMin() > 0 ){
-					syncTimer.scheduleRepeating(user.getDelaySyncMin()*60000);
-				}else{
-					//default 30 minutes
-					syncTimer.scheduleRepeating(30*60000);
-				}
-			}
+			 //remove some offline_code here(0726)
+//			if(!isOffline() && OfflineUtil.isReadyForUser(user.getUid())){
+//				Timer syncTimer = new Timer(){
+//					public void run() {
+//						//Check current login user's offline status, do download sync if need download.
+//						Sync sync = new Sync();
+//						sync.sync(user, null);
+//					}
+//				};
+//				
+//				//run immediately, then schedule run in period
+//				syncTimer.run();
+//				if(user.getDelaySyncMin() > 0 ){
+//					syncTimer.scheduleRepeating(user.getDelaySyncMin()*60000);
+//				}else{
+//					//default 30 minutes
+//					syncTimer.scheduleRepeating(30*60000);
+//				}
+//			}
 			
 			if (GwtUtils.isAnonymous(user)) {
 				// anonymous user
@@ -707,21 +704,23 @@ public abstract class BaseEntryPoint extends AbstractEntryPoint implements Nativ
 					public void onClick(ClickEvent event) {
 						profile.setObject(null);
 						login(null);
-						if(isOffline()){
-							OfflineLoginService.logout();
-							//redir to Dashboard home.
-							GwtClientUtils.redirect("");
-						}else{
+						 //remove some offline_code here(0726)
+//						if(isOffline()){
+//							OfflineLoginService.logout();
+//							//redir to Dashboard home.
+//							GwtClientUtils.redirect("");
+//						}else{
 							//put this after all finish, otherwise Safari will throw null point exception in JS.
 							GwtClientUtils.redirect("j_spring_security_logout");
-						}
+//						}
 					}
 				});
-				if(isOffline()){
-					loginPanel.add(new Label(user.getFullname()));
-				}else{
+				 //remove some offline_code here(0726)
+//				if(isOffline()){
+//					loginPanel.add(new Label(user.getFullname()));
+//				}else{
 					loginPanel.add(profile);
-				}
+//				}
 				if(isAllowLogout()){
 					loginPanel.add(new Label(" | "));
 					loginPanel.add(logout);

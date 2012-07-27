@@ -46,7 +46,6 @@ import com.edgenius.wiki.gwt.client.model.AttachmentModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.SpaceModel;
 import com.edgenius.wiki.gwt.client.model.UserModel;
-import com.edgenius.wiki.gwt.client.offline.SyncButton;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentListener;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel;
 import com.edgenius.wiki.gwt.client.page.widgets.LocationButton;
@@ -775,14 +774,15 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 	}
 	public void setSpaceUname(String spaceUname) {
 		sysSpaceUname = spaceUname;
-		if(!StringUtil.equals(oldSpaceUname,sysSpaceUname) && !AbstractEntryPoint.isOffline()){
+		 //remove some offline_code here(0726)
+		if(!StringUtil.equals(oldSpaceUname,sysSpaceUname) ){  //&& !AbstractEntryPoint.isOffline()
 			//remove 
 			cleanBeforeLogin();
-			if(!StringUtil.isBlank(spaceUname)){
-				//space change: maybe use event/listener model in future
-				SpaceControllerAsync spaceController = ControllerFactory.getSpaceController();
-				spaceController.getSpace(spaceUname, new SpaceChangeAsync());
-			}
+//			if(!StringUtil.isBlank(spaceUname)){
+//				//space change: maybe use event/listener model in future
+//				SpaceControllerAsync spaceController = ControllerFactory.getSpaceController();
+//				spaceController.getSpace(spaceUname, new SpaceChangeAsync());
+//			}
 			oldSpaceUname = sysSpaceUname;
 		}
 	}
@@ -871,22 +871,22 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 		
 		return null;
 	}
-
-	private class SpaceChangeAsync implements AsyncCallback<SpaceModel>{
-		public void onFailure(Throwable error) {
-			GwtClientUtils.processError(error);
-		}
-
-		public void onSuccess(SpaceModel model) {
-			if(model.permissions[ClientConstants.OFFLINE] == 1 && !model.isRemoved){
-				//display offline button on login part
-				addBeforeLogin(new HTML(" | "));
-				addBeforeLogin(new SyncButton(model.viewer,model.unixName,false));
-			}else{
-				//remove 
-				cleanBeforeLogin();
-			}
-		}
-	}
+	 //remove some offline_code here(0726)
+//	private class SpaceChangeAsync implements AsyncCallback<SpaceModel>{
+//		public void onFailure(Throwable error) {
+//			GwtClientUtils.processError(error);
+//		}
+//
+//		public void onSuccess(SpaceModel model) {
+//			if(model.permissions[ClientConstants.OFFLINE] == 1 && !model.isRemoved){
+//				//display offline button on login part
+//				addBeforeLogin(new HTML(" | "));
+//				addBeforeLogin(new SyncButton(model.viewer,model.unixName,false));
+//			}else{
+//				//remove 
+//				cleanBeforeLogin();
+//			}
+//		}
+//	}
 
 }

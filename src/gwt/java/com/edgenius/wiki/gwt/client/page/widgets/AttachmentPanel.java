@@ -39,7 +39,6 @@ import com.edgenius.wiki.gwt.client.model.AttachmentModel;
 import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.UploadProgressModel;
-import com.edgenius.wiki.gwt.client.offline.OfflineUploader;
 import com.edgenius.wiki.gwt.client.page.EditPanel;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.server.CaptchaVerifiedException;
@@ -48,7 +47,6 @@ import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
 import com.edgenius.wiki.gwt.client.server.SecurityControllerAsync;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
-import com.edgenius.wiki.gwt.client.server.utils.NumberUtil;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.CloseButton;
@@ -1431,32 +1429,32 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// method from SubmitHandler
 		public void onSubmit(SubmitEvent event) {
-			
-			if(AbstractEntryPoint.isOffline()){
-				//don't submit 
-				event.cancel();
-				
-				//to ask offline upload 
-				OfflineUploader offUploader = new OfflineUploader();
-				
-				//add each item to OfflineUploadModel
-				for (Iterator<Widget> iter = panel.iterator(); iter.hasNext(); ) {
-					Widget obj = iter.next();
-					if(obj instanceof HorizontalPanel){
-						HorizontalPanel itemPanel = (HorizontalPanel) obj;
-						FileUpload up = (FileUpload) itemPanel.getWidget(WIDGET_INDEX_UPLOADER);
-						TextBox desc = (TextBox) itemPanel.getWidget(WIDGET_INDEX_DESC);
-						if(up.getFilename() != null && up.getFilename().trim().length() > 0){
-							offUploader.add(up,desc.getText());
-						}
-					}
-				}//end for
-				
-				
-				String jsonAtts = offUploader.upload(spaceUnameHidden.getValue(),pageUuidHidden.getValue()
-						,NumberUtil.toInt(draftHidden.getValue(),0));
-				mergeAttachments(jsonAtts);
-			}
+		    //remove some offline_code here(0726)
+//			if(AbstractEntryPoint.isOffline()){
+//				//don't submit 
+//				event.cancel();
+//				
+//				//to ask offline upload 
+//				OfflineUploader offUploader = new OfflineUploader();
+//				
+//				//add each item to OfflineUploadModel
+//				for (Iterator<Widget> iter = panel.iterator(); iter.hasNext(); ) {
+//					Widget obj = iter.next();
+//					if(obj instanceof HorizontalPanel){
+//						HorizontalPanel itemPanel = (HorizontalPanel) obj;
+//						FileUpload up = (FileUpload) itemPanel.getWidget(WIDGET_INDEX_UPLOADER);
+//						TextBox desc = (TextBox) itemPanel.getWidget(WIDGET_INDEX_DESC);
+//						if(up.getFilename() != null && up.getFilename().trim().length() > 0){
+//							offUploader.add(up,desc.getText());
+//						}
+//					}
+//				}//end for
+//				
+//				
+//				String jsonAtts = offUploader.upload(spaceUnameHidden.getValue(),pageUuidHidden.getValue()
+//						,NumberUtil.toInt(draftHidden.getValue(),0));
+//				mergeAttachments(jsonAtts);
+//			}
 		}
 
 		public void onSubmitComplete(SubmitCompleteEvent event) {

@@ -30,9 +30,9 @@
 	<extend-property name="locale" values="tr_TR"/>
  	@TOKEN.GWT.DEPLOY.ONLY.E@
  	
-				
-	<inherits name='com.google.gwt.gears.Gears'/>
-	<inherits name='com.google.gwt.gears.Offline' />
+<!--  	 		 remove some offline_code here(0726) -->
+<!-- 	<inherits name='com.google.gwt.gears.Gears'/> -->
+<!-- 	<inherits name='com.google.gwt.gears.Offline' /> -->
 	
 	<entry-point class='com.edgenius.wiki.gwt.client.instance.InstanceAdmin'/>
 	<public path="public/resources"/>

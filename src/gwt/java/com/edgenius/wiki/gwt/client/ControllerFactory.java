@@ -23,11 +23,6 @@
  */
 package com.edgenius.wiki.gwt.client;
 
-import com.edgenius.wiki.gwt.client.offline.controller.CommentOfflineControllerImpl;
-import com.edgenius.wiki.gwt.client.offline.controller.PageOfflineControllerImpl;
-import com.edgenius.wiki.gwt.client.offline.controller.PortalOfflineControllerImpl;
-import com.edgenius.wiki.gwt.client.offline.controller.SecurityOfflineControllerImpl;
-import com.edgenius.wiki.gwt.client.offline.controller.TagOfflineControllerImpl;
 import com.edgenius.wiki.gwt.client.server.CommentController;
 import com.edgenius.wiki.gwt.client.server.CommentControllerAsync;
 import com.edgenius.wiki.gwt.client.server.HelperController;
@@ -67,54 +62,58 @@ public class ControllerFactory {
 
 	public static CommentControllerAsync getCommentController(){
 		CommentControllerAsync service;
-		if(AbstractEntryPoint.isOffline()){
-			service = (CommentControllerAsync) GWT.create(CommentOfflineControllerImpl.class);
-		}else{
+		 //remove some offline_code here(0726)
+//		if(AbstractEntryPoint.isOffline()){
+//			service = (CommentControllerAsync) GWT.create(CommentOfflineControllerImpl.class);
+//		}else{
 			service = (CommentControllerAsync) GWT.create(CommentController.class);
 			ServiceDefTarget endpoint = (ServiceDefTarget) service;
 			String baseUrl = GwtClientUtils.getBaseUrl();
 			endpoint.setServiceEntryPoint(baseUrl + CommentController.MODULE_ACTION_URI);
-		}
+//		}
 		return service;
 	}
 
 	public static PortalControllerAsync getPortalController(){
 		
 		PortalControllerAsync service;
-		if(AbstractEntryPoint.isOffline()){
-			service = (PortalControllerAsync) GWT.create(PortalOfflineControllerImpl.class);
-		}else{
+//		 //remove some offline_code here(0726)
+//		if(AbstractEntryPoint.isOffline()){
+//			service = (PortalControllerAsync) GWT.create(PortalOfflineControllerImpl.class);
+//		}else{
 			service = (PortalControllerAsync) GWT.create(PortalController.class);
 			ServiceDefTarget endpoint = (ServiceDefTarget) service;
 			String baseUrl = GwtClientUtils.getBaseUrl();
 			endpoint.setServiceEntryPoint(baseUrl + PortalController.MODULE_ACTION_URI);
-		}
+//		}
 		return service;
 	}
 
 	public static PageControllerAsync getPageController(){
 		PageControllerAsync service;
-		if(AbstractEntryPoint.isOffline()){
-			service = (PageControllerAsync) GWT.create(PageOfflineControllerImpl.class);
-		}else{
+		 //remove some offline_code here(0726)
+//		if(AbstractEntryPoint.isOffline()){
+//			service = (PageControllerAsync) GWT.create(PageOfflineControllerImpl.class);
+//		}else{
 			service = (PageControllerAsync) GWT.create(PageController.class);
 			ServiceDefTarget endpoint = (ServiceDefTarget) service;
 			String baseUrl = GwtClientUtils.getBaseUrl();
 			endpoint.setServiceEntryPoint(baseUrl + PageController.MODULE_ACTION_URI);
-		}
+//		}
 		return service;
 	}
 
 	public static TagControllerAsync getTagController(){
 		TagControllerAsync service;
-		if(AbstractEntryPoint.isOffline()){
-			service = (TagControllerAsync) GWT.create(TagOfflineControllerImpl.class);
-		}else{
+		 //remove some offline_code here(0726)
+//		if(AbstractEntryPoint.isOffline()){
+//			service = (TagControllerAsync) GWT.create(TagOfflineControllerImpl.class);
+//		}else{
 			service = (TagControllerAsync) GWT.create(TagController.class);
 			ServiceDefTarget endpoint = (ServiceDefTarget) service;
 			String baseUrl = GwtClientUtils.getBaseUrl();
 			endpoint.setServiceEntryPoint(baseUrl + TagController.MODULE_ACTION_URI);
-		}
+//		}
 		return service;
 	}
 	public static HelperControllerAsync getHelperController(){
@@ -144,14 +143,15 @@ public class ControllerFactory {
 
 	public static SecurityControllerAsync getSecurityController(){
 		SecurityControllerAsync  service;
-		if(AbstractEntryPoint.isOffline()){
-			service = (SecurityControllerAsync) GWT.create(SecurityOfflineControllerImpl.class);
-		}else{
+		 //remove some offline_code here(0726)
+//		if(AbstractEntryPoint.isOffline()){
+//			service = (SecurityControllerAsync) GWT.create(SecurityOfflineControllerImpl.class);
+//		}else{
 			service = (SecurityControllerAsync) GWT.create(SecurityController.class);
 			ServiceDefTarget endpoint = (ServiceDefTarget) service;
 			String baseUrl = GwtClientUtils.getBaseUrl();
 			endpoint.setServiceEntryPoint(baseUrl + SecurityController.MODULE_ACTION_URI);
-		}
+//		}
 		return service;
 	}
 
