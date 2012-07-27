@@ -46,7 +46,7 @@ public class RegionBorderPoint {
 		this.keyIndex = keyIndex;
 	}
 	public String toString(){
-		return pos1+":" + pos2+":" + start+":" + regionKey;
+		return pos1+":" + pos2+":" + start+":" + keyIndex + ":" + regionKey;
 	}
 	public int getPoint() {
 		return pos1;

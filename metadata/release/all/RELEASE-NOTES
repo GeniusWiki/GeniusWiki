@@ -1,3 +1,19 @@
+Version 3.13
+=======================================================
+h2. Enhancements
+* Support fullscreen
+* Database connection pool enhancement
+* Some libraries upgrade
+
+h2. Bugs
+* If empty header markup with extra space, like, h3. , nullpoint exception.
+
+
+Version 3.12
+=======================================================
+h2. Bugs
+
+
 Version 3.11
 =======================================================
 h2. Enhancements

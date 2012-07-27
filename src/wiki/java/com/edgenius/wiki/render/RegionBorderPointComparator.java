@@ -40,14 +40,27 @@ public class RegionBorderPointComparator implements Comparator<RegionBorderPoint
 		if(rs !=0)
 			return rs;
 		
-		if(!o1.start && o2.start)
-			//put o2(start) before o1(end) 
-			return 1;
+		//if point in same position
 		
-		if(o1.start && !o2.start)
-			//put o1(start) before o2(end)
-			return -1;
+		if(!o1.start && o2.start){
+		    //when do region key replacement, the early one will be insert first, then later one, this means, the actual position of later one will before the early one.
+		    if(o1.getRegionKey().equals(o2.getRegionKey())){
+		        //if they are one region, then put o1(end) before o2(start) 
+		        return -1;
+		    }else{
+		        //different region - put o2(start) before o1(end) 
+		        return 1;
+		    }
+		}
 		
+		if(o1.start && !o2.start){
+		    if(o1.getRegionKey().equals(o2.getRegionKey())){
+		        return 1;
+		    }else{
+    			//put o1(start) before o2(end)
+    			return -1;
+		    }		
+		}
 		
 		rs = o1.pos2 - o2.pos2;
 		if(rs != 0)
