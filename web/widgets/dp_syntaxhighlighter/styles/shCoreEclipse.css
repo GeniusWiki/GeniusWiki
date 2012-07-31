@@ -1,4 +1,8 @@
 /**
+ * Some customisation by Edgenius:
+	 Delete some collapse style
+	 hide toolbar
+	 overflow-y: hidden
  * SyntaxHighlighter
  * http://alexgorbatchev.com/SyntaxHighlighter
  *
@@ -35,7 +39,8 @@
   line-height: 1.1em !important;
   margin: 0 !important;
   outline: 0 !important;
-  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: hidden !important;
   padding: 0 !important;
   position: static !important;
   right: auto !important;
@@ -110,35 +115,10 @@
 .syntaxhighlighter.show {
   display: block !important;
 }
-.syntaxhighlighter.collapsed table {
-  display: none !important;
-}
-.syntaxhighlighter.collapsed .toolbar {
-  padding: 0.1em 0.8em 0em 0.8em !important;
-  font-size: 1em !important;
-  position: static !important;
-  width: auto !important;
-  height: auto !important;
-}
-.syntaxhighlighter.collapsed .toolbar span {
-  display: inline !important;
-  margin-right: 1em !important;
-}
-.syntaxhighlighter.collapsed .toolbar span a {
-  padding: 0 !important;
-  display: none !important;
-}
-.syntaxhighlighter.collapsed .toolbar span a.expandSource {
-  display: inline !important;
-}
+
 .syntaxhighlighter .toolbar {
-  position: absolute !important;
-  right: 1px !important;
-  top: 1px !important;
-  width: 11px !important;
-  height: 11px !important;
-  font-size: 10px !important;
-  z-index: 10 !important;
+	display:none;
+  
 }
 .syntaxhighlighter .toolbar span.title {
   display: inline !important;
