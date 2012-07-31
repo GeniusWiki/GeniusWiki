@@ -12,7 +12,6 @@
 		<title><edgenius:title/></title>
 		
  		<script language='javascript' src='gwtpage/gwtpage.nocache.js?v=@TOKEN.SITE.VERSION@'></script>
- 		<script language='javascript' src='gwtpage/gears_init.js'></script>
  		<%-- This is not real Javascript but a Servlet - see PageLayout servlet web.xml  --%>
  		<script language='javascript' src='${ctxPath}/layout.js'></script>
  		
