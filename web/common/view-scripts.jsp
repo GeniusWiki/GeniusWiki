@@ -8,22 +8,34 @@
 		
 		<script language='javascript' src="${ctxPath}/static/scripts/pages.js?v=@TOKEN.SITE.VERSION@" /></script>
 		<%-- dp syntax highlighter --%>
-		<link type="text/css" rel="stylesheet" href="${ctxPath}/widgets/dp_syntaxhighlighter/styles/SyntaxHighlighter.css?v=@TOKEN.SITE.VERSION@">
+		<link type="text/css" rel="stylesheet" href="${ctxPath}/widgets/dp_syntaxhighlighter/styles/shCoreEclipse.css?v=@TOKEN.SITE.VERSION@">
 
    		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shCore.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushXml.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushVb.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushSql.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushRuby.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushPython.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushPhp.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushJScript.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushJava.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushDelphi.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushCss.js?v=@TOKEN.SITE.VERSION@"></script>
    		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushCSharp.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushCpp.js?v=@TOKEN.SITE.VERSION@"></script>
-   		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushCommon.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushCpp.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushColdFusion.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushBash.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushAS3.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushAppleScript.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushXml.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushVb.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushSql.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushScala.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushSass.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushRuby.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushPython.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushPowerShell.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushPhp.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushPerl.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushJScript.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushJava.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushJavaFX.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushGroovy.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushErlang.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushDiff.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushDelphi.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushCss.js?v=@TOKEN.SITE.VERSION@"></script>
+		<script language="javascript" type="text/javascript" src="${ctxPath}/widgets/dp_syntaxhighlighter/scripts/shBrushCommon.js?v=@TOKEN.SITE.VERSION@"></script>
 
 		<script language="javascript">
 			<%-- This method is call once after GWT complete initilised. Note The $(document).ready() will trigger before GWT initialised! --%>
@@ -111,15 +123,9 @@
 					}
 					
 				});
-				//dp.SyntaxHighlighter.ClipboardSwf = '${ctxPath}/widgets/dp_syntaxhighlighter/scripts/clipboard.swf';
-				dp.SyntaxHighlighter.HighlightAll('sourcecode');
-				//to avoid duplicated render if this method is called over twice...
-				var tags = document.getElementsByTagName('pre');
-				for(var i = 0; i < tags.length; i++){
-					if(tags[i].getAttribute('name') == 'sourcecode'){
-						tags[i].setAttribute('name','sourcecode-done');
-					}
-				}
+				<%-- !! This method can be call multiple times as renderCallback() will be execute on view/preview pannel etc. So far, looks that not harmful except performance --%>
+				SyntaxHighlighter.highlight();
+				
 			}
 			
 			<%-- Call from GWT by ShellDialog that opened from space admin panel, Shell jsp.  --%>

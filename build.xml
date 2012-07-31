@@ -711,14 +711,6 @@
 		<gwtCompile module="gwt" phase="dev" gwt.application="gwtadmin"/>
 		<gwtPublish phase="dev" gwt.application="gwtadmin"/>
 		
-		<!-- expand URL automatically: only for debug purpose: need not restart tomcat after compile GWT -->
-		<echo level="info">Expanding URLs to offline configuration files... </echo>
-		<echo level="warning">Limitation: Expanded Web context is assumed to blank. Restart server to fix if web context is not blank</echo>
-	   <java classname="com.edgenius.wiki.service.impl.SettingServiceImpl" classpathref="compile.classpath">
-         <classpath>
-           <pathelement path="${dev.dir}/WEB-INF/classes"/>
-         </classpath>
-       </java>
 	</target>
 	
 	<target name="dev.gwt.i18n" description="Referesh i18n message java file according to latest i18n properties files">

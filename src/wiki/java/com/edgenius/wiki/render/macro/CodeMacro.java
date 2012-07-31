@@ -47,11 +47,31 @@ import com.edgenius.wiki.render.RenderContext;
 public class CodeMacro extends BaseMacro implements ImmutableContentMacro{
 	
 	//this is compliance with dp_SyntaxHighligher support
-	private static final String[]  SUPPORTED_CODE_NAMES = new String[]{"XML","VB","SQL","RUBY","PYTHON","PHP"
-		,"JSCRIPT","JAVASCRIPT"  //for name safe
-		,"JAVA","DELPHI","CSS"
-		,"CSHARP","C#"
-		,"C",};
+	private static final String[]  SUPPORTED_CODE_NAMES = new String[]{
+	    "applescript",
+	    "actionscript3","as3",
+	    "bash", "shell",
+	    "coldfusion", "cf",
+	    "cpp", "c",
+	    "c#", "c-sharp", "csharp",
+	    "css",
+	    "delphi", "pascal",
+	    "diff", "patch", "pas",
+	    "erl", "erlang",
+	    "groovy",
+	    "java",
+	    "jfx", "javafx",
+	    "js", "jscript", "javascript",
+	    "perl", "pl",
+	    "php",
+	    "text", "plain",
+	    "py", "python",
+	    "ruby", "rails", "ror", "rb",
+	    "scala",
+	    "sql",
+	    "vb", "vbnet",
+	    "xml", "xhtml", "xslt", "html"
+		};
 	public static final String DEFAULT_CODE = "common";
 	
 	@Override
@@ -93,15 +113,15 @@ public class CodeMacro extends BaseMacro implements ImmutableContentMacro{
 			//give default source name, as it is mandatory for dp_SyntaxHighlighter
 			src = DEFAULT_CODE;
 		}else{
-			boolean supported = false;
-			for (String code : SUPPORTED_CODE_NAMES) {
-				if(code.equalsIgnoreCase(src)){
-					supported = true;
-					break;
-				}
-			}
-			if(!supported)
-				src = DEFAULT_CODE;
+		    src = src.toLowerCase();
+		    __supported:{
+    			for (String code : SUPPORTED_CODE_NAMES) {
+    				if(code.equals(src)){
+    					break __supported;
+    				}
+    			}
+    			src = DEFAULT_CODE;
+		    }
 		}
 		String result = values.get(NameConstants.CODE);
 		//following dp_SyntaxHighligher require: must replace "<", I just do HTML entity replace then
@@ -109,7 +129,7 @@ public class CodeMacro extends BaseMacro implements ImmutableContentMacro{
 		result = EscapeUtil.escapeHTML(result);
 		
 		//name="sourcecode" must keep consist with view-scripts.jsp highlightSyntax()
-		buffer.append("<pre name=\"sourcecode\" class=\"").append(src).append("\" ");
+		buffer.append("<pre name=\"sourcecode\" class=\"brush:").append(src).append("\" ");
 		buffer.append(NameConstants.AID).append("=\"").append(CodeMacro.class.getName()).append("\">");
 		buffer.append(result);
 		buffer.append("</pre>");
