@@ -449,7 +449,7 @@ text]
 --------------
 {pre} my test{pre} [view>link1] {pre}hello{pre} 
 ==============
-<pre name="sourcecode" class="java" aid="com.edgenius.wiki.render.macro.CodeMacro">
+<pre name="sourcecode" class="brush:java" aid="com.edgenius.wiki.render.macro.CodeMacro">
 public int methodA(){
 	return abc;
 } 

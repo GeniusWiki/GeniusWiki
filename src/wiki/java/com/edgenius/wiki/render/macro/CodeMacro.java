@@ -170,9 +170,10 @@ public class CodeMacro extends BaseMacro implements ImmutableContentMacro{
 			
 			String src = "";
 			if(node.getAttributes() != null && node.getAttributes().get(NameConstants.CLASS) != null){
-				String srcName = node.getAttributes().get(NameConstants.CLASS);
-				if(!DEFAULT_CODE.equalsIgnoreCase(srcName))
+				String srcName = StringUtils.substringAfter(node.getAttributes().get(NameConstants.CLASS), ":");
+				if(!DEFAULT_CODE.equalsIgnoreCase(srcName)){
 					src = "|"+NameConstants.SRC+"="+srcName;
+				}
 			}
 			
 			//as above Iterator cursor already move to end of pair node, so move them back and restore around insertMarkup method
