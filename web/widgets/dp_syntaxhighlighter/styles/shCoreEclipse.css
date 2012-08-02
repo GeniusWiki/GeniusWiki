@@ -3,6 +3,8 @@
 	 Delete some collapse style
 	 hide toolbar
 	 overflow-y: hidden
+	 .syntaxhighlighter .line { white-space: pre-wrap !important;}
+	 
  * SyntaxHighlighter
  * http://alexgorbatchev.com/SyntaxHighlighter
  *
@@ -74,7 +76,7 @@
   font-style: italic !important;
 }
 .syntaxhighlighter .line {
-  white-space: pre !important;
+   white-space: pre-wrap !important;
 }
 .syntaxhighlighter table {
   width: 100% !important;
