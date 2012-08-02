@@ -33,7 +33,7 @@
 		<property name="idleConnectionTestPeriodInMinutes" value="1" />
 		<property name="idleMaxAgeInMinutes" value="4" />
 		<property name="maxConnectionsPerPartition" value="30" />
-		<property name="minConnectionsPerPartition" value="10" />
+		<property name="minConnectionsPerPartition" value="5" />
 		<property name="partitionCount" value="3" />
 		<property name="acquireIncrement" value="5" />
 		<property name="statementsCacheSize" value="100" />
