@@ -61,6 +61,7 @@ public class InstancePatternFactory extends AbstractPatternFactory {
 	//please refer to com.edgenius.wiki.security.acegi.DBFilterInvocationDefinitionSource.lookupAttributes(String)
 	//system default policy, allow any user/role to access
 	static final String[] DEFAULT_URL_POLICIES = new String[]{
+		"/status*",
 		"/signin*",
 		"/**/invite.do*",
 		"/**/login.do*",
