@@ -12,21 +12,22 @@
 	 1.DON'T use fullscreen plugin as it conflicts with GWT popup window
 	 2. be careful first letter is ","
 	 -->
-	<property name="tinymce.plugin" value=",safari,paste,noneditable,tabfocus,fullscreen" />
+	<!--,fullscreen-->
+	<property name="tinymce.plugin" value=",safari,paste,noneditable,tabfocus" />
 	<!--Used in macro.xml -->
 	<property name="tinymce.plugin.1" value="safari" />
 	<property name="tinymce.plugin.2" value="paste" />
 	<property name="tinymce.plugin.3" value="noneditable" />
 	<property name="tinymce.plugin.4" value="tabfocus" />
-	<property name="tinymce.plugin.5" value="fullscreen" />
+	<!--<property name="tinymce.plugin.5" value="fullscreen" />-->
 	
 	<property name="company.name" value="Edgenius Pty Ltd." />
 	<property name="company.website" value="www.edgenius.com" />
 	<property name="app.name" value="GeniusWiki" />
 	<property name="app.name.lowcase" value="geniuswiki" />
 
-	<property name="app.version" value="3.13" />
-	<property name="pack.version" value="125" />
+	<property name="app.version" value="3.14" />
+	<property name="pack.version" value="126" />
 	
 	<property name="site.version" value="${pack.version}" />
 	
