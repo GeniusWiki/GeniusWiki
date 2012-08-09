@@ -379,7 +379,9 @@ public class SharedConstants {
 
 	//suppress functions - There is exactly same value in Constants.java - that is for Global.java
 	public static enum SUPPRESS{
+	    
 		SIGNUP(1),
+		//If system integrated with third party and login from external, then remove logout button from UI 
 		LOGOUT(1<<1);
 		
 		private int value;

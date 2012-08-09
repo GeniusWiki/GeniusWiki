@@ -31,6 +31,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,7 +53,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 
-import com.edgenius.core.Global;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.service.PageService;
@@ -61,14 +64,7 @@ import com.edgenius.wiki.util.WikiUtil;
  * @author Dapeng.Ni
  */
 public class SitemapServiceImpl implements SitemapService, InitializingBean {
-	/**
-	 * 
-	 */
 	private static final String SITEMAP_URL_CONTEXT = "sitemap/";
-
-	/**
-	 * 
-	 */
 	private static final String ROBOTS_TXT = "robots.txt";
 
 	static final Logger log = LoggerFactory.getLogger(SitemapServiceImpl.class);
@@ -76,7 +72,8 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 	public static final String SITEMAP_INDEX_NAME = "sitemap.xml";
 	public static final String SITEMAP_NAME_PREFIX = "sitemap-";
 
-	private static final int SITEMAP_GENERATE_DAYS_FEQUENCE = -7;
+	private static final int SITEMAP_GENERATE_DAYS_FEQUENCE = -28;
+    private static final String SITEMAP_INDEX_TAIL_FLAG = "</sitemapindex>";
 	
 	 
 	private SimpleDateFormat TIME_FORMAT = new  SimpleDateFormat("yyyy-MM-dd");
@@ -93,6 +90,10 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 	public File getSitemapFile(String filename) throws IOException{
 		return new File(mapResourcesRoot.getFile(), filename);
 	}
+	
+	/*
+	 * A cron job in MaintainJob which is trigger daily, however, below method will only execute after <code>SITEMAP_GENERATE_DAYS_FEQUENCE</code> defined days, normally, it is 28 days.
+	 */
 	public boolean createSitemap() throws IOException{
 		Calendar targetDate = Calendar.getInstance();
 		targetDate.add(Calendar.DAY_OF_MONTH, SITEMAP_GENERATE_DAYS_FEQUENCE);
@@ -102,13 +103,18 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 			return false;
 		}
 		
+		log.info("Sitemap is going to generating URLs since last update {}", metadata.getModifiedDate());
+		
 		List<Page> pages = pageService.getPageForSitemap(metadata.getModifiedDate());
 		
-		generateSitemap(pages, TIME_FORMAT.format(new Date()));
+		String zipSitemapFileName = generateSitemap(pages, TIME_FORMAT.format(new Date()));
+		
+		log.info("Sitemap success complete {} pages URLs generation on sitemap {}", pages.size(), zipSitemapFileName);
 		
 		return true;
 	}
 
+	//not test yet
 	public boolean removePage(String pageUuid) throws IOException{
 		boolean removed = false;
 		String sitemapIndex = metadata.getSitemapIndex(pageUuid);
@@ -157,8 +163,6 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		if(!Global.ADSENSE) return;
-		
 		if(!mapResourcesRoot.exists() && !mapResourcesRoot.getFile().mkdirs()){
 			throw new BeanInitializationException("Failed creating public sitemap location.");
 		}
@@ -181,47 +185,62 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 	//********************************************************************
 	//               Private
 	//********************************************************************
-	private void appendSitemapIndex(String sitemap) throws IOException {
-		File sitemapIndexFile = new File(mapResourcesRoot.getFile(), SITEMAP_INDEX_NAME);
-		
-		List<String> lines;
-		int removeIdx = -1;
-		if(sitemapIndexFile.exists()){
-			lines = FileUtils.readLines(sitemapIndexFile);
-			if(lines.size() > 0){
-				//remove last tag: </sitemapindex>
-				for(int idx = lines.size()-1; idx >= 0;idx--){
-					if("</sitemapindex>".equals(lines.get(idx).trim())){
-						removeIdx = idx;
-						break;
-					}
-				}
-				if(removeIdx != -1){
-					lines.remove(removeIdx);
-				}
-			}
-		}else{
-			lines = new ArrayList<String>();
-		}
-		
-		if(removeIdx == -1){
-			//assume a new file - this may be cause problem if sitemap crashed.
-			lines.add("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-			lines.add("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
-		}
-		
-		lines.add("   <sitemap>");
-		lines.add("     <loc>" + WebUtil.getHostAppURL() + SITEMAP_URL_CONTEXT + sitemap + "</loc>");
-		lines.add("     <lastmod>"+TIME_FORMAT.format(new Date())+" </lastmod>");
-		lines.add("   </sitemap>");
-		
-		lines.add("</sitemapindex>");
-		
-		FileUtils.writeLines(sitemapIndexFile, lines);
-		
+    private void appendSitemapIndex(String sitemap) throws IOException {
+        File sitemapIndexFile = new File(mapResourcesRoot.getFile(), SITEMAP_INDEX_NAME);
+        if(!sitemapIndexFile.exists()){
+            //if a new sitemap file
+            List<String> lines = new ArrayList<String>();
+            lines.add("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            lines.add("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
+            lines.add("</sitemapindex>");
+            FileUtils.writeLines(sitemapIndexFile, lines);
+        }
+        
+        RandomAccessFile rfile = new RandomAccessFile(sitemapIndexFile, "rw");
+        FileChannel channel = rfile.getChannel();
+
+        //this new content will append to end of file before XML end tag
+        StringBuilder lines = new StringBuilder();
+        lines.append("   <sitemap>\n");
+        lines.append("     <loc>" + WebUtil.getHostAppURL() + SITEMAP_URL_CONTEXT + sitemap + "</loc>\n");
+        lines.append("     <lastmod>"+TIME_FORMAT.format(new Date())+" </lastmod>\n");
+        lines.append("   </sitemap>\n");
+        //the last tag will be overwrite, so append it again to new content. 
+        lines.append(SITEMAP_INDEX_TAIL_FLAG);
+        byte[] content = lines.toString().getBytes();
+
+        ByteBuffer byteBuf = ByteBuffer.allocate(512);
+        // seek first
+        int len = 0, headIdx = 0;
+        long tailIdx = channel.size() - 512;
+        tailIdx = tailIdx < 0 ? 0 : tailIdx;
+
+        long headPos = -1;
+        StringBuilder header = new StringBuilder();
+        while ((len = channel.read(byteBuf, tailIdx)) > 0) {
+            byteBuf.rewind();
+            byte[] dst = new byte[len];
+            byteBuf.get(dst, 0, len);
+            header.append(new String(dst, "UTF8"));
+            headIdx = header.indexOf(SITEMAP_INDEX_TAIL_FLAG);
+            if (headIdx != -1) {
+                headPos = channel.size() - header.substring(headIdx).getBytes().length;
+                break;
+            }
+        }
+        FileLock lock = channel.tryLock(headPos, content.length, false);
+        try {
+            channel.write(ByteBuffer.wrap(content), headPos);
+        } finally {
+            lock.release();
+        }
+
+        channel.force(false);
+        rfile.close();
+        
 	}
 	
-	private void generateSitemap(List<Page> pages, String sitemapIndex) throws IOException {
+	private String generateSitemap(List<Page> pages, String sitemapIndex) throws IOException {
 		String sitemapZip = SITEMAP_NAME_PREFIX+sitemapIndex+".xml.gz";
 		File sizemapZipFile = new File(mapResourcesRoot.getFile(), sitemapZip);
 		if(sizemapZipFile.exists()){
@@ -229,15 +248,15 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		}
 		
 		StringBuilder lines = new StringBuilder();
-		lines.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-		lines.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
+		lines.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+		lines.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 		
 		for (Page page : pages) {
 			String url = WikiUtil.getPageRedirFullURL(page.getSpace().getUnixName(), page.getTitle(), page.getPageUuid());
-			lines.append("<url>");
-			lines.append("<loc>"+ url +"</loc>");
-			lines.append("<lastmod>"+TIME_FORMAT.format(page.getModifiedDate())+"</lastmod>");
-			lines.append("</url>");
+			lines.append("<url>\n");
+			lines.append("<loc>"+ url +"</loc>\n");
+			lines.append("<lastmod>"+TIME_FORMAT.format(page.getModifiedDate())+"</lastmod>\n");
+			lines.append("</url>\n");
 			metadata.addPageMap(page.getPageUuid(), sitemapIndex, url);
 		}
 		
@@ -250,6 +269,8 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 		appendSitemapIndex(sitemapZip);
 		
 		metadata.save(mapResourcesRoot.getFile());
+		
+		return sitemapZip;
 	}
 
 

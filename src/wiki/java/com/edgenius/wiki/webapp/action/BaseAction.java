@@ -112,6 +112,15 @@ public class BaseAction extends ActionSupport{
 			}
 		}
 	}
+
+    protected void sendHttpResponseCode(int httpResponseCode) {
+        HttpServletResponse response = getResponse();
+        try {
+            response.sendError(httpResponseCode);
+        } catch (IOException e) {
+            log.error("Unable to send HttpResponseCode:" + httpResponseCode, e);
+        }
+    }
 	/**
 	 * @param redir
 	 */

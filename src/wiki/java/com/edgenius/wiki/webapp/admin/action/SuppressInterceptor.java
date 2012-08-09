@@ -38,6 +38,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 /**
+ * STRUCTS Interecptor plugged into default Interecptor stack.
  * @author Dapeng.Ni
  */
 public class SuppressInterceptor  extends AbstractInterceptor{

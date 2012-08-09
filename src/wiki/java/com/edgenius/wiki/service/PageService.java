@@ -586,6 +586,8 @@ public interface PageService {
 
 
 	/**
+	 * Get Pages metadata for sitemap service after given time.
+	 * page.uid, page.pageUuid, page.title, page.modifiedDate, page.space.unixName
 	 * 
 	 */
 	List<Page> getPageForSitemap(Date lastModifiedDate);

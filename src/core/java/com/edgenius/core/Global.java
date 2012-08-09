@@ -110,7 +110,7 @@ public class Global implements Serializable{
 	public static String restServiceAuth= "basic";
 	
 	//suppress function: signup, logout...
-	//@see WikiConstants.SUPRESS_*
+	//@see enum in WikiConstants.SUPPRESS
 	public static int suppress;
 	public static boolean DetectLocaleFromRequest = false;
 	public static boolean VersionCheck = true;
@@ -126,6 +126,8 @@ public class Global implements Serializable{
 	public static String Skin = "default";
 	
 	//this is holder of current http request(thread) suppress value - it mixes Global setting and "suppress" parameter in URL.
+	//The reason with this holder is, we need a URL with "suppress" parameters, which will overwrite the GlobalSetting in request level.
+	//More detail see com.edgenius.wiki.webapp.admin.action.SuppressInterceptor.
 	private transient final static ThreadLocal<Integer> currentSuppress = new ThreadLocal<Integer>();
 
 	

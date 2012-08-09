@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.edgenius.core.Global;
 import com.edgenius.wiki.service.SitemapService;
 
 /**
@@ -46,21 +47,20 @@ public class SitemapAction extends BaseAction{
 	@Autowired private SitemapService sitemapService;
 	
 	public String execute(){
+	    if(!Global.PublicSearchEngineAllow){
+	        sendHttpResponseCode(404);
+	    }
 		try {
 			File  sitemapFile = sitemapService.getSitemapFile(file);
 			downloadFile(file, sitemapFile);
 		} catch (IOException e) {
 			log.warn("Sitemap file {} not found", file);
-			HttpServletResponse response = getResponse();
-			try {
-				response.sendError(404);
-			} catch (IOException e1) {
-				log.error("Unable to send 404 error for sitemap request", e);
-			}
+			sendHttpResponseCode(404);
 		}
 		
 		return null;
 	}
+
 	
 	//********************************************************************
 	//               Set / Get

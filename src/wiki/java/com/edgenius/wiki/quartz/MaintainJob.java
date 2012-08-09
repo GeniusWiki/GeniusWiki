@@ -77,7 +77,7 @@ public class MaintainJob  extends AuthenticatedQuartzJobBean {
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//  Sitemap generator
-		if(Global.ADSENSE){
+		if(Global.PublicSearchEngineAllow){
 			try{
 				SitemapService sitemapService = (SitemapService) applicationContext.getBean(SitemapService.SERVICE_NAME);
 				sitemapService.createSitemap();

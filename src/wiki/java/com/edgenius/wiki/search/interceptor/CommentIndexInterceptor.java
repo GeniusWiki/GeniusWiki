@@ -29,6 +29,7 @@ import java.util.List;
 import javax.jms.Queue;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edgenius.wiki.SpaceSetting;
 import com.edgenius.wiki.WikiConstants;
@@ -44,6 +45,7 @@ import com.edgenius.wiki.util.WikiUtil;
 /**
  * @author Dapeng.Ni
  */
+@Transactional
 public class CommentIndexInterceptor extends IndexInterceptor {
 	private CommentDAO commentDAO;
 	private Queue notifyQueue;
