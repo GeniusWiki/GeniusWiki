@@ -31,6 +31,7 @@ import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 
+import com.edgenius.core.Constants.SUPPRESS;
 import com.edgenius.core.Global;
 import com.edgenius.core.SecurityValues;
 import com.edgenius.core.model.User;
@@ -56,7 +57,7 @@ public class UserMethodBeforeAdvice implements MethodBeforeAdvice{
 			User loginUser = WikiUtil.getUser();
 			if(name.equals(UserService.saveUser)){
 			    //if public sign up is disabled and not system admin, then throw exception.
-				if(Global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP)
+				if(Global.hasSuppress(SUPPRESS.SIGNUP)
 						//administrator allows to add user from system admin page 
 					&& !securityService.isAllowResourceAdmin(SharedConstants.INSTANCE_NAME, SecurityValues.RESOURCE_TYPES.INSTANCE,loginUser)){
 					throw new UserSignUpDiabledException("User sign up is disabled.");

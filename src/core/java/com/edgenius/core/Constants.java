@@ -81,6 +81,7 @@ public class Constants {
 			return value;
 		}
 	}
+	
+	public static enum REGISTER_METHOD{signup, approval}
 }
 
-public enum REGISTER_METHOD{signup, approval}

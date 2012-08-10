@@ -29,6 +29,8 @@ import java.io.FileInputStream;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
+import com.edgenius.core.Constants.REGISTER_METHOD;
+import com.edgenius.core.Constants.SUPPRESS;
 import com.edgenius.core.Global;
 import com.edgenius.core.GlobalSetting;
 import com.edgenius.core.Server;
@@ -38,8 +40,6 @@ import com.edgenius.core.repository.RepositoryService;
 import com.edgenius.core.service.impl.JavaMailSenderImpl;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.Shell;
-import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.quartz.QuartzException;
 import com.edgenius.wiki.quartz.VersionCheckJobInvoker;
@@ -117,7 +117,7 @@ public class GeneralAdminAction extends BaseAction{
 		spaceQuota = (int) (global.getSpaceQuota()/MB);
 		removeDelay = global.getDelayRemoveSpaceHours();
 		syncFeq = global.getDelayOfflineSyncMinutes();
-		allowPublic = !global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP.name());
+		allowPublic = !global.hasSuppress(SUPPRESS.SIGNUP.name());
 		signupNeedApproval = REGISTER_METHOD.approval.name().equals(global.getRegisterMethod());
 		detectLocale = global.isDetectLocaleFromRequest();
 		sysLang = (global.getDefaultLanguage()+"_" + global.getDefaultCountry()).toLowerCase();
@@ -191,9 +191,9 @@ public class GeneralAdminAction extends BaseAction{
 			global.setDelayRemoveSpaceHours(removeDelay);
 			global.setSpaceQuota(spaceQuota*MB);
 			if(allowPublic)
-				global.removeSuppress(SharedConstants.SUPPRESS.SIGNUP.name());
+				global.removeSuppress(SUPPRESS.SIGNUP.name());
 			else
-				global.addSuppress(SharedConstants.SUPPRESS.SIGNUP.name());
+				global.addSuppress(SUPPRESS.SIGNUP.name());
 			
 			global.setRegisterMethod(signupNeedApproval?REGISTER_METHOD.approval.name():REGISTER_METHOD.signup.name());
 			global.setDelayOfflineSyncMinutes(syncFeq);

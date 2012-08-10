@@ -32,6 +32,7 @@ import javax.xml.ws.WebServiceException;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.edgenius.core.Constants.REGISTER_METHOD;
 import com.edgenius.core.Global;
 import com.edgenius.core.model.Role;
 import com.edgenius.core.model.User;
@@ -41,7 +42,6 @@ import com.edgenius.core.service.UserOverLimitedException;
 import com.edgenius.core.service.UserReadingService;
 import com.edgenius.core.service.UserService;
 import com.edgenius.core.util.CodecUtil;
-import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.integration.WsContants;
 import com.edgenius.wiki.integration.dto.RoleList;
 import com.edgenius.wiki.integration.dto.WsUser;

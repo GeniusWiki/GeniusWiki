@@ -29,10 +29,9 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.edgenius.core.Constants.SUPPRESS;
 import com.edgenius.core.Global;
 import com.edgenius.wiki.WikiConstants;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants.SUPPRESS;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -62,7 +61,7 @@ public class SuppressInterceptor  extends AbstractInterceptor{
 				String[] funcs = suppress.split(",");
 				for (String func : funcs) {
 					try {
-						SUPPRESS sup = SharedConstants.SUPPRESS.valueOf(func.toUpperCase());
+						SUPPRESS sup = SUPPRESS.valueOf(func.toUpperCase());
 						if(sup != null)
 							supVal |= sup.getValue();
 					} catch (Exception e) {

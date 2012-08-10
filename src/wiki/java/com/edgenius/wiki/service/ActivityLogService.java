@@ -25,9 +25,9 @@ package com.edgenius.wiki.service;
 
 import java.util.List;
 
+import com.edgenius.core.Constants.REGISTER_METHOD;
 import com.edgenius.core.model.User;
 import com.edgenius.core.repository.FileNode;
-import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.gwt.client.model.RenderMarkupModel;
 import com.edgenius.wiki.model.ActivityLog;
 import com.edgenius.wiki.model.Page;

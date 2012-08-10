@@ -41,6 +41,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edgenius.core.Constants;
+import com.edgenius.core.Constants.SUPPRESS;
 import com.edgenius.core.Global;
 import com.edgenius.core.SecurityValues.OPERATIONS;
 import com.edgenius.core.SecurityValues.RESOURCE_TYPES;
@@ -444,7 +445,7 @@ public class FriendServiceImpl implements FriendService {
 		List<String> validGroup = new ArrayList<String>();
 		for (String email: validEmails) {
 			try {
-			    if(Global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP)){
+			    if(Global.hasSuppress(SUPPRESS.SIGNUP)){
     			    User user = userReadingService.getUserByEmail(email);
     			    if(user == null){
     			        //only unregistered user to be told system is not allow sign-up
@@ -469,7 +470,7 @@ public class FriendServiceImpl implements FriendService {
 		invitationDAO.saveOrUpdate(invite);
 		
 		//if system public signup is disabled, then here need check if that invited users are register users, if not, here need send email to notice system admin to add those users.
-		if(Global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP)){
+		if(Global.hasSuppress(SUPPRESS.SIGNUP)){
 		    List<String> unregistereddEmails = new ArrayList<String>();
 		    for (String email : validGroup) {
                 User user = userReadingService.getUserByEmail(email);

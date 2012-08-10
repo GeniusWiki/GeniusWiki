@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.edgenius.core.Constants.REGISTER_METHOD;
 import com.edgenius.core.Constants.SUPPRESS;
 
 /**

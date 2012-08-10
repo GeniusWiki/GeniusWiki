@@ -45,6 +45,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.captcha.CaptchaServiceProxy;
 
 import com.edgenius.core.Constants;
+import com.edgenius.core.Constants.REGISTER_METHOD;
 import com.edgenius.core.Global;
 import com.edgenius.core.SecurityValues;
 import com.edgenius.core.SecurityValues.OPERATIONS;
@@ -67,7 +68,6 @@ import com.edgenius.core.util.ServletUtils;
 import com.edgenius.core.util.TimeZoneUtil;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.WikiConstants;
-import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.gwt.client.model.ActivityModel;
 import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
 import com.edgenius.wiki.gwt.client.model.JsInfoModel;
