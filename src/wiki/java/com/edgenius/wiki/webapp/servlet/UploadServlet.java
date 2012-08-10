@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -93,9 +93,8 @@ public class UploadServlet extends BaseServlet {
 		PageService pageService = getPageService();
 
 		// monitoring upload status
-		UploadStatus listener = new UploadStatus(request);
-		FileItemFactory factory = new MonitoredDiskFileItemFactory(listener);
-		ServletFileUpload upload = new ServletFileUpload(factory);
+	    UploadStatus listener = new UploadStatus(request);
+		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
 
 		List<FileNode> files = new ArrayList<FileNode>();
 		String pageUuid = null, spaceUname = null;
@@ -201,6 +200,8 @@ public class UploadServlet extends BaseServlet {
 //					}
 //				}
 			}
+			
+			listener.done();
 		} catch (RepositoryQuotaException e) {
 			FileNode att = new FileNode();
 			att.setErrorCode(ErrorCode.SPACE_QUOTA_ERROR);
