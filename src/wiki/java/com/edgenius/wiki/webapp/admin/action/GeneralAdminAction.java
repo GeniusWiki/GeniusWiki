@@ -598,4 +598,12 @@ public class GeneralAdminAction extends BaseAction{
 	public void setShell(boolean shell) {
 		this.shell = shell;
 	}
+
+    public boolean isSignupNeedApproval() {
+        return signupNeedApproval;
+    }
+
+    public void setSignupNeedApproval(boolean signupNeedApproval) {
+        this.signupNeedApproval = signupNeedApproval;
+    }
 }
