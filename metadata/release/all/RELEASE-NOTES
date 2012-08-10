@@ -1,3 +1,19 @@
+Version 3.15
+=======================================================
+h2. Enhancements
+* If user accept invitation, the space is added to dashboard automatically.
+* Sitemap service to create robot.txt and sitemap.xml
+* Refine invitation process when system is not allow public sign-up.
+* A new option in system admin, approval required for sign-up user if it is on.
+
+h2. Bugs
+* Comment daily cron job transaction exception
+ 
+
+Version 3.14
+=======================================================
+A urgent fix on fullscreen editing mode, temporarily disabled full-screen editing until figure out the solution. 
+
 Version 3.13
 =======================================================
 h2. Enhancements

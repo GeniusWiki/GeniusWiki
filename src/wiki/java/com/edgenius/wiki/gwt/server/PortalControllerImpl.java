@@ -46,7 +46,6 @@ import com.edgenius.wiki.gwt.client.server.PortalController;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.EscapeUtil;
 import com.edgenius.wiki.gwt.client.server.utils.NameConstants;
-import com.edgenius.wiki.gwt.client.server.utils.NumberUtil;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.edgenius.wiki.gwt.server.handler.GWTSpringController;
@@ -56,6 +55,7 @@ import com.edgenius.wiki.service.SecurityDummy;
 import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.service.WidgetService;
 import com.edgenius.wiki.util.WikiUtil;
+import com.edgenius.wiki.widget.SpaceWidget;
 import com.edgenius.wiki.widget.WidgetException;
 import com.edgenius.wiki.widget.WidgetTemplate;
 
@@ -288,7 +288,6 @@ public class PortalControllerImpl extends GWTSpringController implements PortalC
 		InstanceSetting instance = settingService.getInstanceSetting();
 		
 		int count = 1;
-		int column = SharedConstants.DEFAULT_PORTAL_COLUMNS;
 		if(instance == null || StringUtil.isBlank(instance.getDashboardMarkup())
 			|| StringUtil.equalsIgnoreCase(StringUtils.trim(instance.getDashboardMarkup()),SharedConstants.DEFAULT_DAHSBOARD_MARKUP)){
 			//default dashboard - then it must have {portal} - see SharedContants.DEFAULT_DAHSBOARD_MARKUP
@@ -298,26 +297,18 @@ public class PortalControllerImpl extends GWTSpringController implements PortalC
 				if(renderPiece instanceof MacroModel){
 					MacroModel rs = ((MacroModel)renderPiece);
 					if(SharedConstants.MACRO_PORTAL.equals(rs.macroName)){
+					    //here try to confirm one and only one {portal} in Dashboard markup
 						count++;
-						if(count == 1){
-							int col = NumberUtil.toInt(rs.values.get(NameConstants.COLUMNS), -1);
-							if(col == -1){
-								//this is just for makes this macro can tolerance spell error - colunm or columns
-								col = NumberUtil.toInt(rs.values.get(NameConstants.COLUMN), -1);
-							}
-							if(col != -1)
-								column = col; 
-						}
 					}
 				}
 			}
 		}
 		if(count != 1){
+		    //we hope one and only one {portal} in Dashboard markup, otherwise, try to give some error here.
 			model.errorCode = ErrorCode.WIDGET_TO_MULTIPLE_PORTAL;
 			return model;
 		}
 		
-		PortalModel portal;
 		if(viewer.isAnonymous()){
 			model.errorCode = ErrorCode.WIDGET_ADD_TO_ANONYMOUS_PORTAL;
 			return model;
@@ -325,13 +316,10 @@ public class PortalControllerImpl extends GWTSpringController implements PortalC
 			//finally update this user's portal in Dashboard
 			
 			//reload user from Database rather than Cache. 
-			viewer = userReadingService.getUser(viewer.getUid());
-			
-			UserSetting setting = viewer.getSetting();
-			List<String> layout = setting.getHomeLayout();
-			String newPorlet = widgetType + SharedConstants.PORTLET_SEP + widgetKey + SharedConstants.PORTLET_SEP + 0 + SharedConstants.PORTLET_SEP  + 0;
-			layout.add(newPorlet);
-			settingService.saveOrUpdateUserSetting(viewer, setting);
+            viewer = userReadingService.getUser(viewer.getUid());
+            UserSetting setting = viewer.getSetting();
+            setting.addWidgetToHomelayout(widgetType, widgetKey);
+            settingService.saveOrUpdateUserSetting(viewer, setting);
 		}
 		
 		return model;

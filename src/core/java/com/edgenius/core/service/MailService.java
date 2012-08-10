@@ -51,5 +51,6 @@ public interface MailService {
 	 * @param msg
 	 */
 	public abstract void send(SimpleMailMessage msg);
-
+	
+	public void sendPlainToSystemAdmins( String templateName, Map model);
 }

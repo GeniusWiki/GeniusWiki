@@ -67,6 +67,7 @@ import com.edgenius.core.util.ServletUtils;
 import com.edgenius.core.util.TimeZoneUtil;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.WikiConstants;
+import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.gwt.client.model.ActivityModel;
 import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
 import com.edgenius.wiki.gwt.client.model.JsInfoModel;
@@ -271,7 +272,10 @@ public class SecurityControllerImpl  extends GWTSpringController implements Secu
             user.setPassword(CodecUtil.encodePassword(user.getPassword(), algorithm));
         }
         
-        user.setEnabled(true);
+    	//now, only signup and approval 2 method, here treat signup method is as default method. 
+    	//So only Global.registerMethod=="approval", the enable is false, otherwise, user always be enabled.
+    	boolean enable = !REGISTER_METHOD.approval.name().equals(Global.registerMethod);
+        user.setEnabled(enable);
         
         // Set the default user role on this new user
         user.setRoles(roleService.getDefaultRole());
@@ -279,11 +283,12 @@ public class SecurityControllerImpl  extends GWTSpringController implements Secu
         user.setCreatedDate(new Date());
         try {
             userService.saveUser(user);
-            activityLog.logUserSignup(user);
+            //for compatible, not directly use Global.registerMethod(if it is null, treat as signup)
+            activityLog.logUserSignup(user, enable?REGISTER_METHOD.signup:REGISTER_METHOD.approval);
             
             //set back user uid
             model.setUid(user.getUid());
-            if(login){
+            if(login && enable){
             	//login flag use for admin: if admin add user, then need not do login and send account email
             	securityService.login(user.getUsername(), model.getPassword());
             }
@@ -298,7 +303,16 @@ public class SecurityControllerImpl  extends GWTSpringController implements Secu
 				map.put(WikiConstants.ATTR_PAGE_LINK, WebUtil.getHostAppURL());
 				
 				if(login){
-					mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_NOTIFICATION, map);
+				    if(enable){
+				        mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_NOTIFICATION, map);
+				    }else{
+				        //if user needs approval, then send waiting approval email
+				        UserSetting setting = user.getSetting();
+				        setting.setRequireSignupApproval(true);
+		                settingService.saveOrUpdateUserSetting(user, setting);
+		                
+				        mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_USER, map);
+				    }
 				}else{
 					//this is admin add new user, send user name and password as well.
 					map.put(WikiConstants.ATTR_PASSWORD, plainPassword);

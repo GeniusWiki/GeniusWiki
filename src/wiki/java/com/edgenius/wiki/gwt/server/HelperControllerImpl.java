@@ -136,7 +136,8 @@ public class HelperControllerImpl  extends GWTSpringController implements Helper
 		// return errorCode and valid email group separator by ","
 		InvitationModel returnModel = new InvitationModel();
 		try {
-			returnModel.emailGroup = friendService.sendInvitation(user, invitation.spaceUname, invitation.emailGroup, invitation.message);
+		    List<String> emails = friendService.sendInvitation(user, invitation.spaceUname, invitation.emailGroup, invitation.message);
+			returnModel.emailGroup = StringUtils.join(emails, ",");
 		} catch (Exception e) {
 			returnModel.errorCode = ErrorCode.INVITATION_FAILED; 
 		}

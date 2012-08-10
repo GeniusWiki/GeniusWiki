@@ -76,7 +76,8 @@ public class WikiConstants {
 	public static final String ATTR_CONTENT = "content";
 	public static final String ATTR_PAGINATION_INFO = "pagination";
 	public static final String ATTR_ADMIN_URL = "adminURL";
-	
+
+    public static final String ATTR_SIGNUP_SUPRESSED = "signupSuppressed";
 	public static final String ATTR_SUPPRESS = "ATTR_SUPPRESS";
 	
 	public static final String SESSION_NAME_USER_SORTBY = "userSortBy";
@@ -129,8 +130,11 @@ public class WikiConstants {
 	public static final String MAIL_TEMPL_FORGET_PASSWORD_NOTIFICATION = "forgetpass.ftl";
 	public static final String MAIL_TEMPL_FRIENDSHIP = "friendshiprequest.ftl";
 	public static final String MAIL_TEMPL_VERSION_CHECK = "versioncheck.ftl";
+	public static final String MAIL_TEMPL_ADD_INVITED_USER = "adduserrequeest.ftl";
+    public static final String MAIL_TEMPL_USER_VOLUME_EXCEED = "userexceed.ftl";
 
-
+    public static final String MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_ADMIN = "signupapprovetoadmin.ftl";
+    public static final String MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_USER = "signupapprovaltouser.ftl";
 	public static final int UUID_KEY_SIZE = 8;
 	
 	
@@ -174,9 +178,13 @@ public class WikiConstants {
 
 	public static final String MACRO_NAME_KEY = "$MACRO_NAME$";
 
+
+
+
 	public static int offlineDBVersion = 1;
 	public static int offlineMainDBVersion = 1;
 
 	public static String mceNonEditable = "mceNonEditable";
 
+	public enum REGISTER_METHOD{signup, approval};
 }

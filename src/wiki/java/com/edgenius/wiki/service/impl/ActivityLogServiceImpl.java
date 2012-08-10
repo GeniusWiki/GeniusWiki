@@ -42,10 +42,12 @@ import com.edgenius.core.util.AuditLogger;
 import com.edgenius.core.util.DateUtil;
 import com.edgenius.wiki.ActivityType;
 import com.edgenius.wiki.ActivityType.SubType;
+import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.dao.ActivityLogDAO;
 import com.edgenius.wiki.gwt.client.model.RenderMarkupModel;
 import com.edgenius.wiki.gwt.client.model.RenderPiece;
 import com.edgenius.wiki.gwt.client.model.TextModel;
+import com.edgenius.wiki.gwt.client.server.utils.BooleanUtil;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.server.UserUtil;
@@ -200,10 +202,18 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 			}else if(activity.getType() == ActivityType.Type.USER_EVENT.getCode()){
 				if(activity.getSubType() == ActivityType.SubType.CREATE.getCode()){
 					//Sign-up {0}.
-					msg =messageService.getMessage("activity.user."+SubType.valueOfCode(activity.getSubType())
-							, new Object[]{
-					DateUtil.toDisplayDateWithPrep(viewer, activity.getCreatedDate(),messageService)});
-					
+				    
+				    String status = StringUtils.trimToNull(activity.getExtroInfo());
+				    if(status == null){
+				        msg =messageService.getMessage("activity.user.approved."+SubType.valueOfCode(activity.getSubType())
+                                , new Object[]{DateUtil.toDisplayDateWithPrep(viewer, activity.getCreatedDate(),messageService)});
+				    }else if(REGISTER_METHOD.approval.name().equals(status)){
+				        msg =messageService.getMessage("activity.user.wait."+SubType.valueOfCode(activity.getSubType())
+	                            , new Object[]{DateUtil.toDisplayDateWithPrep(viewer, activity.getCreatedDate(),messageService)});
+				    }else{ //REGISTER_METHOD.signup.name().equals(status)
+				        msg =messageService.getMessage("activity.user."+SubType.valueOfCode(activity.getSubType())
+					        , new Object[]{DateUtil.toDisplayDateWithPrep(viewer, activity.getCreatedDate(),messageService)});
+				    }
 					
 				}else if(activity.getSubType() == ActivityType.SubType.UPDATE.getCode()){
 					//Updates status {1} {2}.
@@ -510,13 +520,16 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 	}
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// User log
-	public void logUserSignup(User user){
+	public void logUserSignup(User user, REGISTER_METHOD registerStatus){
 		try {
 			ActivityLog activity = new ActivityLog();
 			activity.setType(ActivityType.Type.USER_EVENT.getCode());
 			activity.setSubType(ActivityType.SubType.CREATE.getCode());
 			activity.setSrcResourceType(SecurityValues.RESOURCE_TYPES.USER.ordinal());
 			activity.setSrcResourceName(user.getUsername());
+			
+			//put user enable status here, this will check if the signup needs to be approved.
+			activity.setExtroInfo(registerStatus==null?null:registerStatus.name());
 			
 			activity.setCreator(user);
 			activity.setCreatedDate(user.getCreatedDate());

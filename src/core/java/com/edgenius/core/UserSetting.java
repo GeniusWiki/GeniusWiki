@@ -24,9 +24,14 @@
 package com.edgenius.core;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 
 /**
  * TODO: bind with wiki package!!!
@@ -76,8 +81,13 @@ public class UserSetting implements Serializable{
 	//system design, -1 is initial status. For -1 value, right sidebar is turn on
 	private int fixedPanel = -1;
 	
+	//user status information, normally display aside user portrait
 	private String status;
 	private List<QuickNote> quickNotes;
+	
+	//if system is in Global.registerMethod == REGISTER_METHOD.approval, then user signup but status is disabled. 
+	//When system admin turn on enable, it will retrieve this flag, if true, then send an approval email to this user.
+	private boolean requireSignupApproval = false;
 	
 	//Key:name,i.e., Twitter,LinkedIn, Facebook, Position etc. 
 	//Value: Map - Key: property name, Value: property value.
@@ -112,6 +122,33 @@ public class UserSetting implements Serializable{
 			this.createDate = createDate;
 		}
 	}
+	/**
+	 * Add widget to portal first position.
+	 * @param widgetType
+	 * @param widgetKey
+	 */
+	public void addWidgetToHomelayout(String widgetType, String widgetKey){
+	    String widget = widgetType + SharedConstants.PORTLET_SEP + widgetKey 
+                + SharedConstants.PORTLET_SEP + 0 + SharedConstants.PORTLET_SEP  + 0;
+	    
+	    if(homeLayout == null) homeLayout = new ArrayList<String>();
+	    
+	    homeLayout.add(widget);
+	}
+	public boolean hasWidgetAtHomelayout(String widgetType, String widgetKey){
+	    if(homeLayout == null || homeLayout.size() == 0) return false;
+	    
+	    String widgetPrefix = widgetType + SharedConstants.PORTLET_SEP + widgetKey+ SharedConstants.PORTLET_SEP;
+	    for (String widget : homeLayout) {
+            if(StringUtils.startsWith(widget, widgetPrefix)){
+                return true;
+            }
+        }
+	    return false;
+	}
+	//********************************************************************
+    //               Set / Get
+    //********************************************************************
 	public String getStatus() {
 		return status;
 	}
@@ -173,15 +210,9 @@ public class UserSetting implements Serializable{
 	public void setSkin(String skin) {
 		this.skin = skin;
 	}
-	/**
-	 * @return the portalColumn
-	 */
 	public int getPortalColumn() {
 		return portalColumn;
 	}
-	/**
-	 * @param portalColumn the portalColumn to set
-	 */
 	public void setPortalColumn(int portalColumn) {
 		this.portalColumn = portalColumn;
 	}
@@ -197,5 +228,11 @@ public class UserSetting implements Serializable{
 	public void setContacts(LinkedHashMap<String, LinkedHashMap<String, String>> socialAccount) {
 		this.contacts = socialAccount;
 	}
+    public boolean isRequireSignupApproval() {
+        return requireSignupApproval;
+    }
+    public void setRequireSignupApproval(boolean requireSignupApproval) {
+        this.requireSignupApproval = requireSignupApproval;
+    }
 	
 }

@@ -44,6 +44,7 @@ import com.edgenius.core.Constants;
 import com.edgenius.core.Global;
 import com.edgenius.core.SecurityValues.OPERATIONS;
 import com.edgenius.core.SecurityValues.RESOURCE_TYPES;
+import com.edgenius.core.UserSetting;
 import com.edgenius.core.dao.ResourceDAO;
 import com.edgenius.core.model.Permission;
 import com.edgenius.core.model.Resource;
@@ -69,6 +70,7 @@ import com.edgenius.wiki.service.InvitationException;
 import com.edgenius.wiki.service.NotificationService;
 import com.edgenius.wiki.service.SpaceService;
 import com.edgenius.wiki.util.WikiUtil;
+import com.edgenius.wiki.widget.SpaceWidget;
 
 /**
  * @author Dapeng.Ni
@@ -314,6 +316,7 @@ public class FriendServiceImpl implements FriendService {
 		//* allocate read permission this invited user to space
 		//* send notification to this space (admin)
 		//* remove this acceptor from invitation email group, if email group is zero, delete this invitation record from DB
+		//* Add this space to user's dashboard
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//               Step 1
@@ -386,9 +389,17 @@ public class FriendServiceImpl implements FriendService {
 			invitation.setToEmailGroup(newGroup.toString());
 			invitationDAO.saveOrUpdate(invitation);
 		}
+		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //               Step 4
+		//if user dashboard does not have this space yet, add it.
+		UserSetting setting = acceptor.getSetting();
+		if(!setting.hasWidgetAtHomelayout(SpaceWidget.class.getName(), spaceUname)){
+		    setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceUname);
+		}
 	}
 
-	public String sendInvitation(User sender, String spaceUname, String toEmailGroup, String message) {
+	public List<String> sendInvitation(User sender, String spaceUname, String toEmailGroup, String message) {
 		
 		String[] emails = toEmailGroup.split("[;,]");
 		//check email, and only save valid email to database
@@ -430,23 +441,53 @@ public class FriendServiceImpl implements FriendService {
 		String url = WikiUtil.getPageRedirFullURL(spaceUname,null,null);
 		map.put(WikiConstants.ATTR_PAGE_LINK, url);
 		
-		StringBuffer validGroup = new StringBuffer();
+		List<String> validGroup = new ArrayList<String>();
 		for (String email: validEmails) {
 			try {
+			    if(Global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP)){
+    			    User user = userReadingService.getUserByEmail(email);
+    			    if(user == null){
+    			        //only unregistered user to be told system is not allow sign-up
+    			        map.put(WikiConstants.ATTR_SIGNUP_SUPRESSED, true);
+    			    }
+			    }else{
+			        map.put(WikiConstants.ATTR_SIGNUP_SUPRESSED, false);
+			    }
+			    
 				map.put(WikiConstants.ATTR_INVITE_URL, WebUtil.getHostAppURL()+"invite.do?s="
 						+URLEncoder.encode(spaceUname,Constants.UTF8)+"&i="+invite.getUuid());
 				SimpleMailMessage msg = new SimpleMailMessage();
 				msg.setFrom(Global.DefaultNotifyMail);
 				msg.setTo(email); 
 				mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_INVITE, map);
-				validGroup.append(email).append(",");
+				validGroup.add(email);
 			} catch (Exception e) {
 				log.error("Failed send email to invite " + email,e);
 			}
 		}
 		invite.setToEmailGroup(validGroup.toString());
 		invitationDAO.saveOrUpdate(invite);
-		return validGroup.toString();
+		
+		//if system public signup is disabled, then here need check if that invited users are register users, if not, here need send email to notice system admin to add those users.
+		if(Global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP)){
+		    List<String> unregistereddEmails = new ArrayList<String>();
+		    for (String email : validGroup) {
+                User user = userReadingService.getUserByEmail(email);
+                if(user == null){
+                    unregistereddEmails.add(email);
+                }
+            }
+		    
+		    if(!unregistereddEmails.isEmpty()){
+    		    //send email to system admin.
+    		    map = new HashMap<String,Object>();
+    		    map.put(WikiConstants.ATTR_USER, sender);
+    	        map.put(WikiConstants.ATTR_SPACE, space);
+    	        map.put(WikiConstants.ATTR_LIST, unregistereddEmails);
+    	        mailService.sendPlainToSystemAdmins(WikiConstants.MAIL_TEMPL_ADD_INVITED_USER,map);
+		    }
+		}
+		return validGroup;
 	}
 	
 	public void removeExpiredInvitations(int hours) {

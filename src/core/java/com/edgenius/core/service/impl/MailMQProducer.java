@@ -24,6 +24,7 @@
 package com.edgenius.core.service.impl;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.jms.Queue;
 
@@ -32,7 +33,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.mail.SimpleMailMessage;
 
+import com.edgenius.core.Global;
 import com.edgenius.core.service.MailService;
+import com.edgenius.core.service.UserReadingService;
 /**
  * 
  * @author Dapeng.Ni
@@ -41,6 +44,7 @@ public class MailMQProducer implements MailService{
 	protected final Logger log = LoggerFactory.getLogger(MailMQProducer.class);
 	private JmsTemplate template;
 	private Queue destination;
+	private UserReadingService userReadingService;
 	
 	public void send(SimpleMailMessage msg) {
 		MailMQObject mail = new MailMQObject();
@@ -69,6 +73,22 @@ public class MailMQProducer implements MailService{
 	
 	}
 	
+    @Override
+    public void sendPlainToSystemAdmins(String templateName, Map model){
+        Set<String> mailAddrList =userReadingService.getSystemAdminMailList();
+        for (String addr : mailAddrList) {
+            try {
+                SimpleMailMessage mail = new SimpleMailMessage();
+                mail.setFrom(Global.DefaultNotifyMail);
+                mail.setTo(addr); 
+                this.sendPlainMail(mail, templateName,model);
+            } catch (Exception e) {
+                log.error("Failed send email to system admin:" + addr,e);
+            }
+        }
+        
+    }
+
 	//********************************************************************
 	//               private 
 	//********************************************************************
@@ -89,6 +109,11 @@ public class MailMQProducer implements MailService{
 	public void setDestination(Queue destination) {
 		this.destination = destination;
 	}
+
+    public void setUserReadingService(UserReadingService userReadingService) {
+        this.userReadingService = userReadingService;
+    }
+
 
 
 }

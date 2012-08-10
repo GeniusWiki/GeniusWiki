@@ -55,9 +55,10 @@ public class UserMethodBeforeAdvice implements MethodBeforeAdvice{
 		try{
 			User loginUser = WikiUtil.getUser();
 			if(name.equals(UserService.saveUser)){
-				if((Global.getCurrentSuppress() & SharedConstants.SUPPRESS.SIGNUP.getValue()) > 0
+			    //if public sign up is disabled and not system admin, then throw exception.
+				if(Global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP)
 						//administrator allows to add user from system admin page 
-					& !securityService.isAllowResourceAdmin(SharedConstants.INSTANCE_NAME, SecurityValues.RESOURCE_TYPES.INSTANCE,loginUser)){
+					&& !securityService.isAllowResourceAdmin(SharedConstants.INSTANCE_NAME, SecurityValues.RESOURCE_TYPES.INSTANCE,loginUser)){
 					throw new UserSignUpDiabledException("User sign up is disabled.");
 				}
 			}else if(name.equals(UserService.updateUser)

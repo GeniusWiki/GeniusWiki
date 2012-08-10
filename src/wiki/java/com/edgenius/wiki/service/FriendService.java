@@ -83,9 +83,9 @@ public interface FriendService {
 	// someone use invite.do?s=spaceUname&i=inviteUUID to accept this invitation
 	/**
 	 * @param toEmailGroup, multiple email separator by "," or ";"
-	 * @return valid email group separator by ","
+	 * @return valid email list.
 	 */
-	String sendInvitation(User sender,String spaceUname, String toEmailGroup, String message);
+	List<String>  sendInvitation(User sender,String spaceUname, String toEmailGroup, String message);
 	
 	/**
 	 * Current policy is, space admin send invitation to some email address. the receiver need sign-up/login to accept

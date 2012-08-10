@@ -41,6 +41,7 @@ import com.edgenius.core.service.UserOverLimitedException;
 import com.edgenius.core.service.UserReadingService;
 import com.edgenius.core.service.UserService;
 import com.edgenius.core.util.CodecUtil;
+import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.integration.WsContants;
 import com.edgenius.wiki.integration.dto.RoleList;
 import com.edgenius.wiki.integration.dto.WsUser;
@@ -83,9 +84,13 @@ public class WsUserServiceImpl implements WsUserService {
         }
 		user.setCreatedDate(new Date());
 		
+		//TODO: always enable, not check Global.registerMethod yet.
+		user.setEnabled(true);
 		try {
 			user = userService.saveUser(user);
-			activityLog.logUserSignup(user);
+			activityLog.logUserSignup(user,REGISTER_METHOD.approval);
+			
+			//TODO: not send out email to user
 			
 			return user.getUid(); 
 		} catch (UserExistsException e) {

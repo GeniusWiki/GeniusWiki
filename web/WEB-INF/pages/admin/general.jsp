@@ -102,6 +102,13 @@
 				}else{
 					$("allowPublic").checked=false;
 				}
+				
+				if(${signupNeedApproval}){
+					$("signupNeedApproval").checked=true;
+				}else{
+					$("signupNeedApproval").checked=false;
+				}
+				
 				if(${detectLocale}){
 					$("detectLocale").checked=true;
 				}else{
@@ -481,6 +488,16 @@
 							</span> 
 						</td>
 						<td class="desc"><fmt:message key="allow.public.desc"/></td>
+					</tr>
+					<tr>
+						<td class="form-label"><fmt:message key="signup.approval"/></td>
+						<td>
+							<input id="signupNeedApproval" name="signupNeedApproval" value="true" type="checkbox" class="wd" style="display:none">
+							<span id="signupNeedApprovalDiv" class="rd">
+								<c:choose><c:when test="${signupNeedApproval}"><fmt:message key="yes"/></c:when><c:otherwise><fmt:message key="no"/></c:otherwise></c:choose>
+							</span> 
+						</td>
+						<td class="desc"><fmt:message key="signup.approval.desc"/></td>
 					</tr>
 					<tr>
 						<td colspan="3"><div class="separator"></div></td>

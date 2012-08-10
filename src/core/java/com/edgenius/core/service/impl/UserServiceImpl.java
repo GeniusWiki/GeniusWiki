@@ -52,6 +52,7 @@ import com.edgenius.core.service.UserRemoveException;
 import com.edgenius.core.service.UserService;
 import com.edgenius.core.util.CodecUtil;
 import com.edgenius.core.util.WebUtil;
+import com.edgenius.wiki.WikiConstants;
 /**
  * @author Dapeng.Ni
  */
@@ -96,7 +97,7 @@ public class UserServiceImpl extends AbstractUserService implements UserService 
 					msg.setBcc(bcc.toArray(new String[bcc.size()]));
 					HashMap<String, String> model = new HashMap<String, String>();
 					model.put("weburl", WebUtil.getHostAppURL());
-					mailService.sendPlainMail(msg,  "userexceed.ftl", model);
+					mailService.sendPlainMail(msg,  WikiConstants.MAIL_TEMPL_USER_VOLUME_EXCEED, model);
         		}
 	        }
         }

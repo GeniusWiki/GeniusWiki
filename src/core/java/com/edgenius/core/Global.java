@@ -29,6 +29,8 @@ import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 
 import com.edgenius.core.Constants.SUPPRESS;
+import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
+import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 
 /**
  * @author Dapeng.Ni
@@ -87,8 +89,9 @@ public class Global implements Serializable{
 	//how often does offline sync(download) will happen.
 	public static int DelayOfflineSyncMinutes = 30;
 	
-	//signup: allow user free signup, approval: require system admin approval, maybe there are more options, ...no implementation yet
-	public static String registerMethod = "signup";
+	//signup: allow user free signup, approval: require system admin approval
+	//@see enum WikiContants.REGISTER_METHOD
+	public static String registerMethod = REGISTER_METHOD.signup.name();
 	
 	//refer to http://www.quartz-scheduler.org/docs/tutorials/crontrigger.html
 	//every day 3am
@@ -110,7 +113,7 @@ public class Global implements Serializable{
 	public static String restServiceAuth= "basic";
 	
 	//suppress function: signup, logout...
-	//@see enum in WikiConstants.SUPPRESS
+	//@see enum in SharedConstants.SUPPRESS
 	public static int suppress;
 	public static boolean DetectLocaleFromRequest = false;
 	public static boolean VersionCheck = true;
@@ -335,7 +338,9 @@ public class Global implements Serializable{
 		}
 	}
 
-	
+	public static boolean hasSuppress(SharedConstants.SUPPRESS hasSupress) {
+	    return (Global.getCurrentSuppress() & hasSupress.getValue()) > 0;
+    }
 	public static void setCurrentSuppress(Integer suppr) {
 		Global.currentSuppress.set(suppr);
 	}

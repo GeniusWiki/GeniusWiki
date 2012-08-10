@@ -38,6 +38,7 @@ import com.edgenius.core.repository.RepositoryService;
 import com.edgenius.core.service.impl.JavaMailSenderImpl;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.Shell;
+import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.quartz.QuartzException;
@@ -69,6 +70,7 @@ public class GeneralAdminAction extends BaseAction{
 	private int removeDelay;
 	private int syncFeq;
 	private boolean allowPublic = false;
+	private boolean signupNeedApproval = false;
 	private boolean detectLocale = false;
 	private String sysLang;
 	private boolean allowSE = false;
@@ -116,6 +118,7 @@ public class GeneralAdminAction extends BaseAction{
 		removeDelay = global.getDelayRemoveSpaceHours();
 		syncFeq = global.getDelayOfflineSyncMinutes();
 		allowPublic = !global.hasSuppress(SharedConstants.SUPPRESS.SIGNUP.name());
+		signupNeedApproval = REGISTER_METHOD.approval.name().equals(global.getRegisterMethod());
 		detectLocale = global.isDetectLocaleFromRequest();
 		sysLang = (global.getDefaultLanguage()+"_" + global.getDefaultCountry()).toLowerCase();
 		allowSE = global.isPublicSearchEngineAllow();
@@ -191,6 +194,8 @@ public class GeneralAdminAction extends BaseAction{
 				global.removeSuppress(SharedConstants.SUPPRESS.SIGNUP.name());
 			else
 				global.addSuppress(SharedConstants.SUPPRESS.SIGNUP.name());
+			
+			global.setRegisterMethod(signupNeedApproval?REGISTER_METHOD.approval.name():REGISTER_METHOD.signup.name());
 			global.setDelayOfflineSyncMinutes(syncFeq);
 			global.setPublicSearchEngineAllow(allowSE);
 			global.setDetectLocaleFromRequest(detectLocale);

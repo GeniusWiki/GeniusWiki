@@ -140,20 +140,10 @@ public class NotificationServiceImpl implements NotificationService {
 						
 						List<ActivityLog> activities = activityLog.getByTarget(ActivityType.Type.SYSTEM_EVENT.getCode(),ActivityType.SubType.VERSION_PING.getCode(), version,"VERSION_CHECK"); //hardcode
 						if(activities == null || activities.size() == 0){
-							Set<String> mailAddrList =userReadingService.getSystemAdminMailList();
-							for (String addr : mailAddrList) {
-								try {
-									SimpleMailMessage mail = new SimpleMailMessage();
-									mail.setFrom(Global.DefaultNotifyMail);
-									mail.setTo(addr); 
-									Map<String,Object> map = new HashMap<String,Object>();
-									map.put("newVer",verStr);
-									map.put("currVer", Version.VERSION);
-									mailService.sendPlainMail(mail, WikiConstants.MAIL_TEMPL_VERSION_CHECK,map);
-								} catch (Exception e) {
-									log.error("Failed send notification email:" + addr,e);
-								}
-							}
+							Map<String,Object> map = new HashMap<String,Object>();
+							map.put("newVer",verStr);
+							map.put("currVer", Version.VERSION);
+							mailService.sendPlainToSystemAdmins(WikiConstants.MAIL_TEMPL_VERSION_CHECK,map);
 							log.info("New version {} found and notified to system administrators.", version);
 							
 							//log activity

@@ -213,22 +213,10 @@ public class NutServlet extends BaseServlet{
 		
 		//append this space to Dashboard
 		try{
-			String widget = SpaceWidget.class.getName() + SharedConstants.PORTLET_SEP + spaceUname 
-				+ SharedConstants.PORTLET_SEP + 0 + SharedConstants.PORTLET_SEP  + 0;
-			
 			User user = WikiUtil.getUser();
 			UserSetting setting = user.getSetting();
-			List<String> list;
-			if(setting != null){
-				list = setting.getHomeLayout();
-				if(list == null)
-					list = new ArrayList<String>();
-			}else{
-				setting = new UserSetting();
-				list = new ArrayList<String>();
-			}
-			list.add(widget);
-			setting.setHomeLayout(list);
+			setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceUname);
+			
 			getSettingService().saveOrUpdateUserSetting(user, setting);
 			log.info("User [{}] dashboard add space {}.", user.getUsername(), spaceUname);
 		}catch (Exception e) {

@@ -27,6 +27,7 @@ import java.util.List;
 
 import com.edgenius.core.model.User;
 import com.edgenius.core.repository.FileNode;
+import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
 import com.edgenius.wiki.gwt.client.model.RenderMarkupModel;
 import com.edgenius.wiki.model.ActivityLog;
 import com.edgenius.wiki.model.Page;
@@ -70,7 +71,12 @@ public interface ActivityLogService {
 	void logSpaceRemoved(Space space,User requestor, boolean permanent);
 	void logSpaceRestored(String spaceUname, String name, User user);
 	
-	void logUserSignup(User user);
+	/**
+	 * 
+	 * @param user
+	 * @param registerStatus signup or approval. If null, treat as sign-up is approved.
+	 */
+	void logUserSignup(User user, REGISTER_METHOD registerStatus);
 	void logUserStatusUpdate(User user);
 	void logUserFollowing(User user, User follower);
 	void logUserUnFollowing(User user, User follower);

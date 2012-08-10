@@ -26,6 +26,7 @@ package com.edgenius.core.service.impl;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 import javax.mail.internet.MimeMessage;
 
@@ -42,6 +43,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.edgenius.core.Global;
 import com.edgenius.core.service.MailService;
+import com.edgenius.core.service.UserReadingService;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -56,6 +58,7 @@ public class MailEngineService implements MailService {
 
 	private FreeMarkerConfigurer mailTemplateEngine = null;
 	private JavaMailSender mailSender;
+	private UserReadingService userReadingService;  
 
 	/* (non-Javadoc)
 	 * @see com.edgenius.text.engine.service.impl.IMail#sendHtmlMail(org.springframework.mail.SimpleMailMessage, java.lang.String, java.util.Map)
@@ -118,6 +121,23 @@ public class MailEngineService implements MailService {
 		}
 	}
 
+
+
+    @Override
+    public void sendPlainToSystemAdmins( String templateName, Map model){
+        Set<String> mailAddrList =userReadingService.getSystemAdminMailList();
+        for (String addr : mailAddrList) {
+            try {
+                SimpleMailMessage mail = new SimpleMailMessage();
+                mail.setFrom(Global.DefaultNotifyMail);
+                mail.setTo(addr); 
+                this.sendPlainMail(mail, templateName,model);
+            } catch (Exception e) {
+                log.error("Failed send email to system admin:" + addr,e);
+            }
+        }
+        
+    }
 	//********************************************************************
 	//               private method
 	//********************************************************************
@@ -156,4 +176,12 @@ public class MailEngineService implements MailService {
 	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
+
+
+
+    public void setUserReadingService(UserReadingService userReadingService) {
+        this.userReadingService = userReadingService;
+    }
+
+
 }

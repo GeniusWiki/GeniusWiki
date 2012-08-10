@@ -24,17 +24,26 @@
 package com.edgenius.wiki.webapp.admin.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.mail.SimpleMailMessage;
+
+import com.edgenius.core.Global;
 import com.edgenius.core.SecurityValues.SYSTEM_ROLES;
+import com.edgenius.core.UserSetting;
 import com.edgenius.core.model.Role;
 import com.edgenius.core.model.User;
+import com.edgenius.core.service.MailService;
 import com.edgenius.core.service.MessageService;
 import com.edgenius.core.util.DateUtil;
+import com.edgenius.core.util.WebUtil;
 import com.edgenius.core.webapp.taglib.PageInfo;
 import com.edgenius.wiki.WikiConstants;
 import com.edgenius.wiki.service.CommentService;
 import com.edgenius.wiki.service.PageService;
+import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.service.SpaceService;
 import com.edgenius.wiki.util.WikiUtil;
 import com.edgenius.wiki.webapp.action.BaseAction;
@@ -63,6 +72,8 @@ public class UserAdminAction  extends BaseAction{
 	private PageService pageService;
 	private CommentService commentService;
 	private MessageService messageService;
+	private MailService mailService;
+	private SettingService settingService;
 	
 	//********************************************************************
 	//               method
@@ -138,6 +149,30 @@ public class UserAdminAction  extends BaseAction{
 		//this will update user cache as well
 		userService.updateUser(user);
 		
+		//Retreive UserSetting.requireSignupApproval, if it is true, then send out email to tell user whose account is enabled.
+		UserSetting setting = user.getSetting();
+		if(setting.isRequireSignupApproval()){
+		    try {
+		        SimpleMailMessage msg = new SimpleMailMessage();
+		        msg.setFrom(Global.DefaultNotifyMail);
+		        msg.setTo(user.getContact().getEmail());
+		        Map model = new HashMap();
+		        model.put(WikiConstants.ATTR_USER, user);
+		        model.put(WikiConstants.ATTR_PAGE_LINK, WebUtil.getHostAppURL());
+		        //send sign up success email
+                mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_NOTIFICATION, model);
+                
+                //reset flag and save into database
+                setting.setRequireSignupApproval(false);
+                settingService.saveOrUpdateUserSetting(user, setting);
+                
+                //according to this method convention, null means this account approved.
+                activityLog.logUserSignup(user,null);
+            } catch (Exception e) {
+                log.error("Failed to send out user signup approvaed email:" + user.getUsername(), e);
+            }
+		   
+		}
 		UserDTO dto = new UserDTO();
 		dto.setUser(user);
 		getRequest().setAttribute("dto", dto);
@@ -207,4 +242,12 @@ public class UserAdminAction  extends BaseAction{
 	public void setMessageService(MessageService messageService) {
 		this.messageService = messageService;
 	}
+
+    public void setMailService(MailService mailService) {
+        this.mailService = mailService;
+    }
+
+    public void setSettingService(SettingService settingService) {
+        this.settingService = settingService;
+    }
 }
