@@ -82,3 +82,5 @@ public class Constants {
 		}
 	}
 }
+
+public enum REGISTER_METHOD{signup, approval}

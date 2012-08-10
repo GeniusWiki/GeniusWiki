@@ -29,8 +29,6 @@ import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 
 import com.edgenius.core.Constants.SUPPRESS;
-import com.edgenius.wiki.WikiConstants.REGISTER_METHOD;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 
 /**
  * @author Dapeng.Ni
@@ -338,7 +336,7 @@ public class Global implements Serializable{
 		}
 	}
 
-	public static boolean hasSuppress(SharedConstants.SUPPRESS hasSupress) {
+	public static boolean hasSuppress(SUPPRESS hasSupress) {
 	    return (Global.getCurrentSuppress() & hasSupress.getValue()) > 0;
     }
 	public static void setCurrentSuppress(Integer suppr) {

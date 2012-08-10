@@ -179,13 +179,8 @@ public class WikiConstants {
 
 	public static final String MACRO_NAME_KEY = "$MACRO_NAME$";
 
-
-
-
 	public static int offlineDBVersion = 1;
 	public static int offlineMainDBVersion = 1;
 
-	public static String mceNonEditable = "mceNonEditable";
-
-	public enum REGISTER_METHOD{signup, approval};
+	public static String mceNonEditable = "mceNonEditable";;
 }
