@@ -131,6 +131,7 @@ public class WikiConstants {
 	public static final String MAIL_TEMPL_FRIENDSHIP = "friendshiprequest.ftl";
 	public static final String MAIL_TEMPL_VERSION_CHECK = "versioncheck.ftl";
 	public static final String MAIL_TEMPL_ADD_INVITED_USER = "adduserrequeest.ftl";
+	//This variable not used but has hardcode value in UserServiceImpl.saveUser() because of package dependency restriction  
     public static final String MAIL_TEMPL_USER_VOLUME_EXCEED = "userexceed.ftl";
 
     public static final String MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_ADMIN = "signupapprovetoadmin.ftl";

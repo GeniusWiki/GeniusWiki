@@ -201,6 +201,7 @@ public class SharedConstants {
 	public static final int PAGE_SIZE = 10;
 	
 	public static final String LOGO_SEP = "$";
+	//!!!There is same constants in Contants.PORTLET_SEP
 	public static final String PORTLET_SEP = "$"; //can not use & as it will be entity prefix
 	public static final char MACRO_PARAM_SEP = '|';
 

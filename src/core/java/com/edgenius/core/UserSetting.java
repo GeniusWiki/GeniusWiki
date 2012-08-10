@@ -31,8 +31,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
-
 /**
  * TODO: bind with wiki package!!!
  * @author dapeng
@@ -128,8 +126,8 @@ public class UserSetting implements Serializable{
 	 * @param widgetKey
 	 */
 	public void addWidgetToHomelayout(String widgetType, String widgetKey){
-	    String widget = widgetType + SharedConstants.PORTLET_SEP + widgetKey 
-                + SharedConstants.PORTLET_SEP + 0 + SharedConstants.PORTLET_SEP  + 0;
+	    String widget = widgetType + Constants.PORTLET_SEP + widgetKey 
+                + Constants.PORTLET_SEP + 0 + Constants.PORTLET_SEP  + 0;
 	    
 	    if(homeLayout == null) homeLayout = new ArrayList<String>();
 	    
@@ -138,7 +136,7 @@ public class UserSetting implements Serializable{
 	public boolean hasWidgetAtHomelayout(String widgetType, String widgetKey){
 	    if(homeLayout == null || homeLayout.size() == 0) return false;
 	    
-	    String widgetPrefix = widgetType + SharedConstants.PORTLET_SEP + widgetKey+ SharedConstants.PORTLET_SEP;
+	    String widgetPrefix = widgetType + Constants.PORTLET_SEP + widgetKey+ Constants.PORTLET_SEP;
 	    for (String widget : homeLayout) {
             if(StringUtils.startsWith(widget, widgetPrefix)){
                 return true;

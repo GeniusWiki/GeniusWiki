@@ -66,6 +66,8 @@ public class Constants {
 	public static final String FACEBOOK_SKIN = "facebook";
 	public static final String SE_ROBOT = "SEROBOT";
 	
+	//!!!There is same constants in SharedContants.PORTLET_SEP
+	public static final String PORTLET_SEP = "$";
 	//!!!suppress functions - There is exactly same value in SharedConstants.java
 	public static enum SUPPRESS{
 		SIGNUP(1),
