@@ -57,12 +57,14 @@
 	<bean id="mailService" class="com.edgenius.core.service.impl.MailMQProducer">
 		<property name="template" ref="mailJmsTemplate"/>
 		<property name="destination" ref="mailDestination"/>
+		<property name="userReadingService" ref="userReadingService"/>
 	</bean>
 	
 	<!--  The mail service directly use mail sender  -->
 	<bean id="mailEngine" class="com.edgenius.core.service.impl.MailEngineService">
 		<property name="mailTemplateEngine" ref="mailTemplateEngine"/>
 		<property name="mailSender" ref="mailSender"/>
+		<property name="userReadingService" ref="userReadingService"/>
 	</bean>
 	
  </beans>
