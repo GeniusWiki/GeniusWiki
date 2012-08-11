@@ -68,7 +68,11 @@ public class UserMethodBeforeAdvice implements MethodBeforeAdvice{
 				User user = (User) args[0];
 				if(loginUser == null || loginUser.isAnonymous()){
 					//anonymous
-					throw new AccessDeniedException("Anonymous can not update user. Security exception.");
+					//A special case -If system sign-up needs approval, this is from settingService.updateUserSetting()->userService.updateUser()
+					//The current user not login yet, but user is not enabled
+					if(user.isEnabled() || !user.getSetting().isRequireSignupApproval()){
+						throw new AccessDeniedException("Anonymous can not update user. Security exception.");
+					}
 				}else if (!loginUser.equals(user)&& 
 							!securityService.isAllowResourceAdmin(SharedConstants.INSTANCE_NAME,
 								SecurityValues.RESOURCE_TYPES.INSTANCE,loginUser)){
