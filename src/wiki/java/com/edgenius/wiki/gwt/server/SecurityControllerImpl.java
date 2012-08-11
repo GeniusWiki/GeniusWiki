@@ -312,7 +312,7 @@ public class SecurityControllerImpl  extends GWTSpringController implements Secu
 		                settingService.saveOrUpdateUserSetting(user, setting);
 		                
 				        mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_USER, map);
-				        mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_ADMIN, map);
+				        mailService.sendPlainToSystemAdmins(WikiConstants.MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_ADMIN, map);
 				    }
 				}else{
 					//this is admin add new user, send user name and password as well.
