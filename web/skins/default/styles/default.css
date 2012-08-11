@@ -1975,6 +1975,44 @@ background:transparent none repeat-x scroll 0 -6px;
 }
 .morelessbar .morebtn .gwt-Label{
 }
+.historyAction .msg{
+	float:left
+}
+.historyAction .return{
+	float:left;
+}
+.historyAction .action{
+	clear:both;
+}
+.historyAction .round{
+	float:left;
+	text-align: center;
+	line-height: 18px;
+	padding:5px 8px 5px 8px;
+}
+.historyAction .round .prev{
+}
+.historyAction .round .next{
+}
+.historyAction .round .version{
+	font-size:20px;
+	line-height: 25px;
+}
+.historyAction .round .author{
+}
+.historyAction .round .date{
+}
+.historyAction .round .diff{
+}
+.historyAction .current{
+	float:left;
+	font-size: 25px;
+	line-height: 75px;
+	padding:0px 8px 0px 8px;
+	margin: 8px 0px 5px 0px;
+	border-left:1px solid;
+	border-right:1px solid;
+}
 
 
 /************************************************************
@@ -2120,4 +2158,3 @@ background:transparent none repeat-x scroll 0 -6px;
   border: 0px; 
   background: #E5E5E5;
 }
-

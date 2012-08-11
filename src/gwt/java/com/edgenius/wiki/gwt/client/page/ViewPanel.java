@@ -29,6 +29,7 @@ import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
+import com.edgenius.wiki.gwt.client.model.PageItemModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.UserModel;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentButton;
@@ -50,8 +51,12 @@ import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
+import com.edgenius.wiki.gwt.client.widgets.ClickLink;
+import com.edgenius.wiki.gwt.client.widgets.UserProfileLink;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -190,13 +195,14 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		
 		if(model.isHistory){
 			//NOTE: this title may not equals model.title as Page Title maybe changed in editing history.
-			historyDiffMessage(model.spaceUname,model.currentTitle);
+			historyDiffMessage(model);
 			
 			functionBtnBar.loadHistoryFunc(model.permissions, model.currentTitle,model.pageVersion);
 			//history page can not update main.setPageTitle() and main.PageUid() 
 			main.setCurrentPageTitle(model.currentTitle);
 			//always show history tab if users viewing history
 			model.tabIndex = SharedConstants.TAB_TYPE_HISTORY;
+			
 		}else{
 			functionBtnBar.loadViewFunc(model);
 			if(model.pintop > 0){
@@ -426,14 +432,86 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 	//               inner class
 	//********************************************************************
 
-	private void historyDiffMessage(String spaceUname,String currentTitle) {
+	private void historyDiffMessage(final PageModel model) {
+		String spaceUname = model.spaceUname;
+		String currentTitle = model.currentTitle;
+		
 		message.cleanMessage();
-		HorizontalPanel msgPanel = new HorizontalPanel();
-		Hyperlink retCurrentVerBtn = new Hyperlink(Msg.consts.return_latest_version()
-				, GwtUtils.getSpacePageToken(spaceUname,currentTitle));
-		msgPanel.add(new Label(Msg.consts.view_history()));
-		msgPanel.add(retCurrentVerBtn);
-		message.warning(msgPanel,false);
+		
+		String id1 = HTMLPanel.createUniqueId();
+		String id2 = HTMLPanel.createUniqueId();
+		StringBuffer buf = new StringBuffer("<div class='historyAction'><div class='msg' id='").append(id1)
+				.append("'></div><div class='return' id='").append(id2).append("'></div>");
+		buf.append("<div class='action'>");
+		
+		String idp1 = null,idp2 = null,idp3 = null,idp4 = null,idn1 = null,idn2 = null,idn3 = null,idn4 = null;
+		if(model.nextHistoryItem != null){
+			idn1 = HTMLPanel.createUniqueId();
+			idn2 = HTMLPanel.createUniqueId();
+			idn3 = HTMLPanel.createUniqueId();
+			idn4 = HTMLPanel.createUniqueId();
+			
+			buf.append("<div class='round next'><div class='version' id='").append(idn1).append("'></div><div class='author' id='")
+			.append(idn2).append("'></div><div class='date' id='").append(idn3).append("'></div><div class='diff' id='").append(idn4).append("'></div></div>");
+			
+		}
+		buf.append("<div class='current'>").append(Msg.consts.revision()).append(" ").append(model.pageVersion).append("</div>");
+		if(model.prevHistoryItem != null){
+			idp1 = HTMLPanel.createUniqueId();
+			idp2 = HTMLPanel.createUniqueId();
+			idp3 = HTMLPanel.createUniqueId();
+			idp4 = HTMLPanel.createUniqueId();
+				
+			buf.append("<div class='round prev'><div class='version' id='").append(idp1).append("'></div><div class='author' id='")
+				.append(idp2).append("'></div><div class='date' id='").append(idp3).append("'></div><div class='diff' id='").append(idp4).append("'></div></div>");
+		}
+		buf.append("</div></div>");
+		HTMLPanel msgPanel = new HTMLPanel(buf.toString());
+		Hyperlink retCurrentVerBtn = new Hyperlink(Msg.consts.return_latest_version(), GwtUtils.getSpacePageToken(spaceUname,currentTitle));
+		msgPanel.add(new Label(Msg.consts.view_history()), id1);
+		msgPanel.add(retCurrentVerBtn, id2);
+		
+		if(model.prevHistoryItem != null){
+			historyRoundMsg(msgPanel, model.prevHistoryItem, model.pageVersion, idp1, idp2, idp3, idp4);
+		}
+		if(model.nextHistoryItem != null){
+			historyRoundMsg(msgPanel, model.nextHistoryItem, model.pageVersion, idn1, idn2, idn3, idn4);
+		}
+		
+		HorizontalPanel panel = new HorizontalPanel();
+		panel.add(msgPanel);
+		message.warning(panel,false);
+	}
+
+	private void historyRoundMsg(HTMLPanel msgPanel, final PageItemModel round, final int pageVersion, 
+			String idp1,String idp2, String idp3, String idp4) {
+		
+		String spaceUname = round.spaceUname;
+		Hyperlink preLink;
+		if(round.version == -1){
+			//latest page
+			preLink= new Hyperlink(Msg.consts.latest(), GwtUtils.getSpacePageToken(spaceUname, round.title));
+		}else{
+			preLink= new Hyperlink(Msg.consts.revision() + " " + round.version
+					,GwtUtils.buildToken(PageMain.TOKEN_HISTORY,spaceUname, String.valueOf(round.uid)));
+		}
+		
+		UserProfileLink modifier = new UserProfileLink(round.modifier, spaceUname, round.modifierUsername,round.modifierPortrait);
+		Label modifiedDate = new Label(GwtClientUtils.toDisplayDate(round.modifiedDate));
+		//do compare
+		ClickLink compareButton = new ClickLink(Msg.consts.compare());
+		compareButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				PageControllerAsync action = ControllerFactory.getPageController();
+				action.diff(round.version==-1?null:round.version, pageVersion, versionAsync);
+			}
+		});
+		
+		msgPanel.add(preLink,idp1);
+		msgPanel.add(modifier, idp2);
+		msgPanel.add(modifiedDate, idp3);
+		msgPanel.add(compareButton, idp4);
 	}
 
 	

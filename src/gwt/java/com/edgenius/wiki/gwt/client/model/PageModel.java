@@ -156,7 +156,7 @@ public class PageModel extends CaptchaCodeModel  implements CascadeObject<PageMo
 	
 	//only for client side comparable
 	private transient PageModel parent;
-
+	
 	public String editingUsername;
 	public String editingUserFullname;
 	public int editingTime;
@@ -164,6 +164,10 @@ public class PageModel extends CaptchaCodeModel  implements CascadeObject<PageMo
 
 	//link ext blog data
 	public Collection<BlogMeta> linkedBlogs;
+
+	//When display history, these two are previous and next history around current - if it has
+	public PageItemModel nextHistoryItem;
+	public PageItemModel prevHistoryItem;
 
 
 	//********************************************************************

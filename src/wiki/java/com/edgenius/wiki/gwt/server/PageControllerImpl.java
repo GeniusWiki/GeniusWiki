@@ -23,34 +23,25 @@
  */
 package com.edgenius.wiki.gwt.server;
 
-import static com.edgenius.wiki.gwt.server.PageUtil.COPY_ATTACHMENT_WITHOUT_DRAFT;
-import static com.edgenius.wiki.gwt.server.PageUtil.NOT_COPY_ATTACHMENT;
-
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.captcha.CaptchaServiceProxy;
 
-import com.edgenius.core.DataRoot;
 import com.edgenius.core.Global;
-import com.edgenius.core.Server;
 import com.edgenius.core.UserSetting;
 import com.edgenius.core.model.User;
 import com.edgenius.core.repository.FileNode;
 import com.edgenius.core.repository.RepositoryException;
 import com.edgenius.core.service.MessageService;
 import com.edgenius.core.util.AuditLogger;
-import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.PageTheme;
 import com.edgenius.wiki.Theme;
@@ -107,6 +98,9 @@ import com.edgenius.wiki.service.ThemeSaveException;
 import com.edgenius.wiki.service.ThemeService;
 import com.edgenius.wiki.service.VersionConflictException;
 import com.edgenius.wiki.util.WikiUtil;
+
+import static com.edgenius.wiki.gwt.server.PageUtil.COPY_ATTACHMENT_WITHOUT_DRAFT;
+import static com.edgenius.wiki.gwt.server.PageUtil.NOT_COPY_ATTACHMENT;
 
 /**
  * @author Dapeng.Ni
@@ -421,6 +415,25 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			if (page == null){
 				throw new PageException("Null return for page by uuid:" + history.getPageUuid() + " for history uid:" +historyUid);
 			}
+			
+			if(page.getVersion() != (history.getVersion()+1)){
+				History nextHistory = pageService.getHistoryByVersion(history.getPageUuid(), history.getVersion() + 1);
+				if(nextHistory != null){
+					model.nextHistoryItem = PageUtil.copyToPageItem(nextHistory);
+				}
+			}else{
+				//next is latest version
+				model.nextHistoryItem = PageUtil.copyToPageItem(page);
+				//a convention to tell current is latest version.
+				model.nextHistoryItem.version = -1;
+			}
+			if(history.getVersion() > 1){
+				History prevHistory = pageService.getHistoryByVersion(history.getPageUuid(), history.getVersion() - 1);
+				if(prevHistory != null){
+					model.prevHistoryItem = PageUtil.copyToPageItem(prevHistory);
+				}
+			}
+			
 			//don't allow user update "favorite, watch, attachment and tag" becuase these info does not bring current values back
 			//if allow edit, it has conflict. For example, history show tag always empty, but current page may contain some. If edit on
 			//history page, current ones will be replaced. 
