@@ -50,7 +50,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 
 import com.edgenius.core.util.WebUtil;
@@ -79,7 +78,7 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 	private SimpleDateFormat TIME_FORMAT = new  SimpleDateFormat("yyyy-MM-dd");
 	
 	private Resource mapResourcesRoot;
-	@Autowired private PageService pageService;
+	private PageService pageService;
 	
 	private SitemapMetadata metadata;
 
@@ -287,6 +286,10 @@ public class SitemapServiceImpl implements SitemapService, InitializingBean {
 	//********************************************************************
 	public void setMapResourcesRoot(Resource mapResourcesRoot) {
 		this.mapResourcesRoot = mapResourcesRoot;
+	}
+
+	public void setPageService(PageService pageService) {
+		this.pageService = pageService;
 	}
 
 

@@ -41,6 +41,7 @@ import com.edgenius.test.TestDataConstants;
 @ContextConfiguration(locations={"/testAplicationContext-services.xml"
 		,"/com/edgenius/core/applicationContext-core-orm.xml"
 		,"/com/edgenius/wiki/applicationContext-security.xml"
+		,"/com/edgenius/wiki/applicationContext-orm.xml"
 		,"/com/edgenius/wiki/applicationContext-service.xml"
 		,"/com/edgenius/core/applicationContext-cache.xml"
 		,"/com/edgenius/core/applicationContext-core-service.xml"
