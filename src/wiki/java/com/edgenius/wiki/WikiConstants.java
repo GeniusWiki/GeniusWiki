@@ -76,7 +76,8 @@ public class WikiConstants {
 	public static final String ATTR_CONTENT = "content";
 	public static final String ATTR_PAGINATION_INFO = "pagination";
 	public static final String ATTR_ADMIN_URL = "adminURL";
-
+	public static final String ATTR_APPROVED = "approved";
+	
     public static final String ATTR_SIGNUP_SUPRESSED = "signupSuppressed";
 	public static final String ATTR_SUPPRESS = "ATTR_SUPPRESS";
 	
@@ -178,6 +179,7 @@ public class WikiConstants {
 	public static final int AUTO_FIX_TITLE_CHANGE_LINK= 1<<1;
 
 	public static final String MACRO_NAME_KEY = "$MACRO_NAME$";
+
 
 	public static int offlineDBVersion = 1;
 	public static int offlineMainDBVersion = 1;

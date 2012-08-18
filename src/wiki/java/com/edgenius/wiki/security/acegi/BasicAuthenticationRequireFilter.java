@@ -49,7 +49,7 @@ import com.edgenius.core.service.UserReadingService;
  * 
  * @author Dapeng.Ni
  */
-public class BasicAuthenticationReqireFilter extends OncePerRequestFilter{
+public class BasicAuthenticationRequireFilter extends OncePerRequestFilter{
 	protected UserReadingService userReadingService;
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

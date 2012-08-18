@@ -61,6 +61,10 @@ public class LoginDialog extends DialogBox implements UserCreateListener{
 		hidebox();
 		//GOTO home page or UserModel url from server side  
 		String url = model.getRedirUrl() == null?SharedConstants.URL_HOME:model.getRedirUrl();
-		GwtClientUtils.reload(url);
+		if(model.isForceRedirerct()){
+			GwtClientUtils.redirect(url);
+		}else{
+			GwtClientUtils.reload(url);
+		}
 	}
 }

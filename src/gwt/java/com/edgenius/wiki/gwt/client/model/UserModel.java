@@ -50,6 +50,8 @@ public class UserModel extends CaptchaCodeModel{
 	private boolean disable;
 	private String portrait;
 	private String redirUrl;
+	//If true, it will use  GwtClient.redirect() rather than GwtClient.reload();
+	private boolean forceRedirerct;
 	//value combination from SharedConstants.SUPPRESS_*
 	private int suppress;
 	
@@ -238,5 +240,11 @@ public class UserModel extends CaptchaCodeModel{
 	}
 	public void setSuppress(int suppress) {
 		this.suppress = suppress;
+	}
+	public boolean isForceRedirerct() {
+		return forceRedirerct;
+	}
+	public void setForceRedirerct(boolean forceRedirerct) {
+		this.forceRedirerct = forceRedirerct;
 	}
 }

@@ -55,7 +55,6 @@ import com.edgenius.wiki.service.SecurityDummy;
 import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.service.WidgetService;
 import com.edgenius.wiki.util.WikiUtil;
-import com.edgenius.wiki.widget.SpaceWidget;
 import com.edgenius.wiki.widget.WidgetException;
 import com.edgenius.wiki.widget.WidgetTemplate;
 
@@ -318,7 +317,7 @@ public class PortalControllerImpl extends GWTSpringController implements PortalC
 			//reload user from Database rather than Cache. 
             viewer = userReadingService.getUser(viewer.getUid());
             UserSetting setting = viewer.getSetting();
-            setting.addWidgetToHomelayout(widgetType, widgetKey);
+            setting.addWidgetToHomelayout(widgetType, widgetKey, instance.getHomeLayout());
             settingService.saveOrUpdateUserSetting(viewer, setting);
 		}
 		

@@ -40,7 +40,7 @@
 	<!-- ================================================================================================================================================= -->
 	<!--  HTTP Basic Authentication -->
 	<!-- If some resource need mandatory Basic Authentication login, use this filter to open Basic Authentication dialog
-	<bean id="basicAuthenticationReqireFilter" class="com.edgenius.wiki.security.spring.BasicAuthenticationReqireFilter">
+	<bean id="basicAuthenticationRequireFilter" class="com.edgenius.wiki.security.spring.BasicAuthenticationRequireFilter">
 		<property name="userService" ref="userService"/>
 	</bean>
 	 -->
@@ -72,7 +72,7 @@
 	  <property name="errorPage" value="/captcha.jsp"/>
 	</bean>
 		 
-	<bean id="captchaReqiredFilterService" class="com.edgenius.wiki.security.service.CaptchaReqiredFilterServiceImpl" >
+	<bean id="captchaRequiredFilterService" class="com.edgenius.wiki.security.service.CaptchaRequiredFilterServiceImpl" >
 	   <property name="loginTimesCache" ref="loginTimesCache" />
 	   <!--  unit: second , now it is 30 minutes-->
 	   <property name="retryPeriodThreshold" value="1800" />
@@ -120,7 +120,7 @@
 		<property name="redirectStrategy" ref="redirectStrategy"/>
 	</bean>
 	<bean id="redirectStrategy" class="com.edgenius.wiki.security.acegi.AuthenticationRedirectStrategy">
-		<property name="captchaReqiredFilterService" ref="captchaReqiredFilterService"/>
+		<property name="captchaRequiredFilterService" ref="captchaRequiredFilterService"/>
 	</bean>
 	<bean id="authenticationProcessingFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
   		<property name="filterProcessesUrl" value="/j_spring_security_check"/>

@@ -67,7 +67,7 @@ public class WsDashboardServiceImpl implements WsDashboardService {
 				msg.append("User ["+username+"] does not exist.\n");
 			}else{
     			UserSetting setting = user.getSetting();
-                setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceKey);
+                setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceKey, settingService.getInstanceSetting().getHomeLayout());
     			settingService.saveOrUpdateUserSetting(user, setting);
     			log.info("User [{}] dashboard add space {}.", username, spaceKey);
 			}

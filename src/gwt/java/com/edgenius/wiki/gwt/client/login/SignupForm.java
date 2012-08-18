@@ -123,13 +123,15 @@ public class SignupForm extends SimplePanel implements SubmitHandler, AsyncCallb
 		//don't user presuccessCheck: need not check session expire
 //		if(!GwtClientUtils.preSuccessCheck(model,message)){
 		if(ErrorCode.hasError(model)){
-			if(message != null)
+			if(message != null){
 				message.error(ErrorCode.getMessage(model.errorCode, model.errorMsg));
+			}
 			return;
 		}
 		
-		if(dialog != null)
+		if(dialog != null){
 			dialog.hidebox();
+		}
 		
 		for(Iterator<UserCreateListener> iter = listener.iterator();iter.hasNext();){
 			iter.next().userCreated(model);

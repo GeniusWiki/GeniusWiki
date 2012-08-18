@@ -26,7 +26,7 @@ package com.edgenius.wiki.security.service;
 /**
  * @author Dapeng.Ni
  */
-public interface CaptchaReqiredFilterService {
+public interface CaptchaRequiredFilterService {
 	boolean reqiredCaptche(String username);
 
 	void clean(String username);

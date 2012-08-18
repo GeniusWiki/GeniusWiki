@@ -5,7 +5,7 @@ You friend ${user.fullname} invited you join his/her space ${space.name}. You ar
 Your friends's message:
 ${inviteMessage}
 
-<#if signupSuppressed>
+<#if signupSuppressed??>
 The system sign up is disabled currently. Your administrator will create an account as soon as possible. Please wait for another email for your login information then accept this invitation.
 <#else>
 You can access this space following this link ${pagelink} if you already have proper permission.

@@ -34,7 +34,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.edgenius.core.Constants;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
-import com.edgenius.wiki.security.service.CaptchaReqiredFilterService;
+import com.edgenius.wiki.security.service.CaptchaRequiredFilterService;
 
 /**
  * Don't realy redirect url, just send url as string for ajax usage.
@@ -45,7 +45,7 @@ public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 
 	private static final String EXTERNAL_LOGIN_FORM = "external_login_form";
 	
-	private CaptchaReqiredFilterService captchaReqiredFilterService;
+	private CaptchaRequiredFilterService captchaRequiredFilterService;
 	
 	@Override
 	public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
@@ -60,11 +60,11 @@ public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 		String username = request.getParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
 		if(url.indexOf(defaultFailureUrl) == -1){
 			//login success
-			captchaReqiredFilterService.clean(username);
+			captchaRequiredFilterService.clean(username);
 			response.getWriter().write(url);
 		}else{
 			//login error, re-display user name
-			boolean require = captchaReqiredFilterService.reqiredCaptche(username);
+			boolean require = captchaRequiredFilterService.reqiredCaptche(username);
 			response.getOutputStream().write((SharedConstants.FORM_RET_HEADER+SharedConstants.FORM_RET_HEADER_ERROR_IN_USERPASS+(require?1:0)+username).getBytes(Constants.UTF8));
 		}
 	}
@@ -72,8 +72,8 @@ public class AuthenticationRedirectStrategy extends DefaultRedirectStrategy {
 	//********************************************************************
 	//               set /get
 	//********************************************************************
-	public void setCaptchaReqiredFilterService(CaptchaReqiredFilterService captchaReqiredFilterService) {
-		this.captchaReqiredFilterService = captchaReqiredFilterService;
+	public void setCaptchaRequiredFilterService(CaptchaRequiredFilterService captchaRequiredFilterService) {
+		this.captchaRequiredFilterService = captchaRequiredFilterService;
 	}
 
 }

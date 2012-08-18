@@ -124,12 +124,18 @@ public class UserSetting implements Serializable{
 	 * Add widget to portal first position.
 	 * @param widgetType
 	 * @param widgetKey
+	 * @param only if user home layout is null, it will initials with this default values first, then add new widget to home layout.
 	 */
-	public void addWidgetToHomelayout(String widgetType, String widgetKey){
+	public void addWidgetToHomelayout(String widgetType, String widgetKey, List<String> instanceDefaultLayout){
 	    String widget = widgetType + Constants.PORTLET_SEP + widgetKey 
                 + Constants.PORTLET_SEP + 0 + Constants.PORTLET_SEP  + 0;
 	    
-	    if(homeLayout == null) homeLayout = new ArrayList<String>();
+	    if(homeLayout == null) {
+	    	homeLayout = new ArrayList<String>();
+	    	if(instanceDefaultLayout != null){
+	    		homeLayout.addAll(instanceDefaultLayout);
+	    	}
+	    }
 	    
 	    homeLayout.add(widget);
 	}

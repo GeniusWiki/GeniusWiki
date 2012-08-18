@@ -34,9 +34,9 @@ public class LoginAction extends BaseAction{
 	
 	public String execute(){
 		//if true, then display sign-up page, otherwise, login page
-		if("true".equalsIgnoreCase(register))
+		if("true".equalsIgnoreCase(register)){
 			getRequest().setAttribute("register", true);
-		
+		}
 		return SUCCESS;
 	}
 	public String getRedir() {

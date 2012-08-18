@@ -1079,7 +1079,7 @@ a:visited {
 
 .diff-text .diff-deletion {
 	color: red;
-	text-decoration: LINE-THROUGH
+	text-decoration: LINE-THROUGH;
 }
 
 .diff-text .diff-nextprev {

@@ -291,7 +291,7 @@ public class SharedConstants {
 	public static final String ROLE_ANONYMOUS = "ROLE_SYS_ANONYMOUS";
 	public static final String ROLE_REGISTERED = "ROLE_SYS_USERS";
 	//this value is as prefix of space group desc and display name...
-	public static final String SPACE_ROLE_DEFAULT_PREFIX = "Group of Space " ;
+	public static final String SPACE_ROLE_DEFAULT_PREFIX = "Group on Space " ;
 	
 	public static final String TABLE_BORDER_DEFAULT_WIDHT= "1";
 	

@@ -215,7 +215,7 @@ public class NutServlet extends BaseServlet{
 		try{
 			User user = WikiUtil.getUser();
 			UserSetting setting = user.getSetting();
-			setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceUname);
+			setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceUname, getSettingService().getInstanceSetting().getHomeLayout());
 			
 			getSettingService().saveOrUpdateUserSetting(user, setting);
 			log.info("User [{}] dashboard add space {}.", user.getUsername(), spaceUname);

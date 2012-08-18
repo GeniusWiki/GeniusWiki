@@ -28,7 +28,7 @@
 					<c:param name="s">${s}</c:param>
 					<c:param name="i">${i}</c:param>
 				</c:url></c:set>
-				<p><a href="${actUrl}"><img src="<c:url value="/static/images/tick.png"/>"/> Login or sign-up to accept</a></p>
+				<p><a href="${actUrl}"><img src="<c:url value="/static/images/tick.png"/>"/> Login <c:if test="${allowsignup}">or sign-up to accept</c:if></a></p>
 			</div>
 		</c:when>
 		<c:when test="${btnStyle=='correctUser'}">
@@ -42,7 +42,7 @@
 		</c:when>
 		<c:when test="${btnStyle=='wrongUser'}">
 			<div class="buttonsbar">
-					<p><a href="<c:url value="/j_spring_security_logout"/>"><img src="<c:url value="/static/images/tick.png"/>"/> Logoff then signup with correct email</a></p> 
+					<p><a href="<c:url value="/j_spring_security_logout"/>"><img src="<c:url value="/static/images/tick.png"/>"/> Logoff then sign-up with correct email</a></p> 
 			</div>
 	
 		</c:when>

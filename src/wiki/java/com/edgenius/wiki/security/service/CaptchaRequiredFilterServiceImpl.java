@@ -31,7 +31,7 @@ import net.sf.ehcache.Element;
 /**
  * @author Dapeng.Ni
  */
-public class CaptchaReqiredFilterServiceImpl implements CaptchaReqiredFilterService{
+public class CaptchaRequiredFilterServiceImpl implements CaptchaRequiredFilterService{
 
 	private Cache loginTimesCache;
 	//unit:second

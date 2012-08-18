@@ -45,6 +45,12 @@
     	<action name="searchengine" class="sitemapAction">
         </action>
         
+    	<action name="signupwaitapproval">
+    		<result name="success" type="dispatcher">
+			  <param name="location">/WEB-INF/pages/signupwaitapproval.jsp</param>
+			</result>
+        </action>
+        
     	<action name="invite" class="inviteAction"> 
              <result name="friendship">/WEB-INF/pages/friendship.jsp</result> 
              <result name="invitation">/WEB-INF/pages/invitation.jsp</result> 

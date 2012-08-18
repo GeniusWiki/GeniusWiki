@@ -69,6 +69,7 @@ import com.edgenius.wiki.security.service.SecurityService;
 import com.edgenius.wiki.service.FriendService;
 import com.edgenius.wiki.service.InvitationException;
 import com.edgenius.wiki.service.NotificationService;
+import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.service.SpaceService;
 import com.edgenius.wiki.util.WikiUtil;
 import com.edgenius.wiki.widget.SpaceWidget;
@@ -93,6 +94,7 @@ public class FriendServiceImpl implements FriendService {
 	private SpaceService spaceService;
 	private MessageService messageService;
 	private MailService mailService;
+	private SettingService settingService;
 	
 	public void refreshSpaceGroupUsers(Resource resource) {
 		if(resource == null || resource.getType() != RESOURCE_TYPES.SPACE){
@@ -394,9 +396,12 @@ public class FriendServiceImpl implements FriendService {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         //               Step 4
 		//if user dashboard does not have this space yet, add it.
+		//refresh user again
+		acceptor = userReadingService.getUser(acceptor.getUid());
 		UserSetting setting = acceptor.getSetting();
 		if(!setting.hasWidgetAtHomelayout(SpaceWidget.class.getName(), spaceUname)){
-		    setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceUname);
+		    setting.addWidgetToHomelayout(SpaceWidget.class.getName(), spaceUname, settingService.getInstanceSetting().getHomeLayout());
+		    settingService.saveOrUpdateUserSetting(acceptor, setting);
 		}
 	}
 
@@ -410,7 +415,8 @@ public class FriendServiceImpl implements FriendService {
 		}
 		List<String> validEmails = new ArrayList<String>();
 		for (String email : emails) {
-			if (email.trim().matches("^[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$")) {
+			email = email.trim();
+			if (email.matches("^[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$")) {
 				validEmails.add(email);
 			}else{
 				log.warn("Invalid email in friend invite email group, this email will be ignore:" + email);
@@ -450,6 +456,8 @@ public class FriendServiceImpl implements FriendService {
     			    if(user == null){
     			        //only unregistered user to be told system is not allow sign-up
     			        map.put(WikiConstants.ATTR_SIGNUP_SUPRESSED, true);
+    			    }else{
+    			    	map.put(WikiConstants.ATTR_SIGNUP_SUPRESSED, false);
     			    }
 			    }else{
 			        map.put(WikiConstants.ATTR_SIGNUP_SUPRESSED, false);
@@ -466,7 +474,7 @@ public class FriendServiceImpl implements FriendService {
 				log.error("Failed send email to invite " + email,e);
 			}
 		}
-		invite.setToEmailGroup(validGroup.toString());
+		invite.setToEmailGroup(StringUtils.join(validGroup,','));
 		invitationDAO.saveOrUpdate(invite);
 		
 		//if system public signup is disabled, then here need check if that invited users are register users, if not, here need send email to notice system admin to add those users.
@@ -546,6 +554,9 @@ public class FriendServiceImpl implements FriendService {
 	
 	public void setMailService(MailService mailService) {
 		this.mailService = mailService;
+	}
+	public void setSettingService(SettingService settingService) {
+		this.settingService = settingService;
 	}
 
 }

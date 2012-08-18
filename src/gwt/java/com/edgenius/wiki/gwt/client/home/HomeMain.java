@@ -70,7 +70,7 @@ public class HomeMain extends MessagePanel implements RenderContentListener, Asy
 	}
 
 	public void login(UserModel user) {
-		Log.info("Home main get login message : "  + user);
+		Log.info("Home main get login user : "  + user);
 		render.login(user);
 	}
 

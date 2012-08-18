@@ -147,7 +147,7 @@ public class UserAdminAction  extends BaseAction{
 		user.setEnabled(enable);
 		
 		//this will update user cache as well
-		userService.updateUser(user);
+		userService.updateUserWithIndex(user);
 		
 		//Retreive UserSetting.requireSignupApproval, if it is true, then send out email to tell user whose account is enabled.
 		UserSetting setting = user.getSetting();
@@ -158,6 +158,7 @@ public class UserAdminAction  extends BaseAction{
 		        msg.setTo(user.getContact().getEmail());
 		        Map model = new HashMap();
 		        model.put(WikiConstants.ATTR_USER, user);
+		        model.put(WikiConstants.ATTR_APPROVED, true);
 		        model.put(WikiConstants.ATTR_PAGE_LINK, WebUtil.getHostAppURL());
 		        //send sign up success email
                 mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_NOTIFICATION, model);

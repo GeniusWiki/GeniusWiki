@@ -110,7 +110,7 @@
         diskExpiryThreadIntervalSeconds="120"/>		   
 		           
 	<!--  for login retry cache, it saved login time, period per user. Useful in captcha reqired service -->
-	<!-- Key:userName Value:LoginRetryObject(last time, retry count),  Owner:CaptchaReqiredFilterServiceImpl -->
+	<!-- Key:userName Value:LoginRetryObject(last time, retry count),  Owner:CaptchaRequiredFilterServiceImpl -->
 	<cache name="loginTimesCache"
 		   maxElementsInMemory="2000"
         eternal="false"

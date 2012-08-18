@@ -42,6 +42,10 @@ public class UserIndexInterceptor extends IndexInterceptor {
 			user = (User) retValue;
 		}else if(StringUtils.equals(method.getName(), UserService.updateUserWithIndex)){
 			user = (User) retValue;
+			if(!user.isEnabled()){
+				//if user is disabled. remove it from index
+				removedUsername =  user.getUsername();
+			}
 		}else if(StringUtils.equals(method.getName(), UserService.removeUser)){
 			user = (User) retValue;
 			removedUsername =  user.getUsername();

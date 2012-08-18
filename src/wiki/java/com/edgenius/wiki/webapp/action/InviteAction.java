@@ -26,9 +26,9 @@ package com.edgenius.wiki.webapp.action;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.web.PortResolver;
-import org.springframework.security.web.PortResolverImpl;
 
+import com.edgenius.core.Constants.SUPPRESS;
+import com.edgenius.core.Global;
 import com.edgenius.core.SecurityValues.RESOURCE_TYPES;
 import com.edgenius.core.model.User;
 import com.edgenius.core.service.MessageService;
@@ -69,10 +69,10 @@ public class InviteAction extends BaseAction{
 	private MessageService messageService;
 	private SecurityService securityService;
 	
-	private PortResolver portResolver = new PortResolverImpl();
 	private SpaceService spaceService;
 	
 	public String execute(){
+		getRequest().setAttribute("allowsignup", !Global.hasSuppress(SUPPRESS.SIGNUP));
 		
 		Space space = spaceService.getSpaceByUname(s);
 		if(space == null){
@@ -118,7 +118,9 @@ public class InviteAction extends BaseAction{
 	 * @return
 	 */
 	public String accept() {
+		
 		try {
+			getRequest().setAttribute("allowsignup", !Global.hasSuppress(SUPPRESS.SIGNUP));
 			
 			Space space = spaceService.getSpaceByUname(s);
 			if(space == null){

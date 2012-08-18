@@ -251,7 +251,9 @@ public class SecurityControllerImpl  extends GWTSpringController implements Secu
 	}
 
 
-
+	/**
+	 * New user Sign up 
+	 */
 	public UserModel createUser(UserModel model, boolean login) {
 		if(!WikiUtil.captchaValid(captchaService, model))
 			return null;
@@ -313,6 +315,11 @@ public class SecurityControllerImpl  extends GWTSpringController implements Secu
 		                
 				        mailService.sendPlainMail(msg, WikiConstants.MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_USER, map);
 				        mailService.sendPlainToSystemAdmins(WikiConstants.MAIL_TEMPL_SIGNUP_WAIT_APPROVAL_ADMIN, map);
+				        
+				        //redirect - if user signup from popup dialog, this "force" will cause page redirect to approval page, 
+				        //otherwise, it only try to refresh current page URL by GwtClientUtil.reload();
+				        model.setForceRedirerct(true);
+				        model.setRedirUrl("signupwaitapproval.do");
 				    }
 				}else{
 					//this is admin add new user, send user name and password as well.

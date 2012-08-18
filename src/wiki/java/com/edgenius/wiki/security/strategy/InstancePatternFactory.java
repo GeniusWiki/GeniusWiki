@@ -23,11 +23,6 @@
  */
 package com.edgenius.wiki.security.strategy;
 
-import static com.edgenius.wiki.service.BackupService.backup;
-import static com.edgenius.wiki.service.BackupService.restore;
-import static com.edgenius.wiki.service.SecurityDummy.checkInstanceAdmin;
-import static com.edgenius.wiki.service.SecurityDummy.checkInstanceRead;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -44,6 +39,11 @@ import com.edgenius.wiki.service.BackupService;
 import com.edgenius.wiki.service.SecurityDummy;
 import com.edgenius.wiki.service.SpaceService;
 import com.edgenius.wiki.service.impl.SpaceServiceImpl;
+
+import static com.edgenius.wiki.service.BackupService.backup;
+import static com.edgenius.wiki.service.BackupService.restore;
+import static com.edgenius.wiki.service.SecurityDummy.checkInstanceAdmin;
+import static com.edgenius.wiki.service.SecurityDummy.checkInstanceRead;
 /**
  * NOTE: All url definition must be convert to lowercase!!! 
  * @author Dapeng.Ni
@@ -63,6 +63,7 @@ public class InstancePatternFactory extends AbstractPatternFactory {
 	static final String[] DEFAULT_URL_POLICIES = new String[]{
 		"/status*",
 		"/signin*",
+		"/signupwaitapproval.do*",
 		"/**/invite.do*",
 		"/**/login.do*",
 		//current allow all user signup, in future, it should be a configurable choice

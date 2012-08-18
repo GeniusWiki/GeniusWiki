@@ -265,7 +265,10 @@ public class Global implements Serializable{
 			for (String supName : supStrs) {
 				try {
 					SUPPRESS sup = SUPPRESS.valueOf(supName.toUpperCase());
-					Global.suppress |= sup.getValue(); 
+					Global.suppress |= sup.getValue();
+					
+					//need further confirm ???
+					Global.setCurrentSuppress(Global.suppress);
 				} catch (Exception e) {
 					//skip invalid suppress
 				}
@@ -338,7 +341,7 @@ public class Global implements Serializable{
 	}
 
 	public static boolean hasSuppress(SUPPRESS hasSupress) {
-	    return (Global.getCurrentSuppress() & hasSupress.getValue()) > 0;
+	    return (Global.suppress & hasSupress.getValue()) > 0;
     }
 	public static void setCurrentSuppress(Integer suppr) {
 		Global.currentSuppress.set(suppr);

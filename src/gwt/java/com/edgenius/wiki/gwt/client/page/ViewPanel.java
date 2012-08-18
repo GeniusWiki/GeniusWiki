@@ -472,10 +472,10 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		msgPanel.add(retCurrentVerBtn, id2);
 		
 		if(model.prevHistoryItem != null){
-			historyRoundMsg(msgPanel, model.prevHistoryItem, model.pageVersion, idp1, idp2, idp3, idp4);
+			historyRoundMsg(msgPanel, model.prevHistoryItem, model.uid, idp1, idp2, idp3, idp4);
 		}
 		if(model.nextHistoryItem != null){
-			historyRoundMsg(msgPanel, model.nextHistoryItem, model.pageVersion, idn1, idn2, idn3, idn4);
+			historyRoundMsg(msgPanel, model.nextHistoryItem, model.uid, idn1, idn2, idn3, idn4);
 		}
 		
 		HorizontalPanel panel = new HorizontalPanel();
@@ -483,7 +483,7 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		message.warning(panel,false);
 	}
 
-	private void historyRoundMsg(HTMLPanel msgPanel, final PageItemModel round, final int pageVersion, 
+	private void historyRoundMsg(HTMLPanel msgPanel, final PageItemModel round, final int pageUid, 
 			String idp1,String idp2, String idp3, String idp4) {
 		
 		String spaceUname = round.spaceUname;
@@ -504,7 +504,7 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 			@Override
 			public void onClick(ClickEvent event) {
 				PageControllerAsync action = ControllerFactory.getPageController();
-				action.diff(round.version==-1?null:round.version, pageVersion, versionAsync);
+				action.diff(round.version==-1?null:round.uid, pageUid, versionAsync);
 			}
 		});
 		

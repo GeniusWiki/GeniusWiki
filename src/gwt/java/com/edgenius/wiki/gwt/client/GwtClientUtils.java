@@ -167,6 +167,9 @@ public class GwtClientUtils {
 	 */
 	public static void reload(String url) {
 		if(BaseEntryPoint.I != null){
+			//try to use ajax request to reload the page if the page is already initialised:
+			//This is NOT true if current page is in Login/Signup page(not that pop dialog) as LoginEntryPoint is not extend from BaseEntryPoint
+			//However, if it is normal page, then here just retry parse token and reload with ajax request.
 			BaseEntryPoint.I.reload();
 		}else{
 			//some other URL, just send redirect, this may won't cause browser refresh page, if the given URL equals current URL.

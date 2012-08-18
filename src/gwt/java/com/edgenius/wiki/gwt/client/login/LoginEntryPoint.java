@@ -83,8 +83,11 @@ public class LoginEntryPoint  extends AbstractEntryPoint implements UserCreateLi
 	public void userCreated(UserModel model) {
 		//GOTO home page or UserModel url from server side
 		String url = model.getRedirUrl() == null?SharedConstants.URL_HOME:model.getRedirUrl();
-		GwtClientUtils.reload(url);
-		
+		if(model.isForceRedirerct()){
+			GwtClientUtils.redirect(url);
+		}else{
+			GwtClientUtils.reload(url);
+		}
 	}
 
 	public void onPreviewNativeEvent(NativePreviewEvent event){
