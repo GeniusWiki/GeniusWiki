@@ -194,7 +194,7 @@ public class SpaceServiceImpl implements SpaceService {
 
 			// create a new role for new space
 			Role role = new Role();
-			role.setDescription(SharedConstants.SPACE_ROLE_DEFAULT_PREFIX + space.getUnixName());
+			role.setDescription(""); //don't put any desc - so not look weird in AddGroup panel, which combine display name and desc.
 			role.setDisplayName(SharedConstants.SPACE_ROLE_DEFAULT_PREFIX +  space.getUnixName());
 			role.setName(Role.SPACE_ROLE_PREFIX + space.getUnixName());
 			role.setType(Role.TYPE_SPACE);
