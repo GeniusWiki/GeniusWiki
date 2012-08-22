@@ -89,13 +89,13 @@ public class StatusServlet extends BaseServlet {
 					jmsTemplate = getJmsTemplate();
 					notifyQueue = getJmsQueue();
 					
-					uuid = UUID.randomUUID().toString();
-					NotifyMQObject message = new NotifyMQObject(NotifyMQObject.TYPE_SYSTEM_STATUS_CHECK, uuid);
-					jmsTemplate.convertAndSend(notifyQueue, message);
-					
 					//wait JMS call back this servlet
 					jmsAckLocker.lock();
 					try{
+						uuid = UUID.randomUUID().toString();
+						NotifyMQObject message = new NotifyMQObject(NotifyMQObject.TYPE_SYSTEM_STATUS_CHECK, uuid);
+						jmsTemplate.convertAndSend(notifyQueue, message);
+						
 						boolean ack = jmsAckCondition.await(10, TimeUnit.SECONDS);
 						if(!ack){
 							running = "JMS is not response in 10 seconds!";
@@ -105,8 +105,8 @@ public class StatusServlet extends BaseServlet {
 						jmsAckLocker.unlock();
 					}
 				}else{
-					log.warn("Last status check thread is completed yet, this request is ignored");
-					running = "Last status check thread is completed yet, this request is ignored";
+					log.warn("Last status check thread is not completed yet, this request is ignored");
+					running = "Last status check thread is not completed yet, this request is ignored";
 				}
 			} catch (Exception e) {
 				log.error("System checking failed", e);
