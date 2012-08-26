@@ -35,9 +35,10 @@ import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 public class PageModel extends CaptchaCodeModel  implements CascadeObject<PageModel>{
 	private static final long serialVersionUID = -8875837170061514031L;
 
-	//At moment, oly Offline model use this field for bring uid to PageItemModel as it need for getting history, draft by UID 
-	//it is uid of table record, please note, it is not recommend use it to read page  except you know what exactly type
-	//as History,Draft,Page, Offline pages may use same uid.
+	// please note, it is not recommend use it to read page  except you know what exactly type
+	// as History,Draft,Page, Offline pages may use same uid.
+	//-- Offline model use this field for bring uid to PageItemModel as it need for getting history, draft by UID as it is uid of table record. 
+	//-- Now, PageUtil.copyPageToModel() also fill this field - in view page history, this field is used to for comparison link as history Uid
 	public int uid;
 
 	//********************************************************************

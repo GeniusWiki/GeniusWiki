@@ -472,10 +472,10 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		msgPanel.add(retCurrentVerBtn, id2);
 		
 		if(model.prevHistoryItem != null){
-			historyRoundMsg(msgPanel, model.prevHistoryItem, model.uid, idp1, idp2, idp3, idp4);
+			historyNextPrevMsg(msgPanel, model.prevHistoryItem, model.uid, idp1, idp2, idp3, idp4);
 		}
 		if(model.nextHistoryItem != null){
-			historyRoundMsg(msgPanel, model.nextHistoryItem, model.uid, idn1, idn2, idn3, idn4);
+			historyNextPrevMsg(msgPanel, model.nextHistoryItem, model.uid, idn1, idn2, idn3, idn4);
 		}
 		
 		HorizontalPanel panel = new HorizontalPanel();
@@ -483,28 +483,28 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		message.warning(panel,false);
 	}
 
-	private void historyRoundMsg(HTMLPanel msgPanel, final PageItemModel round, final int pageUid, 
+	private void historyNextPrevMsg(HTMLPanel msgPanel, final PageItemModel history, final int pageUid, 
 			String idp1,String idp2, String idp3, String idp4) {
 		
-		String spaceUname = round.spaceUname;
+		String spaceUname = history.spaceUname;
 		Hyperlink preLink;
-		if(round.version == -1){
+		if(history.version == -1){
 			//latest page
-			preLink= new Hyperlink(Msg.consts.latest(), GwtUtils.getSpacePageToken(spaceUname, round.title));
+			preLink= new Hyperlink(Msg.consts.latest(), GwtUtils.getSpacePageToken(spaceUname, history.title));
 		}else{
-			preLink= new Hyperlink(Msg.consts.revision() + " " + round.version
-					,GwtUtils.buildToken(PageMain.TOKEN_HISTORY,spaceUname, String.valueOf(round.uid)));
+			preLink= new Hyperlink(Msg.consts.revision() + " " + history.version
+					,GwtUtils.buildToken(PageMain.TOKEN_HISTORY,spaceUname, String.valueOf(history.uid)));
 		}
 		
-		UserProfileLink modifier = new UserProfileLink(round.modifier, spaceUname, round.modifierUsername,round.modifierPortrait);
-		Label modifiedDate = new Label(GwtClientUtils.toDisplayDate(round.modifiedDate));
+		UserProfileLink modifier = new UserProfileLink(history.modifier, spaceUname, history.modifierUsername,history.modifierPortrait);
+		Label modifiedDate = new Label(GwtClientUtils.toDisplayDate(history.modifiedDate));
 		//do compare
 		ClickLink compareButton = new ClickLink(Msg.consts.compare());
 		compareButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				PageControllerAsync action = ControllerFactory.getPageController();
-				action.diff(round.version==-1?null:round.uid, pageUid, versionAsync);
+				action.diff(history.version==-1?null:history.uid, pageUid, versionAsync);
 			}
 		});
 		

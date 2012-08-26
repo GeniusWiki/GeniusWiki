@@ -90,6 +90,7 @@ public class PageUtil {
 		}
 		value.pageUuid = page.getPageUuid();
 		value.title = page.getTitle();
+		value.uid = page.getUid();
 		
 		//so far, getPageHistory() will return null for space field
 		Space space = page.getSpace();
