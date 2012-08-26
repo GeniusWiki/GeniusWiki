@@ -109,6 +109,7 @@ public class StatusServlet extends BaseServlet {
 					running = "Last status check thread is not completed yet, this request is ignored";
 				}
 			} catch (Exception e) {
+				uuid = null;
 				log.error("System checking failed", e);
 				running = "Exception on " + e.getMessage();
 			}
