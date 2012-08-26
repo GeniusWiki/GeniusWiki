@@ -752,7 +752,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		model.type = DiffListModel.FLAT_TYPE;
 		ArrayList<DiffModel> diffList = new ArrayList<DiffModel>();
 		try {
-			log.info("Version comparing(pageUid:pageUid, null is current): " + uid1 + " vs " + uid2);
+			log.info("Version comparing(pageUid:pageUid, -1 is current): " + uid1 + " vs " + uid2);
 			String diffText = diffService.diffToHtml(uid1, uid2, true);
 			DiffModel dm = new DiffModel(DiffModel.FLAT_HTML, diffText);
 			diffList.add(dm);
@@ -761,10 +761,10 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			log.error("Conflict diff exception:" , e);
 			model.errorCode = ErrorCode.DIFF_FAILED;
 		}
-		if(uid1 != null){
+		if(uid1 != SharedConstants.CURRENT){
 			History p1 = pageService.getHistoryObject(uid1);
 			if(p1 != null){
-				model.ver1 = uid1 == null?0:(p1.getVersion());
+				model.ver1 = uid1 == SharedConstants.CURRENT?0:(p1.getVersion());
 			}else{
 				//don't put model.errorCode, as it is not serious issue, just keep version number as -1, and let client side handle it
 				log.error("Conflict failed get version number on page UID {}", uid1);
@@ -773,10 +773,10 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			//current version
 			model.ver1 = 0;
 		}
-		if(uid2 != null){
+		if(uid2 != SharedConstants.CURRENT){
 			History p2 = pageService.getHistoryObject(uid2);
 			if(p2 != null){
-				model.ver2 = uid2 == null?0:(p2.getVersion());
+				model.ver2 = uid2 == SharedConstants.CURRENT?0:(p2.getVersion());
 			}else{
 				//don't put model.errorCode, as it is not serious issue, just keep version number as -1, and let client side handle it
 				log.error("Conflict failed get version numberon page UID {}", uid1);
