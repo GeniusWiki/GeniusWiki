@@ -31,12 +31,14 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class DeltaObject implements Serializable{
+    //Types
 	public static final int NOCHANGE = 0;
 	public static final int ADD = 1;
 	public static final int DEL = 2;
 	
-	public int type;
-	public String content;
+	//fields
+	public final int type;
+	public final String content;
 	
 	public DeltaObject(int type, String content){
 		this.type = type;

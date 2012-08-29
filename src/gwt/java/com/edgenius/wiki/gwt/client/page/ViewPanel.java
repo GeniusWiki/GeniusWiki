@@ -51,9 +51,12 @@ import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
+import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.UserProfileLink;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -496,8 +499,16 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		UserProfileLink modifier = new UserProfileLink(history.modifier, spaceUname, history.modifierUsername,history.modifierPortrait);
 		Label modifiedDate = new Label(GwtClientUtils.toDisplayDate(history.modifiedDate));
 		//do compare
-		Hyperlink compareButton = new Hyperlink(Msg.consts.compare()
-				, GwtUtils.buildToken(PageMain.TOKEN_DIFF,String.valueOf(history.version==-1?-1:history.uid), String.valueOf(pageUid)));
+        ClickLink compareButton = new ClickLink(Msg.consts.compare());
+        compareButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                PageControllerAsync action = ControllerFactory.getPageController();
+                action.diff(history.version == -1 ? null : history.uid, pageUid, versionAsync);
+            }
+        });
+//		Hyperlink compareButton = new Hyperlink(Msg.consts.compare()
+//				, GwtUtils.buildToken(PageMain.TOKEN_DIFF,String.valueOf(history.version==-1?-1:history.uid), String.valueOf(pageUid)));
 		
 		msgPanel.add(preLink,idp1);
 		msgPanel.add(modifier, idp2);

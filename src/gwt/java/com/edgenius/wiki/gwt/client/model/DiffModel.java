@@ -28,6 +28,7 @@ package com.edgenius.wiki.gwt.client.model;
  * @author Dapeng.Ni
  */
 public class DiffModel extends GeneralModel {
+    //This is special type: only one element in Diff ArrayList, i.e., already renndered HTML content.  
 	public static final int FLAT_HTML = -1;
 	
 	public static final int NOCHANGE = 0;
