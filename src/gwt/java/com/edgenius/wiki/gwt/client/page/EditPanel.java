@@ -697,7 +697,8 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 			//must call before setText(), so that content could point to correct editor 
 			contentArea.enableRich(model.isRichContent);
 			contentArea.setText(model.content == null?"":model.content);
-			
+            contentArea.resize();
+            
 			if(templatePanel != null){
 				templatePanel.initPanel();
 			}

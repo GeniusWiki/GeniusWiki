@@ -245,6 +245,12 @@ public class Editor extends SimplePanel  implements DialogListener{
 	public String getID() {
 		return plainEditor.getID();
 	}
+    /**
+     * Resize the editor box to fix the window
+     */
+    public void resize() {
+        
+    }
 
 
 	
