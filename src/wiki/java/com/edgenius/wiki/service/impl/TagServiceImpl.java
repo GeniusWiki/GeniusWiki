@@ -58,6 +58,8 @@ public class TagServiceImpl implements TagService {
 
 	private PageTagDAO pageTagDAO;
 	private SpaceTagDAO spaceTagDAO;
+	
+	//save tag name + counter of object with this tag
 	private Cache tagCache;
 	private UserReadingService userReadingService;
 	private TouchService touchService;
@@ -303,8 +305,9 @@ public class TagServiceImpl implements TagService {
 		if(element == null){
 			tagList = new HashMap<String, Integer>();
 			element = new Element(key, tagList);
-		}else
+		}else{
 			tagList = (Map<String,Integer>) element.getValue();
+		}
 		tagList.putAll(values);
 		
 		tagCache.put(element);
