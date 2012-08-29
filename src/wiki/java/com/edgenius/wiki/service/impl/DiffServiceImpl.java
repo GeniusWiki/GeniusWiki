@@ -41,6 +41,7 @@ import org.suigeneris.jrcs.diff.myers.MyersDiff;
 
 import com.edgenius.wiki.dao.HistoryDAO;
 import com.edgenius.wiki.dao.PageDAO;
+import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.model.History;
 import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.service.DeltaObject;
@@ -70,18 +71,18 @@ public class DiffServiceImpl implements DiffService {
 	
 	public String diffToHtml(Integer uid1, Integer uid2,boolean byword) throws DiffException {
 		//current page: the passed in uid should be null.
-		if(uid1 == null && uid2 == null){
-			throw new DiffException("Unable compare with both null");
+		if(uid1 == SharedConstants.CURRENT && uid2 == SharedConstants.CURRENT){
+			throw new DiffException("Unable compare with both -1(current)");
 		}
 		try {
 			String content1;
 			String content2; 
-			if(uid1 == null){
+			if(uid1 == SharedConstants.CURRENT){
 				History page2  = historyDAO.get(uid2);
 				Page page1 = pageDAO.getByUuid(page2.getPageUuid());
 				content1 = page1.getContent().getContent();
 				content2 = page2.getContent().getContent();
-			}else if(uid2 == null){
+			}else if(uid2 == SharedConstants.CURRENT){
 				History page1  = historyDAO.get(uid1);
 				Page page2 = pageDAO.getByUuid(page1.getPageUuid());
 				content1 = page1.getContent().getContent();

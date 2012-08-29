@@ -377,7 +377,8 @@ public class SharedConstants {
 	public static final int SORT_BY_CREATEON = 1 <<5;
 	
 	public static final String USERSETTING_PROP_NAME_EMAIL = "Email"; //UserSetting.CONTACT_EMAIL_NAME;
-
+	
+	public static final int CURRENT = -1;
 	//suppress functions - There is exactly same value in Constants.java - that is for Global.java
 	public static enum SUPPRESS{
 	    

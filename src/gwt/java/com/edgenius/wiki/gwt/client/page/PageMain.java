@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Vector;
 
 import com.allen_sauer.gwt.log.client.Log;
-import com.edgenius.wiki.gwt.client.AbstractEntryPoint;
 import com.edgenius.wiki.gwt.client.BaseEntryPoint;
 import com.edgenius.wiki.gwt.client.ClientConstants;
 import com.edgenius.wiki.gwt.client.ControllerFactory;
@@ -44,7 +43,6 @@ import com.edgenius.wiki.gwt.client.home.HomeMain;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.AttachmentModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
-import com.edgenius.wiki.gwt.client.model.SpaceModel;
 import com.edgenius.wiki.gwt.client.model.UserModel;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentListener;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel;
@@ -52,7 +50,6 @@ import com.edgenius.wiki.gwt.client.page.widgets.LocationButton;
 import com.edgenius.wiki.gwt.client.page.widgets.PrintButton;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
 import com.edgenius.wiki.gwt.client.server.PluginControllerAsync;
-import com.edgenius.wiki.gwt.client.server.SpaceControllerAsync;
 import com.edgenius.wiki.gwt.client.server.TemplateControllerAsync;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.NumberUtil;
@@ -70,7 +67,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.Frame;
@@ -111,6 +107,9 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 	public static final String TOKEN_DRAFT = "$DRAFT";
 	//URL: /page#/$HISTORY/spaceUname/historyUid
 	public static final String TOKEN_HISTORY = "$HISTORY";
+	
+	//URL: /page#/$HISTORY/spaceUname/historyUid
+	public static final String TOKEN_DIFF = "$DIFF";
 	//no use so far
 	public static final String TOKEN_OPEN_NEW_WINDOW = "$POPUP";
 	
@@ -470,6 +469,12 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 			PageControllerAsync action = ControllerFactory.getPageController();
 			//don't get attachment information
 			action.getHistoryByUid(historyUid,false, viewPanel);
+		}else if(actionID.endsWith(TOKEN_DIFF)){
+			//View 2 page diff: /page#/$DIFF/historyUid1/historyUid2
+			Integer historyUid1 =  Integer.valueOf(GwtUtils.getToken(tokens, 1));
+			Integer historyUid2 =  Integer.valueOf(GwtUtils.getToken(tokens, 2));
+			PageControllerAsync action = ControllerFactory.getPageController();
+			action.diff(historyUid1, historyUid2, viewPanel.versionAsync);
 		}else if(actionID.indexOf(TOKEN_DRAFT) != -1){
 			//Edit draft URL: /page#/$DRAFT/spaceUname/draftType/draftUid
 			Integer draftType = Integer.valueOf(GwtUtils.getToken(tokens, 2));

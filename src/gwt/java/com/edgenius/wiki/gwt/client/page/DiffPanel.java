@@ -31,19 +31,15 @@ import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.DiffListModel;
 import com.edgenius.wiki.gwt.client.model.DiffModel;
-import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.page.widgets.FunctionWidget;
 import com.edgenius.wiki.gwt.client.render.TextRenderPanel;
-import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.UIObject;
@@ -182,8 +178,9 @@ public abstract class DiffPanel extends MessagePanel{
 			diffMessage.cleanMessage();
 			HorizontalPanel msgPanel = new HorizontalPanel();
 			msgPanel.add(new Label(Msg.consts.comparing_view()));
-			//if ver is not equals -1, then try to add more info
-			if(model.ver1 != -1 && model.ver2 != -1){
+			
+			//if both version is not current
+			if(model.ver1 != SharedConstants.CURRENT && model.ver2 != SharedConstants.CURRENT){
 				String ver1 = model.ver1 == 0?Msg.consts.latest():Msg.consts.revision()+ " "+model.ver1;
 				String ver2 = model.ver2 == 0?Msg.consts.latest():Msg.consts.revision()+ " "+model.ver2;
 				msgPanel.add(new Label(Msg.consts.comparing() +" "+ver1+" <> "+ver2+"."));
@@ -193,6 +190,8 @@ public abstract class DiffPanel extends MessagePanel{
 			//switch to diffContent panel
 			diffRendered();
 			fillDiffContent(model);
+			
+			main.switchTo(PageMain.VIEW_PANEL);
 		}
 	}
 //	

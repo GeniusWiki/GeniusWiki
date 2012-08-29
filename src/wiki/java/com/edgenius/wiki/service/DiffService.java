@@ -33,7 +33,7 @@ public interface DiffService {
 
 	/**
 	 * This method is called in history comparison.It directly returns HTML text for UI rendering. 
-	 * !!! the input uid1 or uid2 would be null if it is current page 
+	 * !!! the input uid1 or uid2 would be -1 if it is current page 
 	 * @param uid1
 	 * @param uid2
 	 * @param byword

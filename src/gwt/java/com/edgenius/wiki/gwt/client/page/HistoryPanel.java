@@ -44,6 +44,7 @@ import com.edgenius.wiki.gwt.client.widgets.UserProfileLink;
 import com.edgenius.wiki.gwt.client.widgets.ZebraTable;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -246,8 +247,8 @@ public class HistoryPanel extends PinPanel implements AsyncCallback<PageItemList
 				Window.alert(Msg.consts.choose_two());
 			}else{
 				//do compare left and right
-				PageControllerAsync action = ControllerFactory.getPageController();
-				action.diff(right.isCurrent?null:right.uid, left.isCurrent?null:left.uid, main.viewPanel.versionAsync);
+				String token = GwtUtils.buildToken(PageMain.TOKEN_DIFF,String.valueOf(right.isCurrent?-1:right.uid), String.valueOf(left.isCurrent?-1:left.uid));
+				History.newItem(token);
 				
 				//go to page top
 				GwtClientUtils.gotoAnchor(PageMain.PAGE_TOP_ANCHOR_NAME);
