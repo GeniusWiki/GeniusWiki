@@ -26,20 +26,28 @@ package com.edgenius.wiki.gwt.client.page;
 import java.util.Iterator;
 import java.util.List;
 
+import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.DiffListModel;
 import com.edgenius.wiki.gwt.client.model.DiffModel;
+import com.edgenius.wiki.gwt.client.model.PageItemModel;
+import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.page.widgets.FunctionWidget;
 import com.edgenius.wiki.gwt.client.render.TextRenderPanel;
+import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
+import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
+import com.edgenius.wiki.gwt.client.widgets.UserProfileLink;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.UIObject;
@@ -194,51 +202,68 @@ public abstract class DiffPanel extends MessagePanel{
 			main.switchTo(PageMain.VIEW_PANEL);
 		}
 	}
-//	
-//   private void diffMessage(final DiffListModel model) {
-//        String spaceUname = model.spaceUname;
-//        String currentTitle = model.currentTitle;
-//        
-//        message.cleanMessage();
-//        
-//        String id1 = HTMLPanel.createUniqueId();
-//        String id2 = HTMLPanel.createUniqueId();
-//        StringBuffer buf = new StringBuffer("<div class='historyAction'><div class='msg' id='").append(id1)
-//                .append("'></div><div class='return' id='").append(id2).append("'></div>");
-//        buf.append("<div class='action'>");
-//        
-//        String idp1 = null,idp2 = null,idp3 = null,idp4 = null,idn1 = null,idn2 = null,idn3 = null,idn4 = null;
-//        if(model.ver1 != SharedConstants.CURRENT){
-//            idn1 = HTMLPanel.createUniqueId();
-//            idn2 = HTMLPanel.createUniqueId();
-//            idn3 = HTMLPanel.createUniqueId();
-//            idn4 = HTMLPanel.createUniqueId();
-//            
-//            buf.append("<div class='round next'><div class='version' id='").append(idn1).append("'></div><div class='author' id='")
-//            .append(idn2).append("'></div><div class='date' id='").append(idn3).append("'></div><div class='diff' id='").append(idn4).append("'></div></div>");
-//            
-//        }
-//        if(model.prevHistoryItem != null){
-//            idp1 = HTMLPanel.createUniqueId();
-//            idp2 = HTMLPanel.createUniqueId();
-//            idp3 = HTMLPanel.createUniqueId();
-//            idp4 = HTMLPanel.createUniqueId();
-//                
-//            buf.append("<div class='round prev'><div class='version' id='").append(idp1).append("'></div><div class='author' id='")
-//                .append(idp2).append("'></div><div class='date' id='").append(idp3).append("'></div><div class='diff' id='").append(idp4).append("'></div></div>");
-//        }
-//        buf.append("</div></div>");
-//        HTMLPanel msgPanel = new HTMLPanel(buf.toString());
-//        Hyperlink retCurrentVerBtn = new Hyperlink(Msg.consts.return_latest_version(), GwtUtils.getSpacePageToken(spaceUname,currentTitle));
-//        msgPanel.add(new Label(Msg.consts.view_history()), id1);
-//        msgPanel.add(retCurrentVerBtn, id2);
-//        
-//        
-//        
-//        HorizontalPanel panel = new HorizontalPanel();
-//        panel.add(msgPanel);
-//        message.warning(panel,false);
-//    }
+	
+   private void diffMessage(final PageModel model) {
+        
+        message.cleanMessage();
+        
+        String id1 = HTMLPanel.createUniqueId();
+        //head
+        StringBuffer buf = new StringBuffer("<div class='historyAction'><div class='msg' id='").append(id1).append("'></div>");
+        buf.append("<div class='action'>");
+        
+        //diff 1
+        String idp1 = null,idp2 = null,idp3 = null,idn1 = null,idn2 = null,idn3 = null;
+        idn1 = HTMLPanel.createUniqueId();
+        idn2 = HTMLPanel.createUniqueId();
+        idn3 = HTMLPanel.createUniqueId();
+        buf.append("<div class='round next'><div class='version' id='").append(idn1).append("'></div><div class='author' id='")
+        .append(idn2).append("'></div><div class='date' id='").append(idn3).append("'></div></div>");
+        //diff 2
+        idp1 = HTMLPanel.createUniqueId();
+        idp2 = HTMLPanel.createUniqueId();
+        idp3 = HTMLPanel.createUniqueId();
+
+        buf.append("<div class='round prev'><div class='version' id='").append(idp1).append("'></div><div class='author' id='")
+            .append(idp2).append("'></div><div class='date' id='").append(idp3).append("'></div></div>");
+        
+        //end
+        buf.append("</div></div>");
+        
+        
+        //put this message into 
+        HTMLPanel msgPanel = new HTMLPanel(buf.toString());
+        msgPanel.add(new Label(Msg.consts.comparing_view()), id1);
+        
+        diffActionMsg(msgPanel, model.prevHistoryItem, idn1, idn2, idn3);
+        diffActionMsg(msgPanel, model.nextHistoryItem, idp1, idp2, idp3);
+        
+        HorizontalPanel panel = new HorizontalPanel();
+        panel.add(msgPanel);
+        message.warning(panel,false);
+    }
+   
+   private void diffActionMsg(HTMLPanel msgPanel, final PageItemModel history, String idp1,String idp2, String idp3) {
+       
+       String spaceUname = PageMain.getSpaceUname();
+       
+       Hyperlink preLink;
+       if(history.version == -1){
+           //latest page
+           preLink= new Hyperlink(Msg.consts.latest(), GwtUtils.getSpacePageToken(spaceUname, history.title));
+       }else{
+           preLink= new Hyperlink(Msg.consts.revision() + " " + history.version
+                   ,GwtUtils.buildToken(PageMain.TOKEN_HISTORY,spaceUname, String.valueOf(history.uid)));
+       }
+       
+       UserProfileLink modifier = new UserProfileLink(history.modifier, spaceUname, history.modifierUsername,history.modifierPortrait);
+       Label modifiedDate = new Label(GwtClientUtils.toDisplayDate(history.modifiedDate));
+  
+       msgPanel.add(preLink,idp1);
+       msgPanel.add(modifier, idp2);
+       msgPanel.add(modifiedDate, idp3);
+   }
+   
    
 	private class DiffActionMenu extends PopupPanel{
 		public DiffActionMenu(final DiffModel diff){
