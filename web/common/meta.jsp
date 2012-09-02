@@ -1,3 +1,6 @@
+<!-- Force latest IE rendering engine or ChromeFrame if installed -->
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
 <meta name="description" content="<fmt:message key="metadata.description"/>"/>
 <meta name="keywords" content="<fmt:message key="metadata.keyword"/>"/>

@@ -11,9 +11,9 @@
         
 		<title><edgenius:title/></title>
 		
- 		<script language='javascript' src='gwtpage/gwtpage.nocache.js?v=@TOKEN.SITE.VERSION@'></script>
+ 		<script src='gwtpage/gwtpage.nocache.js?v=@TOKEN.SITE.VERSION@'></script>
  		<%-- This is not real Javascript but a Servlet - see PageLayout servlet web.xml  --%>
- 		<script language='javascript' src='${ctxPath}/layout.js'></script>
+ 		<script src='${ctxPath}/layout.js'></script>
  		
     	<%@ include file="/common/view-scripts.jsp"%>
     	<%@ include file="/common/edit-scripts.jsp"%>

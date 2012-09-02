@@ -47,6 +47,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.edgenius.core.Constants;
+import com.edgenius.core.model.User;
 import com.edgenius.core.repository.FileNode;
 import com.edgenius.core.repository.RepositoryQuotaException;
 import com.edgenius.core.repository.RepositoryService;
@@ -72,7 +73,34 @@ public class UploadServlet extends BaseServlet {
 
 	@SuppressWarnings("unchecked")
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		PageService pageService = getPageService();
+		
+		if ("GET".equalsIgnoreCase(request.getMethod())){
+			String pageUuid = request.getParameter("puuid");
+			String spaceUname = request.getParameter("uname");
 
+			List<FileNode> files = new ArrayList<FileNode>();
+			
+			try {
+				//get this page all 
+				User user = WikiUtil.getUser();
+				files.addAll(pageService.getPageAttachment(spaceUname, pageUuid, false, false, user));
+			} catch (Exception e) {
+				log.error("File upload failed " , e);
+				FileNode att = new FileNode();
+				att.setErrorCode(ErrorCode.UPLOAD_FAILED);
+				files = new ArrayList<FileNode>();
+				files.add(att);
+			}
+			
+			request.setAttribute("pageUuid", pageUuid);
+			request.setAttribute("spaceUname", spaceUname);
+			request.setAttribute("files", files);
+			request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
+			
+			return;
+		}
 //		if(WikiUtil.getUser().isAnonymous()){
 //			//anonymous can not allow to upload any files
 //			try {
@@ -90,7 +118,7 @@ public class UploadServlet extends BaseServlet {
 //			System.out.println(new String(bt,0,len));
 //		}
 //		
-		PageService pageService = getPageService();
+
 
 		// monitoring upload status
 	    UploadStatus listener = new UploadStatus(request);
