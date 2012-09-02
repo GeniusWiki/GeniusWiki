@@ -162,6 +162,12 @@
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload-fp.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload-ui.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/locale.js?v=@TOKEN.SITE.VERSION@"></script>
-<script src="${ctxPath}/widgets/jquery/jquery-upload/js/main.js?v=@TOKEN.SITE.VERSION@"></script>
+<script>
+$(function () {
+    'use strict';
+    // Initialize the jQuery File Upload widget:
+    $('#fileupload').fileupload();
+});
+</script>
 </body> 
 </html>
