@@ -24,7 +24,6 @@
 package com.edgenius.wiki.webapp.servlet;
 
 import com.edgenius.core.repository.FileNode;
-import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 
 /**
  * @author Dapeng.Ni
@@ -32,17 +31,17 @@ import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 public class FileObject {
 
 	public String name;
-	public String size;
-	public String error;
-	public String thumbnail_url;
-	public String url;
-	public String delete_type;
-	public String delete_url;
+	public long size;
+	public String error = "";
+	public String thumbnail_url = "";
+	public String url = "";
+	public String delete_type = "";
+	public String delete_url = "";
 	
 	public static FileObject fromNode(FileNode node){
 		FileObject item = new FileObject();
 		item.name = node.getFilename();
-		item.size = GwtUtils.convertHumanSize(node.getSize());
+		item.size = node.getSize();
 		
 		return item;
 	}
