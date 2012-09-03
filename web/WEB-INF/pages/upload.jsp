@@ -165,8 +165,11 @@
 <script>
 $(function () {
     'use strict';
-    // Initialize the jQuery File Upload widget:
     $('#fileupload').fileupload();
+    
+    <c:if test="${not empty files}"> 
+    var result = tmpl("template-download", ${files});
+    $(".files").appendto(result);
 });
 </script>
 </body> 

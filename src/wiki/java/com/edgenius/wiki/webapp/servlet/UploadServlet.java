@@ -74,53 +74,20 @@ public class UploadServlet extends BaseServlet {
 	@SuppressWarnings("unchecked")
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		PageService pageService = getPageService();
 		
 		if ("GET".equalsIgnoreCase(request.getMethod())){
-			String pageUuid = request.getParameter("puuid");
-			String spaceUname = request.getParameter("uname");
-
-			List<FileNode> files = new ArrayList<FileNode>();
-			
-			try {
-				//get this page all 
-				User user = WikiUtil.getUser();
-				files.addAll(pageService.getPageAttachment(spaceUname, pageUuid, false, false, user));
-			} catch (Exception e) {
-				log.error("File upload failed " , e);
-				FileNode att = new FileNode();
-				att.setErrorCode(ErrorCode.UPLOAD_FAILED);
-				files = new ArrayList<FileNode>();
-				files.add(att);
-			}
-			
-			request.setAttribute("pageUuid", pageUuid);
-			request.setAttribute("spaceUname", spaceUname);
-			request.setAttribute("files", files);
-			request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
+			listAttachments(request, response);
 			
 			return;
 		}
+		
+		//post - upload
+		
 //		if(WikiUtil.getUser().isAnonymous()){
-//			//anonymous can not allow to upload any files
-//			try {
-//				response.getWriter().write("");
-//			} catch (IOException e) {
-//				log.error(e.toString(),e);
-//			}
-//			return;
-//		}
-//		
-//		ServletInputStream is = request.getInputStream();
-//		byte[] bt = new byte[1000];
-//		int len;
-//		while((len = is.read(bt)) != -1){
-//			System.out.println(new String(bt,0,len));
-//		}
-//		
+//		//anonymous can not allow to upload any files
 
+		PageService pageService = getPageService();
 
-		// monitoring upload status
 	    UploadStatus listener = new UploadStatus(request);
 		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
 
@@ -276,6 +243,42 @@ public class UploadServlet extends BaseServlet {
 		}
 	}
 
+
+	private void listAttachments(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
+		PageService pageService = getPageService();
+		String pageUuid = request.getParameter("puuid");
+		String spaceUname = request.getParameter("uname");
+
+		List<FileNode> files = new ArrayList<FileNode>();
+		
+		try {
+			//get this page all 
+			User user = WikiUtil.getUser();
+			files.addAll(pageService.getPageAttachment(spaceUname, pageUuid, false, false, user));
+		} catch (Exception e) {
+			log.error("File upload failed " , e);
+			//TODO: i18n
+			request.setAttribute("error", "Get page attachments failed, please try again.");
+		}
+		
+		request.setAttribute("pageUuid", pageUuid);
+		request.setAttribute("spaceUname", spaceUname);
+		request.setAttribute("files", toAttachmentsJson(files));
+		
+		request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
+		
+	}
+
+	private String toAttachmentsJson(List<FileNode> files) {
+		// convert fileNode to json that for JS template in upload.jsp.
+		Gson gson = new Gson();
+		List<FileObject> items = new ArrayList<FileObject>();
+		for (FileNode fileNode : files) {
+			items.add(FileObject.fromNode(fileNode));
+		}
+		return gson.toJson(items);
+	}
 
 	/**
 	 * @param redir
