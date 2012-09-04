@@ -75,12 +75,19 @@ public class UploadServlet extends BaseServlet {
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		
-		if ("GET".equalsIgnoreCase(request.getMethod())){
-			listAttachments(request, response);
-			
-			return;
-		}
-		
+        if ("GET".equalsIgnoreCase(request.getMethod())) {
+            //just render blank page for upload
+            String pageUuid = request.getParameter("puuid");
+            String spaceUname = request.getParameter("uname");
+
+            request.setAttribute("pageUuid", pageUuid);
+            request.setAttribute("spaceUname", spaceUname);
+
+            request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
+
+            return;
+        }
+
 		//post - upload
 		
 //		if(WikiUtil.getUser().isAnonymous()){
@@ -241,43 +248,6 @@ public class UploadServlet extends BaseServlet {
 		} catch (IOException e) {
 			log.error(e.toString(),e);
 		}
-	}
-
-
-	private void listAttachments(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
-		PageService pageService = getPageService();
-		String pageUuid = request.getParameter("puuid");
-		String spaceUname = request.getParameter("uname");
-
-		List<FileNode> files = new ArrayList<FileNode>();
-		
-		try {
-			//get this page all 
-			User user = WikiUtil.getUser();
-			files.addAll(pageService.getPageAttachment(spaceUname, pageUuid, false, false, user));
-		} catch (Exception e) {
-			log.error("File upload failed " , e);
-			//TODO: i18n
-			request.setAttribute("error", "Get page attachments failed, please try again.");
-		}
-		
-		request.setAttribute("pageUuid", pageUuid);
-		request.setAttribute("spaceUname", spaceUname);
-		request.setAttribute("files", toAttachmentsJson(files));
-		
-		request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
-		
-	}
-
-	private String toAttachmentsJson(List<FileNode> files) {
-		// convert fileNode to json that for JS template in upload.jsp.
-		Gson gson = new Gson();
-		List<FileObject> items = new ArrayList<FileObject>();
-		for (FileNode fileNode : files) {
-			items.add(FileObject.fromNode(fileNode));
-		}
-		return gson.toJson(items);
 	}
 
 	/**

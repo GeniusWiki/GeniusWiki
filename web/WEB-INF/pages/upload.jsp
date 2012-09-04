@@ -165,10 +165,23 @@
 <script>
 $(function () {
     'use strict';
-    $('#fileupload').fileupload();
+    $('#fileupload').fileupload({
+    	destroy: function (e, data) {
+            $.each(data.files, function (index, file) {
+                alert('Dropped file: ' + file.name);
+            });
+        },
+        submit: function (e, data) {
+            $.each(data.files, function (index, file) {
+                alert('submit file: ' + file.name);
+            });
+        }
+    });
     $('#fileupload').each(function () {
         var that = this;
-        $.getJSON(this.action, function (result) {
+        
+        $.getJSON("<c:url value='/pages/pages!getAttachments.do'><c:param name='s'>${spaceUname}</c:param><c:param name='u'>${pageUuid}</c:param></c:url>"
+        	, function (result) {
             if (result && result.length) {
                 $(that).fileupload('option', 'done')
                     .call(that, null, {result: result});

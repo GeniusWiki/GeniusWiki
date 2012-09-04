@@ -77,6 +77,7 @@
     <package name="pages" extends="global" namespace="/pages">
     	 <action name="pages" class="pageAction" method="view"> 
             <result name="success">/pages.jsp</result> 
+            <result name="upload">/WEB-INF/pages/upload.jsp</result>
             <result name="sehome">/WEB-INF/pages/view/dashboard.jsp</result> 
             <result name="sespace">/WEB-INF/pages/view/spaceview.jsp</result> 
             <result name="sepage">/WEB-INF/pages/view/pageview.jsp</result>
