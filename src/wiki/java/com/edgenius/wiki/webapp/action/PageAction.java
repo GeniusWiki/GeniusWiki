@@ -26,30 +26,25 @@ package com.edgenius.wiki.webapp.action;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.cxf.wsdl.http.UrlEncoded;
 
 import com.edgenius.core.Constants;
 import com.edgenius.core.DataRoot;
 import com.edgenius.core.Global;
 import com.edgenius.core.model.User;
 import com.edgenius.core.repository.FileNode;
+import com.edgenius.core.service.MessageService;
 import com.edgenius.core.util.FileUtil;
-import com.edgenius.core.util.WebUtil;
 import com.edgenius.core.webapp.taglib.PageInfo;
 import com.edgenius.wiki.InstanceSetting;
 import com.edgenius.wiki.Shell;
 import com.edgenius.wiki.WikiConstants;
 import com.edgenius.wiki.gwt.client.model.RenderPiece;
-import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.edgenius.wiki.model.Page;
@@ -61,7 +56,6 @@ import com.edgenius.wiki.service.RenderService;
 import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.service.SpaceService;
 import com.edgenius.wiki.util.WikiUtil;
-import com.google.gson.Gson;
 
 /**
  * @author Dapeng.Ni
@@ -97,6 +91,7 @@ public class PageAction extends BaseAction {
 	//for page attachment handling - delete
 	private String nodeUuid;
 	
+	private MessageService messageService;
 	private SpaceService spaceService; 
 	private PageService pageService;
 	private RenderService renderService;  
@@ -182,7 +177,7 @@ public class PageAction extends BaseAction {
             List<FileNode> files = pageService.getPageAttachment(s, u, false, false, user);
             
             PrintWriter writer = getResponse().getWriter();
-            writer.print(toAttachmentsJson(files));
+            writer.print(FileObject.toAttachmentsJson(files,s, messageService));
             
             return null;
         } catch (Exception e) {
@@ -206,15 +201,7 @@ public class PageAction extends BaseAction {
     //               Private method
     //********************************************************************
 
-    private String toAttachmentsJson(List<FileNode> files) throws UnsupportedEncodingException {
-        // convert fileNode to json that for JS template in upload.jsp.
-        Gson gson = new Gson();
-        List<FileObject> items = new ArrayList<FileObject>();
-        for (FileNode fileNode : files) {
-            items.add(FileObject.fromNode(fileNode, s));
-        }
-        return gson.toJson(items);
-    }
+    
 	/**
 	 * 
 	 */
@@ -361,34 +348,6 @@ public class PageAction extends BaseAction {
 	}
 
 	//********************************************************************
-    //               Private class
-    //********************************************************************
-	//This class is only for mapping Page attachment object to JSON for JQuery upload format.
-	public static class FileObject {
-
-	    public String name;
-	    public long size;
-	    public String error = "";
-	    public String thumbnail_url = "";
-	    public String url = "";
-	    public String delete_type = "DELETE";
-	    public String delete_url = "";
-	    
-	    public static FileObject fromNode(FileNode node, String spaceUname) throws UnsupportedEncodingException{
-	        FileObject item = new FileObject();
-	        item.name = node.getFilename();
-	        item.size = node.getSize();
-	        
-	        item.url = WebUtil.getPageRepoFileUrl(WebUtil.getHostAppURL(),spaceUname, node.getFilename(), node.getNodeUuid(), true);
-	        item.thumbnail_url = WebUtil.getPageRepoFileUrl(WebUtil.getHostAppURL(),spaceUname, node.getFilename(), node.getNodeUuid(), false);
-	        item.delete_url = WebUtil.getHostAppURL() + "pages/pages!deleteAttachment.do?s=" + URLEncoder.encode(spaceUname, Constants.UTF8) 
-	                + "&u=" + URLEncoder.encode(node.getIdentifier(), Constants.UTF8)
-	                + "&nodeUuid=" + URLEncoder.encode(node.getNodeUuid(), Constants.UTF8);
-	        return item;
-	    }
-	}
-
-	//********************************************************************
 	//               Set / Get
 	//********************************************************************
 	public void setP(String pageUname) {
@@ -465,6 +424,10 @@ public class PageAction extends BaseAction {
 
 	public void setSettingService(SettingService settingService) {
 		this.settingService = settingService;
+	}
+
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
 	}
 
 }

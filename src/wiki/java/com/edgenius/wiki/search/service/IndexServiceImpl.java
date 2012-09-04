@@ -1145,7 +1145,7 @@ public class IndexServiceImpl implements IndexService, InitializingBean {
 		//if this attachment is shared, this field should be useless, otherwise, it uses on checking search permission on page level.
 		Fieldable shared = new Field(FieldName.FILE_SHARED,Boolean.valueOf(node.isShared()).toString(), Field.Store.YES, Field.Index.NO);
 		Fieldable filename = new Field(FieldName.FILE_NAME, node.getFilename(), Field.Store.YES, Field.Index.NO);
-		Fieldable comment = new Field(FieldName.FILE_COMMENT, node.getComment(), Field.Store.YES, Field.Index.NO);
+		Fieldable comment = new Field(FieldName.FILE_COMMENT, StringUtils.trimToEmpty(node.getComment()), Field.Store.YES, Field.Index.NO);
 		
 		String extract = origFileContent;
 		if(origFileContent == null){

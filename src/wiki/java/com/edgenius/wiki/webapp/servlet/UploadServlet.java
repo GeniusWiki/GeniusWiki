@@ -47,10 +47,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.edgenius.core.Constants;
-import com.edgenius.core.model.User;
 import com.edgenius.core.repository.FileNode;
 import com.edgenius.core.repository.RepositoryQuotaException;
 import com.edgenius.core.repository.RepositoryService;
+import com.edgenius.core.service.MessageService;
 import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.webapp.BaseServlet;
 import com.edgenius.core.webapp.filter.AjaxRedirectFilter.RedirectResponseWrapper;
@@ -62,7 +62,7 @@ import com.edgenius.wiki.service.ActivityLogService;
 import com.edgenius.wiki.service.PageException;
 import com.edgenius.wiki.service.PageService;
 import com.edgenius.wiki.util.WikiUtil;
-import com.google.gson.Gson;
+import com.edgenius.wiki.webapp.action.FileObject;
 
 /**
  * @author Dapeng.Ni
@@ -79,9 +79,11 @@ public class UploadServlet extends BaseServlet {
             //just render blank page for upload
             String pageUuid = request.getParameter("puuid");
             String spaceUname = request.getParameter("uname");
+            String draft = request.getParameter("draft");
 
             request.setAttribute("pageUuid", pageUuid);
             request.setAttribute("spaceUname", spaceUname);
+            request.setAttribute("draft", BooleanUtils.toBoolean(draft));
 
             request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
 
@@ -233,12 +235,8 @@ public class UploadServlet extends BaseServlet {
 		}
 
 		try {
-			String json = "";
-			if (files != null) {
-				Gson gson = new Gson();
-				json = gson.toJson(files);
-			}
-
+			String json = FileObject.toAttachmentsJson(files,spaceUname, getMessageService());
+			
 			//TODO: does not compress request in Gzip, refer to 
 			//http://www.google.com/codesearch?hl=en&q=+RemoteServiceServlet+show:PAbNFg2Qpdo:akEoB_bGF1c:4aNSrXYgYQ4&sa=N&cd=1&ct=rc&cs_p=https://ssl.shinobun.org/svn/repos/trunk&cs_f=proprietary/gwt/gwt-user/src/main/java/com/google/gwt/user/server/rpc/RemoteServiceServlet.java#first
 			byte[] reply = json.getBytes(Constants.UTF8);
@@ -250,6 +248,7 @@ public class UploadServlet extends BaseServlet {
 		}
 	}
 
+	
 	/**
 	 * @param redir
 	 */
@@ -261,7 +260,11 @@ public class UploadServlet extends BaseServlet {
 		}
 	}
 
-
+	private MessageService getMessageService() {
+		ServletContext context = this.getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+		return (MessageService) ctx.getBean(MessageService.SERVICE_NAME);
+	}
 	private PageService getPageService() {
 		ServletContext context = this.getServletContext();
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
