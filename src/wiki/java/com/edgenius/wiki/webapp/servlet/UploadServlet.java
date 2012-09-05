@@ -25,6 +25,7 @@ package com.edgenius.wiki.webapp.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -51,6 +53,7 @@ import com.edgenius.core.repository.FileNode;
 import com.edgenius.core.repository.RepositoryQuotaException;
 import com.edgenius.core.repository.RepositoryService;
 import com.edgenius.core.service.MessageService;
+import com.edgenius.core.service.UserReadingService;
 import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.webapp.BaseServlet;
 import com.edgenius.core.webapp.filter.AjaxRedirectFilter.RedirectResponseWrapper;
@@ -62,7 +65,6 @@ import com.edgenius.wiki.service.ActivityLogService;
 import com.edgenius.wiki.service.PageException;
 import com.edgenius.wiki.service.PageService;
 import com.edgenius.wiki.util.WikiUtil;
-import com.edgenius.wiki.webapp.action.FileObject;
 
 /**
  * @author Dapeng.Ni
@@ -83,7 +85,7 @@ public class UploadServlet extends BaseServlet {
 
             request.setAttribute("pageUuid", pageUuid);
             request.setAttribute("spaceUname", spaceUname);
-            request.setAttribute("draft", BooleanUtils.toBoolean(draft));
+            request.setAttribute("draft", NumberUtils.toInt(draft, Draft.NONE_DRAFT));
 
             request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
 
@@ -208,34 +210,39 @@ public class UploadServlet extends BaseServlet {
 			listener.done();
 		} catch (RepositoryQuotaException e) {
 			FileNode att = new FileNode();
-			att.setErrorCode(ErrorCode.SPACE_QUOTA_ERROR);
-			files = new ArrayList<FileNode>();
-			files.add(att);
+			att.setError(getMessageService().getMessage("err.quota.exhaust"));
+			files = Arrays.asList(att);
 		} catch (AuthenticationException e) {
 			String redir = ((RedirectResponseWrapper)response).getRedirect();
-			if(redir == null)
-				redir = WikiConstants.URL_LOGIN;
+			if(redir == null) redir = WikiConstants.URL_LOGIN;
 			log.info("Send Authentication redirect URL " + redir);
-			sendAjaxFormRedir(response,SharedConstants.FORM_RET_AUTH_EXP,redir);
-			return;
+			
+			FileNode att = new FileNode();
+            att.setError(getMessageService().getMessage("err.authentication.required"));
+            files = Arrays.asList(att);
+            
+//			sendAjaxFormRedir(response,SharedConstants.FORM_RET_AUTH_EXP,redir);
+//			return;
 		} catch (AccessDeniedException e) {
 			String redir = ((RedirectResponseWrapper)response).getRedirect();
-			if(redir == null)
-				redir = WikiConstants.URL_ACCESS_DENIED;
+			if(redir == null) redir = WikiConstants.URL_ACCESS_DENIED;
 			log.info("Send AccessDenied redirect URL " + redir);
-			sendAjaxFormRedir(response,SharedConstants.FORM_RET_ACCESS_DENIED_EXP,redir);
-			return;
+			
+	        FileNode att = new FileNode();
+	        att.setError(getMessageService().getMessage("err.access.denied"));
+            files = Arrays.asList(att);
+			//sendAjaxFormRedir(response,SharedConstants.FORM_RET_ACCESS_DENIED_EXP,redir);
+//			return;
 		} catch (Exception e) {
 			// FileUploadException,RepositoryException
 			log.error("File upload failed " , e);
 			FileNode att = new FileNode();
-			att.setErrorCode(ErrorCode.UPLOAD_FAILED);
-			files = new ArrayList<FileNode>();
-			files.add(att);
+			att.setError(getMessageService().getMessage("err.upload"));
+			files = Arrays.asList(att);
 		}
 
 		try {
-			String json = FileObject.toAttachmentsJson(files,spaceUname, getMessageService());
+			String json = FileNode.toAttachmentsJson(files,spaceUname, getMessageService(), getUserReadingService());
 			
 			//TODO: does not compress request in Gzip, refer to 
 			//http://www.google.com/codesearch?hl=en&q=+RemoteServiceServlet+show:PAbNFg2Qpdo:akEoB_bGF1c:4aNSrXYgYQ4&sa=N&cd=1&ct=rc&cs_p=https://ssl.shinobun.org/svn/repos/trunk&cs_f=proprietary/gwt/gwt-user/src/main/java/com/google/gwt/user/server/rpc/RemoteServiceServlet.java#first
@@ -264,6 +271,12 @@ public class UploadServlet extends BaseServlet {
 		ServletContext context = this.getServletContext();
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
 		return (MessageService) ctx.getBean(MessageService.SERVICE_NAME);
+	}
+	
+	private UserReadingService getUserReadingService() {
+	    ServletContext context = this.getServletContext();
+	    ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+	    return (UserReadingService) ctx.getBean(UserReadingService.SERVICE_NAME);
 	}
 	private PageService getPageService() {
 		ServletContext context = this.getServletContext();

@@ -101,25 +101,22 @@
     <tr class="template-download fade">
         {% if (file.error) { %}
             <td></td>
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+            <td class="error" colspan="5"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=file.error%}</td>
         {% } else { %}
             <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+                <a href="{%=file.url%}" title="{%=file.filename%}" download="{%=file.filename%}">{%=file.filename%}</a>
             </td>
             <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td class="date">{%=file.date%}</td>
-            <td class="author">{%=file.author%}</td>
-            <td colspan="2"></td>
+            <td class="date">{%=file.displayDate%}</td>
+            <td class="author">{%=file.userFullname%}</td>
+       		<td class="delete">
+           		<button class="btn btn-danger" data-type="GET" data-url="{%=file.deleteUrl%}">
+                  <i class="icon-trash icon-white"></i>
+              	  <span>{%=locale.fileupload.destroy%}</span>
+          	  	</button>
+           	 	<input type="checkbox" name="delete" value="1">
+      		 </td>
         {% } %}
-        <td class="delete">
-            <button class="btn btn-danger" data-type="GET" data-url="{%=file.delete_url%}">
-                <i class="icon-trash icon-white"></i>
-                <span>{%=locale.fileupload.destroy%}</span>
-            </button>
-            <input type="checkbox" name="delete" value="1">
-        </td>
     </tr>
 {% } %}
 </script>
@@ -137,15 +134,11 @@
 $(function () {
     'use strict';
     $('#fileupload').fileupload({
-    	destroy: function (e, data) {
-            $.each(data.files, function (index, file) {
-                alert('Dropped file: ' + file.name);
-            });
+    	destroyed: function (e, data) {
+            alert("delete");
         },
         submit: function (e, data) {
-            $.each(data.files, function (index, file) {
-                alert('submit file: ' + file.name);
-            });
+                alert('submit file: ');
         }
     });
     $('#fileupload').each(function () {

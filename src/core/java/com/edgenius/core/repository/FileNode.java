@@ -25,9 +25,22 @@ package com.edgenius.core.repository;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.edgenius.core.Constants;
 import com.edgenius.core.model.CrFileNode;
+import com.edgenius.core.model.User;
+import com.edgenius.core.service.MessageService;
+import com.edgenius.core.service.UserReadingService;
+import com.edgenius.core.util.DateUtil;
+import com.edgenius.core.util.WebUtil;
+import com.edgenius.wiki.util.WikiUtil;
+import com.google.gson.Gson;
 
 
 public class FileNode  implements Serializable{
@@ -63,7 +76,6 @@ public class FileNode  implements Serializable{
 //	version.getName()
 	private String version;
 	
-	private String errorCode;
 	//page or user 's attachment
 	private transient String type;
 	//for browser display index
@@ -85,7 +97,14 @@ public class FileNode  implements Serializable{
 	//********************************************************************
 	//for display use
 	private String userFullname;
-	
+
+    private String errorCode;
+    
+	//these used by upload.jsp javascript templ for display purpose
+    public String displayDate;
+    public String url;
+    public String deleteUrl;
+    private String error;
 	//********************************************************************
 	//               Function methods
 	//********************************************************************
@@ -93,6 +112,16 @@ public class FileNode  implements Serializable{
 	public String toString(){
 		return "Filename:" + filename + ";nodeUuid:" + nodeUuid + ";identifier"+ identifier;
 	}
+	
+    public void closeStream() {
+        if(file != null){
+            try {
+                file.close();
+            } catch (Exception e) {
+            }
+        }
+        
+    }
 
 	public static void copyNodeToPersist(FileNode my, CrFileNode filenode) {
 		filenode.setNodeType(my.getType());
@@ -136,6 +165,40 @@ public class FileNode  implements Serializable{
 		return my;
 	}
 	
+    /**
+     * Warning: this method will modify FileNode in parameter list directly. 
+     * 
+     * Construct display information for upload.jsp javascript display purpose.
+     * @param files
+     * @param spaceUname
+     * @param messageService
+     * @param userReadingService 
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    public static String toAttachmentsJson(List<FileNode> files, String spaceUname, MessageService messageService, UserReadingService userReadingService) throws UnsupportedEncodingException {
+        // convert fileNode to json that for JS template in upload.jsp.
+        Gson gson = new Gson();
+
+        for (FileNode fileNode : files) {
+            if(StringUtils.isEmpty(fileNode.getFilename())){
+                //This could be an error node, skip further message processing/
+                continue;
+            }
+            fileNode.displayDate = DateUtil.toDisplayDate(WikiUtil.getUser(), new Date(fileNode.getDate()),messageService);
+            fileNode.url = WebUtil.getPageRepoFileUrl(WebUtil.getHostAppURL(),spaceUname, fileNode.getFilename(), fileNode.getNodeUuid(), true);
+            fileNode.deleteUrl = WebUtil.getHostAppURL() + "pages/pages!deleteAttachment.do?s=" + URLEncoder.encode(spaceUname, Constants.UTF8) 
+                    + "&u=" + URLEncoder.encode(fileNode.getIdentifier(), Constants.UTF8)
+                    + "&nodeUuid=" + URLEncoder.encode(fileNode.getNodeUuid(), Constants.UTF8);
+            
+            //pass back user fullname
+            User user = userReadingService.getUserByName(fileNode.createor);
+            fileNode.setUserFullname(user.getFullname());
+     
+        }
+        return gson.toJson(files);
+    }
+
 	
 //	/**
 //	 * @param child
@@ -338,16 +401,14 @@ public class FileNode  implements Serializable{
 		this.bulkZip = bulkZip;
 	}
 
-	public void closeStream() {
-		if(file != null){
-			try {
-				file.close();
-			} catch (Exception e) {
-			}
-		}
-			
-		
-	}
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 
 
 }
