@@ -131,9 +131,9 @@
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload-ui.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/locale.js?v=@TOKEN.SITE.VERSION@"></script>
 <script>
+var dirty = false;
 $(function () {
     'use strict';
-	var dirty = false;
     $('#fileupload').fileupload({
     	destroyed: function (e, data) {
     		dirty = true;
@@ -153,14 +153,11 @@ $(function () {
             }
         });
     });   
-    $(window).bind('beforeunload', function(){ 
-     		if (dirty){
-     			gwtRefreshAttachments('${spaceUname}','${pageUuid}"',${draft});
-     		}
-       } 
-    );
 });
 
+function isAttachmentDirty(){
+	return dirty;
+}
 </script>
 </body> 
 </html>

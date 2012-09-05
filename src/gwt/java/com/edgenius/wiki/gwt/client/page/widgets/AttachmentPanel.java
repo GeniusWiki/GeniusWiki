@@ -356,7 +356,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
                 draftStatus = SharedConstants.NONE_DRAFT;
             }
             
-		    UploadDialog dialog = new UploadDialog(PageMain.getSpaceUname(), PageMain.getPageUuid(), draftStatus);
+		    UploadDialog dialog = new UploadDialog(this, PageMain.getSpaceUname(), PageMain.getPageUuid(), draftStatus);
             dialog.showbox();
 		} else if (sender == uploadBtn){
 			int draftStatus = SharedConstants.AUTO_DRAFT;
@@ -434,7 +434,10 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
             
             @Override
             public void onSuccess(String json) {
-                AttachmentPanel.this.mergeAttachments(json);
+            	if(json != null){
+            		AttachmentPanel.this.clear();
+            		AttachmentPanel.this.mergeAttachments(json);
+            	}
             }
             
             @Override
@@ -443,14 +446,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
             }
         });
 	}
-	/**
-     * For Space admin Shell setting bind to change theme.
-    */
-    public static native void bindJsMethod() /*-{
-        $wnd.gwtRefreshAttachments = function(spaceUname, pageUuid, draftStatus) {
-            @com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel::refresh(Ljava/lang/String;Ljava/lang/String;I)(spaceUname, pageUuid, draftStatus);
-        };
-    }-*/;
+
 	//********************************************************************
 	//               Private methods
 	//********************************************************************

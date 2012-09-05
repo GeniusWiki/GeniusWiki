@@ -187,7 +187,7 @@ public class PageAction extends BaseAction {
         return UPLOAD;
 	}
 	
-	public String deleteAttachment(){
+	public String removeAttachment(){
 	    try {
 	        FileNode node = pageService.removeAttachment(s, u, nodeUuid, null);
             try {

@@ -187,7 +187,7 @@ public class FileNode  implements Serializable{
             }
             fileNode.displayDate = DateUtil.toDisplayDate(WikiUtil.getUser(), new Date(fileNode.getDate()),messageService);
             fileNode.url = WebUtil.getPageRepoFileUrl(WebUtil.getHostAppURL(),spaceUname, fileNode.getFilename(), fileNode.getNodeUuid(), true);
-            fileNode.deleteUrl = WebUtil.getHostAppURL() + "pages/pages!deleteAttachment.do?s=" + URLEncoder.encode(spaceUname, Constants.UTF8) 
+            fileNode.deleteUrl = WebUtil.getHostAppURL() + "pages/pages!removeAttachment.do?s=" + URLEncoder.encode(spaceUname, Constants.UTF8) 
                     + "&u=" + URLEncoder.encode(fileNode.getIdentifier(), Constants.UTF8)
                     + "&nodeUuid=" + URLEncoder.encode(fileNode.getNodeUuid(), Constants.UTF8);
             
