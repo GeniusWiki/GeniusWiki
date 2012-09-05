@@ -189,7 +189,13 @@ public class PageAction extends BaseAction {
 	
 	public String deleteAttachment(){
 	    try {
-            pageService.removeAttachment(s, u, nodeUuid, null);
+	        FileNode node = pageService.removeAttachment(s, u, nodeUuid, null);
+            try {
+                activityLog.logAttachmentRemoved(s, pageService.getCurrentPageByUuid(u).getTitle(), WikiUtil.getUser(), node);
+            } catch (Exception e) {
+                log.warn("Activity log save error for attachment remove",e);
+            }
+            
             return null;
         } catch (Exception e) {
             log.error("Remove page attachment failed:" + u , e);

@@ -159,6 +159,9 @@ public interface IconBundle extends ClientBundle {
 	
 	@Source("com/edgenius/wiki/gwt/public/resources/images/geniuswiki/default/icons/collapse.png")
 	public ImageResource collapse();
+	
+	@Source("com/edgenius/wiki/gwt/public/resources/images/geniuswiki/default/icons/arrow_up.png")
+	public ImageResource upload();
 	//********************************************************************
 	//               Security
 	//********************************************************************

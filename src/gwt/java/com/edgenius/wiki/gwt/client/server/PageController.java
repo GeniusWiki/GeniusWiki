@@ -95,6 +95,7 @@ public interface PageController extends RemoteService{
 	
 	public PageModel getCustomizedPage(String customizedPageID, String[] params);
 	
+	public String getAttachments(String spaceUname, String pageUuid, int draft);
 	//return error code
 	public String updateAttachmentMeta(String spaceUname,  String pageUuid, String nodeUuid, String name, String desc);
 	/**

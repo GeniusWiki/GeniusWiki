@@ -24,6 +24,7 @@
 package com.edgenius.wiki.gwt.server;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -581,7 +582,20 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		return model;
 	}
 
-
+    public String getAttachments(String spaceUname, String pageUuid, int draft){
+        try {
+            //get this page all 
+            User user = WikiUtil.getUser();
+            //spaceUname and pageUuid
+            List<FileNode> files = pageService.getPageAttachment(spaceUname, pageUuid, true, false, user);
+            return PageUtil.copyAttachmentsJson(files, user.getUsername(), draft > 0?draft:COPY_ATTACHMENT_WITHOUT_DRAFT); 
+        } catch (Exception e) {
+            log.error("Get page attachment failed:" + pageUuid , e);
+            return null;
+        }
+        
+    }
+    
 	public PageModel removeAttachment(String spaceUname,String pageUuid, String nodeUuid, String nodeVersion) {
 
 		PageModel model = new PageModel();

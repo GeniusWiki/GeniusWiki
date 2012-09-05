@@ -49,6 +49,7 @@ public interface PageControllerAsync extends RemoteServiceAsync {
 	//return histories less than this startVer  
 	void getPageHistory(String spaceUname, String pageUuid,int startVer, int returnCount, AsyncCallback<PageItemListModel> callback);
 	
+	void getAttachments(String spaceUname, String pageUuid, int draft, AsyncCallback<String> callback);
 	void removeAttachment(String spaceUname,String pageUuid, String nodeUuid, String nodeVersion, AsyncCallback<PageModel> callback);
 	void removeDraft(String spaceUname,String pageUuid, int type, AsyncCallback<PageModel> callback);
 	void getPageTree(String spaceUname, AsyncCallback<TreeItemListModel> callback);

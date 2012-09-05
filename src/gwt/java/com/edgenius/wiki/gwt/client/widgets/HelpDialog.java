@@ -56,9 +56,6 @@ public class HelpDialog  extends DialogBox implements ClickHandler{
 		DOM.setElementAttribute(syntax.getElement(), "frameborder", "0");
 		DOM.setElementAttribute(key.getElement(), "frameborder", "0");
 		
-		syntax.setSize("100%", "100%");
-		key.setSize("100%", "100%");
-		
 		FlowPanel sbar = new FlowPanel();
 		Image sImg1 = new Image(IconBundle.I.get().home_link());
 		sbar.add(sImg1);

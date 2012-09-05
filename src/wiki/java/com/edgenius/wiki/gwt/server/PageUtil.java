@@ -183,36 +183,7 @@ public class PageUtil {
 		}
 		
 		if(coypAttachment != NOT_COPY_ATTACHMENT){
-			List<FileNode> attList = page.getAttachments();
-			List<FileNode> userAttList = new ArrayList<FileNode>();
-			if(attList != null && attList.size() > 0){
-				for (FileNode node: attList) {
-					//this node is manual draft or auto draft
-					if(node.getStatus()  > 0){
-						if(!StringUtils.equalsIgnoreCase(node.getCreateor(),currentUser.getUsername())
-							|| coypAttachment == COPY_ATTACHMENT_WITHOUT_DRAFT){
-							//if user is not current user, it means it is other person's draft, then remove 
-							continue;
-						}
-						//I comment this filter(2009/06/17) because I think this can maximum ensure user upload works.
-						//If do below filter, it causes confuse sometimes. For example, user upload foo.png and save manual 
-						//draft then exit, if go back editing, upload image bar.png, if reload manual draft, the bar.png is gone as 
-						//it is auto-draft status yet. But if at beginning, user only keep auto draft, then reload will load
-						//both images as they both status are auto-draft... confused here - if I upload an image bar.png, 
-						// this image kept if I restore auto draft, but it is gone if I restore manual draft? So anyway, 
-						// I always load all status attachment whatever the request...
-						
-						//could be COPY_ATTACHMENT_WITH_DRAFT,COPY_ATTACHMENT_WITH_AUTOSAVE, 
-						//Auto-save also need load manual draft attachment, but manual does not load auto's
-//						if(coypAttachment < node.getStatus() ){
-//							continue;
-//						}
-					}
-					userAttList.add(node);
-				}
-				Gson gson = new Gson();
-				value.attachmentJson = gson.toJson(userAttList);
-			}
+		    value.attachmentJson = copyAttachmentsJson(page.getAttachments(), currentUser.getUsername(), coypAttachment);
 		}
 		//size of all OPERATIONS, some operation is not available for page, just left it as zero value
 		//plus space admin permission onto position 11
@@ -359,7 +330,39 @@ public class PageUtil {
 		return model;
 	}
 
-
+	public static String copyAttachmentsJson(List<FileNode> attList, String currentUserName, int coypAttachment){
+        List<FileNode> userAttList = new ArrayList<FileNode>();
+        if(attList != null && attList.size() > 0){
+            for (FileNode node: attList) {
+                //this node is manual draft or auto draft
+                if(node.getStatus()  > 0){
+                    if(!StringUtils.equalsIgnoreCase(node.getCreateor(), currentUserName)
+                        || coypAttachment == COPY_ATTACHMENT_WITHOUT_DRAFT){
+                        //if user is not current user, it means it is other person's draft, then remove 
+                        continue;
+                    }
+                    //I comment this filter(2009/06/17) because I think this can maximum ensure user upload works.
+                    //If do below filter, it causes confuse sometimes. For example, user upload foo.png and save manual 
+                    //draft then exit, if go back editing, upload image bar.png, if reload manual draft, the bar.png is gone as 
+                    //it is auto-draft status yet. But if at beginning, user only keep auto draft, then reload will load
+                    //both images as they both status are auto-draft... confused here - if I upload an image bar.png, 
+                    // this image kept if I restore auto draft, but it is gone if I restore manual draft? So anyway, 
+                    // I always load all status attachment whatever the request...
+                    
+                    //could be COPY_ATTACHMENT_WITH_DRAFT,COPY_ATTACHMENT_WITH_AUTOSAVE, 
+                    //Auto-save also need load manual draft attachment, but manual does not load auto's
+//                  if(coypAttachment < node.getStatus() ){
+//                      continue;
+//                  }
+                }
+                userAttList.add(node);
+            }
+            Gson gson = new Gson();
+            return  gson.toJson(userAttList);
+        }
+        //empty json
+        return "{}";
+	}
 	//********************************************************************
 	//                       Private methods
 	//********************************************************************

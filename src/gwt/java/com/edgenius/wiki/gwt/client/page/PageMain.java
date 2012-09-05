@@ -352,6 +352,7 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 	private void exposeJSMethods() {
 		CalendarDetailDialog.bindJsMethod();
 		ShellDialog.bindJsMethod();
+		AttachmentPanel.bindJsMethod();
 	}
 
 	/**

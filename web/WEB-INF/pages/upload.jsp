@@ -133,12 +133,13 @@
 <script>
 $(function () {
     'use strict';
+	var dirty = false;
     $('#fileupload').fileupload({
     	destroyed: function (e, data) {
-            alert("delete");
+    		dirty = true;
         },
         submit: function (e, data) {
-                alert('submit file: ');
+        	dirty = true;
         }
     });
     $('#fileupload').each(function () {
@@ -151,8 +152,15 @@ $(function () {
                     .call(that, null, {result: result});
             }
         });
-    });    
+    });   
+    $(window).bind('beforeunload', function(){ 
+     		if (dirty){
+     			gwtRefreshAttachments('${spaceUname}','${pageUuid}"',${draft});
+     		}
+       } 
+    );
 });
+
 </script>
 </body> 
 </html>

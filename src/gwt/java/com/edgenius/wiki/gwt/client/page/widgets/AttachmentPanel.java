@@ -52,6 +52,7 @@ import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.CloseButton;
 import com.edgenius.wiki.gwt.client.widgets.IconBundle;
 import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
+import com.edgenius.wiki.gwt.client.widgets.UploadDialog;
 import com.edgenius.wiki.gwt.client.widgets.Writable;
 import com.edgenius.wiki.gwt.client.widgets.WritableListener;
 import com.edgenius.wiki.gwt.client.widgets.ZebraTable;
@@ -345,7 +346,18 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		if (sender == closeBtn) {
 			this.setVisible(false);
 		} else if (sender == addMoreAttBtn) {
-			uploadFormPanel.addUploderItem();
+			//uploadFormPanel.addUploderItem();
+		    int draftStatus = SharedConstants.AUTO_DRAFT;
+            if(main.getVisiblePanelIndex() == PageMain.EDIT_PANEL){
+                //anyway, save initial status: maybe user will choose save or save-draft, then status will modified in server side.
+                draftStatus = SharedConstants.AUTO_DRAFT;
+            }else if(main.getVisiblePanelIndex() == PageMain.VIEW_PANEL){
+                //for viewPanel uploading, it always immediately become formal attachment
+                draftStatus = SharedConstants.NONE_DRAFT;
+            }
+            
+		    UploadDialog dialog = new UploadDialog(PageMain.getSpaceUname(), PageMain.getPageUuid(), draftStatus);
+            dialog.showbox();
 		} else if (sender == uploadBtn){
 			int draftStatus = SharedConstants.AUTO_DRAFT;
 			if(main.getVisiblePanelIndex() == PageMain.EDIT_PANEL){
@@ -355,6 +367,8 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 				//for viewPanel uploading, it always immediately become formal attachment
 				draftStatus = SharedConstants.NONE_DRAFT;
 			}
+			
+		
 			upload(false,draftStatus);
 		}
 	}
@@ -413,6 +427,30 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		
 		return modelList;
 	}
+	
+	public void refresh(String spaceUname, String pageUuid, int draftStatus){
+	    PageControllerAsync action = ControllerFactory.getPageController();
+        action.getAttachments(spaceUname, pageUuid, draftStatus, new AsyncCallback<String>() {
+            
+            @Override
+            public void onSuccess(String json) {
+                AttachmentPanel.this.mergeAttachments(json);
+            }
+            
+            @Override
+            public void onFailure(Throwable arg0) {
+                //nothing
+            }
+        });
+	}
+	/**
+     * For Space admin Shell setting bind to change theme.
+    */
+    public static native void bindJsMethod() /*-{
+        $wnd.gwtRefreshAttachments = function(spaceUname, pageUuid, draftStatus) {
+            @com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel::refresh(Ljava/lang/String;Ljava/lang/String;I)(spaceUname, pageUuid, draftStatus);
+        };
+    }-*/;
 	//********************************************************************
 	//               Private methods
 	//********************************************************************
