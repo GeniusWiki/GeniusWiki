@@ -958,6 +958,8 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 						//2 minutes wait other relative lock release
 						ThreadInterruptManager.addThread(Thread.currentThread(), TIMEOUT);
 						relCond.await();
+						//do next cycle compete to acquire lock.
+						acquireLock(spacename, identifier, nodeUuid);
 					}
 				}
 				
@@ -990,6 +992,8 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 						//2 minutes wait, if 
 						ThreadInterruptManager.addThread(Thread.currentThread(), TIMEOUT);
 						relCond.await();
+						//do next cycle compete to acquire lock.
+						acquireLock(spacename, identifier, nodeUuid);
 					}
 				}
 			}else{
@@ -1026,6 +1030,8 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 						//2 minutes wait, if 
 						ThreadInterruptManager.addThread(Thread.currentThread(), TIMEOUT);
 						relCond.await();
+						//do next cycle compete to acquire lock.
+						acquireLock(spacename, identifier, nodeUuid);
 					}
 				}
 			}
