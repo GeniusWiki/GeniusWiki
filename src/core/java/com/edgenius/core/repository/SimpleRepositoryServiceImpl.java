@@ -920,6 +920,8 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 	}
 	private void acquireLock(String spacename, String identifier, String nodeUuid) throws RepositoryTiemoutExcetpion {
 		
+		log.debug("Request - Repository space {} identifier {} node {} acquire write lock in thread {}. "
+				, new String[]{spacename, identifier,nodeUuid, Thread.currentThread().getName()});
 		try {
 			writeLock.lock();
 
@@ -956,8 +958,6 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 						//2 minutes wait other relative lock release
 						ThreadInterruptManager.addThread(Thread.currentThread(), TIMEOUT);
 						relCond.await();
-						//do next cycle compete to acquire lock.
-						acquireLock(spacename, identifier, nodeUuid);
 					}
 				}
 				
@@ -990,8 +990,6 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 						//2 minutes wait, if 
 						ThreadInterruptManager.addThread(Thread.currentThread(), TIMEOUT);
 						relCond.await();
-						//do next cycle compete to acquire lock.
-						acquireLock(spacename, identifier, nodeUuid);
 					}
 				}
 			}else{
@@ -1028,15 +1026,14 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 						//2 minutes wait, if 
 						ThreadInterruptManager.addThread(Thread.currentThread(), TIMEOUT);
 						relCond.await();
-						//do next cycle compete to acquire lock.
-						acquireLock(spacename, identifier, nodeUuid);
 					}
 				}
 			}
-			log.info("Repository space " + spacename + " identifier " + identifier + " node " + nodeUuid + " acquire write lock successfully. " );
+			log.debug("Repository space {} identifier {} node {} acquire write lock successfully in thread {}. "
+					, new String[]{spacename, identifier,nodeUuid, Thread.currentThread().getName()});
 		} catch (InterruptedException e) {
 			log.info("Acquire space lock concurrent interrupted");
-			throw new RepositoryTiemoutExcetpion("Repository can acquired write permssion in time period " + TIMEOUT +". Timeout exception");
+			throw new RepositoryTiemoutExcetpion("Repository cannot acquired write permssion in time period " + TIMEOUT +". Timeout exception");
 		}finally{
 			writeLock.unlock();
 		}
@@ -1046,6 +1043,7 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 	 * release space level lock. 
 	 */
 	private void releaseLock(String spacename, String identifier, String nodeUuid) {
+		log.debug("Request - Release lock on space {} identifier {} node {}", new String[]{spacename, identifier,nodeUuid});
 		
 		try {
 			writeLock.lock();
@@ -1083,7 +1081,7 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 					}
 				}
 			}
-			log.info("Repository space " + spacename + " identifier " + identifier + " node " + nodeUuid + " acquire release lock successfully. " );
+			log.debug("Repository space {} identifier {} node {} release write lock successfully. ", new String[]{spacename, identifier,nodeUuid});
 		}finally{
 			writeLock.unlock();
 		}
