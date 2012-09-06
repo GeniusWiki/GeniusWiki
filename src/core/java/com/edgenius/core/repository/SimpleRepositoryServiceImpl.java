@@ -968,7 +968,7 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 				if(cond == null){
 					cond = new ConditionGroup();
 					spaceLockMap.put(spacename, cond);
-					//this space never has a lock whatever any level, success acquired lock
+					//this space does not has a lock whatever any level yet, success acquired lock
 					Condition idCond = writeLock.newCondition();
 					cond.identifierConditionMap.put(identifier, idCond);
 				}else{
@@ -985,7 +985,7 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 						}
 					}
 					if(relCond == null){
-						//not relative  lock, success acquired lock , success acquired lock
+						//no lock in this level, success acquired lock 
 						Condition idCond = writeLock.newCondition();
 						cond.identifierConditionMap.put(identifier, idCond);
 					}else{
@@ -1049,7 +1049,7 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 	 * release space level lock. 
 	 */
 	private void releaseLock(String spacename, String identifier, String nodeUuid) {
-		log.debug("Request - Release lock on space {} identifier {} node {}", new String[]{spacename, identifier,nodeUuid});
+		log.debug("Request - Release lock on space {} identifier {} node {} in {}", new String[]{spacename, identifier,nodeUuid, Thread.currentThread().getName()});
 		
 		try {
 			writeLock.lock();
@@ -1087,7 +1087,7 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 					}
 				}
 			}
-			log.debug("Repository space {} identifier {} node {} release write lock successfully. ", new String[]{spacename, identifier,nodeUuid});
+			log.debug("Repository space {} identifier {} node {} release write lock successfully in {}", new String[]{spacename, identifier,nodeUuid,Thread.currentThread().getName()});
 		}finally{
 			writeLock.unlock();
 		}
