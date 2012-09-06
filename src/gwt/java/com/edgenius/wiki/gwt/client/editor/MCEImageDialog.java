@@ -45,6 +45,7 @@ import com.edgenius.wiki.gwt.client.widgets.HintTextBox;
 import com.edgenius.wiki.gwt.client.widgets.ImageSlideListener;
 import com.edgenius.wiki.gwt.client.widgets.ImageSlider;
 import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
+import com.edgenius.wiki.gwt.client.widgets.UploadDialog;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -69,8 +70,8 @@ public class MCEImageDialog extends MCEDialog implements ImageSlideListener, Att
 	private MessageWidget message = new MessageWidget();
 	private ImageSlider slider = new ImageSlider();
 	
-	public MCEImageDialog(TinyMCE tiny){
-		super(tiny,false,false,true);
+	public MCEImageDialog(final TinyMCE tiny){
+		super(tiny,false,true,true);
 		
 		this.spaceUname = tiny.getEditor().getSpaceUname();
 
@@ -110,11 +111,8 @@ public class MCEImageDialog extends MCEDialog implements ImageSlideListener, Att
 			ClickLink uploadImg = new ClickLink(Msg.consts.upload());
 			uploadImg.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					attachmentPanel.setVisible(true);
-					if(!attachmentPanel.isReadonly()){
-						//add one FileUpload item for user ready to upload
-						attachmentPanel.addOneFileUploadBox();
-					}
+					UploadDialog dialog = new UploadDialog(tiny.getEditor().getAttachmentPanel(), PageMain.getSpaceUname(), PageMain.getPageUuid(), SharedConstants.AUTO_DRAFT);
+					dialog.showbox();
 				};
 			});
 			panel.add(uploadImg);

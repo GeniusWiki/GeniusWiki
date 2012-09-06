@@ -967,22 +967,12 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 				return;
 			}
 			
-			//show viewPanel depends on if there are attachment
-			if(attPanel.hasAttachments()){
-				
-				//fill preview fields: User can choose "preview" during attachment uploading and waiting to exit to ViewPanel
-				main.setPreviewReady(true,model);
-				
-				//fill model to viewPanel, which will be shown after attachment uploaded finish.
-				main.viewPanel.fillPanel(model);
-				attPanel.upload(true,draftStatus);
-			}else{
-				//fill viewPanel then resetToken: remove $EDIT or $CREATE and don't invoke RPC call as well.
-				exitConfirm(false);
-				dirty = false;
-				main.viewPanel.showPanel(model);
-				main.viewPanel.resetToken();
-			}
+
+			//fill viewPanel then resetToken: remove $EDIT or $CREATE and don't invoke RPC call as well.
+			exitConfirm(false);
+			dirty = false;
+			main.viewPanel.showPanel(model);
+			main.viewPanel.resetToken();
 		}
 
 	}

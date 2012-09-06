@@ -397,8 +397,7 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		if(attachmentBtn.isVisible()){
 			attPanel.setVisible(true);
 			if(!attPanel.isReadonly()){
-				//add one FileUpload item for user ready to upload
-				attPanel.addOneFileUploadBox();
+			    //TODO: attachment auto show upload dialog
 			}
 		}
 	}
