@@ -26,7 +26,6 @@ package com.edgenius.wiki.gwt.client.server;
 import com.edgenius.wiki.gwt.client.model.FeedbackModel;
 import com.edgenius.wiki.gwt.client.model.InvitationModel;
 import com.edgenius.wiki.gwt.client.model.PortletModel;
-import com.edgenius.wiki.gwt.client.model.UploadProgressModel;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -34,7 +33,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface HelperControllerAsync extends RemoteServiceAsync{
 	
-	public void checkUploadingStatus( AsyncCallback<UploadProgressModel> callback);
 	public void sendFeedback(FeedbackModel feedback, AsyncCallback<Boolean> callback);
 	public void sendInvitation(InvitationModel invitation , AsyncCallback<InvitationModel> callback);
 	/**

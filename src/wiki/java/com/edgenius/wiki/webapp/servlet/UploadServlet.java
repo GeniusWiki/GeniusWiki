@@ -58,8 +58,6 @@ import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.webapp.BaseServlet;
 import com.edgenius.core.webapp.filter.AjaxRedirectFilter.RedirectResponseWrapper;
 import com.edgenius.wiki.WikiConstants;
-import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.service.ActivityLogService;
 import com.edgenius.wiki.service.PageException;
@@ -99,7 +97,6 @@ public class UploadServlet extends BaseServlet {
 
 		PageService pageService = getPageService();
 
-	    UploadStatus listener = new UploadStatus(request);
 		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
 
 		List<FileNode> files = new ArrayList<FileNode>();
@@ -207,7 +204,6 @@ public class UploadServlet extends BaseServlet {
 //				}
 			}
 			
-			listener.done();
 		} catch (RepositoryQuotaException e) {
 			FileNode att = new FileNode();
 			att.setError(getMessageService().getMessage("err.quota.exhaust"));
@@ -220,9 +216,7 @@ public class UploadServlet extends BaseServlet {
 			FileNode att = new FileNode();
             att.setError(getMessageService().getMessage("err.authentication.required"));
             files = Arrays.asList(att);
-            
-//			sendAjaxFormRedir(response,SharedConstants.FORM_RET_AUTH_EXP,redir);
-//			return;
+
 		} catch (AccessDeniedException e) {
 			String redir = ((RedirectResponseWrapper)response).getRedirect();
 			if(redir == null) redir = WikiConstants.URL_ACCESS_DENIED;
@@ -231,8 +225,7 @@ public class UploadServlet extends BaseServlet {
 	        FileNode att = new FileNode();
 	        att.setError(getMessageService().getMessage("err.access.denied"));
             files = Arrays.asList(att);
-			//sendAjaxFormRedir(response,SharedConstants.FORM_RET_ACCESS_DENIED_EXP,redir);
-//			return;
+
 		} catch (Exception e) {
 			// FileUploadException,RepositoryException
 			log.error("File upload failed " , e);
@@ -255,17 +248,7 @@ public class UploadServlet extends BaseServlet {
 		}
 	}
 
-	
-	/**
-	 * @param redir
-	 */
-	private void sendAjaxFormRedir(HttpServletResponse response, String type,String redir) {
-		try {
-			response.getOutputStream().write((SharedConstants.FORM_RET_HEADER+type+redir).getBytes());
-		} catch (IOException e) {
-			log.error(e.toString(),e);
-		}
-	}
+
 
 	private MessageService getMessageService() {
 		ServletContext context = this.getServletContext();

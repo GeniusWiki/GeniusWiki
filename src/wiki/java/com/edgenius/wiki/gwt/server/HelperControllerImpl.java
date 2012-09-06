@@ -39,11 +39,9 @@ import com.edgenius.core.repository.ITicket;
 import com.edgenius.core.repository.RepositoryService;
 import com.edgenius.core.service.MailService;
 import com.edgenius.core.service.MessageService;
-import com.edgenius.core.util.ServletUtils;
 import com.edgenius.wiki.gwt.client.model.FeedbackModel;
 import com.edgenius.wiki.gwt.client.model.InvitationModel;
 import com.edgenius.wiki.gwt.client.model.PortletModel;
-import com.edgenius.wiki.gwt.client.model.UploadProgressModel;
 import com.edgenius.wiki.gwt.client.server.HelperController;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
@@ -56,7 +54,6 @@ import com.edgenius.wiki.service.PageService;
 import com.edgenius.wiki.service.SecurityDummy;
 import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.util.WikiUtil;
-import com.edgenius.wiki.webapp.servlet.UploadStatus;
 
 /**
  * @author Dapeng.Ni
@@ -74,20 +71,6 @@ public class HelperControllerImpl  extends GWTSpringController implements Helper
 	private ActivityLogService activityLog;
 	private SettingService settingService;
 	
-	public UploadProgressModel checkUploadingStatus() {
-		UploadStatus status = (UploadStatus) ServletUtils.getRequest().getSession().getAttribute(UploadStatus.NAME);
-		UploadProgressModel model = new UploadProgressModel();
-		if(status != null){
-			log.debug("total " +status.getTotalSize() +  ". current reading..."+status.getBytesRead());
-			model.status = status.getStatus();
-			model.bytesRead = status.getBytesRead();
-			model.totalSize = status.getTotalSize();
-			model.elapseSecond = status.getElapsedSecond();
-			model.currentFileIndex = status.getFileIndex();
-			model.currentFilename = status.getFilename();
-		}		
-		return model;
-	}
 
 	public boolean sendFeedback(FeedbackModel feedback) {
 		

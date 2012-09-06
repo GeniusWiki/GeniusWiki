@@ -84,8 +84,6 @@ import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ProgressBar;
-import com.google.gwt.user.client.ui.ProgressBar.TextFormatter;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -117,14 +115,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 
 	private Hidden removedList = new Hidden("removedList");
 
-	private static final int SUBMIT_COUNTER_SUM = 8;
-	private int submitCounter = 0;
-	private Timer submitTimer = new SubmitTimer();
 	private PageMain main;
-	//1 second
-	private final static int PROGRESS_DELAY = 1000;
-	//10 minutes
-	private final static long PROGRESS_TIMEOUT = PROGRESS_DELAY * 600;
 	
 	private boolean readonly;
 	private Vector<AttachmentListener> attachmentListeners = new Vector<AttachmentListener>();
@@ -251,19 +242,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			uploadFormPanel.submitForm();
 		}
 	}
-	public void startSubmitTimer() {
-		//has attachment and not start yet
-		if(hasAttachments() && submitCounter == 0){
-			submitCounter = SUBMIT_COUNTER_SUM;
-			//every 1s to count down.
-			submitTimer.scheduleRepeating(1000);
-		}		
-	}
-	public void cancleSubmitTimer() {
-		submitCounter = SUBMIT_COUNTER_SUM;
-		counter.setText("");
-		submitTimer.cancel();
-	}
+
 	/**
 	 * Merge given JSON string with current attachment list on UploadedPanel.
 	 * @param results
@@ -435,7 +414,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
             @Override
             public void onSuccess(String json) {
             	if(json != null){
-            		AttachmentPanel.this.clear();
+            		AttachmentPanel.this.reset();
             		AttachmentPanel.this.mergeAttachments(json);
             	}
             }
@@ -1191,11 +1170,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	private class UploadingPanel extends SimplePanel{
 		private VerticalPanel uploadingListPanel = new VerticalPanel();
 		private HorizontalPanel monitor = new HorizontalPanel();
-		private UploadProcessAsync uploadingAsync = new UploadProcessAsync();
-		private ProgressBar progressBar = new ProgressBar();
 		public UploadingPanel(){
-			monitor.add(progressBar);
-			progressBar.setVisible(false);
 			
 			VerticalPanel main = new VerticalPanel();
 			main.add(monitor);
@@ -1211,7 +1186,6 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		
 		public void clear(){
 			uploadingListPanel.clear();
-			progressBar.setVisible(false);
 		}
 		/**
 		 * @param index
@@ -1257,38 +1231,9 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			uploadingListPanel.add(itemPanel);
 		}
 
-		/**
-		 * 
-		 */
-		public void checkProgress() {
-			progressBar.setVisible(true);
-			HelperControllerAsync helperController = ControllerFactory.getHelperController();
-			helperController.checkUploadingStatus(uploadingAsync);
-			
-		}
 
-		public void setProcess(double percent,final String text) {
-			progressBar.setVisible(true);
-			progressBar.setTextFormatter(new TextFormatter(){
-				protected String getText(ProgressBar bar, double curProgress) {
-					return text;
-				}
-			});
-			progressBar.setProgress(percent);
 
-		}
 
-		public void done() {
-			progressBar.setTextFormatter(new TextFormatter(){
-				protected String getText(ProgressBar bar, double curProgress) {
-					return "";
-				}
-			});
-			progressBar.setProgress(0);
-			progressBar.setVisible(false);
-			
-			//don't clear uploadingListPanel, which will clear from UploadedPanel calls UploadingPanel.removeItem()
-		}
 	}
 
 	//********************************************************************
@@ -1412,8 +1357,6 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 
 		private void submitForm() {
 			if(!hasAtt()){
-				//try to cancel first, In this case: timer start from saving draft require, but attachment removed
-				submitTimer.cancel();
 				return;
 			}
 			if (main.getPageUuid() == null || main.getPageUuid().trim().length() == 0) {
@@ -1455,9 +1398,6 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			//only left 3 hidden widget.
 			if(panel.getWidgetCount() <= 3)
 				uploadBtn.setEnabled(false);
-			
-			if(!AbstractEntryPoint.isOffline())
-				uploadingPanel.checkProgress();
 
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1514,67 +1454,5 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			uploadFormPanel.draftHidden.setValue(Integer.valueOf(draftStatus).toString());
 		}
 	}
-	
-	// ********************************************************************
-	// Form upload handler methods
-	// ********************************************************************
-	private class UploadProcessAsync implements AsyncCallback<UploadProgressModel>{
-
-		private Timer timer = new CheckTimer();
-		public void onFailure(Throwable error) {
-			GwtClientUtils.processError(error);
-		}
-
-		public void onSuccess(UploadProgressModel model) {
-
-			if(!GwtClientUtils.preSuccessCheck(model,null)){
-				return;
-			}
-			if(model.status == UploadProgressModel.UPLOADING){
-				float percent = (float) Math.ceil(((float)model.bytesRead / (float)model.totalSize) * 100);
-				String read = GwtUtils.convertHumanSize(model.bytesRead);
-				String total = GwtUtils.convertHumanSize(model.totalSize);
-
-				uploadingPanel.setProcess(percent,read+"/" +total);
-				timer.schedule(PROGRESS_DELAY);
-			}else{
-				//upload is done. clean
-				uploadingPanel.done();
-			}
-			
-		}
-		private class CheckTimer extends Timer{
-			private int reqestCount = 0;
-			public void run() {
-				reqestCount++;
-				if(PROGRESS_DELAY * reqestCount > PROGRESS_TIMEOUT){
-					//stop update progress bar.
-					return;
-				}
-				uploadingPanel.checkProgress();
-			}
-		}
-
-	}
-	//********************************************************************
-	//               Timer class
-	//********************************************************************
-	
-	private class SubmitTimer extends Timer{
-
-		public void run() {
-			if(submitCounter < 1){
-				upload(false,SharedConstants.AUTO_DRAFT);
-				submitCounter = 0;
-				submitTimer.cancel();
-				counter.setText("");
-			}else{
-				counter.setText(Integer.valueOf(submitCounter).toString());
-				submitCounter--;
-			}
-		}
-	}
-
-
 
 }

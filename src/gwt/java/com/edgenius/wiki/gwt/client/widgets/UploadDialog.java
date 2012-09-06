@@ -68,9 +68,9 @@ public class UploadDialog extends DialogBox implements DialogListener{
 
 	@Override
 	public boolean dialogClosing(DialogBox dialog) {
-		if(isDirty()){
+//		if(isDirty()){
 			attachmentPanel.refresh(spaceUname, pageUuid, draft);
-		}
+//		}
 		return true;
 	}
 

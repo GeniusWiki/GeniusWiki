@@ -26,7 +26,6 @@ package com.edgenius.wiki.gwt.client.server;
 import com.edgenius.wiki.gwt.client.model.FeedbackModel;
 import com.edgenius.wiki.gwt.client.model.InvitationModel;
 import com.edgenius.wiki.gwt.client.model.PortletModel;
-import com.edgenius.wiki.gwt.client.model.UploadProgressModel;
 
 /**
  * @author Dapeng.Ni
@@ -35,7 +34,6 @@ public interface HelperController extends RemoteService{
 	String MODULE_ACTION_URI = "helper.rpcs";
 
 
-	public UploadProgressModel checkUploadingStatus();
 	public boolean sendFeedback(FeedbackModel feedback);
 	
 	public InvitationModel sendInvitation(InvitationModel invitation);
