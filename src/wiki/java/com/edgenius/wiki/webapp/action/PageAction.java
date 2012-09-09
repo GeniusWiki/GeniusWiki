@@ -177,7 +177,7 @@ public class PageAction extends BaseAction {
             List<FileNode> files = pageService.getPageAttachment(s, u, false, false, user);
             
             PrintWriter writer = getResponse().getWriter();
-            writer.print(FileNode.toAttachmentsJson(files,s, messageService, userReadingService));
+            writer.print(FileNode.toAttachmentsJson(files,s, WikiUtil.getUser(), messageService, userReadingService));
             
             return null;
         } catch (Exception e) {

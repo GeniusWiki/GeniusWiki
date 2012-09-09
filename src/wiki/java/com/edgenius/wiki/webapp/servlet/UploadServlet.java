@@ -235,7 +235,7 @@ public class UploadServlet extends BaseServlet {
 		}
 
 		try {
-			String json = FileNode.toAttachmentsJson(files,spaceUname, getMessageService(), getUserReadingService());
+			String json = FileNode.toAttachmentsJson(files,spaceUname, WikiUtil.getUser(), getMessageService(), getUserReadingService());
 			
 			//TODO: does not compress request in Gzip, refer to 
 			//http://www.google.com/codesearch?hl=en&q=+RemoteServiceServlet+show:PAbNFg2Qpdo:akEoB_bGF1c:4aNSrXYgYQ4&sa=N&cd=1&ct=rc&cs_p=https://ssl.shinobun.org/svn/repos/trunk&cs_f=proprietary/gwt/gwt-user/src/main/java/com/google/gwt/user/server/rpc/RemoteServiceServlet.java#first

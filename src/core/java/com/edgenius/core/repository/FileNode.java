@@ -39,7 +39,6 @@ import com.edgenius.core.service.MessageService;
 import com.edgenius.core.service.UserReadingService;
 import com.edgenius.core.util.DateUtil;
 import com.edgenius.core.util.WebUtil;
-import com.edgenius.wiki.util.WikiUtil;
 import com.google.gson.Gson;
 
 
@@ -176,7 +175,7 @@ public class FileNode  implements Serializable{
      * @return
      * @throws UnsupportedEncodingException
      */
-    public static String toAttachmentsJson(List<FileNode> files, String spaceUname, MessageService messageService, UserReadingService userReadingService) throws UnsupportedEncodingException {
+    public static String toAttachmentsJson(List<FileNode> files, String spaceUname, User viewer, MessageService messageService, UserReadingService userReadingService) throws UnsupportedEncodingException {
         // convert fileNode to json that for JS template in upload.jsp.
         Gson gson = new Gson();
 
@@ -185,7 +184,7 @@ public class FileNode  implements Serializable{
                 //This could be an error node, skip further message processing/
                 continue;
             }
-            fileNode.displayDate = DateUtil.toDisplayDate(WikiUtil.getUser(), new Date(fileNode.getDate()),messageService);
+            fileNode.displayDate = DateUtil.toDisplayDate(viewer, new Date(fileNode.getDate()),messageService);
             fileNode.url = WebUtil.getPageRepoFileUrl(WebUtil.getHostAppURL(),spaceUname, fileNode.getFilename(), fileNode.getNodeUuid(), true);
             fileNode.deleteUrl = WebUtil.getHostAppURL() + "pages/pages!removeAttachment.do?s=" + URLEncoder.encode(spaceUname, Constants.UTF8) 
                     + "&u=" + URLEncoder.encode(fileNode.getIdentifier(), Constants.UTF8)
