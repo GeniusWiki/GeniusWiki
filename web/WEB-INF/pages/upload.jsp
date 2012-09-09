@@ -13,12 +13,11 @@
 	<!--[if lt IE 9]><script src="${ctxPath}/widgets/html5shiv/html5.js"></script><![endif] -->
 	
 	<link rel="stylesheet" href="${ctxPath}/widgets/jquery/jquery-upload/css/jquery.fileupload-ui.css">
-
 </head>
 <body>
 <div class="container">
 	<div class="well">
-        <h3>Drag and drop files into this dialog or use below "Add files..." button to choose multiple files.</h3>
+        <h3>Drag and drop files into this dialog or use "Add files..." button to choose one or multiple files.</h3>
     </div>
 	<p></p>    
     <form id="fileupload" action="${ctxPath}/pages/upload" method="post" enctype="multipart/form-data">
@@ -164,6 +163,9 @@ $(function () {
 function isAttachmentDirty(){
 	return dirty;
 }
+$(document).ready(function () {
+	window.top.gwtUploadPageReady();
+});
 </script>
 </body> 
 </html>

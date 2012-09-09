@@ -313,4 +313,5 @@ public class Css {
 	public static final String LABEL = "label";
 	public static final String CURRENT = "current";
     public static final String UPLOAD_DIALOG_BOX = "upload-dialog";
+	public static final String BUSY_PANEL = "busy-panel";
 }

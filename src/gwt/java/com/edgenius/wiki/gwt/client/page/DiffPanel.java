@@ -197,7 +197,6 @@ public abstract class DiffPanel extends MessagePanel{
 			diffRendered();
 			fillDiffContent(model);
 			
-//			main.switchTo(PageMain.VIEW_PANEL);
 		}
 	}
 	

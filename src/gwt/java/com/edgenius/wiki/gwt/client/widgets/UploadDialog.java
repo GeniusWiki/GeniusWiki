@@ -28,7 +28,10 @@ import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.ui.DeckPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 
 /**
@@ -40,7 +43,8 @@ public class UploadDialog extends DialogBox implements DialogListener{
 	private String spaceUname;
 	private String pageUuid;
 	private int draft;
-
+	private DeckPanel deck = new DeckPanel();
+	
 	public UploadDialog(AttachmentPanel attachmentPanel, String spaceUname, String pageUuid, int draft){
         this.setText(Msg.consts.upload());
         this.setIcon(new Image(IconBundle.I.get().upload()));
@@ -51,10 +55,27 @@ public class UploadDialog extends DialogBox implements DialogListener{
         this.draft = draft;
         
         Frame upload = new Frame(GwtClientUtils.getBaseUrl() + "pages/upload?uname="+URL.encodeQueryString(spaceUname)+"&puuid="+ pageUuid+"&draft="+draft);
-        this.setWidget(upload);
+        
+        FlowPanel busyPanel = new FlowPanel();
+        String id = HTMLPanel.createUniqueId();
+        HTMLPanel busyPanelDiv = new HTMLPanel("<span></span><div id='"+ id+"'></div>");
+        busyPanelDiv.add(IconBundle.I.loading(), id);
+        busyPanel.add(busyPanelDiv);
+        busyPanelDiv.setStyleName(Css.BUSY_PANEL);
+        busyPanelDiv.addStyleName("upload");
+        
+		deck.add(busyPanel);
+        deck.add(upload);
+        
+        deck.showWidget(0);
+        
+        this.setWidget(deck);
         upload.setSize("100%", "100%");
+        deck.setSize("100%", "100%");
         this.addStyleName(Css.UPLOAD_DIALOG_BOX);
         this.addDialogListener(this);
+        
+        this.bindJSMethod(this);
         
     }
 
@@ -69,6 +90,7 @@ public class UploadDialog extends DialogBox implements DialogListener{
 	@Override
 	public boolean dialogClosing(DialogBox dialog) {
 //		if(isDirty()){
+		//always refresh attachment panel - until  isDirty() working. 
 			attachmentPanel.refresh(spaceUname, pageUuid, draft);
 //		}
 		return true;
@@ -80,6 +102,15 @@ public class UploadDialog extends DialogBox implements DialogListener{
 	@Override
 	public void dialogRelocated(DialogBox dialog) {}
 	
+	public void ready(){
+		deck.showWidget(1);
+	}
+	
+	public native boolean bindJSMethod(UploadDialog dialog)/*-{
+		$wnd.gwtUploadPageReady = function() {
+			dialog.@com.edgenius.wiki.gwt.client.widgets.UploadDialog::ready()();
+		};
+	}-*/;
 	public native boolean isDirty()/*-{
 		return $wnd.isAttachmentDirty();
 	}-*/;

@@ -175,7 +175,7 @@ public class DialogBox extends PopupPanel implements HasHTML, HasText,MouseOverH
 		bodyTable.setWidth("100%");
 		bottomTable.setWidth("100%");
 		
-		body.setWidth("100%");
+		body.setSize("100%","100%");
 		caption.setWidth("100%");
 		
 		panel.setStyleName(Css.DIALOG_BOX_TABLE);

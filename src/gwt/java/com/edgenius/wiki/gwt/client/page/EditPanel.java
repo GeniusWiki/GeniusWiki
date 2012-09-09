@@ -828,17 +828,17 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	 */
 	private void versionConflictMessage() {
 
-		message.warning(buildVersionConflictMessage(),false);
-		main.previewPanel.message.warning(buildVersionConflictMessage(), false);
+		message.warning(buildVersionConflictMessage(this),false);
+		main.previewPanel.message.warning(buildVersionConflictMessage(main.previewPanel), false);
 	}
-	private HorizontalPanel buildVersionConflictMessage() {
+	private HorizontalPanel buildVersionConflictMessage(final DiffPanel diffPanel) {
 		ClickLink diffLink = new ClickLink(Msg.consts.compare());
 		diffLink.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				//this compare won't be in TOKEN way to invoke: when user refresh page, it will return to create/edit page
 				PageControllerAsync action = ControllerFactory.getPageController();
 				PageModel draft = extactPageValue();
-				action.diffConflict(draft,EditPanel.this.versionAsync);
+				action.diffConflict(draft,diffPanel.versionAsync);
 			}
 
 		});

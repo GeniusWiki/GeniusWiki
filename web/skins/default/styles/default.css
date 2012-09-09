@@ -2145,3 +2145,18 @@ background:transparent none repeat-x scroll 0 -6px;
   border: 0px; 
   background: #E5E5E5;
 }
+.busy-panel{
+	display:table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.busy-panel.upload{
+	width:1110px;
+	height:550px;
+}
+.busy-panel *{
+	vertical-align: middle;
+}
+.busy-panel span{
+	display: inline-block; height: 100%; width: 1px;
+}
