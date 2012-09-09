@@ -103,10 +103,9 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		
 		addMoreAttBtn.addClickHandler(this);
 		
-		int col=0;
 		FlowPanel btnPanel = new FlowPanel();
-		btnPanel.add(addMoreAttBtn);
 		btnPanel.add(noPermLabel);
+		btnPanel.add(addMoreAttBtn);
 		
 		panel.add(btnPanel);
 		panel.add(message);

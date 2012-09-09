@@ -29,7 +29,6 @@ import java.util.List;
 import javax.jms.Queue;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.edgenius.wiki.SpaceSetting;
 import com.edgenius.wiki.WikiConstants;
@@ -45,7 +44,6 @@ import com.edgenius.wiki.util.WikiUtil;
 /**
  * @author Dapeng.Ni
  */
-@Transactional
 public class CommentIndexInterceptor extends IndexInterceptor {
 	private CommentDAO commentDAO;
 	private Queue notifyQueue;
@@ -65,14 +63,15 @@ public class CommentIndexInterceptor extends IndexInterceptor {
 			
 		}else if(StringUtils.equals(method.getName(), CommentService.sendDailyCommentNotify)){
 			log.info("Send daily comment notify is invoked.");
-			List<Integer> pageUidList = commentDAO.getNeedNotifyCommentPageUids();
+			//Warning - this intercetor of sendDailyCommentNotify is triggered in Quartz, 
+			//hibernate session available here becuase OpenSessionInView is not turned on.
+			//So, don't try to use commentDAO.
+			List<Integer> pageUidList = (List<Integer>) retValue;
 			if(pageUidList != null){
 				for (Integer pageUid : pageUidList) {
 					sendEmailNotify(null, pageUid);
 				}
 			}
-			//clean all comment notify flag, whatever it is daily summary or per post 
-			commentDAO.cleanNotifyFlag();
 		}else if(StringUtils.equals(method.getName(), CommentService.removePageComments)){
 			List<PageComment> comments =  (List<PageComment>) retValue;
 			if(comments != null){

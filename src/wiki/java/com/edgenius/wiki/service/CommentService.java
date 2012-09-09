@@ -86,17 +86,17 @@ public interface CommentService {
 	
 	int getDailyCommentCount(Integer pageUid);
 	/**
-	 * Dummy method, just for invoke CommentIndexInterceptor then send email...  a little weird solution
-	 * to send email. 
+	 * This method does not send email directly but in CommentIndexInterceptor send email...  
+	 * a little weird solution to send email. 
 	 * Pros: 
 	 * Easy for UnitText(no need initial MQ application context)
 	 * Unit for email sending in create comment (also in CommentIndexInterceptor)
 	 * 
 	 * Crons:
 	 * Looks weird~~~
-	 * 
+	 * Comment notify flag is reset before email MQ request sent.
 	 */
-	void sendDailyCommentNotify();
+	List<Integer> sendDailyCommentNotify();
 	/**
 	 * @param uid
 	 */

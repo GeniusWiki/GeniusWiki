@@ -1062,14 +1062,15 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 			if(identifier == null && nodeUuid == null){
 				//space level lock
 				if(cond.spaceCondition != null){
-					cond.spaceCondition.signal();
+					//could have multiple threads waiting for this signal... 
+					cond.spaceCondition.signalAll();
 					cond.spaceCondition = null;
 				}
 			}else if(nodeUuid == null){
 				//identifier level lock
 				Condition idCond = cond.identifierConditionMap.get(identifier);
 				if(idCond != null){
-					idCond.signal();
+					idCond.signalAll();
 					cond.identifierConditionMap.remove(identifier);
 				}
 			}else{
@@ -1078,7 +1079,7 @@ public class SimpleRepositoryServiceImpl implements RepositoryService, Initializ
 				if(nodeMap != null){
 					Condition nodeCond = nodeMap.get(nodeUuid);
 					if(nodeCond != null){
-						nodeCond.signal();
+						nodeCond.signalAll();
 						nodeMap.remove(nodeUuid);
 						//no more node level lock, then clear this node identifier map.
 						if(nodeMap.size() == 0){

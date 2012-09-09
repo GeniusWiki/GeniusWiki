@@ -26,7 +26,6 @@ package com.edgenius.wiki.gwt.client.page;
 import java.util.Iterator;
 import java.util.List;
 
-import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
@@ -36,7 +35,6 @@ import com.edgenius.wiki.gwt.client.model.PageItemModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.page.widgets.FunctionWidget;
 import com.edgenius.wiki.gwt.client.render.TextRenderPanel;
-import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
@@ -199,7 +197,7 @@ public abstract class DiffPanel extends MessagePanel{
 			diffRendered();
 			fillDiffContent(model);
 			
-			main.switchTo(PageMain.VIEW_PANEL);
+//			main.switchTo(PageMain.VIEW_PANEL);
 		}
 	}
 	

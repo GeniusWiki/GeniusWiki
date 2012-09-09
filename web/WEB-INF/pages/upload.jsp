@@ -100,8 +100,14 @@
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         {% if (file.error) { %}
-            <td></td>
-            <td class="error" colspan="5"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=file.error%}</td>
+            <td class="error" colspan="4"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=file.error%}</td>
+			<td class="delete">
+           		<button class="btn btn-danger" data-type="GET" data-url="{%=file.deleteUrl%}">
+                  <i class="icon-trash icon-white"></i>
+              	  <span>{%=locale.fileupload.destroy%}</span>
+          	  	</button>
+           	 	<input type="checkbox" name="delete" value="1">
+      		 </td>
         {% } else { %}
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.filename%}" download="{%=file.filename%}">{%=file.filename%}</a>

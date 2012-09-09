@@ -523,6 +523,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	 */
 	public void saveFunctionDone(){
 		functionBtnBar.actionDone();
+		main.previewPanel.functionBtnBar.actionDone();
 	}
 
 	public void setUploadReqired(boolean required) {
@@ -826,6 +827,11 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	 * @param model
 	 */
 	private void versionConflictMessage() {
+
+		message.warning(buildVersionConflictMessage(),false);
+		main.previewPanel.message.warning(buildVersionConflictMessage(), false);
+	}
+	private HorizontalPanel buildVersionConflictMessage() {
 		ClickLink diffLink = new ClickLink(Msg.consts.compare());
 		diffLink.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
@@ -843,8 +849,9 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 				save(true);
 			}
 		});
-		message.warning(ErrorCode.getMessage(ErrorCode.PAGE_VERSION_CONFLICT, null, new Widget[]{diffLink,forcsSaveLink}),false);
+		return ErrorCode.getMessage(ErrorCode.PAGE_VERSION_CONFLICT, null, new Widget[]{diffLink,forcsSaveLink});	
 	}
+
 	private void showExtPanel(boolean show){
 		//show first, to avoid getVisibleWidget() throw exception in hide mode;
 		extPanel.setVisible(show);

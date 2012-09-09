@@ -41,8 +41,6 @@ public class BackupJob extends AuthenticatedQuartzJobBean {
 	@Override
 	public void executeInternal(JobExecutionContext context) throws JobExecutionException {
 
-		
-		
 		BackupService backupService = (BackupService) applicationContext.getBean(BackupService.SERVICE_NAME);
 		try {
 			proxyLoginAsSystemAdmin();

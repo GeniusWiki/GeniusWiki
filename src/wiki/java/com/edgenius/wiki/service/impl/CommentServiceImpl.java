@@ -111,7 +111,7 @@ public class CommentServiceImpl implements CommentService{
 		return comment;
 	}
 	
-	//JDK1.6 @Override
+	@Override
 	public void initCommentNotifierJob(){
 		//create quartz job 
 		try {
@@ -244,9 +244,18 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 
-	//JDK1.6 @Override
-	public void sendDailyCommentNotify() {
-		//dummy!!! see interface JDoc
+	@Override
+	public List<Integer> sendDailyCommentNotify() {
+		//Because this method is triggered in Quartz Cron job, no hibernate session available because openSessionInView not turn on.
+		//So, put all DAO operation inside this method but not in interceptor.
+		log.info("Send daily comment notify is invoked.");
+		List<Integer> pageUidList = commentDAO.getNeedNotifyCommentPageUids();
+		
+		//At this moment, email not sent yet, but we put all database operation here.
+		//clean all comment notify flag, whatever it is daily summary or per post 
+		commentDAO.cleanNotifyFlag();
+		
+		return pageUidList;
 	}
 	//********************************************************************
 	//               Set /get 

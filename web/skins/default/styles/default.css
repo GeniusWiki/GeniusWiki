@@ -741,32 +741,12 @@ a:visited {
 }
 
 .attachment .function {
-	float: center;
-	width: 100%;
-}
-
-.attachment .function .column1 {
-	width: 300px;
-	white-space: nowrap;
-	text-align: left;
-}
-.attachment .function .column2 {
-	
-}
-
-.attachment .function .column3 {
-	width: 100px;
-	white-space: nowrap;
 	text-align: right;
 }
-
-.attachment .function .column4 {
-	width: 100px;
-	white-space: nowrap;
-	text-align: right;
+.attachment .function .gwt-Hyperlink{
+	padding-right: 15px;
+	line-height: 25px;
 }
-
-
 .attachment .uploaded-table tr td {
 	height: 5px;
 }
