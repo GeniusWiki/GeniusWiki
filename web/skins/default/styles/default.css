@@ -2163,6 +2163,20 @@ background:transparent none repeat-x scroll 0 -6px;
 .busy-panel *{
 	vertical-align: middle;
 }
-.busy-panel span{
-	display: inline-block; height: 100%; width: 1px;
+/*\*//*/
+.busy-panel {
+    display: block;
 }
+.busy-panel span {
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+}
+/**/
+</style>
+<!--[if lt IE 8]><style>
+.busy-panel span {
+    display: inline-block;
+    height: 100%;
+}
+</style><![endif]-->
