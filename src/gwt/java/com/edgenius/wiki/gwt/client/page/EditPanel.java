@@ -827,9 +827,11 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	 * @param model
 	 */
 	private void versionConflictMessage() {
-
+	    
+	    //duplicated this message for both edit and preview panel:
 		message.warning(buildVersionConflictMessage(this),false);
 		main.previewPanel.message.warning(buildVersionConflictMessage(main.previewPanel), false);
+		
 	}
 	private HorizontalPanel buildVersionConflictMessage(final DiffPanel diffPanel) {
 		ClickLink diffLink = new ClickLink(Msg.consts.compare());

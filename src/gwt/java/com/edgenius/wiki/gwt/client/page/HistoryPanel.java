@@ -36,6 +36,7 @@ import com.edgenius.wiki.gwt.client.model.PageItemListModel;
 import com.edgenius.wiki.gwt.client.model.PageItemModel;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
+import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.MoreLessButtonBar;
@@ -248,7 +249,7 @@ public class HistoryPanel extends PinPanel implements AsyncCallback<PageItemList
 			}else{
 				//do compare left and right
 	             PageControllerAsync action = ControllerFactory.getPageController();
-	             action.diff(right.isCurrent?null:right.uid, left.isCurrent?null:left.uid, main.viewPanel.versionAsync);
+	             action.diff(right.isCurrent?SharedConstants.CURRENT:right.uid, left.isCurrent?SharedConstants.CURRENT:left.uid, main.viewPanel.versionAsync);
 	        
 //				String token = GwtUtils.buildToken(PageMain.TOKEN_DIFF,String.valueOf(right.isCurrent?-1:right.uid), String.valueOf(left.isCurrent?-1:left.uid));
 //				History.newItem(token);

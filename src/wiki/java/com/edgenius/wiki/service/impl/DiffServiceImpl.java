@@ -60,10 +60,10 @@ public class DiffServiceImpl implements DiffService {
 
 	private String DIFF_START = "<div class=\"diff-text\">";
 	private String DIFF_END = "</div>";
-	private String INSERT_START = "<font color=\"#8000FF\"><span class=\"diff-insertion\">";
-	private String INSERT_END = "</span></font>";
-	private String DEL_START = "<strike><font color=\"red\"><span class=\"diff-deletion\">";
-	private String DEL_END = "</span></font></strike>";
+	private String INSERT_START = "<span class=\"diff-insertion\">";
+	private String INSERT_END = "</span>";
+	private String DEL_START = "<strike><span class=\"diff-deletion\">";
+	private String DEL_END = "</span></strike>";
 
 	//NOTE: \n will replace to \r
 	private char[] WORD_DELIM = new char[]{' ','\t','\r','\f'};
@@ -71,6 +71,9 @@ public class DiffServiceImpl implements DiffService {
 	
 	public String diffToHtml(Integer uid1, Integer uid2,boolean byword) throws DiffException {
 		//current page: the passed in uid should be null.
+	    if(uid1 == null) uid1 = SharedConstants.CURRENT;
+	    if(uid2 == null) uid2 = SharedConstants.CURRENT;
+	    
 		if(uid1 == SharedConstants.CURRENT && uid2 == SharedConstants.CURRENT){
 			throw new DiffException("Unable compare with both -1(current)");
 		}

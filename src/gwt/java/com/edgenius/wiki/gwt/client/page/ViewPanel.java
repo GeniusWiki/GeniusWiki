@@ -427,9 +427,6 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 	private native String readViewLayout()/*-{
 	   return $wnd._view_layout;
 	}-*/;
-	//********************************************************************
-	//               inner class
-	//********************************************************************
 
 	private void historyDiffMessage(final PageModel model) {
 		String spaceUname = model.spaceUname;
@@ -487,7 +484,7 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		
 		String spaceUname = history.spaceUname;
 		Hyperlink preLink;
-		if(history.version == -1){
+		if(history.version == SharedConstants.CURRENT){
 			//latest page
 			preLink= new Hyperlink(Msg.consts.latest(), GwtUtils.getSpacePageToken(spaceUname, history.title));
 		}else{
@@ -503,11 +500,12 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
             @Override
             public void onClick(ClickEvent event) {
                 PageControllerAsync action = ControllerFactory.getPageController();
-                action.diff(history.version == -1 ? null : history.uid, pageUid, versionAsync);
+                //a little confuse here, version and uid both as same value if it is current page... 
+                action.diff(history.version == SharedConstants.CURRENT ? SharedConstants.CURRENT: history.uid, pageUid, versionAsync);
             }
         });
 //		Hyperlink compareButton = new Hyperlink(Msg.consts.compare()
-//				, GwtUtils.buildToken(PageMain.TOKEN_DIFF,String.valueOf(history.version==-1?-1:history.uid), String.valueOf(pageUid)));
+//				, GwtUtils.buildToken(PageMain.TOKEN_DIFF,String.valueOf(history.version==SharedConstants.CURRENT ? SharedConstants.CURREN:history.uid), String.valueOf(pageUid)));
 		
 		msgPanel.add(preLink,idp1);
 		msgPanel.add(modifier, idp2);
@@ -516,7 +514,10 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 	}
 
 	
-	
+	//********************************************************************
+    //               inner class
+    //********************************************************************
+
 	private class WelcomeMessageListener implements RenderContentListener, AsyncCallback<PageModel>{
 		private String pageUuid;
 

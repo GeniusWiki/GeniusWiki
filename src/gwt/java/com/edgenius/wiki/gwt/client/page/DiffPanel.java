@@ -32,7 +32,6 @@ import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.DiffListModel;
 import com.edgenius.wiki.gwt.client.model.DiffModel;
 import com.edgenius.wiki.gwt.client.model.PageItemModel;
-import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.page.widgets.FunctionWidget;
 import com.edgenius.wiki.gwt.client.render.TextRenderPanel;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
@@ -181,34 +180,24 @@ public abstract class DiffPanel extends MessagePanel{
 				return;
 			}
 			
-			diffMessage.cleanMessage();
-			HorizontalPanel msgPanel = new HorizontalPanel();
-			msgPanel.add(new Label(Msg.consts.comparing_view()));
-			
-			//if both version is not current
-			if(model.ver1 != SharedConstants.CURRENT && model.ver2 != SharedConstants.CURRENT){
-				String ver1 = model.ver1 == 0?Msg.consts.latest():Msg.consts.revision()+ " "+model.ver1;
-				String ver2 = model.ver2 == 0?Msg.consts.latest():Msg.consts.revision()+ " "+model.ver2;
-				msgPanel.add(new Label(Msg.consts.comparing() +" "+ver1+" <> "+ver2+"."));
-			}
-			
-			diffMessage.warning(msgPanel, false);
-			//switch to diffContent panel
+			diffMessage(model);
+			//show diffContent panel
 			diffRendered();
 			fillDiffContent(model);
 			
 		}
 	}
 	
-   private void diffMessage(final PageModel model) {
+   private void diffMessage(final DiffListModel model) {
         
-        message.cleanMessage();
+        diffMessage.cleanMessage();
         
         String id1 = HTMLPanel.createUniqueId();
         //head
-        StringBuffer buf = new StringBuffer("<div class='historyAction'><div class='msg' id='").append(id1).append("'></div>");
+        StringBuffer buf = new StringBuffer("<div class='historyAction diff'><div class='msg' id='").append(id1).append("'></div>");
         buf.append("<div class='action'>");
         
+        buf.append("<div class='indicator diff-text'><div class='diff-insertion'>Added</div> <div class='diff-deletion'>Deleted</div></div>");
         //diff 1
         String idp1 = null,idp2 = null,idp3 = null,idn1 = null,idn2 = null,idn3 = null;
         idn1 = HTMLPanel.createUniqueId();
@@ -221,6 +210,8 @@ public abstract class DiffPanel extends MessagePanel{
         idp2 = HTMLPanel.createUniqueId();
         idp3 = HTMLPanel.createUniqueId();
 
+        buf.append("<div class='current'>vs</div>");
+        
         buf.append("<div class='round prev'><div class='version' id='").append(idp1).append("'></div><div class='author' id='")
             .append(idp2).append("'></div><div class='date' id='").append(idp3).append("'></div></div>");
         
@@ -237,7 +228,8 @@ public abstract class DiffPanel extends MessagePanel{
         
         HorizontalPanel panel = new HorizontalPanel();
         panel.add(msgPanel);
-        message.warning(panel,false);
+        
+        diffMessage.warning(panel,false);
     }
    
    private void diffActionMsg(HTMLPanel msgPanel, final PageItemModel history, String idp1,String idp2, String idp3) {
@@ -245,7 +237,7 @@ public abstract class DiffPanel extends MessagePanel{
        String spaceUname = PageMain.getSpaceUname();
        
        Hyperlink preLink;
-       if(history.version == -1){
+       if(history.version == SharedConstants.CURRENT){
            //latest page
            preLink= new Hyperlink(Msg.consts.latest(), GwtUtils.getSpacePageToken(spaceUname, history.title));
        }else{

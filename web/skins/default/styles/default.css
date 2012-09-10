@@ -1061,11 +1061,11 @@ a:visited {
 }
 
 .diff-text .diff-insertion {
-	color: #8000FF;
+	background:#e6ffe6;
 }
 
 .diff-text .diff-deletion {
-	color: red;
+	background: #ffe6e6;
 	text-decoration: LINE-THROUGH;
 }
 
@@ -1989,8 +1989,6 @@ background:transparent none repeat-x scroll 0 -6px;
 }
 .historyAction .round .date{
 }
-.historyAction .round .diff{
-}
 .historyAction .current{
 	float:left;
 	font-size: 25px;
@@ -2000,8 +1998,16 @@ background:transparent none repeat-x scroll 0 -6px;
 	border-left:1px solid;
 	border-right:1px solid;
 }
-
-
+.historyAction .indicator{
+	float:left;
+	text-align: center;
+	margin: 10px 10px 0px 0px;
+	font-size: 16px;
+	line-height: 26px;
+}
+.historyAction .indicator div{
+	padding:3px 8px 3px 8px;
+}
 /************************************************************
   GWT override 
 ************************************************************/

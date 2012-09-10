@@ -38,8 +38,7 @@ public class DiffListModel extends GeneralModel  {
 	
 	public int type;
 	
-	//comparing version1:version2, if current version, it is ==0. if ver == -1, it means unable get version number since some exception
-	public int ver1 = -1;
-	public int ver2 = -1;
+	public PageItemModel prevHistoryItem = null;
+	public PageItemModel nextHistoryItem = null;
 	
 }

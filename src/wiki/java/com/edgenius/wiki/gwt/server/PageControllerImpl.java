@@ -26,6 +26,7 @@ package com.edgenius.wiki.gwt.server;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -47,6 +48,7 @@ import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.PageTheme;
 import com.edgenius.wiki.Theme;
 import com.edgenius.wiki.WikiConstants;
+import com.edgenius.wiki.dao.PageDAO;
 import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
 import com.edgenius.wiki.gwt.client.model.DiffListModel;
 import com.edgenius.wiki.gwt.client.model.DiffModel;
@@ -426,7 +428,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 				//next is latest version
 				model.nextHistoryItem = PageUtil.copyToPageItem(page);
 				//a convention to tell current is latest version.
-				model.nextHistoryItem.version = -1;
+				model.nextHistoryItem.version = SharedConstants.CURRENT;
 			}
 			if(history.getVersion() > 1){
 				History prevHistory = pageService.getHistoryByVersion(history.getPageUuid(), history.getVersion() - 1);
@@ -761,47 +763,30 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		return model;
 	}
 	
-	public DiffListModel diff(Integer uid1, Integer uid2) {
+    public DiffListModel diff(Integer uid1, Integer uid2) {
+        if (uid1 == null) uid1 = SharedConstants.CURRENT;
+        if (uid2 == null) uid2 = SharedConstants.CURRENT;
+	        
+	        
 		DiffListModel model = new DiffListModel();
 		model.type = DiffListModel.FLAT_TYPE;
-		ArrayList<DiffModel> diffList = new ArrayList<DiffModel>();
-		try {
-			log.info("Version comparing(pageUid:pageUid, -1 is current): " + uid1 + " vs " + uid2);
-			String diffText = diffService.diffToHtml(uid1, uid2, true);
-			DiffModel dm = new DiffModel(DiffModel.FLAT_HTML, diffText);
-			diffList.add(dm);
-			
-		} catch (DiffException e) {
-			log.error("Conflict diff exception:" , e);
-			model.errorCode = ErrorCode.DIFF_FAILED;
-		}
-		if(uid1 != SharedConstants.CURRENT){
-			History p1 = pageService.getHistoryObject(uid1);
-			if(p1 != null){
-				model.ver1 = uid1 == SharedConstants.CURRENT?0:(p1.getVersion());
-			}else{
-				//don't put model.errorCode, as it is not serious issue, just keep version number as -1, and let client side handle it
-				log.error("Conflict failed get version number on page UID {}", uid1);
-			}
-		}else{
-			//current version
-			model.ver1 = 0;
-		}
-		if(uid2 != SharedConstants.CURRENT){
-			History p2 = pageService.getHistoryObject(uid2);
-			if(p2 != null){
-				model.ver2 = uid2 == SharedConstants.CURRENT?0:(p2.getVersion());
-			}else{
-				//don't put model.errorCode, as it is not serious issue, just keep version number as -1, and let client side handle it
-				log.error("Conflict failed get version numberon page UID {}", uid1);
-			}
-		}else{
-			//current version
-			model.ver2 = 0;
-		}
-		model.revs = diffList;
+        try {
+            log.info("Version comparing(pageUid:pageUid, -1 is current): " + uid1 + " vs " + uid2);
+            String diffText = diffService.diffToHtml(uid1, uid2, true);
+            ArrayList<DiffModel> diffList = new ArrayList<DiffModel>();
+            DiffModel dm = new DiffModel(DiffModel.FLAT_HTML, diffText);
+            diffList.add(dm);
+            model.revs = diffList;
+
+            buildDiffPageInfo(uid1, uid2, model);
+        } catch (Exception e) {
+            log.error("Diff exception:" + uid1 + " vs " + uid2, e);
+            model.errorCode = ErrorCode.DIFF_FAILED;
+        }
+		
 		return model;
 	}
+
 	
 	public DiffListModel diff(String spaceUname, String currPageTitle, Integer historyVersion) {
 		DiffListModel model = new DiffListModel();
@@ -810,16 +795,15 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		try {
 			Page page = pageService.getCurrentPageByTitle(spaceUname, currPageTitle);
 			History history = pageService.getHistoryByVersion(page.getPageUuid(), historyVersion);
-			if(history == null)
+			
+			if(history == null){
 				throw new DiffException("Unable get history for page title " + currPageTitle + " by version " + historyVersion);
-			String diffText = diffService.diffToHtml(null, history.getUid(), true);
+			}
+			String diffText = diffService.diffToHtml(SharedConstants.CURRENT, history.getUid(), true);
 			DiffModel dm = new DiffModel(DiffModel.FLAT_HTML, diffText);
 			diffList.add(dm);
 			
-			//setup compare version number
-			model.ver1 = 0;
-			model.ver2 = history.getVersion();
-			
+			buildDiffPageInfo(SharedConstants.CURRENT, history.getUid(), model);
 		} catch (Exception e) {
 			log.error("Diff exception:" , e);
 			model.errorCode = ErrorCode.DIFF_FAILED;
@@ -1087,7 +1071,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// side bar 
-	//JDK1.6 @Override
+	@Override
 	public PageModel editPageSidebar(String spaceUname, String pageUuid) {
 		securityDummy.checkSpaceAdmin(spaceUname);
 		
@@ -1347,6 +1331,28 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 	// ********************************************************************
 	// private method
 	// ********************************************************************
+
+    private void buildDiffPageInfo(Integer uid1, Integer uid2, DiffListModel model) {
+        History p1 = null, p2 = null;
+        if (uid1 != SharedConstants.CURRENT) {
+            p1 = pageService.getHistoryObject(uid1);
+            model.nextHistoryItem = PageUtil.copyToPageItem(p1);
+        }
+        if (uid2 != SharedConstants.CURRENT) {
+            p2 = pageService.getHistoryObject(uid2);
+            model.prevHistoryItem = PageUtil.copyToPageItem(p2);
+        }
+
+        if(model.nextHistoryItem == null){
+            //assume first is current, then next must be history
+            model.nextHistoryItem = PageUtil.copyToPageItem(pageService.getCurrentPageByUuid(p2.getPageUuid()));
+            model.nextHistoryItem.version = SharedConstants.CURRENT;
+        }else if(model.prevHistoryItem == null){
+            //assume second is current, then previous must be history
+            model.prevHistoryItem = PageUtil.copyToPageItem(pageService.getCurrentPageByUuid(p1.getPageUuid()));
+            model.prevHistoryItem.version = SharedConstants.CURRENT;
+        }
+    }
 	/**
 	 * Try to return current page, or its parent, then to home
 	 * @param pageUuid
