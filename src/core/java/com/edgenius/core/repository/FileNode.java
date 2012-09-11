@@ -188,7 +188,8 @@ public class FileNode  implements Serializable{
             fileNode.url = WebUtil.getPageRepoFileUrl(WebUtil.getHostAppURL(),spaceUname, fileNode.getFilename(), fileNode.getNodeUuid(), true);
             fileNode.deleteUrl = WebUtil.getHostAppURL() + "pages/pages!removeAttachment.do?s=" + URLEncoder.encode(spaceUname, Constants.UTF8) 
                     + "&u=" + URLEncoder.encode(fileNode.getIdentifier(), Constants.UTF8)
-                    + "&nodeUuid=" + URLEncoder.encode(fileNode.getNodeUuid(), Constants.UTF8);
+                    + "&nodeUuid=" + URLEncoder.encode(fileNode.getNodeUuid(), Constants.UTF8)
+                    + "&_=" + System.currentTimeMillis();
             
             //pass back user fullname
             User user = userReadingService.getUserByName(fileNode.createor);

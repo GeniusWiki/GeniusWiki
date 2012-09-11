@@ -4,13 +4,13 @@
 <html>
 <head>
 	<%@ include file="/common/meta.jsp"%>
-	<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/static/styles/simple-page.css?v=@TOKEN.SITE.VERSION@"/>" /> 
+	<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/static/styles/simple-page.css?v=@TOKEN.SITE.VERSION@"/>"> 
 	<title><fmt:message key="app.name" /> - <fmt:message key="upload"/></title>
 	
 	<link rel="stylesheet" href="${ctxPath}/widgets/jquery/jquery-upload/blueimp/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${ctxPath}/widgets/jquery/jquery-upload/blueimp/css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="${ctxPath}/widgets/jquery/jquery-upload/blueimp/css/bootstrap-image-gallery.min.css">
-	<!--[if lt IE 9]><script src="${ctxPath}/widgets/html5shiv/html5.js"></script><![endif] -->
+	<!--[if lt IE 9]><script src="${ctxPath}/widgets/html5shiv/html5.js"></script><![endif]-->
 	
 	<link rel="stylesheet" href="${ctxPath}/widgets/jquery/jquery-upload/css/jquery.fileupload-ui.css">
 </head>
@@ -134,6 +134,7 @@
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload-fp.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload-ui.js?v=@TOKEN.SITE.VERSION@"></script>
+<script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.iframe-transport.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/locale.js?v=@TOKEN.SITE.VERSION@"></script>
 <script>
 var dirty = false;
@@ -150,7 +151,8 @@ $(function () {
     $('#fileupload').each(function () {
         var that = this;
         
-        $.getJSON("<c:url value='/pages/pages!getAttachments.do'><c:param name='s'>${spaceUname}</c:param><c:param name='u'>${pageUuid}</c:param></c:url>"
+        <%--random is only for Stupid IE only so won't cache --%>
+        $.getJSON("<c:url value='/pages/pages!getAttachments.do'><c:param name='s'>${spaceUname}</c:param><c:param name='u'>${pageUuid}</c:param></c:url>&_=" +  new Date().getTime()
         	, function (result) {
             if (result && result.length) {
                 $(that).fileupload('option', 'done')
@@ -160,9 +162,6 @@ $(function () {
     });   
 });
 
-function isAttachmentDirty(){
-	return dirty;
-}
 $(document).ready(function () {
 	window.top.gwtUploadPageReady();
 });
