@@ -26,8 +26,8 @@
 	<property name="app.name" value="GeniusWiki" />
 	<property name="app.name.lowcase" value="geniuswiki" />
 
-	<property name="app.version" value="3.15" />
-	<property name="pack.version" value="127" />
+	<property name="app.version" value="3.20" />
+	<property name="pack.version" value="128" />
 	
 	<property name="site.version" value="${pack.version}" />
 	
