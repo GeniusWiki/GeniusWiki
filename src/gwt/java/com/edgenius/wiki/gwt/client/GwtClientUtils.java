@@ -37,6 +37,8 @@ import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.http.client.URL;
@@ -512,16 +514,15 @@ public class GwtClientUtils {
 	 * @param form
 	 * @return
 	 */
-	public static KeyPressHandler createEnterSubmitListener(final FormPanel form) {
-		return new KeyPressHandler() {
-			public void onKeyPress(KeyPressEvent event) {
-				//ClientConstants.KEY_ENTER
-				if (event.getCharCode() == 13) {
-					form.submit();
-				}
-	
-			}
-		};
+	public static KeyDownHandler createEnterSubmitListener(final FormPanel form) {
+		return new KeyDownHandler() {
+            @Override
+            public void onKeyDown(KeyDownEvent event) {
+                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+                    form.submit();
+                }
+            }
+        };
 	}
 
 	public static Widget createUserPortrait(String portraitUrl) {

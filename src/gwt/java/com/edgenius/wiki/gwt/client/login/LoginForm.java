@@ -37,6 +37,7 @@ import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -101,20 +102,20 @@ public class LoginForm extends Composite implements SubmitHandler, SubmitComplet
 		form.setAction(GwtClientUtils.getBaseUrl() + "j_spring_security_check");
 		form.setMethod(FormPanel.METHOD_POST);
 		
-		KeyPressHandler enterSubmit = GwtClientUtils.createEnterSubmitListener(form);
+		KeyDownHandler enterSubmit = GwtClientUtils.createEnterSubmitListener(form);
     	
-		username.addKeyPressHandler(enterSubmit);
+		username.addKeyDownHandler(enterSubmit);
 		username.addKeyPressHandler(cleanMessageListener);
 
-		password.addKeyPressHandler(enterSubmit);
+		password.addKeyDownHandler(enterSubmit);
 		password.addKeyPressHandler(cleanMessageListener);
 		
-		remeberme.addKeyPressHandler(enterSubmit);
+		remeberme.addKeyDownHandler(enterSubmit);
 		
 		//first disable,only this user failed login several times later in given period, captcha will show up
 		captcha.disable();
 		captcha.getCaptchaInputWidget().addKeyPressHandler(cleanMessageListener);
-		captcha.getCaptchaInputWidget().addKeyPressHandler(enterSubmit);
+		captcha.getCaptchaInputWidget().addKeyDownHandler(enterSubmit);
 		
 		//hardcode for server side parameter name
 		redir.setValue(redirUrl);

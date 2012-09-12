@@ -35,6 +35,7 @@ import com.edgenius.wiki.gwt.client.widgets.FormTextBox;
 import com.edgenius.wiki.gwt.client.widgets.FormTextBoxValidCallback;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -69,7 +70,7 @@ public class PersonalProfile implements FormTextBoxValidCallback {
 	 * @param require, 0: signup (all fields), 1:profile(except password and loginname), 2: password only
 	 */
 	public void userInfo(FlexTable panel, FormPanel form, int style) {
-		KeyPressHandler enterSubmit = GwtClientUtils.createEnterSubmitListener(form);
+		KeyDownHandler enterSubmit = GwtClientUtils.createEnterSubmitListener(form);
 		
 		int row = 0;
 		panel.setStyleName(Css.SIGNUP_TABLE);
@@ -79,7 +80,7 @@ public class PersonalProfile implements FormTextBoxValidCallback {
 			loginNameLabel.setStyleName(Css.FORM_LABEL);
 			loginName.setName("user.username");
 			loginName.valid(Msg.consts.login_name(), true, 4, LOGIN_NAME_MAX_LEN, this);
-			loginName.addKeyPressHandler(enterSubmit);
+			loginName.addKeyDownHandler(enterSubmit);
 			loginName.setStyleName(Css.FORM_INPUT);
 			
 			panel.setWidget(row, 0, loginNameLabel);
@@ -92,7 +93,7 @@ public class PersonalProfile implements FormTextBoxValidCallback {
 			Label passwordLabel = new Label(Msg.consts.password());
 			passwordLabel.setStyleName(Css.FORM_LABEL);
 			password.setName("user.password");
-			password.addKeyPressHandler(enterSubmit);
+			password.addKeyDownHandler(enterSubmit);
 			password.addKeyPressHandler(new KeyPressHandler(){
 				public void onKeyPress(KeyPressEvent event) {
 					String text = password.getText();
@@ -107,7 +108,7 @@ public class PersonalProfile implements FormTextBoxValidCallback {
 			
 			Label repasswordLabel = new Label(Msg.consts.confirm_password());
 			repassword.setName("user.confirmPassword");
-			repassword.addKeyPressHandler(enterSubmit);
+			repassword.addKeyDownHandler(enterSubmit);
 			repassword.valid(Msg.consts.password(), false, 0, LOGIN_PASSWORD_LEN, this);
 			repassword.setStyleName(Css.FORM_INPUT);
 			repasswordLabel.setStyleName(Css.FORM_LABEL);
@@ -132,7 +133,7 @@ public class PersonalProfile implements FormTextBoxValidCallback {
 			Label fullnameLabel = new Label(Msg.consts.full_name());
 			fullnameLabel.setStyleName(Css.FORM_LABEL);
 			fullname.setName("user.fullname");
-			fullname.addKeyPressHandler(enterSubmit);
+			fullname.addKeyDownHandler(enterSubmit);
 			fullname.valid(Msg.consts.full_name(), true, 0, LOGIN_FULLNAME_LEN, null);
 			fullname.setStyleName(Css.FORM_INPUT);
 
@@ -143,7 +144,7 @@ public class PersonalProfile implements FormTextBoxValidCallback {
 		
 			Label emailLabel = new Label(Msg.consts.email());
 			email.setName("user.contact.email");
-			email.addKeyPressHandler(enterSubmit);
+			email.addKeyDownHandler(enterSubmit);
 			email.valid(Msg.consts.email(), true, 0, LOGIN_EMAIL_LEN, this);
 			email.setStyleName(Css.FORM_INPUT);
 			emailLabel.setStyleName(Css.FORM_LABEL);
@@ -154,7 +155,7 @@ public class PersonalProfile implements FormTextBoxValidCallback {
 		//signup
 		if((style & STYLE_SIGNUP) > 0){
 			captcha.enable();
-			captcha.getCaptchaInputWidget().addKeyPressHandler(enterSubmit);
+			captcha.getCaptchaInputWidget().addKeyDownHandler(enterSubmit);
 			panel.getFlexCellFormatter().setColSpan(row, 0, 2);
 			panel.setWidget(row, 0, captcha);
 			row++;

@@ -30,6 +30,7 @@ import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -194,6 +195,9 @@ public abstract class FormTextBoxBase extends Composite implements BlurHandler, 
 	}
 	public void addKeyPressHandler(KeyPressHandler handler) {
 		box.addKeyPressHandler(handler);
+	}
+	public void addKeyDownHandler(KeyDownHandler handler) {
+	    box.addKeyDownHandler(handler);
 	}
 	public void addBlurHandler(BlurHandler handler) {
 		box.addBlurHandler(handler);
