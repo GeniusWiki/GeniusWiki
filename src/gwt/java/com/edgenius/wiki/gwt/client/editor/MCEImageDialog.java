@@ -71,7 +71,7 @@ public class MCEImageDialog extends MCEDialog implements ImageSlideListener, Att
 	private ImageSlider slider = new ImageSlider();
 	
 	public MCEImageDialog(final TinyMCE tiny){
-		super(tiny,false,true,true);
+		super(tiny);
 		
 		this.spaceUname = tiny.getEditor().getSpaceUname();
 
