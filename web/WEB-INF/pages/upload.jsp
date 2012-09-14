@@ -152,7 +152,7 @@ $(function () {
         var that = this;
         
         <%--random is only for Stupid IE only so won't cache --%>
-        $.getJSON("<c:url value='/pages/pages!getAttachments.do'><c:param name='s'>${spaceUname}</c:param><c:param name='u'>${pageUuid}</c:param></c:url>&_=" +  new Date().getTime()
+        $.getJSON("<c:url value='/pages/pages!getAttachments.do'><c:param name='s'>${spaceUname}</c:param><c:param name='u'>${pageUuid}</c:param><c:param name='draft'>${draft}</c:param></c:url>&_=" +  new Date().getTime()
         	, function (result) {
             if (result && result.length) {
                 $(that).fileupload('option', 'done')

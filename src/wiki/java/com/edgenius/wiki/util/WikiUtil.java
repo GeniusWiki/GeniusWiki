@@ -110,9 +110,9 @@ public class WikiUtil {
 
 	public static String getUserName() {
 		HttpServletRequest request = WebUtil.getRequest();
-		if(request != null)
+		if(request != null){
 			return request.getRemoteUser();
-		else{
+		}else{
 			User user = ProxyLoginUtil.getRequester();
 			if(user != null){
 				return user.getUsername();

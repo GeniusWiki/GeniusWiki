@@ -589,7 +589,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
             //get this page all 
             User user = WikiUtil.getUser();
             //spaceUname and pageUuid
-            List<FileNode> files = pageService.getPageAttachment(spaceUname, pageUuid, true, false, user);
+            List<FileNode> files = pageService.getPageAttachment(spaceUname, pageUuid, true, draft > 0, user);
             return PageUtil.copyAttachmentsJson(files, user.getUsername(), draft > 0?draft:COPY_ATTACHMENT_WITHOUT_DRAFT); 
         } catch (Exception e) {
             log.error("Get page attachment failed:" + pageUuid , e);

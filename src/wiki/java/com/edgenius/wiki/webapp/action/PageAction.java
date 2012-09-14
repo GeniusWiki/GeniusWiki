@@ -90,6 +90,8 @@ public class PageAction extends BaseAction {
 	
 	//for page attachment handling - delete
 	private String nodeUuid;
+	//see Draft.DRAFT_*
+	private int draft;
 	
 	private MessageService messageService;
 	private SpaceService spaceService; 
@@ -174,7 +176,7 @@ public class PageAction extends BaseAction {
             //get this page all 
             User user = WikiUtil.getUser();
             //spaceUname and pageUuid
-            List<FileNode> files = pageService.getPageAttachment(s, u, false, false, user);
+            List<FileNode> files = pageService.getPageAttachment(s, u, false, draft > 0, user);
             
             PrintWriter writer = getResponse().getWriter();
             writer.print(FileNode.toAttachmentsJson(files,s, WikiUtil.getUser(), messageService, userReadingService));
@@ -189,9 +191,10 @@ public class PageAction extends BaseAction {
 	
 	public String removeAttachment(){
 	    try {
+	        User user = WikiUtil.getUser();
 	        FileNode node = pageService.removeAttachment(s, u, nodeUuid, null);
             try {
-                activityLog.logAttachmentRemoved(s, pageService.getCurrentPageByUuid(u).getTitle(), WikiUtil.getUser(), node);
+                activityLog.logAttachmentRemoved(s, pageService.getCurrentPageByUuid(u).getTitle(), user, node);
             } catch (Exception e) {
                 log.warn("Activity log save error for attachment remove",e);
             }
@@ -435,5 +438,13 @@ public class PageAction extends BaseAction {
 	public void setMessageService(MessageService messageService) {
 		this.messageService = messageService;
 	}
+
+    public int getDraft() {
+        return draft;
+    }
+
+    public void setDraft(int draft) {
+        this.draft = draft;
+    }
 
 }
