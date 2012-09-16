@@ -24,9 +24,7 @@
 package com.edgenius.wiki.gwt.server;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -48,7 +46,6 @@ import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.PageTheme;
 import com.edgenius.wiki.Theme;
 import com.edgenius.wiki.WikiConstants;
-import com.edgenius.wiki.dao.PageDAO;
 import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
 import com.edgenius.wiki.gwt.client.model.DiffListModel;
 import com.edgenius.wiki.gwt.client.model.DiffModel;
@@ -276,12 +273,12 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			//because getCurrentPageByUuid() does not render, refresh attach and navbar, so do these by call getByTitle()
 			page = pageService.getCurrentPageByTitle(spaceUname, page.getTitle());
 			try {
-				page.setAttachments(pageService.getPageAttachment(spaceUname, page.getPageUuid(),true,false, null));
+				page.setAttachments(pageService.getPageAttachment(spaceUname, page.getPageUuid(),true,true, WikiUtil.getUser()));
 			} catch (RepositoryException e) {
 				log.error("Failed get page node in repository " + page.getPageUuid(),e);
 			}
 			
-			PageUtil.copyPageToModel(page, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageUtil.COPY_ATTACHMENT_WITH_DRAFT);
 			
 			//current is RichEditor request, then replace PageModel.content by HTML text rather than wiki markup
 			User user = WikiUtil.getUser(userReadingService);

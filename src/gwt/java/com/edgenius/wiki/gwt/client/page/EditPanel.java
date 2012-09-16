@@ -113,7 +113,6 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	private Timer saveDraftTimer = new SaveDraftTimer();
 	//auto save draft time if set or not
 	private boolean saveDraftTimerSet = false;
-	private boolean uploadReqired = false;
 	private String autoSaveMsgUuid = null;
 	private boolean dirty = false;
 	private boolean exitConfirm = true;
@@ -526,10 +525,6 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		main.previewPanel.functionBtnBar.actionDone();
 	}
 
-	public void setUploadReqired(boolean required) {
-		uploadReqired = required;
-		
-	}
 
 	public boolean isDirty() {
 		return dirty;
@@ -659,7 +654,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.autoSaveUid, SharedConstants.AUTO_DRAFT,true, new LoadDraftAsync());
+						action.editDraft(model.autoSaveUid, SharedConstants.AUTO_DRAFT,true, new LoadDraftAsync(SharedConstants.AUTO_DRAFT));
 					}
 				});
 			}
@@ -738,7 +733,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync());
+						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync(SharedConstants.MANUAL_DRAFT));
 					}
 				});
 				
@@ -752,7 +747,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync());
+						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync(SharedConstants.MANUAL_DRAFT));
 					}
 				});
 				confirmDraftDlg.showbox();
@@ -1049,12 +1044,6 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 			
 			main.setPreviewReady(true,model);
 			
-			//must call after main.setPageUuid() is done. otherwise, duplicated save draft will happen
-			if(uploadReqired){
-				uploadReqired = false;
-				attPanel.upload(false,SharedConstants.AUTO_DRAFT);
-			}
-			
 		}
 	}
 	private static native void fadeMessage(String clz, String fcolor, String bcolor)/*-{
@@ -1067,6 +1056,10 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
     }-*/;
 	
 	private class LoadDraftAsync implements  AsyncCallback<PageModel>{
+		private int draftStatus;
+		public LoadDraftAsync(int draftStatus){
+			this.draftStatus = draftStatus;
+		}
 		public void onFailure(Throwable error) {
 			GwtClientUtils.processError(error);
 		}
@@ -1077,7 +1070,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 
 			//only update Edit Textarea and attachment fields: draft don't save tags info.
 			contentArea.setText(model.content == null?"":model.content);
-			attPanel.mergeAttachments(model.attachmentJson);
+			attPanel.mergeAttachments(model.attachmentJson, draftStatus);
 			main.setPreviewReady(true,model);
 		}
 	}

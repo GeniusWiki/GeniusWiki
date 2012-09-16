@@ -36,12 +36,9 @@ import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.KeyCaptureListener;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.AttachmentModel;
-import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.page.PageMain;
-import com.edgenius.wiki.gwt.client.server.CaptchaVerifiedException;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
-import com.edgenius.wiki.gwt.client.server.SecurityControllerAsync;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
@@ -92,6 +89,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	
 	private boolean readonly;
 	private Vector<AttachmentListener> attachmentListeners = new Vector<AttachmentListener>();
+	private int draftStatus;
 
 	//********************************************************************
 	//                       Methods
@@ -133,61 +131,54 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		uploadedPanel.setReadonly(readonly);
 		this.readonly = readonly;
 	}
-	
-	public void uploadWithCaptcha(String captchaResponse, final boolean toView, final int draftStatus, final CaptchaDialog captcha){
-		CaptchaCodeModel model = null;
-		if(captchaResponse != null){
-			model = new CaptchaCodeModel();
-			model.captchaCode = captchaResponse;
-			model.reqireCaptcha = true;
-		}
-		SecurityControllerAsync action = ControllerFactory.getSecurityController();
-		action.captchaValid(model, new AsyncCallback<Integer>(){
+//	
+//	public void uploadWithCaptcha(String captchaResponse, final boolean toView, final int draftStatus, final CaptchaDialog captcha){
+//		CaptchaCodeModel model = null;
+//		if(captchaResponse != null){
+//			model = new CaptchaCodeModel();
+//			model.captchaCode = captchaResponse;
+//			model.reqireCaptcha = true;
+//		}
+//		SecurityControllerAsync action = ControllerFactory.getSecurityController();
+//		action.captchaValid(model, new AsyncCallback<Integer>(){
+//
+//			public void onFailure(Throwable error) {
+//				if(captcha != null){
+//					captcha.enableSubmit();
+//				}
+//				if(error instanceof CaptchaVerifiedException && captcha != null){
+//					captcha.refreshCaptch();
+//				}else{
+//					GwtClientUtils.processError(error);
+//				}
+//			}
+//
+//			public void onSuccess(Integer result) {
+//				if(captcha != null){
+//					captcha.hidebox();
+//				}
+//				if(result == null || result == -1)
+//					return;
+//				
+//				//TODO: submit
+////				uploadFormPanel.setToView(toView);
+////				uploadFormPanel.setDraftStatus(draftStatus);
+////				uploadFormPanel.submitForm();	
+//			}
+//			
+//		});
+//	}
 
-			public void onFailure(Throwable error) {
-				if(captcha != null){
-					captcha.enableSubmit();
-				}
-				if(error instanceof CaptchaVerifiedException && captcha != null){
-					captcha.refreshCaptch();
-				}else{
-					GwtClientUtils.processError(error);
-				}
-			}
-
-			public void onSuccess(Integer result) {
-				if(captcha != null){
-					captcha.hidebox();
-				}
-				if(result == null || result == -1)
-					return;
-				
-				//TODO: submit
-//				uploadFormPanel.setToView(toView);
-//				uploadFormPanel.setDraftStatus(draftStatus);
-//				uploadFormPanel.submitForm();	
-			}
-			
-		});
-	}
-
-	public void upload(boolean toView, int draftStatus){
-		if(PageMain.isAnonymousLogin()){
-			//popup captcha enquire for anonymous user
-			CaptchaDialog captcha = new CaptchaDialog(this,toView,draftStatus);
-			captcha.showbox();
-		}else{
-//			uploadFormPanel.setToView(toView);
-//			uploadFormPanel.setDraftStatus(draftStatus);
-//			uploadFormPanel.submitForm();
-		}
-	}
 
 	/**
 	 * Merge given JSON string with current attachment list on UploadedPanel.
 	 * @param results
 	 */
 	public void mergeAttachments(String results) {
+		this.mergeAttachments(results,SharedConstants.NONE_DRAFT);
+	}
+	public void mergeAttachments(String results, int draftStatus) {
+		this.draftStatus = draftStatus;
 		if(results == null || results.trim().length() == 0)
 			return;
 		
@@ -249,16 +240,10 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		Object sender = event.getSource();
 
 		if (sender == addMoreAttBtn) {
-			//uploadFormPanel.addUploderItem();
-		    int draftStatus = SharedConstants.AUTO_DRAFT;
-            if(main.getVisiblePanelIndex() == PageMain.EDIT_PANEL){
+	         if(draftStatus == 0 && main.getVisiblePanelIndex() == PageMain.EDIT_PANEL){
                 //anyway, save initial status: maybe user will choose save or save-draft, then status will modified in server side.
                 draftStatus = SharedConstants.AUTO_DRAFT;
-            }else if(main.getVisiblePanelIndex() == PageMain.VIEW_PANEL){
-                //for viewPanel uploading, it always immediately become formal attachment
-                draftStatus = SharedConstants.NONE_DRAFT;
-            }
-            
+	         }
 		    UploadDialog dialog = new UploadDialog(this, PageMain.getSpaceUname(), PageMain.getPageUuid(), draftStatus);
             dialog.showbox();
 		}
@@ -316,7 +301,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		return modelList;
 	}
 	
-	public void refresh(String spaceUname, String pageUuid, int draftStatus){
+	public void refresh(String spaceUname, String pageUuid, final int draftStatus){
 	    PageControllerAsync action = ControllerFactory.getPageController();
         action.getAttachments(spaceUname, pageUuid, draftStatus, new AsyncCallback<String>() {
             
@@ -324,7 +309,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
             public void onSuccess(String json) {
             	if(json != null){
             		AttachmentPanel.this.reset();
-            		AttachmentPanel.this.mergeAttachments(json);
+            		AttachmentPanel.this.mergeAttachments(json, draftStatus);
             	}
             }
             
@@ -379,7 +364,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	
 	private void removeAttachment(String nodeUuid, String version){
 		PageControllerAsync action = ControllerFactory.getPageController();
-		action.removeAttachment(main.getSpaceUname(),main.getPageUuid(),nodeUuid,version, new AsyncCallback<PageModel>(){
+		action.removeAttachment(PageMain.getSpaceUname(),PageMain.getPageUuid(),nodeUuid,version, new AsyncCallback<PageModel>(){
 			//nothing to do here
 			public void onFailure(Throwable error) {
 				GwtClientUtils.processError(error);
@@ -698,7 +683,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			historyTable.setWidget(hisRow, hisCol++, new ItemID(model,true));
 			historyTable.setWidget(hisRow, hisCol++, new Label("ver"+model.version));
 			
-			historyTable.setWidget(hisRow, hisCol++, GwtClientUtils.buildDownloadURLWidget(main.getSpaceUname(),model.filename,model.nodeUuid,model.version));
+			historyTable.setWidget(hisRow, hisCol++, GwtClientUtils.buildDownloadURLWidget(PageMain.getSpaceUname(),model.filename,model.nodeUuid,model.version));
 			historyTable.setWidget(hisRow, hisCol++, new Label(model.creator));
 			historyTable.setWidget(hisRow, hisCol++, new Label(GwtUtils.convertHumanSize(model.size)));
 			historyTable.setWidget(hisRow, hisCol++, new Label(GwtClientUtils.toDisplayDate(model.date)));
@@ -755,7 +740,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			nameLabel.addListener(new WritableListener(){
 				public void editDone(Writable sender, String text) {
 					model.filename = text; 
-					sender.resetWidget(GwtClientUtils.buildDownloadURLWidget(main.getSpaceUname(),model.filename,model.nodeUuid,model.version));
+					sender.resetWidget(GwtClientUtils.buildDownloadURLWidget(PageMain.getSpaceUname(),model.filename,model.nodeUuid,model.version));
 					
 				}
 
@@ -952,7 +937,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 					String[] meta = getMetaData();
 					PageControllerAsync pageController = ControllerFactory.getPageController();
 					//NodeUuid, Name, Desc
-					pageController.updateAttachmentMeta(main.getSpaceUname(),main.getPageUuid(), meta[0],meta[1],meta[2],this);
+					pageController.updateAttachmentMeta(PageMain.getSpaceUname(),PageMain.getPageUuid(), meta[0],meta[1],meta[2],this);
 					
 				}else if(sender == cancelBtn){
 					if(!AbstractEntryPoint.isOffline()){

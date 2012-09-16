@@ -200,31 +200,31 @@ public class CaptchaDialog extends DialogBox{
 	/**
 	 * Upload attachment captcha dialog
 	 */
-	public CaptchaDialog(final AttachmentPanel attachmentPanel, final boolean toView, final int draftStatus) {
-		buildPanel();
-		okBtn.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event) {
-				okBtn.setBusy(true);
-				uploadAttachment(attachmentPanel,toView,draftStatus);
-			}
-		});
-		cancelBtn.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event) {
-				CaptchaDialog.this.hidebox();
-				//commentPanel.saveFunctionDone();
-			}
-		});
-		captcha.getCaptchaInputWidget().addKeyDownHandler(new KeyDownHandler(){
-			public void onKeyDown(KeyDownEvent event) {
-				// Return clicked
-                if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER){
-                	okBtn.setBusy(true);
-                	uploadAttachment(attachmentPanel,toView,draftStatus);
-                }
-			}
-
-		});
-	}
+//	public CaptchaDialog(final AttachmentPanel attachmentPanel, final boolean toView, final int draftStatus) {
+//		buildPanel();
+//		okBtn.addClickHandler(new ClickHandler(){
+//			public void onClick(ClickEvent event) {
+//				okBtn.setBusy(true);
+//				uploadAttachment(attachmentPanel,toView,draftStatus);
+//			}
+//		});
+//		cancelBtn.addClickHandler(new ClickHandler(){
+//			public void onClick(ClickEvent event) {
+//				CaptchaDialog.this.hidebox();
+//				//commentPanel.saveFunctionDone();
+//			}
+//		});
+//		captcha.getCaptchaInputWidget().addKeyDownHandler(new KeyDownHandler(){
+//			public void onKeyDown(KeyDownEvent event) {
+//				// Return clicked
+//                if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER){
+//                	okBtn.setBusy(true);
+//                	uploadAttachment(attachmentPanel,toView,draftStatus);
+//                }
+//			}
+//
+//		});
+//	}
 	/**
 	 * Edit tag in view panel.
 	 */
@@ -270,13 +270,13 @@ public class CaptchaDialog extends DialogBox{
 		
 		tagsPanel.updateTagWithCaptha(captchaResponse, this);
 	}
-	private void uploadAttachment(AttachmentPanel attachmentPanel, boolean toView, int draftStatus) {
-		String captchaResponse = validCaptcha();
-		if(captchaResponse == null)
-			return;
-		
-		attachmentPanel.uploadWithCaptcha(captchaResponse, toView, draftStatus,this);
-	}
+//	private void uploadAttachment(AttachmentPanel attachmentPanel, boolean toView, int draftStatus) {
+//		String captchaResponse = validCaptcha();
+//		if(captchaResponse == null)
+//			return;
+//		
+//		attachmentPanel.uploadWithCaptcha(captchaResponse, toView, draftStatus,this);
+//	}
 
 	/**
 	 * @param type
