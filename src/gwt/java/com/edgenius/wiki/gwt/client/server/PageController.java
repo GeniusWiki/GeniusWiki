@@ -29,6 +29,7 @@ import com.edgenius.wiki.gwt.client.model.PageItemListModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.TextModel;
 import com.edgenius.wiki.gwt.client.model.TreeItemListModel;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 
 /**
  * @author Dapeng.Ni
@@ -46,7 +47,7 @@ public interface PageController extends RemoteService{
 	public PageModel getEmptyPageDefaultContent(String pageUuid);
 	public PageModel viewPage(String spaceUname,String pageTitle, String commentUid);
 	public PageModel editPage(String spaceUname,String pageUuid);
-	public PageModel editDraft(Integer draftUid, int draftType, boolean refreshAttachment);
+	public PageModel editDraft(Integer draftUid, PageType draftType, boolean refreshAttachment);
 	public PageModel editPageSidebar(String spaceUname, String pageUuid);
 	
 	public PageModel previewSidebar(String spaceUname, String pageUuid, String text, boolean isRichContent);
@@ -69,7 +70,7 @@ public interface PageController extends RemoteService{
 	//return removed page uid
 	public PageModel removePage(CaptchaCodeModel captcha, String spaceUname, String pageUuid, boolean permenant);
 	
-	public PageModel removeDraft(String spaceUname, String pageUuid, int type);
+	public PageModel removeDraft(String spaceUname, String pageUuid, PageType type);
 	public TreeItemListModel getPageTree(String spaceUname);
 	
 	/**
@@ -95,7 +96,7 @@ public interface PageController extends RemoteService{
 	
 	public PageModel getCustomizedPage(String customizedPageID, String[] params);
 	
-	public String getAttachments(String spaceUname, String pageUuid, int draft);
+	public String getAttachments(String spaceUname, String pageUuid, PageType draft);
 	//return error code
 	public String updateAttachmentMeta(String spaceUname,  String pageUuid, String nodeUuid, String name, String desc);
 	/**

@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import com.edgenius.core.model.SensitiveTouchedInfo;
 import com.edgenius.core.repository.FileNode;
 import com.edgenius.wiki.gwt.client.model.RenderPiece;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.security.WikiSecurityValues.WikiOPERATIONS;
 
 /**
@@ -65,7 +66,7 @@ public abstract class AbstractPage extends SensitiveTouchedInfo implements Clone
 	
 	//0: is current page or history page,  draft page:Manual(1) or Auto draft(2).
 	@Column(name="P_TYPE")
-	private int type;
+	private PageType type;
 	
 	@Column(name="VERSION")
 	private int version;
@@ -174,11 +175,11 @@ public abstract class AbstractPage extends SensitiveTouchedInfo implements Clone
 		this.title = title;
 	}
 
-	public int getType() {
+	public PageType getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(PageType type) {
 		this.type = type;
 	}
 

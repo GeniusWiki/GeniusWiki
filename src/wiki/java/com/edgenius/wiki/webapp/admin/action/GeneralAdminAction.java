@@ -40,7 +40,7 @@ import com.edgenius.core.repository.RepositoryService;
 import com.edgenius.core.service.impl.JavaMailSenderImpl;
 import com.edgenius.core.util.WebUtil;
 import com.edgenius.wiki.Shell;
-import com.edgenius.wiki.model.Draft;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.quartz.QuartzException;
 import com.edgenius.wiki.quartz.VersionCheckJobInvoker;
 import com.edgenius.wiki.search.lucene.AnalyzerProvider;
@@ -333,7 +333,7 @@ public class GeneralAdminAction extends BaseAction{
 			att.setType(RepositoryService.TYPE_INSTNACE);
 			att.setIdentifier(user.getUsername());
 			att.setCreateor(user.getFullname());
-			att.setStatus(Draft.NONE_DRAFT);
+			att.setStatus(PageType.NONE_DRAFT.value());
 			att.setSize(0);
 			themeService.uploadSystemLogo(att);
 		} catch (Exception e) {

@@ -21,42 +21,45 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.dao;
+package com.edgenius.wiki.gwt.client.server.constant;
 
-import java.util.List;
-
-import com.edgenius.core.dao.DAO;
-import com.edgenius.core.model.User;
-import com.edgenius.wiki.gwt.client.server.constant.PageType;
-import com.edgenius.wiki.model.Draft;
 
 /**
+ *  draft could have 3 type so far: manual(user click "save draft" button) :1, auto (system saving periodically):2, 
+ *  Offline upload has version conflict, then save it as draft:3
+ *  draft type:
+ * 
  * @author Dapeng.Ni
  */
-public interface DraftDAO  extends DAO<Draft>{
+public enum PageType {
+    NONE_DRAFT,  //could be history or current page
+    MANUAL_DRAFT, 
+    AUTO_DRAFT,
+    OFFLINE_CONFLICT_DRAFT;
+    
 
+    /**
+     * @return
+     */
+    public boolean isDraft() {
+        return this.ordinal() > 0;
+    }
 
-	Draft getDraftByUuid(String spaceUname, String uuid, User owner, PageType type);
-	
-	List<Draft> hasDraftByTitle(String spaceUname, String title,User owner);
-	
-	/**
-	 * @return pageUuid
-	 */
-	Draft removeDraftByUuid(String spaceUname, String pageUuid, User owner, PageType type);
+    /**
+     * @param object
+     * @return
+     */
+    public static PageType fromOrdial(int ordial) {
+        for (PageType type : PageType.values()){
+            if(type.ordinal() == ordial) return type;
+        }
+        return null;
+    }
 
-	/**
-	 * @param spaceUname
-	 * @param username
-	 * @param type TODO
-	 * @return
-	 */
-	List<Draft> getDrafts(String spaceUname, String username, PageType type);
-
-	/**
-	 * @param spaceUname
-	 */
-	void removeSpaceDrafts(Integer spaceUid);
-
-	
+    /**
+     * @return
+     */
+    public int value() {
+        return this.ordinal();
+    }
 }

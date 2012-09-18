@@ -47,9 +47,9 @@ import com.edgenius.wiki.Shell;
 import com.edgenius.wiki.ShellTheme;
 import com.edgenius.wiki.SpaceSetting;
 import com.edgenius.wiki.WikiConstants;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.server.SpaceUtil;
-import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.model.Space;
 import com.edgenius.wiki.rss.RSSService;
 import com.edgenius.wiki.service.PageService;
@@ -432,7 +432,7 @@ public class SpaceAction  extends BaseAction {
 		largeAtt.setType(RepositoryService.TYPE_SPACE);
 		largeAtt.setIdentifier(spaceUname);
 		largeAtt.setCreateor(WikiUtil.getUserName());
-		largeAtt.setStatus(Draft.NONE_DRAFT);
+		largeAtt.setStatus(PageType.NONE_DRAFT.value());
 		largeAtt.setSize(0);
 		
 		return largeAtt;

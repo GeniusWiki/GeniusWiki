@@ -37,9 +37,9 @@ import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.util.ImageProcessException;
 import com.edgenius.core.util.ScaleImage;
 import com.edgenius.wiki.WikiConstants;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.server.UserUtil;
-import com.edgenius.wiki.model.Draft;
 
 @SuppressWarnings("serial")
 public class UserAction extends BaseAction{
@@ -75,7 +75,7 @@ public class UserAction extends BaseAction{
 			att.setType(RepositoryService.TYPE_PORTRAIT);
 			att.setIdentifier(user.getUsername());
 			att.setCreateor(user.getFullname());
-			att.setStatus(Draft.NONE_DRAFT);
+			att.setStatus(PageType.NONE_DRAFT.value());
 			att.setSize(0);
 
 			userService.uploadPortrait(user, att);

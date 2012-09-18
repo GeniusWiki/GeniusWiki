@@ -44,6 +44,7 @@ import com.edgenius.wiki.gwt.client.page.widgets.TemplatesPanel;
 import com.edgenius.wiki.gwt.client.server.CaptchaVerifiedException;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
 import com.edgenius.wiki.gwt.client.server.SecurityControllerAsync;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
@@ -294,7 +295,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		if(saveDraftType == SAVE_MANUAL_DRAFT_EXIT_TO_VIEW && !main.isAnonymousLogin()) {
 			//save draft and exist, if it is new created page, it need return its last page, but for existed page, it just need
 			//return its original page. so it need give title of page as first parameter
-			action.saveManualDraft(draft, true, new SaveExitAsync(SharedConstants.MANUAL_DRAFT,null));
+			action.saveManualDraft(draft, true, new SaveExitAsync(PageType.MANUAL_DRAFT,null));
 		} else if(saveDraftType == SAVE_MANUAL_DRAFT_STAY_IN_EDIT) {
 			draft.visibleAttachments = main.getAttachmentNodeUuidList();
 			//return title keep current one, because it won't jump to any other page
@@ -352,7 +353,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		}
 		cancelAutoSave();
 		PageControllerAsync action = ControllerFactory.getPageController();
-		action.savePage(model,forceSave,new SaveExitAsync(SharedConstants.NONE_DRAFT, captcha));
+		action.savePage(model,forceSave,new SaveExitAsync(PageType.NONE_DRAFT, captcha));
 	}
 
 	/**
@@ -654,7 +655,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.autoSaveUid, SharedConstants.AUTO_DRAFT,true, new LoadDraftAsync(SharedConstants.AUTO_DRAFT));
+						action.editDraft(model.autoSaveUid, PageType.AUTO_DRAFT,true, new LoadDraftAsync(PageType.AUTO_DRAFT));
 					}
 				});
 			}
@@ -733,7 +734,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync(SharedConstants.MANUAL_DRAFT));
+						action.editDraft(model.draftUid, PageType.MANUAL_DRAFT,true, new LoadDraftAsync(PageType.MANUAL_DRAFT));
 					}
 				});
 				
@@ -747,7 +748,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync(SharedConstants.MANUAL_DRAFT));
+						action.editDraft(model.draftUid, PageType.MANUAL_DRAFT,true, new LoadDraftAsync(PageType.MANUAL_DRAFT));
 					}
 				});
 				confirmDraftDlg.showbox();
@@ -918,9 +919,9 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	
 	private class SaveExitAsync implements  AsyncCallback<PageModel>{
 		
-		private int draftStatus;
+		private PageType draftStatus;
 		private CaptchaDialog captcha;
-		public SaveExitAsync(int draftStatus, CaptchaDialog captcha){
+		public SaveExitAsync(PageType draftStatus, CaptchaDialog captcha){
 			this.draftStatus = draftStatus;
 			this.captcha = captcha;
 			
@@ -1056,8 +1057,8 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
     }-*/;
 	
 	private class LoadDraftAsync implements  AsyncCallback<PageModel>{
-		private int draftStatus;
-		public LoadDraftAsync(int draftStatus){
+		private PageType draftStatus;
+		public LoadDraftAsync(PageType draftStatus){
 			this.draftStatus = draftStatus;
 		}
 		public void onFailure(Throwable error) {

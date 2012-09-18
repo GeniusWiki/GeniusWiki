@@ -33,6 +33,7 @@ import com.edgenius.core.repository.FileNode;
 import com.edgenius.core.repository.RepositoryException;
 import com.edgenius.core.repository.RepositoryQuotaException;
 import com.edgenius.core.repository.RepositoryTiemoutExcetpion;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.model.AbstractPage;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.model.History;
@@ -376,7 +377,7 @@ public interface PageService {
 	 * save draft will valid if current user is not null
 	 */
 	@ValidateMethod
-	Draft saveDraft(User user, Draft pageValue, int type) throws PageException;
+	Draft saveDraft(User user, Draft pageValue, PageType type) throws PageException;
 	/**
 	 * Return auto and manual draft in list, the element of draft only contains pageUid, ModifiedDate and Draft Type.
 	 * @param user is only for Security validation
@@ -389,7 +390,7 @@ public interface PageService {
 	 * 	//remove draft will valid according if it is same user between current and draft modifier
 	 */
 	@ValidateMethod
-	Draft removeDraft(User user, String spaceUname, String pageUuid, int type) throws PageException;
+	Draft removeDraft(User user, String spaceUname, String pageUuid, PageType type) throws PageException;
 	List<Draft> hasDraft(String spaceUname, String pageTitle, User user);
 	
 	/**
@@ -399,7 +400,7 @@ public interface PageService {
 	 * @return
 	 */
 	@ValidateMethod
-	List<Draft> getDraftPages(User user, int type);
+	List<Draft> getDraftPages(User user, PageType type);
 
 	/**
 	 * RENDER: NO

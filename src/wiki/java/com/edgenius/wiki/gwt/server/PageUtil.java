@@ -41,6 +41,7 @@ import com.edgenius.wiki.gwt.client.model.BlogPostMeta;
 import com.edgenius.wiki.gwt.client.model.CommentModel;
 import com.edgenius.wiki.gwt.client.model.PageItemModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.model.AbstractPage;
@@ -62,14 +63,14 @@ import com.google.gson.Gson;
  */
 public class PageUtil {
 
-	public static final int NOT_COPY_ATTACHMENT = 0;
-//	This option temporary disable: draft flag is useless now: any actions on attachment will immediately be made. 
-	public static final int COPY_ATTACHMENT_WITH_DRAFT = SharedConstants.MANUAL_DRAFT; //1
-	public static final int COPY_ATTACHMENT_WITH_AUTOSAVE = SharedConstants.AUTO_DRAFT; //2
-	public static final int COPY_ATTACHMENT_WITHOUT_DRAFT = 3;
-	
-	
-	public static void copyPageToModel(AbstractPage page,PageModel value, UserReadingService userReadingService, int coypAttachment) {
+	/**
+	 * 
+	 * @param page
+	 * @param value
+	 * @param userReadingService
+	 * @param coypAttachment if null, NOT_COPY_ATTACHMENT, if PageType.NONE_DRAFT, COPY_ATTACHMENT_WITHOUT_DRAFT
+	 */
+	public static void copyPageToModel(AbstractPage page,PageModel value, UserReadingService userReadingService, PageType coypAttachment) {
 		User currentUser = WikiUtil.getUser();
 
 		//Show sidebar or not  - this value only take effect when PageAttribute.NO_SIDEBAR is turned off.
@@ -182,7 +183,7 @@ public class PageUtil {
 			}
 		}
 		
-		if(coypAttachment != NOT_COPY_ATTACHMENT){
+		if(coypAttachment != null){
 		    value.attachmentJson = copyAttachmentsJson(page.getAttachments(), currentUser.getUsername(), coypAttachment);
 		}
 		//size of all OPERATIONS, some operation is not available for page, just left it as zero value
@@ -330,14 +331,14 @@ public class PageUtil {
 		return model;
 	}
 
-	public static String copyAttachmentsJson(List<FileNode> attList, String currentUserName, int coypAttachment){
+	public static String copyAttachmentsJson(List<FileNode> attList, String currentUserName, PageType coypAttachment){
         List<FileNode> userAttList = new ArrayList<FileNode>();
         if(attList != null && attList.size() > 0){
             for (FileNode node: attList) {
                 //this node is manual draft or auto draft
                 if(node.getStatus()  > 0){
                     if(!StringUtils.equalsIgnoreCase(node.getCreateor(), currentUserName)
-                        || coypAttachment == COPY_ATTACHMENT_WITHOUT_DRAFT){
+                        || coypAttachment == PageType.NONE_DRAFT){
                         //if user is not current user, it means it is other person's draft, then remove 
                         continue;
                     }
@@ -376,10 +377,10 @@ public class PageUtil {
 	public static void copyDraftStatus(List<Draft> drafts, PageModel model, User user) {
 		if(drafts !=null){
 			for (Draft draft : drafts) {
-				if(draft.getType() == Draft.MANUAL_DRAFT){
+				if(draft.getType() == PageType.MANUAL_DRAFT){
 					model.draftUid = draft.getUid();
 					model.draftDate = DateUtil.getLocalDate(user, draft.getModifiedDate());
-				}else if(draft.getType() == Draft.AUTO_DRAFT){
+				}else if(draft.getType() == PageType.AUTO_DRAFT){
 					model.autoSaveUid = draft.getUid();
 					model.autoSaveDate = DateUtil.getLocalDate(user, draft.getModifiedDate());
 				}

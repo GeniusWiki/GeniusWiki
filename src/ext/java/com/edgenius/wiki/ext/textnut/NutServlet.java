@@ -63,7 +63,7 @@ import com.edgenius.core.service.UserReadingService;
 import com.edgenius.core.util.CodecUtil;
 import com.edgenius.core.webapp.BaseServlet;
 import com.edgenius.wiki.WikiConstants;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.model.PageContent;
@@ -280,7 +280,7 @@ public class NutServlet extends BaseServlet{
 						if(files.size() > 0){
 							if(pageUuid == null){
 								//must get pageUUID first for upload attachment, so save page to draft first
-								Draft draft = getPageService().saveDraft(WikiUtil.getUser(), page.cloneToDraft(),Draft.AUTO_DRAFT);
+								Draft draft = getPageService().saveDraft(WikiUtil.getUser(), page.cloneToDraft(),PageType.AUTO_DRAFT);
 								
 								pageUuid = draft.getPageUuid();
 								page.setPageUuid(pageUuid);
@@ -297,7 +297,7 @@ public class NutServlet extends BaseServlet{
 								node.setIdentifier(pageUuid);
 								node.setCreateor(WikiUtil.getUserName());
 								node.setType(RepositoryService.TYPE_ATTACHMENT);
-								node.setStatus(SharedConstants.NONE_DRAFT);
+								node.setStatus(PageType.NONE_DRAFT.value());
 								node.setComment("TextNut uploaded attached file");
 								//???node.setContentType(contentType);
 								

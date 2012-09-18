@@ -39,6 +39,7 @@ import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.portal.Portal;
 import com.edgenius.wiki.gwt.client.portal.PortletListDialogue;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
@@ -465,7 +466,7 @@ public class FunctionWidget extends SimplePanel {
 		//for edit, it is possible there are some draft try to delete them.
 		PageControllerAsync action = ControllerFactory.getPageController();
 		if(pageUuid!= null){
-			action.removeDraft(spaceUname,main.getPageUuid(),SharedConstants.AUTO_DRAFT, new RemoveDraftAsync());
+			action.removeDraft(spaceUname,main.getPageUuid(),PageType.AUTO_DRAFT, new RemoveDraftAsync());
 		}
 		
 		

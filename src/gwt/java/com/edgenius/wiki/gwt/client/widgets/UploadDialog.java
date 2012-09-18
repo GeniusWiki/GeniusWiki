@@ -27,6 +27,7 @@ import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -42,10 +43,10 @@ public class UploadDialog extends DialogBox implements DialogListener{
     private AttachmentPanel attachmentPanel;
 	private String spaceUname;
 	private String pageUuid;
-	private int draft;
+	private PageType draft;
 	private DeckPanel deck = new DeckPanel();
 	
-	public UploadDialog(AttachmentPanel attachmentPanel, String spaceUname, String pageUuid, int draft){
+	public UploadDialog(AttachmentPanel attachmentPanel, String spaceUname, String pageUuid, PageType draft){
         this.setText(Msg.consts.upload());
         this.setIcon(new Image(IconBundle.I.get().upload()));
         

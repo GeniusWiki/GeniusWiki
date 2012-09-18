@@ -163,7 +163,7 @@ public class SpaceWidget extends AbstractWidgetTemplate {
 				model.page = new PageModel();
 				Page home = space.getHomepage();
 				renderService.renderHTML(home);
-				PageUtil.copyPageToModel(home, model.page, userReadingService, PageUtil.NOT_COPY_ATTACHMENT);
+				PageUtil.copyPageToModel(home, model.page, userReadingService, null);
 			}
 			
 			model.space = new SpaceModel();

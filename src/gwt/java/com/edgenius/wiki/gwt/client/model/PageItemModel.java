@@ -25,6 +25,7 @@ package com.edgenius.wiki.gwt.client.model;
 
 import java.util.HashMap;
 
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 
 
@@ -47,7 +48,7 @@ public class PageItemModel extends GeneralModel {
 	
 	public int version;
 	//0: is not draft, 1 is manual, 2 auto draft
-	public int type;
+	public PageType type;
 	//is history version?
 	public boolean isCurrent;
 	//for client side use only: when user click this item mark it as checked

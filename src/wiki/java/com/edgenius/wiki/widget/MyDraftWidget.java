@@ -31,6 +31,7 @@ import com.edgenius.core.model.User;
 import com.edgenius.core.service.MessageService;
 import com.edgenius.wiki.WikiConstants;
 import com.edgenius.wiki.gwt.client.model.PageItemListModel;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.server.PageUtil;
 import com.edgenius.wiki.model.Draft;
@@ -74,7 +75,7 @@ public class MyDraftWidget extends AbstractWidgetTemplate {
 			return obj;
 		}
 		
-		List<Draft> draft = pageService.getDraftPages(viewer, SharedConstants.NONE_DRAFT);
+		List<Draft> draft = pageService.getDraftPages(viewer, PageType.NONE_DRAFT);
 		log.info("Get user " + viewer.getUsername() + " personal page type " + getType());
 		
 		PageItemListModel model = new PageItemListModel();
