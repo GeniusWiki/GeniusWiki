@@ -1,14 +1,18 @@
-Version 3.15
-=======================================================
+Version 3.20
 h2. Enhancements
+* Integrated with JQuery Upload, drag and drop upload support.
+* Enhancement in history page and diff page.
 * If user accept invitation, the space is added to dashboard automatically.
 * Sitemap service to create robot.txt and sitemap.xml
 * Refine invitation process when system is not allow public sign-up.
-* A new option in system admin, approval required for sign-up user if it is on.
+* Approval required option in system admin for new user sign-up.
+* Many libraries upgraded.
 
-h2. Bugs
+h2. Major bugs
 * Comment daily cron job transaction exception
- 
+* Simutaneously uploading mutliple file to same page may failed on some.
+* Preview page can not force to save.
+
 
 Version 3.14
 =======================================================
