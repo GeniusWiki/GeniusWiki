@@ -27,10 +27,12 @@ import java.util.Date;
 
 import com.edgenius.wiki.gwt.client.AbstractEntryPoint;
 import com.edgenius.wiki.gwt.client.BaseEntryPoint;
+import com.edgenius.wiki.gwt.client.Callback;
 import com.edgenius.wiki.gwt.client.ClientConstants;
 import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
+import com.edgenius.wiki.gwt.client.constant.PageSaveMethod;
 import com.edgenius.wiki.gwt.client.editor.Editor;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.CaptchaCodeModel;
@@ -44,6 +46,7 @@ import com.edgenius.wiki.gwt.client.page.widgets.TemplatesPanel;
 import com.edgenius.wiki.gwt.client.server.CaptchaVerifiedException;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
 import com.edgenius.wiki.gwt.client.server.SecurityControllerAsync;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
@@ -85,11 +88,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, PanelSwitchListener{
 
-	public static final int SAVE_AUTO_DRAFT_STAY_IN_EDIT = 0;
-	public static final int SAVE_MANUAL_DRAFT_EXIT_TO_VIEW = 1;
-	public static final int SAVE_DRAFT_LOAD_PREVIEW = 2;
-	public static final int SAVE_MANUAL_DRAFT_STAY_IN_EDIT = 3;
-	
 	//title cannot over 250 char
 	private static final int TITLE_MAX_LEN = SharedConstants.TITLE_MAX_LEN;
 	//30s to save draft
@@ -261,7 +259,9 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		}
 		
 	}
-
+    public void saveDraft(PageSaveMethod saveDraftType) {
+        saveDraft(saveDraftType, null);
+    }
 	/**
 	 * Following case will invoke saveDraft() method:
 	 * 
@@ -273,11 +273,12 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	 * Save draft and go to page view: only user click "Save draft" button.
 	 * Save draft will load preview panel if first case.
 	 * 
+	 * Callback is optional and will return pageUuid
 	 */
-	public void saveDraft(int saveDraftType) {
+	public void saveDraft(PageSaveMethod saveDraftType, Callback<String> callback) {
 		if(!validSave()){
 			saveFunctionDone();
-			if(saveDraftType == SAVE_DRAFT_LOAD_PREVIEW){
+			if(saveDraftType == PageSaveMethod.SAVE_DRAFT_LOAD_PREVIEW){
 				main.switchTo(PageMain.EDIT_PANEL);
 			}
 			return;
@@ -291,24 +292,24 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 
 		PageControllerAsync action = ControllerFactory.getPageController();
 		PageModel draft = extactPageValue();
-		if(saveDraftType == SAVE_MANUAL_DRAFT_EXIT_TO_VIEW && !main.isAnonymousLogin()) {
+		if(saveDraftType == PageSaveMethod.SAVE_MANUAL_DRAFT_EXIT_TO_VIEW && !main.isAnonymousLogin()) {
 			//save draft and exist, if it is new created page, it need return its last page, but for existed page, it just need
 			//return its original page. so it need give title of page as first parameter
-			action.saveManualDraft(draft, true, new SaveExitAsync(SharedConstants.MANUAL_DRAFT,null));
-		} else if(saveDraftType == SAVE_MANUAL_DRAFT_STAY_IN_EDIT) {
+			action.saveManualDraft(draft, true, new SaveExitAsync(PageType.MANUAL_DRAFT,null));
+		} else if(saveDraftType == PageSaveMethod.SAVE_MANUAL_DRAFT_STAY_IN_EDIT) {
 			draft.visibleAttachments = main.getAttachmentNodeUuidList();
 			//return title keep current one, because it won't jump to any other page
-			action.saveManualDraft(draft,false, new SaveStayAsync(SAVE_MANUAL_DRAFT_STAY_IN_EDIT));
-		} else if(saveDraftType == SAVE_DRAFT_LOAD_PREVIEW) {
+			action.saveManualDraft(draft,false, new SaveStayAsync(PageSaveMethod.SAVE_MANUAL_DRAFT_STAY_IN_EDIT, callback));
+		} else if(saveDraftType == PageSaveMethod.SAVE_DRAFT_LOAD_PREVIEW) {
 			draft.visibleAttachments = main.getAttachmentNodeUuidList();
 			//review is going to load, but found no preview text exist, save draft as preview text then
 			//anonymous could preview, so here will "save" to draft, but in server side, it will check if it is anonymous,  
 			//it only do renderHTML() without save!!!
 			action.saveAutoDraft(draft, main.previewPanel);
-		} else if(saveDraftType == SAVE_AUTO_DRAFT_STAY_IN_EDIT){
-			if(!main.isAnonymousLogin()){
+		} else if(saveDraftType == PageSaveMethod.SAVE_AUTO_DRAFT_STAY_IN_EDIT){
+			if(!PageMain.isAnonymousLogin()){
 				draft.visibleAttachments = main.getAttachmentNodeUuidList();
-				action.saveAutoDraft(draft, new SaveStayAsync(SAVE_AUTO_DRAFT_STAY_IN_EDIT));
+				action.saveAutoDraft(draft, new SaveStayAsync(PageSaveMethod.SAVE_AUTO_DRAFT_STAY_IN_EDIT, callback));
 			}
 		}
 	}
@@ -352,7 +353,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		}
 		cancelAutoSave();
 		PageControllerAsync action = ControllerFactory.getPageController();
-		action.savePage(model,forceSave,new SaveExitAsync(SharedConstants.NONE_DRAFT, captcha));
+		action.savePage(model,forceSave,new SaveExitAsync(PageType.NONE_DRAFT, captcha));
 	}
 
 	/**
@@ -654,7 +655,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.autoSaveUid, SharedConstants.AUTO_DRAFT,true, new LoadDraftAsync(SharedConstants.AUTO_DRAFT));
+						action.editDraft(model.autoSaveUid, PageType.AUTO_DRAFT,true, new LoadDraftAsync(PageType.AUTO_DRAFT));
 					}
 				});
 			}
@@ -733,7 +734,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync(SharedConstants.MANUAL_DRAFT));
+						action.editDraft(model.draftUid, PageType.MANUAL_DRAFT,true, new LoadDraftAsync(PageType.MANUAL_DRAFT));
 					}
 				});
 				
@@ -747,7 +748,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 						message.cleanMessage();
 						PageControllerAsync action = ControllerFactory.getPageController();
 						//get this user's draft and its attachments
-						action.editDraft(model.draftUid, SharedConstants.MANUAL_DRAFT,true, new LoadDraftAsync(SharedConstants.MANUAL_DRAFT));
+						action.editDraft(model.draftUid, PageType.MANUAL_DRAFT,true, new LoadDraftAsync(PageType.MANUAL_DRAFT));
 					}
 				});
 				confirmDraftDlg.showbox();
@@ -911,16 +912,16 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 
 	private class SaveDraftTimer extends Timer{
 		public void run() {
-			saveDraft(EditPanel.SAVE_AUTO_DRAFT_STAY_IN_EDIT);
+			saveDraft(PageSaveMethod.SAVE_AUTO_DRAFT_STAY_IN_EDIT);
 			saveDraftTimerSet = false;
 		}
 	}
 	
 	private class SaveExitAsync implements  AsyncCallback<PageModel>{
 		
-		private int draftStatus;
+		private PageType draftStatus;
 		private CaptchaDialog captcha;
-		public SaveExitAsync(int draftStatus, CaptchaDialog captcha){
+		public SaveExitAsync(PageType draftStatus, CaptchaDialog captcha){
 			this.draftStatus = draftStatus;
 			this.captcha = captcha;
 			
@@ -982,12 +983,15 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	}
 
 	private class SaveStayAsync implements  AsyncCallback<PageModel>{
-		private int saveType;
+		private PageSaveMethod saveType;
+        private Callback<String> callback;
 		/**
+		 * @param callback 
 		 * @param saveAutoDraftStayInEdit
 		 */
-		public SaveStayAsync(int saveType) {
+		public SaveStayAsync(PageSaveMethod saveType, Callback<String> callback) {
 			this.saveType = saveType;
+			this.callback = callback;
 		}
 		public void onFailure(Throwable error) {
 			GwtClientUtils.processError(error);
@@ -1012,7 +1016,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 			message.cleanMessage();
 			main.previewPanel.message.cleanMessage();
 			
-			if(this.saveType == SAVE_AUTO_DRAFT_STAY_IN_EDIT){
+			if(this.saveType == PageSaveMethod.SAVE_AUTO_DRAFT_STAY_IN_EDIT){
 				draftStatusBar.setText(Msg.params.auto_save_at(DateTimeFormat.getFormat("HH:mm").format(new Date())));
 				//msg from yellow, fade out, normal color then fade in 
 				String fcolor = DOM.getStyleAttribute(draftStatusBar.getElement(),"color");
@@ -1022,7 +1026,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 				DOM.setStyleAttribute(draftStatusBar.getElement(),"backgroundColor","#FEEFB3");
 				
 				fadeMessage(Css.DRAFT_STATUS_MSG, fcolor,bcolor);
-			}else if(this.saveType == SAVE_MANUAL_DRAFT_STAY_IN_EDIT){
+			}else if(this.saveType == PageSaveMethod.SAVE_MANUAL_DRAFT_STAY_IN_EDIT){
 				dirty = false;
 				draftStatusBar.setText(Msg.params.draft_save_at(DateTimeFormat.getFormat("HH:mm").format(new Date())));
 				//msg from red, fade out, normal color then fade in 
@@ -1040,10 +1044,13 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 			//does not update title: if user refresh browser, original title will be used to load page
 //			main.setPageTitle(model.title);
 			main.setSpaceUname(model.spaceUname);
-			main.setPageUuid(model.pageUuid == null?"":model.pageUuid.toString());
+			PageMain.setPageUuid(model.pageUuid == null?"":model.pageUuid.toString());
 			
 			main.setPreviewReady(true,model);
 			
+			if(callback != null){
+			    callback.callback(model.pageUuid);
+			}
 		}
 	}
 	private static native void fadeMessage(String clz, String fcolor, String bcolor)/*-{
@@ -1056,8 +1063,8 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
     }-*/;
 	
 	private class LoadDraftAsync implements  AsyncCallback<PageModel>{
-		private int draftStatus;
-		public LoadDraftAsync(int draftStatus){
+		private PageType draftStatus;
+		public LoadDraftAsync(PageType draftStatus){
 			this.draftStatus = draftStatus;
 		}
 		public void onFailure(Throwable error) {

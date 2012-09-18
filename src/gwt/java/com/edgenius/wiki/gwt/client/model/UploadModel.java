@@ -23,6 +23,8 @@
  */
 package com.edgenius.wiki.gwt.client.model;
 
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
+
 /**
  * Upload offline edited pages or attachments, response model
  * @author Dapeng.Ni
@@ -31,6 +33,6 @@ public class UploadModel extends GeneralModel{
 
 	public String oldPageUuid;
 	public String newPageUuid;
-	public int pageType;
+	public PageType pageType;
 
 }

@@ -21,42 +21,14 @@
  *  
  * ****************************************************************
  */
-package com.edgenius.wiki.dao;
-
-import java.util.List;
-
-import com.edgenius.core.dao.DAO;
-import com.edgenius.core.model.User;
-import com.edgenius.wiki.gwt.client.server.constant.PageType;
-import com.edgenius.wiki.model.Draft;
-
+package com.edgenius.wiki.gwt.client.constant;
 /**
+ * 
  * @author Dapeng.Ni
  */
-public interface DraftDAO  extends DAO<Draft>{
-
-
-	Draft getDraftByUuid(String spaceUname, String uuid, User owner, PageType type);
-	
-	List<Draft> hasDraftByTitle(String spaceUname, String title,User owner);
-	
-	/**
-	 * @return pageUuid
-	 */
-	Draft removeDraftByUuid(String spaceUname, String pageUuid, User owner, PageType type);
-
-	/**
-	 * @param spaceUname
-	 * @param username
-	 * @param type TODO
-	 * @return
-	 */
-	List<Draft> getDrafts(String spaceUname, String username, PageType type);
-
-	/**
-	 * @param spaceUname
-	 */
-	void removeSpaceDrafts(Integer spaceUid);
-
-	
+public enum PageSaveMethod{ 
+    SAVE_AUTO_DRAFT_STAY_IN_EDIT,
+	SAVE_MANUAL_DRAFT_EXIT_TO_VIEW,
+	SAVE_DRAFT_LOAD_PREVIEW,
+	SAVE_MANUAL_DRAFT_STAY_IN_EDIT;
 }

@@ -23,10 +23,15 @@
  */
 package com.edgenius.wiki.gwt.client.widgets;
 
+import com.edgenius.wiki.gwt.client.Callback;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
+import com.edgenius.wiki.gwt.client.constant.PageSaveMethod;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
+import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
+import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -42,10 +47,10 @@ public class UploadDialog extends DialogBox implements DialogListener{
     private AttachmentPanel attachmentPanel;
 	private String spaceUname;
 	private String pageUuid;
-	private int draft;
+	private PageType draft;
 	private DeckPanel deck = new DeckPanel();
 	
-	public UploadDialog(AttachmentPanel attachmentPanel, String spaceUname, String pageUuid, int draft){
+	public UploadDialog(AttachmentPanel attachmentPanel, final String spaceUname, String pageUuid, final PageType draft){
         this.setText(Msg.consts.upload());
         this.setIcon(new Image(IconBundle.I.get().upload()));
         
@@ -54,7 +59,6 @@ public class UploadDialog extends DialogBox implements DialogListener{
         this.pageUuid = pageUuid;
         this.draft = draft;
         
-        Frame upload = new Frame(GwtClientUtils.getBaseUrl() + "pages/upload?uname="+URL.encodeQueryString(spaceUname)+"&puuid="+ pageUuid+"&draft="+draft);
         
         FlowPanel busyPanel = new FlowPanel();
         String id = HTMLPanel.createUniqueId();
@@ -65,12 +69,28 @@ public class UploadDialog extends DialogBox implements DialogListener{
         busyPanelDiv.addStyleName("upload");
         
 		deck.add(busyPanel);
-        deck.add(upload);
+		
+		if(StringUtil.isBlank(pageUuid)){
+		    //could a unsaved new page - save a auto draft then turn page again
+		    if(attachmentPanel.getPageMain().getVisiblePanelIndex() == PageMain.EDIT_PANEL){
+		        attachmentPanel.getPageMain().editPanel.saveDraft(PageSaveMethod.SAVE_AUTO_DRAFT_STAY_IN_EDIT, new Callback<String>() {
+                    @Override
+                    public void callback(String pageUuid) {
+                        Frame upload = new Frame(GwtClientUtils.getBaseUrl() + "pages/upload?uname="+URL.encodeQueryString(spaceUname)+"&puuid="+ pageUuid+"&draft="+draft.value());
+                        upload.setSize("100%", "100%");
+                        deck.add(upload);
+                    }
+                });
+		    }
+		}else{
+		    Frame upload = new Frame(GwtClientUtils.getBaseUrl() + "pages/upload?uname="+URL.encodeQueryString(spaceUname)+"&puuid="+ pageUuid+"&draft="+draft.value());
+		    upload.setSize("100%", "100%");
+		    deck.add(upload);
+		}
+        
         
         deck.showWidget(0);
-        
         this.setWidget(deck);
-        upload.setSize("100%", "100%");
         deck.setSize("100%", "100%");
         this.addStyleName(Css.UPLOAD_DIALOG_BOX);
         this.addDialogListener(this);

@@ -33,6 +33,7 @@ import org.springframework.stereotype.Repository;
 import com.edgenius.core.dao.hibernate.BaseDAOHibernate;
 import com.edgenius.core.model.User;
 import com.edgenius.wiki.dao.DraftDAO;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.model.Draft;
 
 /**
@@ -80,7 +81,7 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 			Draft draft = new Draft();
 			draft.setUid((Integer) rs[0]);
 			draft.setModifiedDate((Date) rs[1]);
-			draft.setType(((Integer) rs[2]));
+			draft.setType((PageType) rs[2]);
 			ret.add(draft);
 			if(idx > 1){
 				log.error("Found over 2 drafts (auto and manual) for page " + title + " on space " + spaceUname);
@@ -92,8 +93,8 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Draft> getDrafts(String spaceUname, String username, int type) {
-		if(type == 0){
+	public List<Draft> getDrafts(String spaceUname, String username, PageType type) {
+		if(type == PageType.NONE_DRAFT){
 			if(StringUtils.isBlank(spaceUname))
 				return find(GET_ALL_DRAFTS,new Object[]{username});
 			else
@@ -107,7 +108,7 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Draft removeDraftByUuid(String spaceUname,  String uuid, User owner, int type) {
+	public Draft removeDraftByUuid(String spaceUname,  String uuid, User owner, PageType type) {
 		if(owner == null || owner.isAnonymous()){
 			//for anonymous, no draft
 			//in postgresql, if owner is null, SQL will throw exception.
@@ -124,7 +125,7 @@ public class DraftDAOHibernate extends BaseDAOHibernate<Draft> implements DraftD
 	}
 
 	@SuppressWarnings("unchecked")
-	public Draft getDraftByUuid(String spaceUname, String uuid, User owner, int type) {
+	public Draft getDraftByUuid(String spaceUname, String uuid, User owner, PageType type) {
 		if(owner == null || owner.isAnonymous()){
 			//for anonymous, no draft
 			//in postgresql, if owner is null, SQL will throw exception.

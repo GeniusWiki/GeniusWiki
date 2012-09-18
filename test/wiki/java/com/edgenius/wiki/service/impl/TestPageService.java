@@ -34,6 +34,7 @@ import com.edgenius.test.TestMain;
 import com.edgenius.test.TestUtil;
 import com.edgenius.wiki.WikiConstants;
 import com.edgenius.wiki.dao.hibernate.PageProgressDAOHibernate;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.model.Draft;
 import com.edgenius.wiki.model.DraftContent;
 import com.edgenius.wiki.model.History;
@@ -190,7 +191,7 @@ public class TestPageService   extends TestMain{
 		progress.setLinkExtInfo("testdraftinfo");
 		draft.setPageProgress(progress);
 		try {
-			draft = pageService.saveDraft(TestUtil.getAdminUser(), draft, Draft.AUTO_DRAFT);
+			draft = pageService.saveDraft(TestUtil.getAdminUser(), draft, PageType.AUTO_DRAFT);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -200,7 +201,7 @@ public class TestPageService   extends TestMain{
 		Assert.assertNotNull(draft);
 		Assert.assertEquals(draftTitle, draft.getTitle());
 		
-		pageService.removeDraft(TestUtil.getAdminUser(),spaceUname, draft.getPageUuid(), Draft.AUTO_DRAFT);
+		pageService.removeDraft(TestUtil.getAdminUser(),spaceUname, draft.getPageUuid(), PageType.AUTO_DRAFT);
 		draft = pageService.getDraft(TestUtil.getAdminUser(),draft.getUid());
 		Assert.assertNull(draft);
 		

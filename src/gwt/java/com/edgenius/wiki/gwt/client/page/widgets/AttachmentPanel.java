@@ -39,9 +39,9 @@ import com.edgenius.wiki.gwt.client.model.AttachmentModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.IconBundle;
 import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
@@ -89,7 +89,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	
 	private boolean readonly;
 	private Vector<AttachmentListener> attachmentListeners = new Vector<AttachmentListener>();
-	private int draftStatus;
+	private PageType draftStatus;
 
 	//********************************************************************
 	//                       Methods
@@ -120,7 +120,10 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		
 		DOM.setElementAttribute(this.getElement(), "id", panelID);
 	}
-	
+    public PageMain getPageMain() {
+       return this.main;
+    }
+
 	public String getPanelID(){
 		return panelID;
 	}
@@ -175,9 +178,9 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	 * @param results
 	 */
 	public void mergeAttachments(String results) {
-		this.mergeAttachments(results,SharedConstants.NONE_DRAFT);
+		this.mergeAttachments(results,PageType.NONE_DRAFT);
 	}
-	public void mergeAttachments(String results, int draftStatus) {
+	public void mergeAttachments(String results, PageType draftStatus) {
 		this.draftStatus = draftStatus;
 		if(results == null || results.trim().length() == 0)
 			return;
@@ -240,9 +243,9 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		Object sender = event.getSource();
 
 		if (sender == addMoreAttBtn) {
-	         if(draftStatus == 0 && main.getVisiblePanelIndex() == PageMain.EDIT_PANEL){
+	         if(draftStatus == PageType.NONE_DRAFT && main.getVisiblePanelIndex() == PageMain.EDIT_PANEL){
                 //anyway, save initial status: maybe user will choose save or save-draft, then status will modified in server side.
-                draftStatus = SharedConstants.AUTO_DRAFT;
+                draftStatus = PageType.AUTO_DRAFT;
 	         }
 		    UploadDialog dialog = new UploadDialog(this, PageMain.getSpaceUname(), PageMain.getPageUuid(), draftStatus);
             dialog.showbox();
@@ -275,33 +278,9 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		return readonly;
 	}
 
-	/**
-	 * @param results
-	 * @return 
-	 */
-	public static List<AttachmentModel> parseAttachmentJSON(String results) {
-		List<AttachmentModel> modelList = new ArrayList<AttachmentModel>();
-		try {
-			JSONValue jsonValue = JSONParser.parse(results);
-			JSONArray attachmentArray;
-			if ((attachmentArray = jsonValue.isArray()) != null) {
-				//AttachmentList
-				int size = attachmentArray.size();
-				for (int idx = 0; idx < size; ++idx) {
-					//attachment
-					JSONObject attachObj = attachmentArray.get(idx).isObject();
-					AttachmentModel model = retrieve(attachObj);
-					modelList.add(model);
-				}
-			}
-		} catch (JSONException e) {
-			Window.alert(Msg.consts.error_request());
-		}
-		
-		return modelList;
-	}
+
 	
-	public void refresh(String spaceUname, String pageUuid, final int draftStatus){
+	public void refresh(String spaceUname, String pageUuid, final PageType draftStatus){
 	    PageControllerAsync action = ControllerFactory.getPageController();
         action.getAttachments(spaceUname, pageUuid, draftStatus, new AsyncCallback<String>() {
             
@@ -324,8 +303,29 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	//               Private methods
 	//********************************************************************
 
-	
-	private static AttachmentModel retrieve(JSONObject attachObj){
+   private List<AttachmentModel> parseAttachmentJSON(String results) {
+        List<AttachmentModel> modelList = new ArrayList<AttachmentModel>();
+        try {
+            JSONValue jsonValue = JSONParser.parseStrict(results);
+            JSONArray attachmentArray;
+            if ((attachmentArray = jsonValue.isArray()) != null) {
+                //AttachmentList
+                int size = attachmentArray.size();
+                for (int idx = 0; idx < size; ++idx) {
+                    //attachment
+                    JSONObject attachObj = attachmentArray.get(idx).isObject();
+                    AttachmentModel model = retrieve(attachObj);
+                    modelList.add(model);
+                }
+            }
+        } catch (JSONException e) {
+            Window.alert(Msg.consts.error_request());
+        }
+        
+        return modelList;
+    }
+   
+	private AttachmentModel retrieve(JSONObject attachObj){
 		AttachmentModel model = new AttachmentModel();
 		
 		//retrieve Attachment->Filename, Comment and Shared fields.
@@ -1031,6 +1031,5 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			}
 		}
 	}
-	
 
 }

@@ -126,14 +126,6 @@ public class SharedConstants {
 	public static final String MACRO_PARAM_SPACE_NAME = "space";
 	public static final String MACRO_PARAM_MESSAGE_ID = "msgid";
 	
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//	//Customised page indicator
-	public static final int OFFLINE_CONFLICT_DRAFT = 3;
-	public static final int AUTO_DRAFT = 2;
-	public static final int MANUAL_DRAFT = 1;
-	public static final int NONE_DRAFT = 0;
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
 	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//	Search Result indicator

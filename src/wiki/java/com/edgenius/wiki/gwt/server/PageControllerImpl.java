@@ -58,6 +58,7 @@ import com.edgenius.wiki.gwt.client.model.TextModel;
 import com.edgenius.wiki.gwt.client.model.TreeItemListModel;
 import com.edgenius.wiki.gwt.client.model.TreeItemModel;
 import com.edgenius.wiki.gwt.client.server.PageController;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.EscapeUtil;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
@@ -98,9 +99,6 @@ import com.edgenius.wiki.service.ThemeSaveException;
 import com.edgenius.wiki.service.ThemeService;
 import com.edgenius.wiki.service.VersionConflictException;
 import com.edgenius.wiki.util.WikiUtil;
-
-import static com.edgenius.wiki.gwt.server.PageUtil.COPY_ATTACHMENT_WITHOUT_DRAFT;
-import static com.edgenius.wiki.gwt.server.PageUtil.NOT_COPY_ATTACHMENT;
 
 /**
  * @author Dapeng.Ni
@@ -146,7 +144,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			
 			// refresh all parameters
 			setUserMarkOnModel(model, user, page);
-			PageUtil.copyPageToModel(page, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageType.NONE_DRAFT);
 			model.tabIndex = SharedConstants.TAB_TYPE_DEFAULT_VISIBLE;
 			
 			pageService.stopEditing(page.getPageUuid(), user);
@@ -179,10 +177,10 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 				List<RenderPiece> renderPieces  = renderService.renderHTML(draft);
 				draft.setRenderPieces(renderPieces);
 			}else{
-				draft = pageService.saveDraft(WikiUtil.getUser(userReadingService), draft, Draft.AUTO_DRAFT);
+				draft = pageService.saveDraft(WikiUtil.getUser(userReadingService), draft, PageType.AUTO_DRAFT);
 			}
 			// refresh all parameters
-			PageUtil.copyPageToModel(draft, model, userReadingService, NOT_COPY_ATTACHMENT);
+			PageUtil.copyPageToModel(draft, model, userReadingService, null);
 
 			//only hide right bar - page info. User still can turn on TreePanel left sidebar or keep it visible.
 			model.attribute = model.attribute| PageAttribute.NO_SIDE_BAR  | PageAttribute.NO_SPACE_MENU; 
@@ -202,7 +200,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		try {
 			if(!WikiUtil.getUser(userReadingService).isAnonymous()){
 				//failure tolerance check, anonymous does not allow save draft. 
-				draft = pageService.saveDraft(WikiUtil.getUser(userReadingService), draft, Draft.MANUAL_DRAFT);
+				draft = pageService.saveDraft(WikiUtil.getUser(userReadingService), draft, PageType.MANUAL_DRAFT);
 			}
 			if(exitToView){
 				// get page title from original one. For existed page, it simple return itself. For new creating,
@@ -215,7 +213,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 				return viewPage(model.spaceUname,title, null);
 			}else{
 				//manually save draft by keyboard, the editing page still hold. return this draft render, for preview.
-				PageUtil.copyPageToModel(draft, model, userReadingService, NOT_COPY_ATTACHMENT);
+				PageUtil.copyPageToModel(draft, model, userReadingService, null);
 				
 			    //only hide right bar - page info. User still can turn on TreePanel left sidebar or keep it visible.
 				model.attribute = model.attribute| PageAttribute.NO_SIDE_BAR  | PageAttribute.NO_SPACE_MENU; 
@@ -278,7 +276,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 				log.error("Failed get page node in repository " + page.getPageUuid(),e);
 			}
 			
-			PageUtil.copyPageToModel(page, model, userReadingService, PageUtil.COPY_ATTACHMENT_WITH_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageType.AUTO_DRAFT);
 			
 			//current is RichEditor request, then replace PageModel.content by HTML text rather than wiki markup
 			User user = WikiUtil.getUser(userReadingService);
@@ -404,9 +402,9 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 				} catch (RepositoryException e) {
 					log.error("Refresh history attachment error:" + history.getPageUuid() + ";version:" +history.getVersion() , e);
 				}
-				PageUtil.copyPageToModel(history, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+				PageUtil.copyPageToModel(history, model, userReadingService, PageType.NONE_DRAFT);
 			} else {
-				PageUtil.copyPageToModel(history, model, userReadingService, NOT_COPY_ATTACHMENT);
+				PageUtil.copyPageToModel(history, model, userReadingService, null);
 				// clean attachment info to keep original attachment in current page
 				model.attachmentJson = "";
 			}
@@ -447,7 +445,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		return model;
 	}
 
-	public PageModel editDraft(Integer draftUid,int draftType, boolean refreshAttachment) {
+	public PageModel editDraft(Integer draftUid,PageType draftType, boolean refreshAttachment) {
 		PageModel model = new PageModel();
 		
 		try {
@@ -485,7 +483,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 				}else{
 					renderService.renderHTML(draft);
 				}
-				PageUtil.copyPageToModel(draft, model, userReadingService, NOT_COPY_ATTACHMENT);
+				PageUtil.copyPageToModel(draft, model, userReadingService, null);
 				// clean attachment info to keep original attachment in current page
 				model.attachmentJson = "";
 			}
@@ -544,7 +542,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			}
 			User user = WikiUtil.getUser(userReadingService);
 			setUserMarkOnModel(model, user, page);
-			PageUtil.copyPageToModel(page, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageType.NONE_DRAFT);
 			if(!found){
 				//set nav bar info
 				PageModel nav = new PageModel();
@@ -581,13 +579,13 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		return model;
 	}
 
-    public String getAttachments(String spaceUname, String pageUuid, int draft){
+    public String getAttachments(String spaceUname, String pageUuid, PageType draft){
         try {
             //get this page all 
             User user = WikiUtil.getUser();
             //spaceUname and pageUuid
-            List<FileNode> files = pageService.getPageAttachment(spaceUname, pageUuid, true, draft > 0, user);
-            return PageUtil.copyAttachmentsJson(files, user.getUsername(), draft > 0?draft:COPY_ATTACHMENT_WITHOUT_DRAFT); 
+            List<FileNode> files = pageService.getPageAttachment(spaceUname, pageUuid, true, draft.isDraft(), user);
+            return PageUtil.copyAttachmentsJson(files, user.getUsername(), draft); 
         } catch (Exception e) {
             log.error("Get page attachment failed:" + pageUuid , e);
             return null;
@@ -672,7 +670,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			buildSidebar(page);
 			buildSpaceMenu(page);
 			 
-			PageUtil.copyPageToModel(page, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageType.NONE_DRAFT);
 			
 			model.tabIndex = SharedConstants.TAB_TYPE_DEFAULT_VISIBLE;
 			
@@ -696,7 +694,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			buildSidebar(page);
 			buildSpaceMenu(page);
 			
-			PageUtil.copyPageToModel(page, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageType.NONE_DRAFT);
 			
 			model.tabIndex = SharedConstants.TAB_TYPE_DEFAULT_VISIBLE;
 			
@@ -708,7 +706,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		return model;
 	}
 
-	public PageModel removeDraft(String spaceUname, String pageUuid, int type) {
+	public PageModel removeDraft(String spaceUname, String pageUuid, PageType type) {
 
 		PageModel model = new PageModel();
 		try {
@@ -959,7 +957,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		}
 		
 //		setUserMarkOnModel(model, user, page);
-		PageUtil.copyPageToModel(page, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+		PageUtil.copyPageToModel(page, model, userReadingService, PageType.NONE_DRAFT);
 		
 		//reset nav
 		if(navList.size() > 0)
@@ -1021,7 +1019,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			
 			User user = WikiUtil.getUser(userReadingService);
 			setUserMarkOnModel(model, user, page);
-			PageUtil.copyPageToModel(page, model, userReadingService, COPY_ATTACHMENT_WITHOUT_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageType.NONE_DRAFT);
 			
 			//show history tab
 			model.tabIndex = SharedConstants.TAB_TYPE_HISTORY;
@@ -1081,7 +1079,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			}
 			//!!!these 3 can not be disorder!!!
 			String sidemarkup = buildSidebar(RenderContext.RENDER_TARGET_RICH_EDITOR, page);
-			PageUtil.copyPageToModel(page, model, userReadingService, NOT_COPY_ATTACHMENT);
+			PageUtil.copyPageToModel(page, model, userReadingService, null);
 			//always show sidebar whatever user hide or show sidebar - actually, use cannot edit side if sidebar is hidden. 
 			//So here is just double confirm.
 			model.pinPanel =  model.pinPanel |SharedConstants.TAB_TYPE_RIGHT_SIDEBAR;
@@ -1126,7 +1124,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			page.setSidebarRenderPieces(renderService.renderHTML(text));
 			//as text may contain PageInfo macro, which need page author, modifier information etc. so 
 			//I have to read out page and copy it to PageModel
-			PageUtil.copyPageToModel(page, model, userReadingService, NOT_COPY_ATTACHMENT);
+			PageUtil.copyPageToModel(page, model, userReadingService, null);
 			
 		} catch (Exception e) {
 			log.error("Get Page with error:" , e);
@@ -1272,7 +1270,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 		
 		//TODO: how to process whole page content but with PageAttribute macro? or similar macro??? 
 		page.setRenderPieces(renderService.renderHTML(page));
-		PageUtil.copyPageToModel(page, model, userReadingService, NOT_COPY_ATTACHMENT);
+		PageUtil.copyPageToModel(page, model, userReadingService, null);
 		
 		return model;
 	}

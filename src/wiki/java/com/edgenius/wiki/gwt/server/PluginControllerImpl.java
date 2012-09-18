@@ -26,6 +26,7 @@ package com.edgenius.wiki.gwt.server;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.PluginModel;
 import com.edgenius.wiki.gwt.client.server.PluginController;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.LinkUtil;
 import com.edgenius.wiki.gwt.server.handler.GWTSpringController;
@@ -55,7 +56,7 @@ public class PluginControllerImpl  extends GWTSpringController implements Plugin
 				System.arraycopy(paramsList,1 , tokens, 0, tokens.length);
 			}
 			Page page = link.invoke(spaceUname,  tokens);
-			PageUtil.copyPageToModel(page, model, userReadingService, PageUtil.COPY_ATTACHMENT_WITHOUT_DRAFT);
+			PageUtil.copyPageToModel(page, model, userReadingService, PageType.NONE_DRAFT);
 			
 		}
 		return model;

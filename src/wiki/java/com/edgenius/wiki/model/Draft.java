@@ -51,14 +51,7 @@ indexes = { @Index(name = "DRAFT_UUID_INDEX", columnNames = {"PAGE_UUID"}),
 		@Index(name = "DRAFT_TITLE_INDEX", columnNames = {"TITLE"}),
 		@Index(name = "DRAFT_UNIXNAME_INDEX", columnNames = {"UNIX_NAME"})})	
 public class Draft extends AbstractPage{
-	//draft could have 3 type so far: manual(user click "save draft" button) :1, auto (system saving periodically):2, 
-	//Offline upload has version conflict, then save it as draft:3
-	//draft type:
-	public static final int NONE_DRAFT = SharedConstants.NONE_DRAFT;
-	public static final int MANUAL_DRAFT = SharedConstants.MANUAL_DRAFT;
-	public static final int AUTO_DRAFT = SharedConstants.AUTO_DRAFT;
-	public static final int OFFLINE_CONFLICT_DRAFT = SharedConstants.OFFLINE_CONFLICT_DRAFT;
-	
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO , generator = "key_seq")  

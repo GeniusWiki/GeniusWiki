@@ -35,6 +35,7 @@ import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.portal.Portlet;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
@@ -79,10 +80,10 @@ public abstract class PageListPortlet extends Portlet{
 				if(fillType == FILL_TYPE_DRAFT){
 					//append delete image to allow delete draft from portlet
 					Image dot; 
-					if(item.type == SharedConstants.MANUAL_DRAFT){
+					if(item.type == PageType.MANUAL_DRAFT){
 						dot = new Image(IconBundle.I.get().bullet_green());
 						dot.setTitle(Msg.consts.manual_draft());
-					}else if(item.type == SharedConstants.AUTO_DRAFT){
+					}else if(item.type == PageType.AUTO_DRAFT){
 						dot = new Image(IconBundle.I.get().bullet_yellow());
 						dot.setTitle(Msg.consts.auto_draft());
 					}else{

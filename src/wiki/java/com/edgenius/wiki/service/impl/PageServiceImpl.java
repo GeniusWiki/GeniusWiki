@@ -72,6 +72,7 @@ import com.edgenius.wiki.dao.UserPageDAO;
 import com.edgenius.wiki.gwt.client.model.LinkModel;
 import com.edgenius.wiki.gwt.client.model.MacroModel;
 import com.edgenius.wiki.gwt.client.model.RenderPiece;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.NameConstants;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
@@ -272,8 +273,8 @@ public class PageServiceImpl implements PageService {
 		try {
 			User viewer = WikiUtil.getUser(userReadingService); 
 			mergeAttahment(getPageAttachment(spaceUname, page.getPageUuid(), true, true, viewer), pageValue.getAttachments()
-					,spaceUname, viewer, Draft.NONE_DRAFT);
-			upgradeAttachmentStatus(spaceUname, page.getPageUuid(), page.getModifier(), Draft.NONE_DRAFT);
+					,spaceUname, viewer, PageType.NONE_DRAFT);
+			upgradeAttachmentStatus(spaceUname, page.getPageUuid(), page.getModifier(), PageType.NONE_DRAFT);
 		} catch (RepositoryException e) {
 			//not critical exception, just log:
 			log.error("Update attachment status during saving page:" + page.getPageUuid() + " in space "+spaceUname + ".Error: " , e);
@@ -391,7 +392,7 @@ public class PageServiceImpl implements PageService {
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		//persistent
-		page.setType(0);
+		page.setType(PageType.NONE_DRAFT);
 		pageDAO.saveOrUpdate(page);
 		
 		//!!!NOTE: follow 3 lines code must after pageDAO.saveOrUpdate(),otherwise, if home page
@@ -420,7 +421,7 @@ public class PageServiceImpl implements PageService {
 		}
 
 		//remove all draft whatever auto or manual
-		removeDraftInternal(spaceUname,page.getPageUuid(), page.getModifier(),Draft.NONE_DRAFT,false);
+		removeDraftInternal(spaceUname,page.getPageUuid(), page.getModifier(),PageType.NONE_DRAFT,false);
 
 		//MOVE to PageIndexInterceptor
 //		if(requireNotified)
@@ -444,7 +445,7 @@ public class PageServiceImpl implements PageService {
 	}
 
 
-	public Draft saveDraft(User user, Draft pageValue, int type) throws PageException{
+	public Draft saveDraft(User user, Draft pageValue, PageType type) throws PageException{
 		String spaceUname = pageValue.getSpace().getUnixName();
 		
 		log.info("Draft saving for page " + pageValue.getTitle() + " on space "+ spaceUname);
@@ -519,9 +520,9 @@ public class PageServiceImpl implements PageService {
 		try{
 			//IMPORTANT: can not re-order following 3 methods
 			mergeAttahment(getPageAttachment(spaceUname, draft.getPageUuid(),true, true, owner), pageValue.getAttachments(),spaceUname,owner, type);
-			if(type == Draft.MANUAL_DRAFT){
-				upgradeAttachmentStatus(spaceUname, draft.getPageUuid(), draft.getModifier(), Draft.MANUAL_DRAFT);
-				removeDraftInternal(spaceUname, draft.getPageUuid(), draft.getModifier(), Draft.AUTO_DRAFT,false);
+			if(type == PageType.MANUAL_DRAFT){
+				upgradeAttachmentStatus(spaceUname, draft.getPageUuid(), draft.getModifier(), PageType.MANUAL_DRAFT);
+				removeDraftInternal(spaceUname, draft.getPageUuid(), draft.getModifier(), PageType.AUTO_DRAFT,false);
 			}
 		} catch (RepositoryException e) {
 			//not critical exception, just log:
@@ -1258,11 +1259,11 @@ public class PageServiceImpl implements PageService {
 	}
 	
 	
-	public Draft removeDraft(User user, String spaceUname, String pageUuid, int type) throws PageException {
+	public Draft removeDraft(User user, String spaceUname, String pageUuid, PageType type) throws PageException {
 		return removeDraftInternal(spaceUname, pageUuid, user, type, true);
 	}
 
-	public List<Draft> getDraftPages(User user, int type) {
+	public List<Draft> getDraftPages(User user, PageType type) {
 		return draftDAO.getDrafts(null, user.getUsername(), type);
 	}
 	public List<Page> getFavoritePages(String username) {
@@ -1584,15 +1585,15 @@ public class PageServiceImpl implements PageService {
 	//               Private Methods
 	//********************************************************************
 
-	private Draft removeDraftInternal(String spaceUname, String pageUuid, User user, int type, boolean removeAttahcmnet) 
+	private Draft removeDraftInternal(String spaceUname, String pageUuid, User user, PageType type, boolean removeAttahcmnet) 
 		throws PageException {
 		Draft draft;
 		try {
 			
-			if(type == Draft.NONE_DRAFT){
+			if(type == PageType.NONE_DRAFT){
 				//remove both
-				Draft draft1 = draftDAO.removeDraftByUuid(spaceUname, pageUuid, user, Draft.AUTO_DRAFT);
-				Draft draft2 = draftDAO.removeDraftByUuid(spaceUname, pageUuid, user, Draft.MANUAL_DRAFT);
+				Draft draft1 = draftDAO.removeDraftByUuid(spaceUname, pageUuid, user, PageType.AUTO_DRAFT);
+				Draft draft2 = draftDAO.removeDraftByUuid(spaceUname, pageUuid, user, PageType.MANUAL_DRAFT);
 				draft = draft1 == null?draft2:draft1;
 			}else{
 				draft = draftDAO.removeDraftByUuid(spaceUname, pageUuid, user, type);
@@ -1602,18 +1603,18 @@ public class PageServiceImpl implements PageService {
 			}
 			if(draft != null && removeAttahcmnet){
 				boolean pageNotExist = false;
-				if(type == Draft.AUTO_DRAFT){
+				if(type == PageType.AUTO_DRAFT){
 					//if auto draft removing, then need check if there is manual draft and page, if no, then remove all from repository
-					if(draftDAO.getDraftByUuid(spaceUname, pageUuid, user, Draft.MANUAL_DRAFT) == null && 
+					if(draftDAO.getDraftByUuid(spaceUname, pageUuid, user, PageType.MANUAL_DRAFT) == null && 
 						pageDAO.getByUuid(pageUuid) == null){
 						pageNotExist = true;
 					}
-				}else if(type == Draft.MANUAL_DRAFT){
+				}else if(type == PageType.MANUAL_DRAFT){
 					//if manual draft removing, need check if page exist, if no, all remove from repository.
 					if(pageDAO.getByUuid(pageUuid) == null){
 						pageNotExist = true;
 					}
-				}else if(type == 0){
+				}else if(type == PageType.NONE_DRAFT){
 					if(pageDAO.getByUuid(pageUuid) == null){
 						pageNotExist = true;
 					}
@@ -1682,12 +1683,12 @@ public class PageServiceImpl implements PageService {
 	 * @throws RepositoryTiemoutExcetpion 
 	 * @throws RepositoryException 
 	 */
-	private void mergeAttahment(List<FileNode> existList, List<FileNode> comeinList,String spaceUname, User user, int status) throws RepositoryException, RepositoryTiemoutExcetpion {
+	private void mergeAttahment(List<FileNode> existList, List<FileNode> comeinList,String spaceUname, User user, PageType status) throws RepositoryException, RepositoryTiemoutExcetpion {
 		if(comeinList != null && existList != null){
 			ITicket ticket = repositoryService.login(spaceUname, spaceUname, spaceUname);
 			for (FileNode node : existList) {
 				//exist item is current user's draft, and it has same status or higher (auto if given is manual)
-				if(node.getStatus() > 0 && node.getStatus() >= status 
+				if(node.getStatus() > 0 && node.getStatus() >= status.value() 
 					&& StringUtils.equalsIgnoreCase(node.getCreateor(),user.getUsername())){
 					//check if this draft is in comeinList, if not, it means it will be removed.
 					boolean found =false;
@@ -1706,28 +1707,28 @@ public class PageServiceImpl implements PageService {
 		}
 		
 	}
-	private void upgradeAttachmentStatus(String spaceUname, String pageUuid, User user,int status) throws RepositoryException{
+	private void upgradeAttachmentStatus(String spaceUname, String pageUuid, User user,PageType status) throws RepositoryException{
 		List<FileNode> list = getPageAttachment(spaceUname, pageUuid, true, true, user);
 		if(list != null){
 			ITicket ticket = repositoryService.login(spaceUname, spaceUname, spaceUname);
 			for (FileNode node : list) {
 				//auto < manual < normal, this logic sequence is reverse with actual number of their hold.  
-				if(node.getStatus() > status && StringUtils.equalsIgnoreCase(node.getCreateor(),user!=null?user.getUsername():null)){
+				if(node.getStatus() > status.value() && StringUtils.equalsIgnoreCase(node.getCreateor(),user!=null?user.getUsername():null)){
 					//remove draft flag in attachment file node
-					node.setStatus(status);
+					node.setStatus(status.value());
 					repositoryService.updateMetaData(ticket, node);
 				}
 			}
 		}
 	}
-	private void removeDraftAttachment(String spaceUname, String pageUuid, User user,int type) throws RepositoryException, RepositoryTiemoutExcetpion{
+	private void removeDraftAttachment(String spaceUname, String pageUuid, User user,PageType type) throws RepositoryException, RepositoryTiemoutExcetpion{
 		//remove this user's attachment from repository
 		
 		ITicket ticket = repositoryService.login(spaceUname, spaceUname, spaceUname);
 		List<FileNode> list = getPageAttachment(spaceUname, pageUuid, true, true, user);
 		if(list != null){
 			for (FileNode node : list) {
-				if(node.getStatus() >= type){
+				if(node.getStatus() >= type.value()){
 					//user if not null, then only special user's attachment(draft status) will remove.
 					if((user != null &&  StringUtils.equalsIgnoreCase(node.getCreateor(),user.getUsername())) || user == null)
 						repositoryService.removeFile(ticket,node.getNodeUuid(),node.getVersion());

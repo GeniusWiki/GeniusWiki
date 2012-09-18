@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 
 /**
@@ -101,7 +102,7 @@ public class PageModel extends CaptchaCodeModel  implements CascadeObject<PageMo
 	
 	public int requireNotified;
 	//0: is current page or history page,  draft page:Manual(1) or Auto draft(2).
-	public int type;
+	public PageType type;
 	public int level;
 	
 	//identify this page is "page not found"(disable create/edit button etc), 

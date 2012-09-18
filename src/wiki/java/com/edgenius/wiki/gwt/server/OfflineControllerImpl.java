@@ -51,6 +51,7 @@ import com.edgenius.wiki.gwt.client.model.SpaceModel;
 import com.edgenius.wiki.gwt.client.model.ThemeModel;
 import com.edgenius.wiki.gwt.client.model.UploadModel;
 import com.edgenius.wiki.gwt.client.server.OfflineController;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.server.handler.GWTSpringController;
 import com.edgenius.wiki.model.Draft;
@@ -161,7 +162,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 					//client side uuid, reset it to null.
 					model.pageUuid = null; 
 				}
-				if(model.type > 0){
+				if(model.type.isDraft()){
 					//uploaded is drafts
 					UploadModel upload = new UploadModel();
 					upload.oldPageUuid = oldUuid;
@@ -187,7 +188,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 						if(!WikiUtil.getUser().isAnonymous()){
 							UploadModel upload = new UploadModel();
 							upload.oldPageUuid = oldUuid;
-							upload.newPageUuid = saveToDraft(model,Draft.OFFLINE_CONFLICT_DRAFT);
+							upload.newPageUuid = saveToDraft(model,PageType.OFFLINE_CONFLICT_DRAFT);
 							uuidList.add(upload);
 						}else{
 							AuditLogger.warn("Anonymous user has version conflict, no conflict draft saved!");
@@ -196,7 +197,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 						if(!WikiUtil.getUser().isAnonymous()){
 							UploadModel upload = new UploadModel();
 							upload.oldPageUuid = oldUuid;
-							upload.newPageUuid = saveToDraft(model,Draft.OFFLINE_CONFLICT_DRAFT);
+							upload.newPageUuid = saveToDraft(model,PageType.OFFLINE_CONFLICT_DRAFT);
 							uuidList.add(upload);
 						}else{
 							AuditLogger.warn("Anonymous user has duplicated page conflict, no conflict draft saved!");
@@ -219,7 +220,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 		//some draft may deleted on client side. here compare uploaded and current,then decide delete draft from server side
 		if(uploadDrafts.size() > 0 && !user.isAnonymous()){
 	
-			List<Draft> existDrafts = pageService.getDraftPages(user, 0);
+			List<Draft> existDrafts = pageService.getDraftPages(user, PageType.NONE_DRAFT);
 			List<Draft> deleteDrafts = new ArrayList<Draft>();
 			for (Draft draft : existDrafts) {
 				Long dt = lastSyncTime.get(draft.getSpace().getUnixName());
@@ -311,7 +312,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 	 * @param model
 	 * @throws PageException
 	 */
-	private String saveToDraft(PageModel model,int type) throws PageException {
+	private String saveToDraft(PageModel model,PageType type) throws PageException {
 		//save it to conflict draft then
 		Draft draft = new Draft();
 		model.isRichContent = true;
@@ -377,7 +378,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 				PageModel pModel = new PageModel();
 				renderService.renderHTML(page);
 				
-				PageUtil.copyPageToModel(page, pModel, userReadingService, PageUtil.NOT_COPY_ATTACHMENT);
+				PageUtil.copyPageToModel(page, pModel, userReadingService, null);
 					
 				//some special value only for offline sync
 				pModel.isHistory = false;
@@ -412,7 +413,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 					for (History history : histories) {
 						PageModel hModel = new PageModel();
 						renderService.renderHTML(history);
-						PageUtil.copyPageToModel(history, hModel, userReadingService, PageUtil.NOT_COPY_ATTACHMENT);
+						PageUtil.copyPageToModel(history, hModel, userReadingService, null);
 
 						//some special value only for offline sync
 						hModel.isHistory = true;
@@ -459,7 +460,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 		//must also check user is NOT anonymous, otherwise, PageService.getDraftPages() will throw AccessDenyException and redirect to login page
 		if((option & SharedConstants.OPTION_SYNC_DRAFT) > 0 && !viewer.isAnonymous()){
 			//get all draft, but must filter out the offline conlict draft
-			List<Draft> drafts = pageService.getDraftPages(viewer,SharedConstants.NONE_DRAFT);
+			List<Draft> drafts = pageService.getDraftPages(viewer,PageType.NONE_DRAFT);
 			for (Draft draft: drafts) {
 				
 				//keep other non-offline spaces draft is not good idea, here I only offline drafts which its spaces is offline 
@@ -468,7 +469,7 @@ public class OfflineControllerImpl extends GWTSpringController implements Offlin
 				
 				PageModel dModel = new PageModel();
 				renderService.renderHTML(draft);
-				PageUtil.copyPageToModel(draft, dModel, userReadingService, PageUtil.NOT_COPY_ATTACHMENT);
+				PageUtil.copyPageToModel(draft, dModel, userReadingService, null);
 				
 				//TODO: how to get attachment from draft: some draft may has not any saved version!
 				//some special value only for offline sync

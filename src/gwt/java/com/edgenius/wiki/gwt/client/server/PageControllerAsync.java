@@ -29,6 +29,7 @@ import com.edgenius.wiki.gwt.client.model.PageItemListModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.TextModel;
 import com.edgenius.wiki.gwt.client.model.TreeItemListModel;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -49,9 +50,9 @@ public interface PageControllerAsync extends RemoteServiceAsync {
 	//return histories less than this startVer  
 	void getPageHistory(String spaceUname, String pageUuid,int startVer, int returnCount, AsyncCallback<PageItemListModel> callback);
 	
-	void getAttachments(String spaceUname, String pageUuid, int draft, AsyncCallback<String> callback);
+	void getAttachments(String spaceUname, String pageUuid, PageType draft, AsyncCallback<String> callback);
 	void removeAttachment(String spaceUname,String pageUuid, String nodeUuid, String nodeVersion, AsyncCallback<PageModel> callback);
-	void removeDraft(String spaceUname,String pageUuid, int type, AsyncCallback<PageModel> callback);
+	void removeDraft(String spaceUname,String pageUuid, PageType type, AsyncCallback<PageModel> callback);
 	void getPageTree(String spaceUname, AsyncCallback<TreeItemListModel> callback);
 	
 	/**
@@ -65,7 +66,7 @@ public interface PageControllerAsync extends RemoteServiceAsync {
 	 * @param draftType, auto or manual draft
 	 * @param loadDraftAsync
 	 */
-	void editDraft(Integer draftUid, int draftType, boolean refreshAttachment, AsyncCallback<PageModel> callback);
+	void editDraft(Integer draftUid, PageType draftType, boolean refreshAttachment, AsyncCallback<PageModel> callback);
 
 	void diff(Integer uid1,Integer uid2, AsyncCallback<DiffListModel> callback);
 	void diff(String spaceUname, String currPageTitle, Integer historyVersion, AsyncCallback<DiffListModel> callback);

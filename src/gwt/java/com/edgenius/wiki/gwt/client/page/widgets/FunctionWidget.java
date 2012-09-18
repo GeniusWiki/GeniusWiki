@@ -30,15 +30,16 @@ import com.edgenius.wiki.gwt.client.ClientConstants;
 import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
+import com.edgenius.wiki.gwt.client.constant.PageSaveMethod;
 import com.edgenius.wiki.gwt.client.home.CreateSpaceDialogue;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.UserModel;
-import com.edgenius.wiki.gwt.client.page.EditPanel;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.portal.Portal;
 import com.edgenius.wiki.gwt.client.portal.PortletListDialogue;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
@@ -447,9 +448,9 @@ public class FunctionWidget extends SimplePanel {
 			saveDraftButton.setBusy(true);
 		}
 		if(exitToView)
-			main.editPanel.saveDraft(EditPanel.SAVE_MANUAL_DRAFT_EXIT_TO_VIEW);
+			main.editPanel.saveDraft(PageSaveMethod.SAVE_MANUAL_DRAFT_EXIT_TO_VIEW);
 		else
-			main.editPanel.saveDraft(EditPanel.SAVE_MANUAL_DRAFT_STAY_IN_EDIT);
+			main.editPanel.saveDraft(PageSaveMethod.SAVE_MANUAL_DRAFT_STAY_IN_EDIT);
 	}
 	public void cancelPage(){
 		//switch to loading panel - this invokes panelSwitch event, then will trigger exist confirm dialog
@@ -465,7 +466,7 @@ public class FunctionWidget extends SimplePanel {
 		//for edit, it is possible there are some draft try to delete them.
 		PageControllerAsync action = ControllerFactory.getPageController();
 		if(pageUuid!= null){
-			action.removeDraft(spaceUname,main.getPageUuid(),SharedConstants.AUTO_DRAFT, new RemoveDraftAsync());
+			action.removeDraft(spaceUname,main.getPageUuid(),PageType.AUTO_DRAFT, new RemoveDraftAsync());
 		}
 		
 		

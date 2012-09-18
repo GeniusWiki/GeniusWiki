@@ -36,6 +36,7 @@ import com.edgenius.wiki.gwt.client.model.AttachmentModel;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentListener;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.NameConstants;
 import com.edgenius.wiki.gwt.client.server.utils.RichTagUtil;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
@@ -111,7 +112,7 @@ public class MCEImageDialog extends MCEDialog implements ImageSlideListener, Att
 			ClickLink uploadImg = new ClickLink(Msg.consts.upload());
 			uploadImg.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					UploadDialog dialog = new UploadDialog(tiny.getEditor().getAttachmentPanel(), PageMain.getSpaceUname(), PageMain.getPageUuid(), SharedConstants.AUTO_DRAFT);
+					UploadDialog dialog = new UploadDialog(tiny.getEditor().getAttachmentPanel(), PageMain.getSpaceUname(), PageMain.getPageUuid(), PageType.AUTO_DRAFT);
 					dialog.showbox();
 				};
 			});

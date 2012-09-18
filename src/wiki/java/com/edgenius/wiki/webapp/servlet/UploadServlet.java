@@ -58,7 +58,7 @@ import com.edgenius.core.util.FileUtil;
 import com.edgenius.core.webapp.BaseServlet;
 import com.edgenius.core.webapp.filter.AjaxRedirectFilter.RedirectResponseWrapper;
 import com.edgenius.wiki.WikiConstants;
-import com.edgenius.wiki.model.Draft;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.service.ActivityLogService;
 import com.edgenius.wiki.service.PageException;
 import com.edgenius.wiki.service.PageService;
@@ -83,7 +83,7 @@ public class UploadServlet extends BaseServlet {
 
             request.setAttribute("pageUuid", pageUuid);
             request.setAttribute("spaceUname", spaceUname);
-            request.setAttribute("draft", NumberUtils.toInt(draft, Draft.NONE_DRAFT));
+            request.setAttribute("draft", NumberUtils.toInt(draft, PageType.NONE_DRAFT.value()));
 
             request.getRequestDispatcher("/WEB-INF/pages/upload.jsp").forward(request, response);
 
@@ -102,7 +102,7 @@ public class UploadServlet extends BaseServlet {
 		List<FileNode> files = new ArrayList<FileNode>();
 		String pageUuid = null, spaceUname = null;
 		try {
-			int status = Draft.NONE_DRAFT;
+			int status = PageType.NONE_DRAFT.value();
 			// index->filename
 			Map<String, FileItem> fileMap = new HashMap<String, FileItem>();
 			Map<String, String> descMap = new HashMap<String, String>();
@@ -126,8 +126,7 @@ public class UploadServlet extends BaseServlet {
 				} else if (StringUtils.equals(name, "pageUuid")) {
 					pageUuid = item.getString();
 				} else if (name.startsWith("draft")) {
-					// check this upload is from "click save button" or "auto
-					// upload in draft status"
+					// check this upload is from "click save button" or "auto upload in draft status"
 					status = Integer.parseInt(item.getString());
 				} else if (name.startsWith("file")) {
 					fileMap.put(name.substring(4), item);

@@ -204,6 +204,7 @@
 				classpath="${depends.classpath}"
 				classpathref="compile.classpath">
 			    <include name="com/edgenius/wiki/gwt/client/server/*.java"/>
+			    <include name="com/edgenius/wiki/gwt/client/server/constant/*.java"/>
 			    <include name="com/edgenius/wiki/gwt/client/server/utils/*.java"/>
 			    <include name="com/edgenius/wiki/gwt/client/model/*.java"/>
 			    <include name="com/edgenius/wiki/gwt/client/html/*.java"/>
