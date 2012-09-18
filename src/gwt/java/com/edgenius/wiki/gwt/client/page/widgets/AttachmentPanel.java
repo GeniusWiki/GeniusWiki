@@ -42,7 +42,6 @@ import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
 import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
-import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
 import com.edgenius.wiki.gwt.client.widgets.IconBundle;
 import com.edgenius.wiki.gwt.client.widgets.MessageWidget;
@@ -121,7 +120,10 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		
 		DOM.setElementAttribute(this.getElement(), "id", panelID);
 	}
-	
+    public PageMain getPageMain() {
+       return this.main;
+    }
+
 	public String getPanelID(){
 		return panelID;
 	}
@@ -276,31 +278,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		return readonly;
 	}
 
-	/**
-	 * @param results
-	 * @return 
-	 */
-	public static List<AttachmentModel> parseAttachmentJSON(String results) {
-		List<AttachmentModel> modelList = new ArrayList<AttachmentModel>();
-		try {
-			JSONValue jsonValue = JSONParser.parse(results);
-			JSONArray attachmentArray;
-			if ((attachmentArray = jsonValue.isArray()) != null) {
-				//AttachmentList
-				int size = attachmentArray.size();
-				for (int idx = 0; idx < size; ++idx) {
-					//attachment
-					JSONObject attachObj = attachmentArray.get(idx).isObject();
-					AttachmentModel model = retrieve(attachObj);
-					modelList.add(model);
-				}
-			}
-		} catch (JSONException e) {
-			Window.alert(Msg.consts.error_request());
-		}
-		
-		return modelList;
-	}
+
 	
 	public void refresh(String spaceUname, String pageUuid, final PageType draftStatus){
 	    PageControllerAsync action = ControllerFactory.getPageController();
@@ -325,8 +303,29 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	//               Private methods
 	//********************************************************************
 
-	
-	private static AttachmentModel retrieve(JSONObject attachObj){
+   private List<AttachmentModel> parseAttachmentJSON(String results) {
+        List<AttachmentModel> modelList = new ArrayList<AttachmentModel>();
+        try {
+            JSONValue jsonValue = JSONParser.parseStrict(results);
+            JSONArray attachmentArray;
+            if ((attachmentArray = jsonValue.isArray()) != null) {
+                //AttachmentList
+                int size = attachmentArray.size();
+                for (int idx = 0; idx < size; ++idx) {
+                    //attachment
+                    JSONObject attachObj = attachmentArray.get(idx).isObject();
+                    AttachmentModel model = retrieve(attachObj);
+                    modelList.add(model);
+                }
+            }
+        } catch (JSONException e) {
+            Window.alert(Msg.consts.error_request());
+        }
+        
+        return modelList;
+    }
+   
+	private AttachmentModel retrieve(JSONObject attachObj){
 		AttachmentModel model = new AttachmentModel();
 		
 		//retrieve Attachment->Filename, Comment and Shared fields.
@@ -1032,6 +1031,5 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			}
 		}
 	}
-	
 
 }

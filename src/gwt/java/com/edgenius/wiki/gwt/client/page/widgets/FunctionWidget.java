@@ -30,11 +30,11 @@ import com.edgenius.wiki.gwt.client.ClientConstants;
 import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
+import com.edgenius.wiki.gwt.client.constant.PageSaveMethod;
 import com.edgenius.wiki.gwt.client.home.CreateSpaceDialogue;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.PageModel;
 import com.edgenius.wiki.gwt.client.model.UserModel;
-import com.edgenius.wiki.gwt.client.page.EditPanel;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.portal.Portal;
 import com.edgenius.wiki.gwt.client.portal.PortletListDialogue;
@@ -448,9 +448,9 @@ public class FunctionWidget extends SimplePanel {
 			saveDraftButton.setBusy(true);
 		}
 		if(exitToView)
-			main.editPanel.saveDraft(EditPanel.SAVE_MANUAL_DRAFT_EXIT_TO_VIEW);
+			main.editPanel.saveDraft(PageSaveMethod.SAVE_MANUAL_DRAFT_EXIT_TO_VIEW);
 		else
-			main.editPanel.saveDraft(EditPanel.SAVE_MANUAL_DRAFT_STAY_IN_EDIT);
+			main.editPanel.saveDraft(PageSaveMethod.SAVE_MANUAL_DRAFT_STAY_IN_EDIT);
 	}
 	public void cancelPage(){
 		//switch to loading panel - this invokes panelSwitch event, then will trigger exist confirm dialog

@@ -126,8 +126,7 @@ public class UploadServlet extends BaseServlet {
 				} else if (StringUtils.equals(name, "pageUuid")) {
 					pageUuid = item.getString();
 				} else if (name.startsWith("draft")) {
-					// check this upload is from "click save button" or "auto
-					// upload in draft status"
+					// check this upload is from "click save button" or "auto upload in draft status"
 					status = Integer.parseInt(item.getString());
 				} else if (name.startsWith("file")) {
 					fileMap.put(name.substring(4), item);

@@ -38,6 +38,7 @@ import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
 import com.edgenius.wiki.gwt.client.KeyCaptureListener;
 import com.edgenius.wiki.gwt.client.KeyMap;
+import com.edgenius.wiki.gwt.client.constant.PageSaveMethod;
 import com.edgenius.wiki.gwt.client.editor.EditorRegistry;
 import com.edgenius.wiki.gwt.client.home.HomeMain;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
@@ -592,7 +593,7 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 			if(!isPreviewReady()){
 				//save draft first, need show loading page, 
 				index = LOADING_PANEL;
-				editPanel.saveDraft(EditPanel.SAVE_DRAFT_LOAD_PREVIEW);
+				editPanel.saveDraft(PageSaveMethod.SAVE_DRAFT_LOAD_PREVIEW);
 			}
 		}else if(index == EDIT_PANEL){
 			setFromPanelIndex(PageMain.PREVIEW_PANEL);
