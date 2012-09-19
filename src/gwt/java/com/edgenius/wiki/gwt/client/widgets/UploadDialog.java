@@ -76,6 +76,7 @@ public class UploadDialog extends DialogBox implements DialogListener{
 		        attachmentPanel.getPageMain().editPanel.saveDraft(PageSaveMethod.SAVE_AUTO_DRAFT_STAY_IN_EDIT, new Callback<String>() {
                     @Override
                     public void callback(String pageUuid) {
+                        UploadDialog.this.pageUuid = pageUuid;
                         Frame upload = new Frame(GwtClientUtils.getBaseUrl() + "pages/upload?uname="+URL.encodeQueryString(spaceUname)+"&puuid="+ pageUuid+"&draft="+draft.value());
                         upload.setSize("100%", "100%");
                         deck.add(upload);

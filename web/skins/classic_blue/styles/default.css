@@ -27,6 +27,10 @@ html,body {
 	font-size:12px;
 	line-height: 20px;
 	height:32px;
+	position:fixed;
+    top:0;
+    width:100%;
+    z-index:200;
 }
 
 #header a {
@@ -146,6 +150,8 @@ html,body {
 	/** !!! This value should corresponding values from skins/default/scripts/view.js !! **/
 	margin: 25px 25px 25px 25px;
 	padding: 12px;
+	top:33px;
+	position: relative;
 }
 
 /*layout of the footer - the bottom of the box */
@@ -344,7 +350,9 @@ a:visited {
 	height:34px;
 	text-shadow: 0px 1px 1px white;
 }
-
+.dialog-box iframe {
+	border: 0px;
+}
 .dlg-top-left{
 	background:transparent url(../images/dlg/dlg_top_left.png) repeat-x scroll 0 0;
 }
@@ -523,6 +531,13 @@ a:visited {
 	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
 }
 
+.upload-dialog {
+	width: 1170px;
+	height: 600px;
+}
+.upload-dialog .main-body{
+	height:555px;
+}
 
 .help-dialog {
 	width: 1024px;
@@ -729,32 +744,14 @@ a:visited {
 	border: 1px solid #87B3FF;
 }
 
+
 .attachment .function {
-	float: center;
-	width: 100%;
-}
-
-.attachment .function .column1 {
-	width: 300px;
-	white-space: nowrap;
-	text-align: left;
-}
-.attachment .function .column2 {
-	
-}
-
-.attachment .function .column3 {
-	width: 100px;
-	white-space: nowrap;
 	text-align: right;
 }
-
-.attachment .function .column4 {
-	width: 100px;
-	white-space: nowrap;
-	text-align: right;
+.attachment .function .gwt-Hyperlink{
+	padding-right: 15px;
+	line-height: 25px;
 }
-
 
 .attachment .uploaded-table tr td {
 	height: 5px;
@@ -1976,6 +1973,52 @@ background:transparent none repeat-x scroll 0 -6px;
 }
 
 
+.historyAction .msg{
+	float:left
+}
+.historyAction .return{
+	float:left;
+}
+.historyAction .action{
+	clear:both;
+}
+.historyAction .round{
+	float:left;
+	text-align: center;
+	line-height: 18px;
+	padding:5px 8px 5px 8px;
+}
+.historyAction .round .prev{
+}
+.historyAction .round .next{
+}
+.historyAction .round .version{
+	font-size:20px;
+	line-height: 25px;
+}
+.historyAction .round .author{
+}
+.historyAction .round .date{
+}
+.historyAction .current{
+	float:left;
+	font-size: 25px;
+	line-height: 75px;
+	padding:0px 8px 0px 8px;
+	margin: 8px 0px 5px 0px;
+	border-left:1px solid;
+	border-right:1px solid;
+}
+.historyAction .indicator{
+	float:left;
+	text-align: center;
+	margin: 10px 10px 0px 0px;
+	font-size: 16px;
+	line-height: 26px;
+}
+.historyAction .indicator div{
+	padding:3px 8px 3px 8px;
+}
 /************************************************************
   GWT override 
 ************************************************************/
@@ -2119,3 +2162,32 @@ background:transparent none repeat-x scroll 0 -6px;
   border: 0px; 
   background: #91c0ef;
 }
+.busy-panel{
+	display:table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.busy-panel.upload{
+	width:1110px;
+	height:550px;
+}
+.busy-panel *{
+	vertical-align: middle;
+}
+/*\*//*/
+.busy-panel {
+    display: block;
+}
+.busy-panel span {
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+}
+/**/
+</style>
+<!--[if lt IE 8]><style>
+.busy-panel span {
+    display: inline-block;
+    height: 100%;
+}
+</style><![endif]-->

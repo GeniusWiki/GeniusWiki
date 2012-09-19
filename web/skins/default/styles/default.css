@@ -28,6 +28,10 @@ html,body {
 	font-size:12px;
 	line-height: 20px;
 	height:32px;
+	position:fixed;
+    top:0;
+    width:100%;
+    z-index:200;
 }
 
 #header a {
@@ -147,6 +151,8 @@ html,body {
 	/** !!! This value should corresponding values from skins/default/scripts/view.js !! **/
 	margin: 25px 25px 25px 25px;
 	padding: 12px;
+	top:33px;
+	position: relative;
 }
 
 /*layout of the footer - the bottom of the box */
