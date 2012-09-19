@@ -8,9 +8,6 @@
         
 		<title><edgenius:title/> <fmt:message key="system.admin"/></title>
  		<script language='javascript' src='gwtadmin/gwtadmin.nocache.js?v=@TOKEN.SITE.VERSION@'></script>
-		<%-- admin of default dash board may need this editor widget --%>
-    	<%@ include file="/common/view-scripts.jsp"%>
-    	<%@ include file="/common/edit-scripts.jsp"%>
 	
  		<script type="text/javascript" src="${ctxPath}/static/scripts/admin.js"></script>
 	</head>
@@ -28,5 +25,10 @@
 	<div id="rightsidebarbtn" class="right-sidebar-btn" style="display:none"></div>		
 	<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
 	<div id="offlineAttachmentDiv" style="display: none"></div>
+	
+	<%-- admin of default dash board may need this editor widget --%>
+   	<%@ include file="/common/view-scripts.jsp"%>
+   	<%@ include file="/common/edit-scripts.jsp"%>
+   	
 	</body>
 </html>

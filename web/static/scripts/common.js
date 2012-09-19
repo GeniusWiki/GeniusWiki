@@ -85,18 +85,6 @@ function getWindowWidth() {
 	return myWidth;
 }
 
-//this message will replace on GWT
-var message = "Are you sure leaving?";
-function beforeUnload(){
-	  if (typeof evt == 'undefined') {
-		 evt = window.event;
-	  }
-	  if (evt) {
-		evt.returnValue = message;
-	  }
-	  return message;
-}
-
 function trim(str){
 	if(str == null)
 		return str;

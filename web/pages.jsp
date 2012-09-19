@@ -10,13 +10,15 @@
         <link rel="stylesheet" type="text/css" media="all" href="${skinPath}/styles/render.css" />
         
 		<title><edgenius:title/></title>
+
+ 		<%-- dp syntax highlighter --%>
+		<link type="text/css" rel="stylesheet" href="${ctxPath}/widgets/dp_syntaxhighlighter/styles/shCoreEclipse.css?v=@TOKEN.SITE.VERSION@">
 		
  		<script src='gwtpage/gwtpage.nocache.js?v=@TOKEN.SITE.VERSION@'></script>
+ 		
  		<%-- This is not real Javascript but a Servlet - see PageLayout servlet web.xml  --%>
  		<script src='${ctxPath}/layout.js'></script>
  		
-    	<%@ include file="/common/view-scripts.jsp"%>
-    	<%@ include file="/common/edit-scripts.jsp"%>
 	</head>
 
 	<body>
@@ -38,6 +40,10 @@
 	<input type="hidden" id="systemTitle" name="systemTitle" value="<edgenius:title/>"/>
 	<input type="hidden" id="shellUrl" name="shellUrl" value="<%=Shell.url%>"/>
 	<div id="offlineAttachmentDiv" style="display: none"></div>
+	
+	<%@ include file="/common/view-scripts.jsp"%>
+    <%@ include file="/common/edit-scripts.jsp"%>
+    	
 	<!--GOOGLE-ANALYSTIC-->
 	</body>
 </html>

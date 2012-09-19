@@ -7,8 +7,7 @@
 		<meta name="keywords" content="${page.title},${page.tagString}"/>
 		<meta name="description" content="${page.title}"/>
 		
-        <%@ include file="/common/meta-plain.jsp"%>
-        <%@ include file="/common/view-scripts.jsp"%>
+        
         <link rel="stylesheet" type="text/css" media="all" href="${skinPath}/styles/render.css?v=@TOKEN.SITE.VERSION@" />
         <link rel="stylesheet" type="text/css" media="all" href="${skinPath}/styles/view.css?v=@TOKEN.SITE.VERSION@" />
         
@@ -54,5 +53,8 @@
 			
 			</td></tr>
 		</table>
+		
+		<%@ include file="/common/meta-plain.jsp"%>
+        <%@ include file="/common/view-scripts.jsp"%>
 	</body>	
 </html>

@@ -94,6 +94,7 @@
 			<copy todir="${var.target.dir}">
 				<fileset dir="${web.dir}">
 					<include name="**/*.jsp" />
+					<include name="**/*.js" />
 					<include name="**/web.xml" />
 				</fileset>
 				<filterset refid="properties.variables" />
@@ -107,6 +108,7 @@
 			<copy todir="${var.target.dir}">
 				<fileset dir="${web.dir}">
 					<exclude name="**/*.jsp" />
+					<exclude name="**/*.js" />
 					<exclude name="**/web.xml" />
 					<exclude name="**/*.orig" />
 				</fileset>

@@ -5,6 +5,11 @@
 <link rel="icon" href="${skinPath}/images/app.ico"/>
 <link rel="SHORTCUT ICON" href="${skinPath}/images/app.ico"/>
 
+<script>
+var ctxPath = '${ctxPath}';
+var skinPath = '${skinPath}';
+</script>
+
 <link rel="stylesheet" type="text/css" media="all" href="${skinPath}/styles/default.css?v=@TOKEN.SITE.VERSION@" />
 <!--[if IE]>
   <link rel="stylesheet" type="text/css" media="all" href="${skinPath}/styles/default-all-ie.css?v=@TOKEN.SITE.VERSION@" />
