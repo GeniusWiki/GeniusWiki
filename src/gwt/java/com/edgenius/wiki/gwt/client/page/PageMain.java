@@ -40,7 +40,7 @@ import com.edgenius.wiki.gwt.client.KeyCaptureListener;
 import com.edgenius.wiki.gwt.client.KeyMap;
 import com.edgenius.wiki.gwt.client.constant.PageSaveMethod;
 import com.edgenius.wiki.gwt.client.editor.EditorRegistry;
-import com.edgenius.wiki.gwt.client.home.HomeMain;
+import com.edgenius.wiki.gwt.client.home.DashboardPanel;
 import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.model.AttachmentModel;
 import com.edgenius.wiki.gwt.client.model.PageModel;
@@ -149,7 +149,7 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 	private LoadingPanel loadingPanel = new LoadingPanel();
 	//initial before EditPanel and EditSidebarPanel
 	public EditorRegistry editorRegistry = new EditorRegistry();
-	public HomeMain dashboardPanel = new HomeMain(this);
+	public DashboardPanel dashboardPanel = new DashboardPanel(this);
 	public ViewPanel viewPanel = new ViewPanel(this);
 	public EditPanel editPanel = new EditPanel(this);
 	public SideBar sidebar = new SideBar(); 

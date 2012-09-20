@@ -43,6 +43,7 @@ public class AttachmentModel extends GeneralModel {
 	public long size;
 	public String desc="";
 	public boolean bulkZip = false;
+	public int draftStatus;
 	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// following fields only used in offline model
@@ -77,6 +78,7 @@ public class AttachmentModel extends GeneralModel {
 		model.size=this.size;
 		model.desc=this.desc;
 		model.bulkZip =this.bulkZip;
+		model.draftStatus = this.draftStatus;
 		
 		//offline only
 		model.offlineEdited = this.offlineEdited;

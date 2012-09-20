@@ -343,6 +343,8 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 				model.date = (long) attachObj.get(attKey).isNumber().doubleValue();
 			}else if(attKey.equalsIgnoreCase("size")) {
 				model.size = (long) attachObj.get(attKey).isNumber().doubleValue();
+			}else if(attKey.equalsIgnoreCase("draftStatus")) {
+			    model.draftStatus = (int) attachObj.get(attKey).isNumber().doubleValue();
 			}else if(attKey.equalsIgnoreCase("userFullname")) {
 				model.creator = attachObj.get(attKey).isString().stringValue();
 			}else if(attKey.equalsIgnoreCase("index")) {
@@ -706,7 +708,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			}
 			
 		
-			Writable nameLabel = new Writable(GwtClientUtils.buildDownloadURLWidget(main.getSpaceUname(),model.filename,model.nodeUuid,model.version),model.filename);
+			Writable nameLabel = new Writable(downloadLink(model),model.filename);
 			nameLabel.addFocusHandler(KeyCaptureListener.instance());
 			nameLabel.addBlurHandler(KeyCaptureListener.instance());
 			nameLabel.addStyleName(Css.NAME);
@@ -740,7 +742,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			nameLabel.addListener(new WritableListener(){
 				public void editDone(Writable sender, String text) {
 					model.filename = text; 
-					sender.resetWidget(GwtClientUtils.buildDownloadURLWidget(PageMain.getSpaceUname(),model.filename,model.nodeUuid,model.version));
+					sender.resetWidget(downloadLink(model));
 					
 				}
 
@@ -766,6 +768,15 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 				}
 			});
 		}
+		
+        private HTML downloadLink(final AttachmentModel model) {
+            HTML link = GwtClientUtils.buildDownloadURLWidget(PageMain.getSpaceUname(),model.filename,model.nodeUuid,model.version);
+            if(model.draftStatus > 0){
+                return new HTML(link.getHTML() + "<span class='draft-status'>"+Msg.consts.draft()+" </span>");
+            }else{
+                return link;
+            }
+        }
 
 		private float getFloatVersion(String verstr) {
 			try{

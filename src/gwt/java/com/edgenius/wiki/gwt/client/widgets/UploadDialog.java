@@ -31,7 +31,6 @@ import com.edgenius.wiki.gwt.client.i18n.Msg;
 import com.edgenius.wiki.gwt.client.page.PageMain;
 import com.edgenius.wiki.gwt.client.page.widgets.AttachmentPanel;
 import com.edgenius.wiki.gwt.client.server.constant.PageType;
-import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -69,10 +68,13 @@ public class UploadDialog extends DialogBox implements DialogListener{
         busyPanelDiv.addStyleName("upload");
         
 		deck.add(busyPanel);
-		
-		if(StringUtil.isBlank(pageUuid)){
+
+		//If editing, always save auto draft - 2 scenarios: first if  pageUuid is null, means new page, must be save draft.
+		//otherwise, an existing page, however, user needs a draft to reload these draft attachments - I set it always save draft that is 100% perfect because here 
+		//does not check if this editing already has a draft saved. 
+	    if(attachmentPanel.getPageMain().getVisiblePanelIndex() == PageMain.EDIT_PANEL){
+//	        if(StringUtil.isBlank(pageUuid)){
 		    //could a unsaved new page - save a auto draft then turn page again
-		    if(attachmentPanel.getPageMain().getVisiblePanelIndex() == PageMain.EDIT_PANEL){
 		        attachmentPanel.getPageMain().editPanel.saveDraft(PageSaveMethod.SAVE_AUTO_DRAFT_STAY_IN_EDIT, new Callback<String>() {
                     @Override
                     public void callback(String pageUuid) {
@@ -82,7 +84,7 @@ public class UploadDialog extends DialogBox implements DialogListener{
                         deck.add(upload);
                     }
                 });
-		    }
+//		    }
 		}else{
 		    Frame upload = new Frame(GwtClientUtils.getBaseUrl() + "pages/upload?uname="+URL.encodeQueryString(spaceUname)+"&puuid="+ pageUuid+"&draft="+draft.value());
 		    upload.setSize("100%", "100%");

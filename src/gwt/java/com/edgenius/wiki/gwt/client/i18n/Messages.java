@@ -2,7 +2,7 @@ package com.edgenius.wiki.gwt.client.i18n;
 
 /**
  * Interface to represent the constants contained in resource bundle:
- * 	'/Users/dapeng/x_dev/workspace/Edgenius/build/gwt/resources/com/edgenius/wiki/gwt/client/i18n/Messages.properties'.
+ * 	'/home/dapengni/xdev/git/GeniusWiki/build/gwt/resources/com/edgenius/wiki/gwt/client/i18n/Messages.properties'.
  */
 public interface Messages extends com.google.gwt.i18n.client.Constants {
   
@@ -1141,6 +1141,15 @@ public interface Messages extends com.google.gwt.i18n.client.Constants {
   String download_attachment();
 
   /**
+   * Translated "Draft".
+   * 
+   * @return translated "Draft"
+   */
+  @DefaultStringValue("Draft")
+  @Key("draft")
+  String draft();
+
+  /**
    * Translated "My drafts list".
    * 
    * @return translated "My drafts list"
@@ -1519,11 +1528,11 @@ public interface Messages extends com.google.gwt.i18n.client.Constants {
   String err_need_blog_selected();
 
   /**
-   * Translated "a saved version is newer than yours, do you want to {0} or {1}?".
+   * Translated "A saved version is newer than yours, do you want to {0} or {1}?".
    * 
-   * @return translated "a saved version is newer than yours, do you want to {0} or {1}?"
+   * @return translated "A saved version is newer than yours, do you want to {0} or {1}?"
    */
-  @DefaultStringValue("a saved version is newer than yours, do you want to {0} or {1}?")
+  @DefaultStringValue("A saved version is newer than yours, do you want to {0} or {1}?")
   @Key("err.newer.version")
   String err_newer_version();
 
@@ -2140,11 +2149,11 @@ public interface Messages extends com.google.gwt.i18n.client.Constants {
   String force_publish_title();
 
   /**
-   * Translated "force to save".
+   * Translated "Force to save".
    * 
-   * @return translated "force to save"
+   * @return translated "Force to save"
    */
-  @DefaultStringValue("force to save")
+  @DefaultStringValue("Force to save")
   @Key("force.save")
   String force_save();
 

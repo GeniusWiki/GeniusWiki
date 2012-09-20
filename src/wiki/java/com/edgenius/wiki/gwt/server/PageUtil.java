@@ -419,6 +419,7 @@ public class PageUtil {
 		//bytes
 		attModel.size=node.getSize();
 		attModel.desc=node.getComment();
+		attModel.draftStatus = node.getStatus();
 	}
 
 	//********************************************************************

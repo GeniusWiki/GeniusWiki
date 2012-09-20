@@ -357,9 +357,10 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 			List<Draft> drafts = pageService.hasDraft(spaceUname,newPageTitle, user);
 			PageUtil.copyDraftStatus(drafts,model,user);
 			
-			if(space.getSetting().getLinkedMetas() != null)
-				model.linkedBlogs = space.getSetting().getLinkedMetas();
-			
+			if(space.getSetting().getLinkedMetas() != null){
+			    //disable blog function - 2012/09/20
+//				model.linkedBlogs = space.getSetting().getLinkedMetas();
+			}
 		} catch (Exception e) {
 			log.error("Get Page with error in create page pre check:" , e);
 			model.errorCode = ErrorCode.PAGE_GET_ERROR;

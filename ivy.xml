@@ -120,7 +120,7 @@
 		<dependency org="apache" name="commons-beanutils" rev="1.7" conf="deploy->default;dev->default" />
 		<dependency org="apache" name="commons-lang" rev="2.4" conf="deploy->default;dev->source"/>
 		<dependency org="apache" name="commons-collections" rev="3.2.1" conf="deploy->default;dev->default"/>
-		<dependency org="apache" name="activemq" rev="5.4.0" conf="deploy->core;dev->core"/>
+		<dependency org="apache" name="activemq" rev="5.4.3" conf="deploy->core;dev->core"/>
 		
 		<dependency org="com/jolbox" name="bonecp" rev="0.7.1.RELEASE" conf="deploy->default;dev->default"/>
 

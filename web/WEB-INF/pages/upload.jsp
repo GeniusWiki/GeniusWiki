@@ -13,6 +13,12 @@
 	<!--[if lt IE 9]><script src="${ctxPath}/widgets/html5shiv/html5.js"></script><![endif]-->
 	
 	<link rel="stylesheet" href="${ctxPath}/widgets/jquery/jquery-upload/css/jquery.fileupload-ui.css">
+	
+	<style>
+	html,body {
+		background-color: #fff;
+	}
+	</style>
 </head>
 <body>
 <div class="container">

@@ -47,13 +47,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author Dapeng.Ni
  *  Merge SearchMain from GWT Module into SimplePanel and render as a one of Deck panel in PageMain. (Oct. 25th, 2007). 
  */
-public class HomeMain extends MessagePanel implements RenderContentListener, AsyncCallback<RenderMarkupModel> {
+public class DashboardPanel extends MessagePanel implements RenderContentListener, AsyncCallback<RenderMarkupModel> {
 
 	private PageMain main;
 	private RenderPanel renderPanel = new WikiRenderPanel();
 	private PageRender render = new PageRender(renderPanel);
 	
-	public HomeMain(PageMain main){
+	public DashboardPanel(PageMain main){
 		this.main = main;
 		render.registerPortalVistor(new HomePortalVisitor());
 		render.addRenderContentListener(this);

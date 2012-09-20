@@ -28,7 +28,6 @@ import java.util.Date;
 import com.edgenius.wiki.gwt.client.AbstractEntryPoint;
 import com.edgenius.wiki.gwt.client.BaseEntryPoint;
 import com.edgenius.wiki.gwt.client.Callback;
-import com.edgenius.wiki.gwt.client.ClientConstants;
 import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
 import com.edgenius.wiki.gwt.client.GwtClientUtils;
@@ -73,7 +72,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -106,7 +104,6 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	private AttachmentButton attachmentBtn;
 	private ClickLink templateBtn = new ClickLink(Msg.consts.templates());
 	private CheckBox noticeCheckbox = new CheckBox(Msg.consts.send_notify());
-	private FlowPanel extPanel = new FlowPanel();
 	
 	private Timer saveDraftTimer = new SaveDraftTimer();
 	//auto save draft time if set or not
@@ -115,7 +112,6 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	private boolean dirty = false;
 	private boolean exitConfirm = true;
 	private String currentToken;
-	private BlogExtraInfoPanel blogExtraInfoPanel;
 	
 	public EditPanel(final PageMain main){
 		super(main);
@@ -181,19 +177,12 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 	    titleBox.setStyleName(Css.TITLE_BOX);
 	    
 	    draftStatusBar.setStyleName(Css.DRAFT_STATUS_MSG); 
-
-	    HorizontalPanel editorPanel = new HorizontalPanel();
-	    editorPanel.setWidth("100%");
-	    editorPanel.add(contentArea);
-	    editorPanel.add(extPanel);
-	    
-	    showExtPanel(false);
 	    
 	    //main content panel, contains contentPanel, diffContent and SideBar panel.
 		FlexTable mainPanel = new FlexTable();
 		mainPanel.setCellPadding(0);
 		mainPanel.setCellSpacing(0);
-	    mainPanel.setWidget(0, 0, editorPanel);
+	    mainPanel.setWidget(0, 0, contentArea);
 	    mainPanel.setWidget(0, 1, diffContent);
 	    
 	    mainPanel.getCellFormatter().setAlignment(0, 0,HasHorizontalAlignment.ALIGN_LEFT, HasVerticalAlignment.ALIGN_TOP);
@@ -683,14 +672,6 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 			tagBox.setText(model.tagString == null?"":model.tagString);
 			tagBox.setSpaceUname(model.spaceUname);
 			
-			extPanel.clear();
-			if(model.linkedBlogs != null && model.linkedBlogs.size() > 0){
-				blogExtraInfoPanel = new BlogExtraInfoPanel(model.linkedBlogs);
-				extPanel.add(blogExtraInfoPanel);
-				showExtPanel(true);
-			}else{
-				showExtPanel(false);
-			}
 			//must call before setText(), so that content could point to correct editor 
 			contentArea.enableRich(model.isRichContent);
 			contentArea.setText(model.content == null?"":model.content);
@@ -778,16 +759,10 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		model.content = contentArea.getText();
 		model.isRichContent = contentArea.isRichEnabled();
 		
-		//notify value comes from WikiConstants.NOTIFY_*
-		//for blog, it may have over one notify - here just set as flag
-		model.requireNotified = (noticeCheckbox.getValue()?1:0)|
-			((blogExtraInfoPanel != null && blogExtraInfoPanel.hasNotify())?SharedConstants.NOTIFY_BLOG:0);
 		
 		model.attachmentList = attPanel.getUploadedItemsUuid();
 		
-		if(extPanel.isVisible() && blogExtraInfoPanel != null){
-			model.linkedBlogs =  blogExtraInfoPanel.getValues();
-		}
+
 		return model;
 	}
 
@@ -850,21 +825,7 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		return ErrorCode.getMessage(ErrorCode.PAGE_VERSION_CONFLICT, null, new Widget[]{diffLink,forcsSaveLink});	
 	}
 
-	private void showExtPanel(boolean show){
-		//show first, to avoid getVisibleWidget() throw exception in hide mode;
-		extPanel.setVisible(show);
-
-		if(show){
-			DOM.setStyleAttribute(extPanel.getElement(),"width",(ClientConstants.LEFT_SIDE_MENU_WIDTH - 20) +"px");
-			DOM.setStyleAttribute(contentArea.getElement(),"marginRight", ClientConstants.LEFT_SIDE_MENU_WIDTH +"px");
-		}else{
-			//switch to flag panel, so that toggle could work.
-			DOM.setStyleAttribute(extPanel.getElement(),"width","0px");
-			DOM.setStyleAttribute(contentArea.getElement(),"marginRight","0px");
-		}
-
-	}
-
+	
 	/**
 	 * @return View layout from javascript.
 	 */
