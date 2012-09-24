@@ -24,6 +24,7 @@
  	@TOKEN.GWT.MINI.DEBUG.PROPERTIES.E@
  	 	
  	@TOKEN.GWT.DEPLOY.ONLY.S@
+ 	<set-property name="compiler.stackMode" value="strip"/>
  	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
 	<inherits name="com.google.gwt.i18n.I18N"/>
 	<extend-property name="locale" values="zh_CN"/>

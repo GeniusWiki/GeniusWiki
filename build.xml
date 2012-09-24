@@ -252,16 +252,16 @@
 		
 		<gwtInit phase="deploy"/>
 		
-		<gwtCompile module="gwt" phase="deploy" gwt.application="gwtlogin"/>
-		<gwtPublish phase="deploy" gwt.application="gwtlogin"/>
-		<move todir="${build.dir}/web/gwtlogin">
-			<fileset dir="${build.dir}/gwtlogin"/>
-		</move>
-		
 		<gwtCompile module="gwt" phase="deploy" gwt.application="gwtpage"/>
 		<gwtPublish phase="deploy" gwt.application="gwtpage"/>
 		<move todir="${build.dir}/web/gwtpage">
 			<fileset dir="${build.dir}/gwtpage"/>
+		</move>
+		
+		<gwtCompile module="gwt" phase="deploy" gwt.application="gwtlogin"/>
+		<gwtPublish phase="deploy" gwt.application="gwtlogin"/>
+		<move todir="${build.dir}/web/gwtlogin">
+			<fileset dir="${build.dir}/gwtlogin"/>
 		</move>
 
 		<gwtCompile module="gwt" phase="deploy" gwt.application="gwtadmin"/>
