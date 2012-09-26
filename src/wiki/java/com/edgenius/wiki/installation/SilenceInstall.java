@@ -109,7 +109,7 @@ public class SilenceInstall {
 		Properties prop = new Properties();
 		prop.load(new FileInputStream(args[0]));
 		
-		log.info("Silence installation starting... on properties: {}" +  args[0]);
+		log.info("Silence installation starting... on properties: {}", args[0]);
 		
 		if(Boolean.parseBoolean(getProperty(prop,"data.root.in.system.property"))){
 			System.setProperty(DataRoot.rootKey, getProperty(prop,"data.root"));
@@ -223,7 +223,7 @@ public class SilenceInstall {
 				obj = install;
 			}
 			if(obj == null){
-				log.error("Invalid field name {} cann't find in any configuration files", key);
+				log.warn("Invalid field name {} cann't find in any configuration files - could only configuration option for silence installation", key);
 				continue;
 			}
 			BeanUtils.setProperty(obj, key, getProperty(prop,key));
