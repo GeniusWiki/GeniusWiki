@@ -343,7 +343,8 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 				model.date = (long) attachObj.get(attKey).isNumber().doubleValue();
 			}else if(attKey.equalsIgnoreCase("size")) {
 				model.size = (long) attachObj.get(attKey).isNumber().doubleValue();
-			}else if(attKey.equalsIgnoreCase("draftStatus")) {
+			}else if(attKey.equalsIgnoreCase("status")) { 
+				//This field is from FileNode.status, so Name is not "draftStart".
 			    model.draftStatus = (int) attachObj.get(attKey).isNumber().doubleValue();
 			}else if(attKey.equalsIgnoreCase("userFullname")) {
 				model.creator = attachObj.get(attKey).isString().stringValue();
@@ -772,7 +773,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
         private HTML downloadLink(final AttachmentModel model) {
             HTML link = GwtClientUtils.buildDownloadURLWidget(PageMain.getSpaceUname(),model.filename,model.nodeUuid,model.version);
             if(model.draftStatus > 0){
-                return new HTML(link.getHTML() + "<span class='draft-status'>"+Msg.consts.draft()+" </span>");
+                return new HTML(link.getHTML() + "<span class='status-label'> ["+ Msg.consts.draft()+"] </span>");
             }else{
                 return link;
             }

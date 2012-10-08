@@ -77,7 +77,7 @@
         <td class="name"><span>{%=file.name%}</span></td>
         <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
         {% if (file.error) { %}
-            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else if (o.files.valid && !i) { %}
             <td>
                 <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
@@ -85,7 +85,7 @@
             <td class="start">{% if (!o.options.autoUpload) { %}
                 <button class="btn btn-primary">
                     <i class="icon-upload icon-white"></i>
-                    <span>{%=locale.fileupload.start%}</span>
+                    <span>Start</span>
                 </button>
             {% } %}</td>
         {% } else { %}
@@ -94,7 +94,7 @@
         <td class="cancel">{% if (!i) { %}
             <button class="btn btn-warning">
                 <i class="icon-ban-circle icon-white"></i>
-                <span>{%=locale.fileupload.cancel%}</span>
+                <span>Cancel</span>
             </button>
         {% } %}</td>
     </tr>
@@ -105,29 +105,24 @@
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         {% if (file.error) { %}
-            <td class="error" colspan="4"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=file.error%}</td>
-			<td class="delete">
-           		<button class="btn btn-danger" data-type="GET" data-url="{%=file.deleteUrl%}">
-                  <i class="icon-trash icon-white"></i>
-              	  <span>{%=locale.fileupload.destroy%}</span>
-          	  	</button>
-           	 	<input type="checkbox" name="delete" value="1">
-      		 </td>
+            <td class="name"><span>{%=file.filename%}</span></td>
+            <td class="error" colspan="3"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else { %}
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.filename%}" download="{%=file.filename%}">{%=file.filename%}</a>
+				{% if (file.status > 0) { %}<span class="status-label"> [Draft] </span>{% } %}
             </td>
             <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
             <td class="date">{%=file.displayDate%}</td>
             <td class="author">{%=file.userFullname%}</td>
-       		<td class="delete">
+        {% } %}
+            <td class="delete">
            		<button class="btn btn-danger" data-type="GET" data-url="{%=file.deleteUrl%}">
                   <i class="icon-trash icon-white"></i>
-              	  <span>{%=locale.fileupload.destroy%}</span>
+              	  <span>Delete</span>
           	  	</button>
            	 	<input type="checkbox" name="delete" value="1">
       		 </td>
-        {% } %}
     </tr>
 {% } %}
 </script>
@@ -141,7 +136,6 @@
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload-fp.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.fileupload-ui.js?v=@TOKEN.SITE.VERSION@"></script>
 <script src="${ctxPath}/widgets/jquery/jquery-upload/js/jquery.iframe-transport.js?v=@TOKEN.SITE.VERSION@"></script>
-<script src="${ctxPath}/widgets/jquery/jquery-upload/js/locale.js?v=@TOKEN.SITE.VERSION@"></script>
 <script>
 var dirty = false;
 $(function () {

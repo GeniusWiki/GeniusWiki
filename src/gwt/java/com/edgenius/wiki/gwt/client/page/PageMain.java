@@ -244,7 +244,7 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 				GwtClientUtils.gotoAnchor(PageMain.PAGE_TOP_ANCHOR_NAME);
 				return false;
 			}else if(KeyMap.isKey(KeyMap.VIEW_NEW_ATTACHMENT, ctrlKey, altKey, shiftKey, metaKey, keyCode)){
-				viewPanel.viewAttachmnet();
+				viewPanel.viewAttachment();
 				GwtClientUtils.gotoAnchor(PageMain.PAGE_TOP_ANCHOR_NAME);
 				return false;
 			}else if(KeyMap.isKey(KeyMap.VIEW_TOGGLE_HISTORY, ctrlKey, altKey, shiftKey, metaKey, keyCode)){

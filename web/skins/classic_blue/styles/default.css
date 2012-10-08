@@ -743,8 +743,6 @@ a:visited {
 	background-color: #F4FBFF;
 	border: 1px solid #87B3FF;
 }
-
-
 .attachment .function {
 	text-align: right;
 }
@@ -771,13 +769,10 @@ a:visited {
 	width: 1%;
 	white-space: nowrap;
 }
-
 .attachment .uploaded-table .column4 {
 	width: 1%;
 	white-space: nowrap;
 }
-
-
 .attachment .uploaded-table .column6 {
 	width: 1%;
 	white-space: nowrap;
@@ -813,6 +808,10 @@ a:visited {
 
 .attachment .desc .box {
 	width: 200px
+}
+.attachment .status-label, .template-download .status-label{
+	margin-left:5px;
+	color:#ABB7C0;
 }
 
 #_favorite img, #_rss img, #_export img, #_watch img{
