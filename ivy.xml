@@ -148,7 +148,7 @@
 		<dependency org="com/sun" name="rome" rev="1.0RC1" conf="deploy->default;dev->source"/>
 		<dependency org="com/sun" name="rome-fetcher" rev="0.9" conf="deploy->default;dev->default"/>
 
-		<dependency org="nonjava" name="tinymce" rev="3.5.2" conf="nonjava->default"/>
+		<dependency org="nonjava" name="tinymce" rev="3.5.7" conf="nonjava->default"/>
 		
 		<!--  don't maintain by ivy, directly copy to target directory
 		<dependency org="nonjava" name="jquery" rev="1.3.2" conf="nonjava->default"/>
