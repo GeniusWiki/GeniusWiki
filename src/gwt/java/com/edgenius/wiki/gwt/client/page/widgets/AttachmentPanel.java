@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.edgenius.wiki.gwt.client.AbstractEntryPoint;
 import com.edgenius.wiki.gwt.client.ControllerFactory;
 import com.edgenius.wiki.gwt.client.Css;
@@ -73,7 +74,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author Dapeng.Ni
  */
-public class AttachmentPanel extends SimplePanel implements AttachmentListener,ClickHandler {
+public class AttachmentPanel extends SimplePanel implements ClickHandler {
 
 	public static final String MODULE_ACTION_URI = "pages/upload";
 	// 5seconds
@@ -172,7 +173,11 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 //		});
 //	}
 
-
+	public void reset(){
+		for(AttachmentListener listener: attachmentListeners){
+			listener.resetAttachmentPanel();
+		}
+	}
 	/**
 	 * Merge given JSON string with current attachment list on UploadedPanel.
 	 * @param results
@@ -182,8 +187,9 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	}
 	public void mergeAttachments(String results, PageType draftStatus) {
 		this.draftStatus = draftStatus;
-		if(results == null || results.trim().length() == 0)
+		if(results == null || results.trim().length() == 0){
 			return;
+		}
 		
 		List<AttachmentModel> modelList = parseAttachmentJSON(results);
 		
@@ -200,7 +206,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			}
 		
 			//fire event to add item in uploadedPanel
-			for(AttachmentListener  listener: attachmentListeners){
+			for(AttachmentListener listener: attachmentListeners){
 				listener.addOrUpdateItem(uploaded);
 			}
 		}
@@ -218,9 +224,9 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 	}
 
 	public void addOrUpdateItem(List<AttachmentModel> modelList) {
-		if(modelList == null || modelList.size() == 0)
+		if(modelList == null || modelList.size() == 0){
 			return;
-		
+		}
 		//check if there any errors, if has, popup message in main panel.
 		for(Iterator<AttachmentModel> iter = modelList.iterator();iter.hasNext();){
 			AttachmentModel att = iter.next();
@@ -234,11 +240,20 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		main.setAttachmentCount(uploadedPanel.getUploadedCount());
 		
 	}
+	
 	public void removeItem(String nodeUuid) {
 		uploadedPanel.removeItem(nodeUuid);
 		main.setAttachmentCount(uploadedPanel.getUploadedCount());
 	}
 
+	public void resetAttachmentPanel() {
+		uploadedPanel.clear();
+		message.cleanMessage();
+		main.setAttachmentCount(uploadedPanel.getUploadedCount());
+		
+		QuickHelpDictionary.clearAttachmentList();
+		
+	}
 	public void onClick(ClickEvent event) {
 		Object sender = event.getSource();
 
@@ -266,14 +281,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 		return uploadedPanel.getUploadedItems();
 	}
 
-	public void reset(){
-		uploadedPanel.clear();
-		message.cleanMessage();
-		main.setAttachmentCount(uploadedPanel.getUploadedCount());
-		
-		QuickHelpDictionary.clearAttachmentList();
-		
-	}
+	
 	public boolean isReadonly(){
 		return readonly;
 	}
@@ -430,7 +438,8 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			//DO NOT user table.clear simply, which does not clear all cell in table, see HtmlTable Jdoc. 
 			panel.clear();
 			msg.setVisible(true);
-			table  = new ZebraTable();
+			
+			table.removeAllRows();
 
 			panel.add(table);
 			panel.add(msg);
@@ -472,11 +481,11 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			int count = 0;
 			for(int idx = startRow;idx<rowSize;idx++){
 				ItemID itemId = (ItemID) table.getWidget(idx, 0);
-				if(itemId.isHistory())
-					continue;
+				if(itemId.isHistory()) continue;
 				
 				count++;
 			}
+			Log.info("Get getUploadedCount " + count);
 			return count;
 		}
 		public ArrayList<String> getUploadedItemsUuid(){
@@ -484,8 +493,7 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			ArrayList<String> uuidList = new ArrayList<String>();
 			for(int idx = startRow;idx<rowSize;idx++){
 				ItemID itemId = (ItemID) table.getWidget(idx, 0);
-				if(itemId.isHistory())
-					continue;
+				if(itemId.isHistory()) continue;
 				
 				uuidList.add(itemId.getUuid());
 			}
@@ -1043,5 +1051,4 @@ public class AttachmentPanel extends SimplePanel implements AttachmentListener,C
 			}
 		}
 	}
-
 }

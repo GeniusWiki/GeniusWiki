@@ -381,9 +381,7 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 		
 		//clean attachment panel for new page
 		//broadcast event to all attachment panel - for example, the attachment panel in editPanel and viewPanel
-		for(AttachmentPanel  listener: attachmentPanels){
-			listener.reset();
-		}
+		resetAttachmentPanel();
 		
 		String[] tokens = GwtUtils.parseToken(token);
 		Log.info("Parsed tokens:" + Arrays.toString(tokens));
@@ -555,6 +553,13 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 		//broadcast event to all attachment panel - for example, the attachment panel in editPanel and viewPanel
 		for(AttachmentPanel panel: attachmentPanels){
 			panel.removeItem(nodeUuid);
+		}
+	}
+	@Override
+	public void resetAttachmentPanel() {
+		//broadcast event to all attachment panel - for example, the attachment panel in editPanel and viewPanel
+		for(AttachmentPanel panel: attachmentPanels){
+			panel.resetAttachmentPanel();
 		}
 	}
 	/**
@@ -895,5 +900,7 @@ public class PageMain extends BaseEntryPoint implements ValueChangeHandler<Strin
 //			}
 //		}
 //	}
+
+
 
 }

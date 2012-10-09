@@ -45,4 +45,5 @@ public interface AttachmentListener {
 	 */
 	void removeItem(String nodeUuid);
 
+	void resetAttachmentPanel();
 }

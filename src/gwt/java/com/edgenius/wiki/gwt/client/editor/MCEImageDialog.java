@@ -225,13 +225,19 @@ public class MCEImageDialog extends MCEDialog implements ImageSlideListener, Att
 		return null;
 	}
 
+	@Override
 	public void addOrUpdateItem(List<AttachmentModel> modelList) {
 		//refresh slider 
 		this.refreshSlider();
 	}
 
+	@Override
 	public void removeItem(String nodeUuid) {
 		//refresh slider 
+		this.refreshSlider();
+	}
+	@Override
+	public void resetAttachmentPanel() {
 		this.refreshSlider();
 	}
 
