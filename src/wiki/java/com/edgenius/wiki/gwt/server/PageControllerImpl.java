@@ -557,7 +557,7 @@ public class PageControllerImpl extends GWTSpringController implements PageContr
 					model.tabFocus = true;
 				}
 			}
-			if(Global.ADSENSE){
+			if(Global.ADSENSE && !page.getSpace().getSetting().isAdDisabled()){
 				//insert adsense in the front of page
 				model.renderContent.add(0, new TextModel(WikiUtil.getAdsenseHTML(spaceUname, page)));
 			}

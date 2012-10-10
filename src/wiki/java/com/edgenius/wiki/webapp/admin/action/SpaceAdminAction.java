@@ -49,6 +49,7 @@ import com.edgenius.wiki.gwt.server.SpaceUtil;
 import com.edgenius.wiki.model.Page;
 import com.edgenius.wiki.model.Space;
 import com.edgenius.wiki.service.ActivityLogService;
+import com.edgenius.wiki.service.SettingService;
 import com.edgenius.wiki.service.SpaceException;
 import com.edgenius.wiki.service.SpaceService;
 import com.edgenius.wiki.service.ThemeService;
@@ -79,6 +80,7 @@ public class SpaceAdminAction extends BaseAction{
 	private ThemeService themeService;
 	private MessageService messageService;
 	private RepositoryService repositoryService;
+	private SettingService settingService;
 	private ActivityLogService activityLog;
 
 	//********************************************************************
@@ -164,8 +166,7 @@ public class SpaceAdminAction extends BaseAction{
 			if(SharedConstants.SYSTEM_SPACEUNAME.equals(space.getUnixName())){
 				continue;
 			}
-			SpaceDTO dto = new SpaceDTO(); 
-			dto.setSpace(space);
+			SpaceDTO dto = getSpaceDTO(space);
 			
 			dto.setCreatedDate(DateUtil.toDisplayDate(viewer,space.getCreatedDate(),messageService));
 			
@@ -195,18 +196,14 @@ public class SpaceAdminAction extends BaseAction{
 	public String detail(){
 		User viewer = WikiUtil.getUser();
 		
-		SpaceDTO dto = new SpaceDTO();
 		Space space = spaceService.getSpace(uid);
-		dto.setSpace(space);
-
+		SpaceDTO dto = getSpaceDTO(space);
+		
 		Page page = spaceService.getLastUpdatedPage(space.getUnixName());
 		if(page != null){
 			dto.setLastUpdatePageModifiedDate(DateUtil.toDisplayDate(viewer,page.getModifiedDate(),messageService));
 			dto.setLastUpdatePageTitle(page.getTitle());
 		}
-		if(space.isRemoved())
-			dto.setDelayRemoveHours(spaceService.getRemovedSpaceLeftHours(space.getUnixName()));
-		
 		dto.setPrivateSpace(space.isPrivate()?messageService.getMessage("yes"):messageService.getMessage("no"));
 		try {
 			setDTOQuota(dto, space);
@@ -220,12 +217,17 @@ public class SpaceAdminAction extends BaseAction{
 		return "detail";
 	}
 
-	
+	public String enableAd(){
+		enableSpaceAd(true);
+		return "func";
+	}
+	public String disableAd(){
+		enableSpaceAd(false);
+		return "func";
+	}
 	
 	public String remove(){
-		SpaceDTO dto = new SpaceDTO();
 		Space space = spaceService.getSpace(uid);
-		dto.setSpace(space);
 		try {
 			spaceService.removeSpaceInDelay(space.getUnixName(), Global.DelayRemoveSpaceHours);
 			
@@ -234,14 +236,13 @@ public class SpaceAdminAction extends BaseAction{
 			log.error("Unable remove space " + uid,e);
 		}
 		
-		dto.setDelayRemoveHours(spaceService.getRemovedSpaceLeftHours(space.getUnixName()));
+		SpaceDTO dto = getSpaceDTO(space);
 		getRequest().setAttribute("dto", dto);
 		return "func";
 	}
 	public String restore(){
-		SpaceDTO dto = new SpaceDTO();
 		Space space = spaceService.getSpace(uid);
-		dto.setSpace(space);
+		SpaceDTO dto = getSpaceDTO(space);
 		try {
 			spaceService.undoRemoveSpace(space.getUnixName());
 		} catch (SpaceException e) {
@@ -264,8 +265,7 @@ public class SpaceAdminAction extends BaseAction{
 		if(space != null){
 			quota = quota * 1024 * 1024;
 			repositoryService.updateWorkspaceQuota(space.getUnixName(), quota);
-			SpaceDTO dto = new SpaceDTO();
-			dto.setSpace(space);
+			SpaceDTO dto = getSpaceDTO(space);
 			try {
 				setDTOQuota(dto, space);
 			} catch (RepositoryException e) {
@@ -274,6 +274,18 @@ public class SpaceAdminAction extends BaseAction{
 			getRequest().setAttribute("dto", dto);
 		}
 		return "quota";
+	}
+	//********************************************************************
+	//               Private methods
+	//********************************************************************
+	private void enableSpaceAd(boolean enable){
+		Space space = spaceService.getSpace(uid);
+		space.getSetting().setAdDisabled(!enable);
+		settingService.saveOrUpdateSpaceSetting(space, space.getSetting());
+		
+		SpaceDTO dto = getSpaceDTO(space);
+		getRequest().setAttribute("dto", dto);
+		
 	}
 	/**
 	 * @param dto
@@ -294,6 +306,21 @@ public class SpaceAdminAction extends BaseAction{
 			dto.setQuota(messageService.getMessage("space.quota.data",new Object[]{GwtUtils.convertHumanSize(quota[1] - quota[0]),total}));
 			dto.setQuotaNum(quota[1]/1024/1024);
 		}
+	}
+
+	/*
+	 * This method return DTO with information for "function bar" area. It does not include detail area inforamtion!
+	 */
+	private SpaceDTO getSpaceDTO(Space space) {
+		SpaceDTO dto = new SpaceDTO();
+		dto.setSpace(space);
+		dto.setGlobalAdSense(Global.ADSENSE);
+		dto.setSpaceAdSense(!space.getSetting().isAdDisabled());
+
+		if(space.isRemoved()){
+			dto.setDelayRemoveHours(spaceService.getRemovedSpaceLeftHours(space.getUnixName()));
+		}
+		return dto;
 	}
 	//********************************************************************
 	//               set /get 
@@ -316,6 +343,9 @@ public class SpaceAdminAction extends BaseAction{
 		this.repositoryService = repositoryService;
 	}
 
+	public void setSettingService(SettingService settingService) {
+		this.settingService = settingService;
+	}
 	public int getPage() {
 		return page;
 	}

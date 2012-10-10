@@ -10,6 +10,18 @@
 </c:choose>
 &nbsp;&nbsp;
 
+<c:if test="${dto.globalAdSense}">
+	<c:choose>
+		<c:when test="${dto.spaceAdSense}">
+			<a href="#" onclick="enableSpaceAd(${dto.space.uid},false)"><fmt:message key="disable.space.ad"/></a>
+		</c:when>
+		<c:otherwise>
+			<a href="#" onclick="enableSpaceAd(${dto.space.uid},true)"><fmt:message key="enable.space.ad"/></a>
+		</c:otherwise>
+	</c:choose>
+</c:if>
+&nbsp;&nbsp;
+
 <%-- use hidden variable rather than pass spaceUname into JS method to avoid unexpected characters --%>
 <input type="hidden" id="sname-${dto.space.uid}" value="<edgenius:encodeToken value='${dto.space.unixName}'/>">
 
