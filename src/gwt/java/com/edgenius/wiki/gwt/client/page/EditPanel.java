@@ -759,7 +759,8 @@ public class EditPanel  extends DiffPanel implements AsyncCallback<PageModel>, P
 		model.content = contentArea.getText();
 		model.isRichContent = contentArea.isRichEnabled();
 		
-		
+		//notify value comes from WikiConstants.NOTIFY_*
+		model.requireNotified = (noticeCheckbox.getValue()?1:0);
 		model.attachmentList = attPanel.getUploadedItemsUuid();
 		
 
