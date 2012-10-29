@@ -44,7 +44,7 @@
 	
 		<dependency org="com.edgenius" name="libs" rev="3.2" changing="true" conf="deploy->license, highlight; dev->license, highlight" />
 		
-		<dependency org="google" name="gwt" rev="2.5.0.rc1" conf="deploy->default;dev->compile" />
+		<dependency org="google" name="gwt" rev="2.5.0" conf="deploy->default;dev->compile" />
 		<!-- 2415
 		<dependency org="org/gwtwidgets" name="gwtwidgets" rev="0.1.4" conf="deploy->server;dev->server-source"/>
 		<dependency org="net/mygwt" name="mygwt" rev="0.4.3"	conf="dev->default" />
