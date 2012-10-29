@@ -60,6 +60,25 @@
 						);
 				}
 			}
+			function enableSpaceAd(uid, enable){
+				var divId = "func-area-"+uid;
+				var url = '<c:url value="/instance/spaces!disableAd.do"/>';
+				if(enable){
+					url = '<c:url value="/instance/spaces!enableAd.do"/>';
+				}
+				var parms = 'uid='+uid;
+				//ajax call detail
+				new Ajax.Updater(
+						{success:divId},
+						url,
+						{method: 'get', 
+						  parameters: parms, 
+						  onComplete: function(){
+							resetURLPanelHeight();
+						 }
+						}
+					);
+			}
 			function removeSpace(uid, remove){
 				var divId = "func-area-"+uid;
 				var url = '<c:url value="/instance/spaces!restore.do"/>';

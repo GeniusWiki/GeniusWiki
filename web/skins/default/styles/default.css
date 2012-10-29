@@ -813,6 +813,10 @@ a:visited {
 .attachment .desc .box {
 	width: 200px
 }
+.attachment .status-label, .template-download .status-label{
+	margin-left:5px;
+	color:#ABB7C0;
+}
 #_favorite img, #_rss img, #_export img, #_watch img{
 	margin: 0px 3px 0px 5px;
 }

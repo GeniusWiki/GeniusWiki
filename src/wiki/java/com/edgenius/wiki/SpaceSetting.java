@@ -101,6 +101,8 @@ public class SpaceSetting implements Serializable{
 	//so far, only one shell support, but in future, may allow one space links to multiple shell
 	//suppose key is some ID of space in Shell, value is themeName 
 	private Map<String, String> shellNames;
+
+	private boolean adDisabled;
 	//********************************************************************
 	//               Function methods
 	//********************************************************************
@@ -290,6 +292,12 @@ public class SpaceSetting implements Serializable{
 	}
 	public void setShellNames(Map<String, String> shellNames) {
 		this.shellNames = shellNames;
+	}
+	public boolean isAdDisabled() {
+		return adDisabled;
+	}
+	public void setAdDisabled(boolean adDisabled) {
+		this.adDisabled = adDisabled;
 	}
 
 

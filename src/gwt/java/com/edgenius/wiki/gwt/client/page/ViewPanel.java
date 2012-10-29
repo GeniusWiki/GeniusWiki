@@ -46,12 +46,14 @@ import com.edgenius.wiki.gwt.client.render.RenderContentListener;
 import com.edgenius.wiki.gwt.client.render.RenderPanel;
 import com.edgenius.wiki.gwt.client.render.WikiRenderPanel;
 import com.edgenius.wiki.gwt.client.server.PageControllerAsync;
+import com.edgenius.wiki.gwt.client.server.constant.PageType;
 import com.edgenius.wiki.gwt.client.server.utils.ErrorCode;
 import com.edgenius.wiki.gwt.client.server.utils.GwtUtils;
 import com.edgenius.wiki.gwt.client.server.utils.PageAttribute;
 import com.edgenius.wiki.gwt.client.server.utils.SharedConstants;
 import com.edgenius.wiki.gwt.client.server.utils.StringUtil;
 import com.edgenius.wiki.gwt.client.widgets.ClickLink;
+import com.edgenius.wiki.gwt.client.widgets.UploadDialog;
 import com.edgenius.wiki.gwt.client.widgets.UserProfileLink;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -393,11 +395,12 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 	/**
 	 * Allow attachment panel is open and a new item upload display (if permission allow)
 	 */
-	public void viewAttachmnet(){
+	public void viewAttachment(){
 		if(attachmentBtn.isVisible()){
 			attPanel.setVisible(true);
 			if(!attPanel.isReadonly()){
-			    //TODO: attachment auto show upload dialog
+				UploadDialog dialog = new UploadDialog(attPanel, PageMain.getSpaceUname(), PageMain.getPageUuid(), PageType.NONE_DRAFT);
+	            dialog.showbox();
 			}
 		}
 	}

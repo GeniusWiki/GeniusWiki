@@ -88,7 +88,7 @@ public class FileNode  implements Serializable{
 	private transient InputStream file;
 	
 	//current, auto draft, manual draft
-	private transient int status;
+	private int status;
 	//username, it won't display on page. userFullname is good.
 	private String createor;
 	private long date;

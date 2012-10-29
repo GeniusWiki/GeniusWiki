@@ -40,6 +40,8 @@ public class SpaceDTO {
 	private String largeLogoUrl;
 	private String quota;
 	private long quotaNum;
+	private boolean globalAdSense;
+	private boolean spaceAdSense;
 
 
 	public long getQuotaNum() {
@@ -109,6 +111,16 @@ public class SpaceDTO {
 	public void setLastUpdatePageModifiedDate(String lastUpdatePageModifiedDate) {
 		this.lastUpdatePageModifiedDate = lastUpdatePageModifiedDate;
 	}
-
-
+	public boolean isGlobalAdSense() {
+		return globalAdSense;
+	}
+	public void setGlobalAdSense(boolean globalAdSense) {
+		this.globalAdSense = globalAdSense;
+	}
+	public boolean isSpaceAdSense() {
+		return spaceAdSense;
+	}
+	public void setSpaceAdSense(boolean spaceAdSense) {
+		this.spaceAdSense = spaceAdSense;
+	}
 }

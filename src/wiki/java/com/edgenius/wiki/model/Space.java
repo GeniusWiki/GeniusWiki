@@ -285,8 +285,7 @@ public class Space extends SensitiveTouchedInfo implements Cloneable,Serializabl
 	//Transient, only has get() method
 	public SpaceSetting getSetting() {
 		//singleton to improve performance: note the user cache need reset once user change setting.
-		if(setting != null)
-			return setting;
+		if(setting != null) return setting;
 		
 		if(configuration != null && configuration.getValue() != null){
 			XStream xstream = new XStream();
