@@ -482,7 +482,7 @@ public class ViewPanel extends DiffPanel implements AsyncCallback<PageModel>, Pa
 		message.warning(panel,false);
 	}
 
-	private void historyNextPrevMsg(HTMLPanel msgPanel, final PageItemModel history, final int pageUid, 
+	private void historyNextPrevMsg(HTMLPanel msgPanel, final PageItemModel history, final Integer pageUid, 
 			String idp1,String idp2, String idp3, String idp4) {
 		
 		String spaceUname = history.spaceUname;

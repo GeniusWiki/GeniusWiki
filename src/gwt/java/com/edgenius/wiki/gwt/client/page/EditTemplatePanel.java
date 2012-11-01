@@ -79,7 +79,7 @@ public class EditTemplatePanel extends SimplePanel implements AsyncCallback<Page
 	private boolean dirty = false;
 	private boolean exitConfirm = true;
 	private String currentToken;
-	private int templID;
+	private Integer templID;
 	
 	public EditTemplatePanel(PageMain main) {
 		this.main = main;

@@ -40,7 +40,7 @@ public class PageModel extends CaptchaCodeModel  implements CascadeObject<PageMo
 	// as History,Draft,Page, Offline pages may use same uid.
 	//-- Offline model use this field for bring uid to PageItemModel as it need for getting history, draft by UID as it is uid of table record. 
 	//-- Now, PageUtil.copyPageToModel() also fill this field - in view page history, this field is used to for comparison link as history Uid
-	public int uid;
+	public Integer uid;
 
 	//********************************************************************
 	//               Variables
