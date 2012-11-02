@@ -69,12 +69,14 @@ function showSidebar(left, visible){
 		if(visible){
 			//show
 			$('#content').css('margin-left',(SIDE_MENU_WIDTH+DEFAULT_LEFT_SIDEBAR_SPACING)+'px');
+			$('#globalMessage').css('margin-left',(SIDE_MENU_WIDTH+DEFAULT_LEFT_SIDEBAR_SPACING)+'px');
 			$('#leftmenu').css('width',SIDE_MENU_WIDTH+'px');
 			$('#leftmenu').show();
 			$('div.left-sidebar').show();
 		}else{
 			//hide
 			$('#content').css('margin-left',DEFAULT_CONTENT_MARGIN +'px');
+			$('#globalMessage').css('margin-left',DEFAULT_CONTENT_MARGIN +'px');
 			$('#leftmenu').css('width','0px');
 			$('#leftmenu').hide();
 			$('div.left-sidebar').hide();
@@ -84,12 +86,14 @@ function showSidebar(left, visible){
 		if(visible){
 			//show
 			$('#content').css('margin-right',(SIDE_MENU_WIDTH+DEFAULT_RIGHT_SIDEBAR_SPACING)+'px');
+			$('#globalMessage').css('margin-right',(SIDE_MENU_WIDTH+DEFAULT_RIGHT_SIDEBAR_SPACING)+'px');
 			$('#rightmenu').css('width',SIDE_MENU_WIDTH+'px');
 			$('#rightmenu').show();
 			$('div.right-sidebar').show();
 		}else{
 			//hide
 			$('#content').css('margin-right',DEFAULT_CONTENT_MARGIN +'px');
+			$('#globalMessage').css('margin-right',DEFAULT_CONTENT_MARGIN +'px');
 			$('#rightmenu').css('width','0px');
 			$('#rightmenu').hide();
 			$('div.right-sidebar').hide();

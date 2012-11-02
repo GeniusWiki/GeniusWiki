@@ -141,6 +141,8 @@ html,body {
 }
 #globalMessage{
 	padding-left:12px;
+	position: relative;
+	top:45px;
 }
 #content {
 	display: block;
