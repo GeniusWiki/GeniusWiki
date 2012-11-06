@@ -550,20 +550,24 @@ public class RenderUtil {
 		return out; 
 	}
 	public static String getExternalImage(RenderContext renderContext) {
-		return renderContext.buildSkinImageTag("render/link/extlink.png"
-				,NameConstants.AID,SharedConstants.NO_RENDER_TAG
-				,NameConstants.TITLE, "Open link in new window"
-				,NameConstants.CLASS, "renderExtLinkImg");
+        //Now(11/02/2012) I hide ext link image - it break page layout 
+	    return "";
+//		return renderContext.buildSkinImageTag("render/link/extlink.png"
+//				,NameConstants.AID,SharedConstants.NO_RENDER_TAG
+//				,NameConstants.TITLE, "Open link in new window"
+//				,NameConstants.CLASS, "renderExtLinkImg");
 	}
 
 	/**
 	 * @return
 	 */
 	public static String getExternalEmailImage(RenderContext renderContext) {
-		return renderContext.buildSkinImageTag("render/link/email.png"
-				,NameConstants.AID, SharedConstants.NO_RENDER_TAG
-				,NameConstants.TITLE,"Email to"
-				,NameConstants.CLASS,"renderExtLinkImg");
+        //Now(11/02/2012) I hide ext link image - it break page layout 
+        return "";
+//		return renderContext.buildSkinImageTag("render/link/email.png"
+//				,NameConstants.AID, SharedConstants.NO_RENDER_TAG
+//				,NameConstants.TITLE,"Email to"
+//				,NameConstants.CLASS,"renderExtLinkImg");
 	}
 	
 	public static String getUserLinkImage(RenderContext renderContext) {

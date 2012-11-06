@@ -155,8 +155,7 @@ public class LinkFilter extends BasePatternTokenFilter  implements ImmutableCont
 			model.setView(pos.uuid);
 			
 			//model view is pos.uuid now, will replace in subRegion render.
-			//Now(11/02/2012) I hide ext link image - it break page layout 
-			//buffer.append(linkRenderHelper.getExternalImage(context,link));
+			buffer.append(linkRenderHelper.getExternalImage(context,link));
 			buffer.append(model.toRichAjaxTag());
 	
 		}else{

@@ -126,11 +126,11 @@ life for fun
 {tab}
 {tabs}
 ==============
-<img aid="norender" title="Email to" class="renderExtLinkImg" src="/skins/default/render/link/email.png"><a href='mailto:help@edgenius.com'>contact us</a>
+<a href='mailto:help@edgenius.com'>contact us</a>
 --------------
 [contact us>mailto:help@edgenius.com]
 ==============
-<img aid="norender" title="Email to" class="renderExtLinkImg" src="/skins/default/render/link/email.png"><a aid="com.edgenius.wiki.render.filter.EmailFilter" href="mailto:ndp@edgenius.com">ndp@edgenius.com</a>
+<a aid="com.edgenius.wiki.render.filter.EmailFilter" href="mailto:ndp@edgenius.com">ndp@edgenius.com</a>
 --------------
 mailto:ndp@edgenius.com
 ==============
@@ -151,10 +151,10 @@ This is out side file
 h2. test [my link>some pages]
 ==============
 <div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor0" href="#">This is <span style="font-family:arial,helvetica,sans-serif;">a new page</span></a></p>
-<p style="text-indent:30px"><b>2 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor1" href="#">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></a></p>
+<p style="text-indent:30px"><b>2 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor1" href="#">test <a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></a></p>
 <p style="text-indent:30px"><b>3 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor2" href="#">test  my link </a></p>
-<p style="text-indent:30px"><b>4 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor3" href="#">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://foo.com' target='_blank'>my extlink</a></a></p>
-</div><br /><h2 id="HeaderAnchor0">This is <span style="font-family:arial,helvetica,sans-serif;">a new page</span></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor2">test <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#">my link</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor3">test <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://foo.com' target='_blank'>my extlink</a></h2>
+<p style="text-indent:30px"><b>4 </b><a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|type:1|anchor:HeaderAnchor3" href="#">test <a href='http://foo.com' target='_blank'>my extlink</a></a></p>
+</div><br /><h2 id="HeaderAnchor0">This is <span style="font-family:arial,helvetica,sans-serif;">a new page</span></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1">test <a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor2">test <a wajax="aname:com.edgenius.wiki.gwt.client.model.LinkModel|spaceuname:test space|link:link1|type:1" href="#">my link</a></h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor3">test <a href='http://foo.com' target='_blank'>my extlink</a></h2>
 --------------
 {toc}
 h2. This is {font:font=arial,helvetica,sans-serif}a new page{font}
@@ -244,11 +244,11 @@ Stop list
 || || 
 | | 
 ============= 
-<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://www.edgenius.com' target='_blank'>website</a>
+<a href='http://www.edgenius.com' target='_blank'>website</a>
 -------------- 
 [website>http://www.edgenius.com]
 ==============
-<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://www.geniuswiki.com' target='_blank'>http://www.geniuswiki.com</a>
+<a href='http://www.geniuswiki.com' target='_blank'>http://www.geniuswiki.com</a>
 --------------
 [http://www.geniuswiki.com]
 ==============
@@ -280,19 +280,19 @@ h1. head three
 --------------
 h2. adfadsfa{font:size=large}{font:font=arial,helvetica,sans-serif}sdf asdf{font}{font}{font:bkcolor=#b0c4de}{font:size=large}{font:font=arial,helvetica,sans-serif}as{font}{font}{font:color=#cc3300}dfa{font}sdfsadf {font} 
 =============   Below has not  Dynamic attribute 
-<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>. 
+<a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>. 
 --------------
 http://www.edgenius.com. 
 =============
-<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>
+<a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>
 --------------
 http://www.edgenius.com
 =============
-<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>;This is more test
+<a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://www.edgenius.com" target="_blank">http://www.edgenius.com</a>;This is more test
 --------------
 http://www.edgenius.com;This is more test
 ============= Link filter can render view by markup, such image
-<img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="/skins/default/render/link/extlink.png"><a href='http://www.edgenius.com' target='_blank'><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
+<a href='http://www.edgenius.com' target='_blank'><img wajax="aname:com.edgenius.wiki.gwt.client.html.ImageModel|filename:image.jpg" src="/download?space=test+space&uuid=nuuid1&file=image.jpg&download=false"></a>
 -------------- 
 [!image.jpg!>http://www.edgenius.com]
 ==============

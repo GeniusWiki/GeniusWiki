@@ -36,10 +36,10 @@ h2. This is header
 h2. This is {font:font=arial,helvetica,sans-serif}Here comes a new page{font} header 
 ==============
 <div wajax="aname:com.edgenius.wiki.render.handler.TOCHandler" class="macroToc mceNonEditable" aid="com.edgenius.wiki.render.macro.TOCMacro"><div class='title'>Table of Contents</div><p style="text-indent:30px"><b>1 </b><a href ='http://localhost:8080/'>correct header</a></p>
-<p style="text-indent:30px"><b>2 </b><a href ='http://localhost:8080/'>my url <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="http://localhost:8080/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a> test</a></p>
+<p style="text-indent:30px"><b>2 </b><a href ='http://localhost:8080/'>my url <a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a> test</a></p>
 <p style="text-indent:30px"><b>3 </b><a href ='http://localhost:8080/'><span style="font-family:arial,helvetica,sans-serif;">Here comes a new page</span> </a></p>
 <p style="text-indent:30px"><b>4 </b><a href ='http://localhost:8080/'>normal header</a></p>
-</div><br /><h2 id="HeaderAnchor0">correct header</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1">my url <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="http://localhost:8080/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a> test</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor2"><span style="font-family:arial,helvetica,sans-serif;">Here comes a new page</span> </h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor3">normal header</h2>
+</div><br /><h2 id="HeaderAnchor0">correct header</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor1">my url <a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a> test</h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor2"><span style="font-family:arial,helvetica,sans-serif;">Here comes a new page</span> </h2><span aid="com.edgenius.wiki.render.filter.NewlineFilter"></span><h2 id="HeaderAnchor3">normal header</h2>
 --------------
 {toc}
 h2. correct header
@@ -52,7 +52,7 @@ h2. normal header
 ||head1||header2
 |com1|{toc}
 ==============
-<h2 id="HeaderAnchor0">my url <img aid="norender" title="Open link in new window" class="renderExtLinkImg" src="http://localhost:8080/skins/default/render/link/extlink.png"><a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></h2>
+<h2 id="HeaderAnchor0">my url <a aid="com.edgenius.wiki.render.filter.UrlFilter" href="http://foo.com" target="_blank">http://foo.com</a></h2>
 --------------
 h2. my url http://foo.com
 ==============
