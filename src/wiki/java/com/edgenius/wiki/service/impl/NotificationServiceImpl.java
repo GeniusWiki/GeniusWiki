@@ -110,7 +110,7 @@ public class NotificationServiceImpl implements NotificationService {
 			log.info("Version check starting");
 			int currVer = (int) (NumberUtils.toFloat(Version.VERSION,0f)*1000);
 			//hard code
-			URL url = new URL("http://www.edgenius.com/versioncheck/"+SharedConstants.APP_NAME+"/"+Installation.INSTANCE_ID+"/"+currVer);
+			URL url = new URL("http://product.edgenius.com/versioncheck/"+SharedConstants.APP_NAME+"/"+Installation.INSTANCE_ID+"/"+currVer);
 //			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy url", 80));
 //			conn = (HttpURLConnection) url.openConnection(proxy);
 			conn = (HttpURLConnection) url.openConnection();

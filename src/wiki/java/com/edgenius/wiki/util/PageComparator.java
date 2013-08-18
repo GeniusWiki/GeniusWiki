@@ -82,7 +82,7 @@ public class PageComparator implements Comparator<Page>, Serializable{
 				level2--;
 			}
 			//this comparison will handle different branch node
-			if(parent1 != parent2){
+			if(parent1 == null || !parent1.equals(parent2)){
 				//sort by title
 				if(parent1 == null){
 					//it means parent1 is root, parent2 must be after it
