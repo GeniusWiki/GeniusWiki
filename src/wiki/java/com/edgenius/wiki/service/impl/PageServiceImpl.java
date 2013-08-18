@@ -207,7 +207,7 @@ public class PageServiceImpl implements PageService {
 				oldTitle = oldPage.getTitle();
 				needRefreshCache = true;
 				//remove old page with old title from cache first, new page should add after page saved
-				removePageCache(spaceUname, page);
+				removePageCache(spaceUname, page, false);
 			}
 			//update current page with new value
 			space = page.getSpace();
@@ -404,9 +404,9 @@ public class PageServiceImpl implements PageService {
 		}
 				
 		//update cache only when a new page created or page title updated
-		if(needRefreshCache)
+		if(needRefreshCache){
 			addPageCache(spaceUname, page);
-	
+		}
 		refreshAncestors(spaceUname, page);
 
 		//page title change so change all page which refer link to this page.
@@ -988,7 +988,7 @@ public class PageServiceImpl implements PageService {
 				// removed page's parent
 				List<Page> children = pageDAO.getChildren(currPage.getUid());
 				for (Page child : children) {
-					removePageCache(toSpaceUname, child);
+					removePageCache(toSpaceUname, child, true);
 					child.setParent(oldParent);
 					child.setLevel(oldParent == null ? 0 : oldParent.getLevel() + 1);
 					pageDAO.saveOrUpdate(child);
@@ -997,7 +997,7 @@ public class PageServiceImpl implements PageService {
 				
 				//do all necessary things for a new page render: 
 				//update pageTree cache, update ancestors, render page
-				removePageCache(toSpaceUname,currPage);
+				removePageCache(toSpaceUname,currPage, true);
 				addPageCache(toSpaceUname, currPage);
 			}			
 			//for render correctly:
@@ -1050,7 +1050,7 @@ public class PageServiceImpl implements PageService {
 			for (Page child : children) {
 				// remove child from cache first, then add it back after
 				// its parent update is done.
-				removePageCache(spaceUname, child);
+				removePageCache(spaceUname, child, true);
 				child.setParent(parent);
 				child.setLevel(parent == null ? 0 : parent.getLevel() + 1);
 				pageDAO.saveOrUpdate(child);
@@ -1106,7 +1106,7 @@ public class PageServiceImpl implements PageService {
 
 		
 		// this page exist in space, already removed, need remove from cache as well
-		removePageCache(spaceUname, page);
+		removePageCache(spaceUname, page, true);
 		securityService.removeResource(pageUuid);
 		
 		
@@ -1757,7 +1757,7 @@ public class PageServiceImpl implements PageService {
 	 * Remove give page from cache
 	 */
 	@SuppressWarnings("unchecked")
-	private void removePageCache(String spaceUname, Page page){
+	private void removePageCache(String spaceUname, Page page, boolean resetChildren){
 		if(page == null)
 			return;
 		
@@ -1775,7 +1775,7 @@ public class PageServiceImpl implements PageService {
 				}
 			}
 			//rebuild child page, reset child page's parent to this page's parent
-			if(removedUid != null){
+			if(removedUid != null && resetChildren){
 				Page parentPage = null;
 				//find given page's parent, use this value reset its children's parent (so bad comments:(
 				//e.g., A->B->C, if B is removed. C's parent will reset to A: A->C
@@ -1812,7 +1812,7 @@ public class PageServiceImpl implements PageService {
 			Set<Page> sortedSet = (Set<Page>) treeItem.getValue();
 			//non-current: remove from page cache
 			if(page.isRemoved()){
-				removePageCache(spaceUname,page);
+				removePageCache(spaceUname,page, true);
 			}else{
 				log.info("add/update from tree cache.Uid:"+page.getUid() + " title:" + page.getTitle());
 				//here does not use clone(): to avoid overuse fields copy.
