@@ -31,8 +31,9 @@ function wopen(url, name, w, h)
   // In my tests these work well on all platforms & browsers.
   w += 32;
   h += 96;
-  wleft = (screen.width - w) / 2;
-  wtop = (screen.height - h) / 2;
+
+  var wleft = (screen.width - w) / 2,
+  	  wtop = (screen.height - h) / 2;
   // IE5 and other old browsers might allow a window that is
   // partially offscreen or wider than the screen. Fix that.
   // (Newer browsers fix this for us, but let's be thorough.)
