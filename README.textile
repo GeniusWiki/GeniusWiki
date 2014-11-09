@@ -25,3 +25,8 @@ Here are some highlight features:
 
 More detail for build, installation and development,  please visit our document wiki space:
 "GeniusWiki Document Center":http://www.geniuswiki.com/page/GeniusWiki+document/GeniusWiki+document 
+
+
+h2. Build
+ant ivy.retrieve
+ant package
