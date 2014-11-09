@@ -96,7 +96,7 @@
 		<dependency org="org/opensymphony" name="sitemesh" rev="2.2.1" conf="deploy->default" />
 		 -->
 		<!--  I don't do upgrade as new version break code - not remember exactly, the problems are getRequest() etc methods -->
-		<dependency org="apache" name="struts2" rev="2.2.1" conf="deploy->default;dev->source" />
+		<dependency org="apache" name="struts2" rev="2.3.16.3" conf="deploy->default;dev->source" />
 		<!-- NO USE  
 		<dependency org="org" name="displaytag" rev="1.1.1" conf="deploy->export;dev->export" />
 		 -->

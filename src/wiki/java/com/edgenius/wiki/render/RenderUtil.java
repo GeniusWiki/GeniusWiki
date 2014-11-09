@@ -225,7 +225,7 @@ public class RenderUtil {
 		if(regions == null || regions.size() == 0)
 			return input;
 		
-		//first, web split whole text by special border tag string some think like "key_regionKey_S|E"
+		//first, we split whole text by special border tag string some think like "key_regionKey_S|E"
 		input = createRegionBorder(input, key, regions,newlineKey);
 		
 		//then we split them one by one. The split is dependent on the RegionComparator(), which ensure the split 

@@ -112,7 +112,7 @@ public class ImageFilter extends BasePatternTokenFilter implements ImmutableCont
 		if(bodyRegion != null){
 			src = bodyRegion.getContent();
 		}else{
-			AuditLogger.error("Unexpected case: Immutable fitler cannot find out current region." + result.group());
+			AuditLogger.error("Unexpected case: Immutable filter cannot find out current region." + result.group());
 			src = result.group(1);
 		}
 		
