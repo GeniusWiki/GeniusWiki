@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-    "http://struts.apache.org/dtds/struts-2.0.dtd">
-
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-    	
+   	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>	
     <package name="global" extends="struts-default">
     	<!-- Never use <result name="*"> !!!
     	This causes serious issue - action method "return null" will execute error.jsp!!!
@@ -29,7 +27,7 @@
 		</global-results>
 	</package>	
 	
-    <package name="default" extends="global">
+    <package name="default" extends="global" strict-method-invocation="true">
     	<default-interceptor-ref name="basicStack"/>
 
  		<action name="print" class="printAction">
@@ -54,6 +52,7 @@
     	<action name="invite" class="inviteAction"> 
              <result name="friendship">/WEB-INF/pages/friendship.jsp</result> 
              <result name="invitation">/WEB-INF/pages/invitation.jsp</result> 
+            <allowed-methods>friendship,accept</allowed-methods>
         </action>
     </package>
     
@@ -74,17 +73,18 @@
         </action>
     </package>
     
-    <package name="pages" extends="global" namespace="/pages">
+    <package name="pages" extends="global" namespace="/pages" strict-method-invocation="true">
     	 <action name="pages" class="pageAction" method="view"> 
             <result name="success">/pages.jsp</result> 
             <result name="upload">/WEB-INF/pages/upload.jsp</result>
             <result name="sehome">/WEB-INF/pages/view/dashboard.jsp</result> 
             <result name="sespace">/WEB-INF/pages/view/spaceview.jsp</result> 
             <result name="sepage">/WEB-INF/pages/view/pageview.jsp</result>
+            <allowed-methods>getAttachments</allowed-methods>
         </action>
     </package>
     
-    <package name="space" extends="global" namespace="/space">
+    <package name="space" extends="global" namespace="/space" strict-method-invocation="true">
     	 <action name="logo" class="spaceAction" method="logo"> 
     		  <result name="success">dummy.jsp</result> 
         </action>
@@ -92,6 +92,7 @@
     	 	<result name="error">/WEB-INF/pages/error.jsp?e=s</result>
     		<result name="setting">/WEB-INF/pages/space/setting.jsp</result>
     		<result name="shell">/WEB-INF/pages/space/shell.jsp</result>
+            <allowed-methods>updateSetting,shell,setting</allowed-methods>
         </action>
     </package>
     
@@ -101,17 +102,20 @@
         </action>
     </package>
         
-    <package name="instance" extends="global" namespace="/instance">
+    <package name="instance" extends="global" namespace="/instance" strict-method-invocation="true">
         <action name="admin" class="instanceAction" method="admin"> 
             <result name="success">/admin.jsp</result> 
         </action> 
         
         <action name="backup" class="backupAction"> 
             <result name="success">/WEB-INF/pages/admin/backup.jsp</result> 
+            <allowed-methods>delete,download,backup,schedule,restoreFromName,restore</allowed-methods>
         </action>
+        
         <action name="theme" class="themeAction"> 
             <result name="themes">/WEB-INF/pages/admin/themes.jsp</result> 
             <result name="skins">/WEB-INF/pages/admin/skins.jsp</result> 
+            <allowed-methods>downloadSkin,uploadTheme,applySkin,enableTheme,listSkins,listThemes</allowed-methods>
         </action>
          
         <action name="uploadlogo" class="com.opensymphony.xwork2.ActionSupport"> 
@@ -120,15 +124,18 @@
         <action name="general" class="generalAdminAction"> 
             <result name="success">/WEB-INF/pages/admin/general.jsp</result> 
             <result name="uploadDone">/WEB-INF/pages/admin/upload.jsp?done=true</result> 
+            <allowed-methods>update,upload</allowed-methods>
         </action> 
         <action name="advance" class="advanceAdminAction"> 
             <result name="success">/WEB-INF/pages/admin/advance.jsp</result> 
             <result name="message">/WEB-INF/pages/admin/message.jsp</result> 
+            <allowed-methods>rebuildIndex,redeployShell,resetCache,printCache</allowed-methods>
         </action> 
         <action name="roles" class="roleAdminAction" method="list"> 
             <result name="success">/WEB-INF/pages/admin/roles.jsp</result> 
             <result name="list">/WEB-INF/pages/admin/rolelist.jsp</result>
             <result name="detail">/WEB-INF/pages/admin/roledetail.jsp</result> 
+            <allowed-methods>detail,filter,created,deleteUsersFromRole</allowed-methods>
         </action> 
         <action name="spaces" class="spaceAdminAction" method="list"> 
             <result name="success">/WEB-INF/pages/admin/spaces.jsp</result> 
@@ -136,12 +143,14 @@
             <result name="detail">/WEB-INF/pages/admin/spacedetail.jsp</result> 
             <result name="func">/WEB-INF/pages/admin/spacefunc.jsp</result> 
             <result name="quota">/WEB-INF/pages/admin/spacequota.jsp</result> 
+            <allowed-methods>filter,detail,disableAd,enableAd,remove,restore,created,changeQuota</allowed-methods>
         </action> 
         <action name="users" class="userAdminAction" method="list"> 
             <result name="success">/WEB-INF/pages/admin/users.jsp</result> 
             <result name="list">/WEB-INF/pages/admin/userlist.jsp</result> 
             <result name="detail">/WEB-INF/pages/admin/userdetail.jsp</result> 
             <result name="func">/WEB-INF/pages/admin/userfunc.jsp</result> 
+            <allowed-methods>filter,detail,enable,created</allowed-methods>
         </action> 
     </package>
 
