@@ -120,7 +120,7 @@
 			<delete dir="${var.target.dir}/WEB-INF/templates/mail/i18n/"/>
 			
 			<copy todir="${var.target.dir}/WEB-INF/lib">
-				<fileset dir="${lib.dir}/deploy">
+				<fileset dir="${lib.dir}/deploy/jars/">
 					<include name="**/*.jar" />
 				</fileset>
 			</copy>
@@ -145,7 +145,7 @@
 			<!--  unzip TinyMCE to widgets directory !!!must call unzip before next copy task: 
 					as override is need from web/widgets/tiny_mce/plugins/table -->
 			<unzip dest="${var.target.dir}/widgets/tiny_mce">
-			   <fileset dir="${lib.dir}/nonjava">
+			   <fileset dir="${lib.dir}/nonjava/zips/">
 			        <include name="tinymce*.zip"/>
 			    </fileset>
 			</unzip>
@@ -163,13 +163,13 @@
 			</delete>
 
 			<unzip dest="${var.target.dir}/widgets/dp_syntaxhighlighter">
-			   <fileset dir="${lib.dir}/nonjava">
+			   <fileset dir="${lib.dir}/nonjava/zips/">
 			        <include name="dp_syntaxhighlighter*.zip"/>
 			    </fileset>
 			</unzip>
 			
 			<unzip dest="${var.target.dir}/widgets/jquery">
-			   <fileset dir="${lib.dir}/nonjava">
+			   <fileset dir="${lib.dir}/nonjava/zips/">
 			        <include name="jquery*.zip"/>
 			    </fileset>
 			</unzip>

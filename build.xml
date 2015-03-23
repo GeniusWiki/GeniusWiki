@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="GeniusWiki" basedir="." default="package"  xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+<project name="GeniusWiki" basedir="." default="package"  xmlns:ivy="antlib:org.apache.ivy.ant">
 	<mkdir dir="lib/dev"/>
 	<macrodef name="preinstall">
 	   <sequential >
 			<echo message="installing global.xml..." />
-			<get src="http://repo.edgenius.com/ivyrep/script/global-2.5.xml"
+			<get src="http://repo.edgenius.com/ivyrep/script/global-2.6.xml"
 				dest="lib/global.xml"
 				usetimestamp="true" 
 	   			ignoreerrors="true"/>
 			<echo message="installing global-macro.xml..." />
-			<get src="http://repo.edgenius.com/ivyrep/script/global-macro-2.5.xml"
+			<get src="http://repo.edgenius.com/ivyrep/script/global-macro-2.6.xml"
 				dest="lib/global-macro.xml"
 				usetimestamp="true" 
 	   			ignoreerrors="true"/>
-			<echo message="installing ivyconf-public.xml..." />
-			<get src="http://repo.edgenius.com/ivyrep/ivyconf-public.xml"
-				dest="lib/ivyconf-public.xml"
+			<echo message="installing ivysettings.xml..." />
+			<get src="http://repo.edgenius.com/ivyrep/ivysettings.xml"
+				dest="lib/ivysettings.xml"
 				usetimestamp="true" 
 	   			ignoreerrors="true"/>
 	   </sequential>
@@ -33,6 +33,7 @@
 	<import file="macro.xml" />
 	
     <!-- Taskdefs -->
+    <mkdir dir="${lib.dir}/dev/jars" />
     <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="compile.classpath"/>
 	<tstamp>
 	      <format property="build.id" pattern="yyyyMMdd"/>
@@ -135,13 +136,13 @@
 		<!-- standalone version pre-task: Tomcat and HSQL -->
 		<unzip dest="${std.dir}/${app.name.lowcase}/webapps/ROOT" src="${target.dir}/${app.name.lowcase}.war"/>
 		<unzip dest="${std.dir}/tomcat">
-			<fileset dir="${lib.dir}/standalone">
+			<fileset dir="${lib.dir}/standalone/zips/">
 				<include name="tomcat-*.zip"/>
 			</fileset>
 		</unzip>
 		
 		<copy todir="${std.dir}/${app.name.lowcase}/webapps/ROOT/WEB-INF/lib">
-			<fileset dir="${lib.dir}/database">
+			<fileset dir="${lib.dir}/database/jars/">
 				<include name="**/hsqldb*" />
 			</fileset>
 		</copy>	
@@ -506,7 +507,7 @@
 	      	<pathelement path="${src.dir}/gwt/java"/>
 	      	<pathelement path="${test.dir}/gwtclient/java"/>
 	      	<!--  lib -->
-	 		<fileset dir="${lib.dir}/dev/">
+	 		<fileset dir="${lib.dir}/dev/jars/">
 	            <include name="gwt-*.jar"/>
 	            <include name="junit*.jar"/>
 	        </fileset>
