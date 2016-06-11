@@ -1,0 +1,2222 @@
+# 
+# Translators:
+# Arab User <arabuser@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: GeniusWiki\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-26 12:32+0000\n"
+"PO-Revision-Date: 2016-06-10 09:35+0000\n"
+"Last-Translator: Arab User <arabuser@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/edgenius/GeniusWiki/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Translate Toolkit 1.9.0\n"
+
+#: id
+msgid "ID"
+msgstr "الرمز"
+
+#: ok
+msgid "OK"
+msgstr "موافق"
+
+#: cancel
+msgid "Cancel"
+msgstr "الغاء"
+
+#: add
+msgid "Add"
+msgstr "إضافة"
+
+#: send
+msgid "Send"
+msgstr "إرسال"
+
+#: to
+msgid "To"
+msgstr "إلى"
+
+#: update
+msgid "Update"
+msgstr "تحديث"
+
+#: close
+msgid "Close"
+msgstr "إغلاق"
+
+#: login
+msgid "Login"
+msgstr "دخول"
+
+#: signup
+msgid "Sign up"
+msgstr "تسجيل"
+
+#: logout
+msgid "Logout"
+msgstr "خروج"
+
+#: title
+msgid "Title"
+msgstr "العنوان"
+
+#: search
+msgid "Search"
+msgstr "البحث"
+
+#: description
+msgid "Description"
+msgstr "الوصف"
+
+#: general
+msgid "General"
+msgstr "عام"
+
+#: users
+msgid "Users"
+msgstr "المستخدمين"
+
+#: user
+msgid "User"
+msgstr "المستخدم"
+
+#: groups
+msgid "Groups"
+msgstr "مجموعات"
+
+#: group
+msgid "Group"
+msgstr "مجموعة"
+
+#: spaces
+msgid "Spaces"
+msgstr "المساحات"
+
+#: security
+msgid "Security"
+msgstr "الأمن"
+
+#: advance
+msgid "Advance"
+msgstr "متقدم"
+
+#: dashboard
+msgid "Dashboard"
+msgstr "البوابة"
+
+#: access
+msgid "Access"
+msgstr "وصول"
+
+#: offline
+msgid "Offline"
+msgstr "غير متصل"
+
+#: home
+msgid "Home"
+msgstr "الرئيسية"
+
+#: name
+msgid "Name"
+msgstr "الإسم"
+
+#: post
+msgid "Post"
+msgstr "نشر"
+
+#: revision
+msgid "Revision"
+msgstr "إصدار"
+
+#: reply
+msgid "Reply"
+msgstr "رد"
+
+#: modifier
+msgid "Modifier"
+msgstr "المعدل"
+
+#: accept
+msgid "Accept"
+msgstr "قبول"
+
+#: deny
+msgid "Deny"
+msgstr "رفض"
+
+#: tags
+msgid "Tags"
+msgstr "دلالات"
+
+#: tag
+msgid "Tag"
+msgstr "دالة"
+
+#: comments
+msgid "Comments"
+msgstr "تعليقات"
+
+#: history
+msgid "History"
+msgstr "سجيل التغيرات"
+
+#: children
+msgid "Children"
+msgstr "الفروع"
+
+#: done
+msgid "Done"
+msgstr "نفذ"
+
+#: edit
+msgid "Edit"
+msgstr "تعديل"
+
+#: upload
+msgid "Upload"
+msgstr "رفع"
+
+#: remove
+msgid "Remove"
+msgstr "حذف"
+
+#: file
+msgid "File"
+msgstr "ملف"
+
+#: export
+msgid "Export"
+msgstr "تصدير"
+
+#: format
+msgid "Format"
+msgstr "شكل"
+
+#: scope
+msgid "Scope"
+msgstr "مجال"
+
+#: restore
+msgid "Restore"
+msgstr "إستعادة"
+
+#: diff
+msgid "Diff"
+msgstr "الفرق"
+
+#: create
+msgid "Create"
+msgstr "إنشاء"
+
+#: return.last
+msgid "Return"
+msgstr "عودة"
+
+#: save
+msgid "Save"
+msgstr "حفظ"
+
+#: preview
+msgid "Preview"
+msgstr "معاينة"
+
+#: publish
+msgid "Publish"
+msgstr "نشر"
+
+#: resume
+msgctxt "resume"
+msgid "Resume"
+msgstr "متابعة"
+
+#: actions
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: help
+msgid "Help"
+msgstr "مساعدة"
+
+#: view
+msgid "View"
+msgstr "مشاهدة"
+
+#: modify
+msgid "Modify"
+msgstr "تعديل"
+
+#: print
+msgid "Print"
+msgstr "طباعة"
+
+#: delete
+msgid "Delete"
+msgstr "حذف"
+
+#: refresh
+msgid "Refresh"
+msgstr "اعادة تنشيط"
+
+#: content
+msgid "Content"
+msgstr "محتوى"
+
+#: introduction
+msgid "Introduction"
+msgstr "المقدمة"
+
+#: widgets
+msgid "Widgets"
+msgstr "القطع"
+
+#: widget
+msgid "Widget"
+msgstr "قطعة"
+
+#: action
+msgid "Action"
+msgstr "إجراء"
+
+#: page
+msgid "Page"
+msgstr "صفحة"
+
+#: comment
+msgid "Comment"
+msgstr "تعليق"
+
+#: space
+msgid "Space"
+msgstr "مساحة"
+
+#: attachment
+msgid "Attachment"
+msgstr "مرفق"
+
+#: setting
+msgid "Setting"
+msgstr "إعداد"
+
+#: trash
+msgid "Trash"
+msgstr "مهملات"
+
+#: privateK
+msgid "Private"
+msgstr "خاص"
+
+#: defaultK
+msgid "Default"
+msgstr "افتراضي"
+
+#: restrict
+msgid "Restrict"
+msgstr "مقيد"
+
+#: admin
+msgid "Admin"
+msgstr "إداري"
+
+#: frequency
+msgid "Frequency"
+msgstr "تردد"
+
+#: remover
+msgid "Remover"
+msgstr "الحاذف"
+
+#: feedback
+msgid "Feedback"
+msgstr "تواصل"
+
+#: masks
+msgid "Masks"
+msgstr "أقنعة"
+
+#: date
+msgid "Date"
+msgstr "التاريخ"
+
+#: press
+msgid "Press"
+msgstr "الصحافة"
+
+#: markup
+msgid "Markup"
+msgstr "العلامات"
+
+#: keyboard
+msgid "Keyboard"
+msgstr "لوحة المفاتيح"
+
+#: faq
+msgid "FAQ"
+msgstr "الأسئلة"
+
+#: response
+msgid "Response"
+msgstr "استجابة"
+
+#: jan
+msgid "Jan"
+msgstr "يناير"
+
+#: feb
+msgid "Feb"
+msgstr "فبراير"
+
+#: mar
+msgid "Mar"
+msgstr "مارس"
+
+#: apr
+msgid "Apr"
+msgstr "إبريل"
+
+#: may
+msgid "May"
+msgstr "مايو"
+
+#: jun
+msgid "Jun"
+msgstr "يونيو"
+
+#: jul
+msgid "Jul"
+msgstr "يوليو"
+
+#: aug
+msgid "Aug"
+msgstr "إغسطس"
+
+#: sep
+msgid "Sep"
+msgstr "سبتمبر"
+
+#: oct
+msgid "Oct"
+msgstr "اكتوبر"
+
+#: nov
+msgid "Nov"
+msgstr "نوفمبر"
+
+#: dec
+msgid "Dec"
+msgstr "ديسمبر"
+
+#: compare
+msgid "Compare"
+msgstr "مقارنة"
+
+#: latest
+msgid "Latest"
+msgstr "أحدث"
+
+#: comparing
+msgid "Comparing"
+msgstr "مقارنة"
+
+#: current
+msgid "Current"
+msgstr "الحالية"
+
+#: loading
+msgid "Loading"
+msgstr "جار التحميل"
+
+#: turn.on.favorite
+msgid "Add this page to the Favorite List"
+msgstr "إضافة هذه الصفحة إلى قائمة مفضلتك"
+
+#: turn.off.favorite
+msgid "Remove this page from the Favorite List"
+msgstr "إزالة هذه الصفحة من قائمة مفضلتك"
+
+#: turn.on.watchlist
+msgid "Add this page to the Watchlist"
+msgstr "إضافة هذه الصفحة إلى قائمة مراقبتك"
+
+#: turn.off.watchlist
+msgid "Remove this page from the Watchlist"
+msgstr "إزالة هذه الصفحة من قائمة مراقبتك"
+
+#. #lower case first char
+#: none
+msgid "none"
+msgstr "لا شيء"
+
+#: insert.anchor
+msgid "Insert anchor"
+msgstr "إدراج مؤشر"
+
+#: anchor.name
+msgid "Anchor name"
+msgstr "أسم المؤشر"
+
+#: in.space
+msgid "in space"
+msgstr "في المساحة"
+
+#: save.draft
+msgid "Save draft"
+msgstr "حفظ مسودة"
+
+#: edit.sidebar
+msgid "Edit the sidebar"
+msgstr "تعديل القائمة الجانبية"
+
+#: add.page
+msgid "Add page"
+msgstr "إضافة صفحة"
+
+#: edit.draft
+msgid "Edit draft"
+msgstr "تعديل مسودة"
+
+#: create.homepage
+msgid "Create home page"
+msgstr "إنشاء صفحة رئيسية"
+
+#: modified.date
+msgid "Modified date"
+msgstr "تاريخ التعديل"
+
+#: goto.profile
+msgid "Profile"
+msgstr "الملف"
+
+#: force.save
+msgid "force to save"
+msgstr "أكد الحفظ"
+
+#: send.notify
+msgid "Send email to users who watching this page"
+msgstr "إرسال بريد إلكتروني إلى المستخدمين الذين يراقبون هذه الصفحة"
+
+#: no.child.page
+msgid "No child page"
+msgstr "لا يوجد صفحة فرعية"
+
+#: no.comment
+msgid "No comments"
+msgstr "لا يوجد تعليقات"
+
+#: comment.no.empty
+msgid "Comment can not be empty"
+msgstr "التعليق لا يمكن أن يكون فارغاً"
+
+#: non.empty
+msgid "Please input non-empty value"
+msgstr "الرجاء إدخال قيمة غير فارغة"
+
+#: no.attachment.by.name
+msgid "No attachment in this file name"
+msgstr "لا يوجد مرفق في هذا الملف"
+
+#: discard.comment
+msgid "Do you want to discard the comment?"
+msgstr "هل تريد التخلص من التعليق؟"
+
+#: post.comment
+msgid "Post comment"
+msgstr "نشر تعليق"
+
+#: no.view.permission
+msgid "No view permission"
+msgstr "لا يوجد صلاحيات مشاهدة"
+
+#: create.space
+msgid "Create space"
+msgstr "إنشاء مساحة"
+
+#: create.space.title
+msgid "Create your wiki or blog space"
+msgstr "قم بإنشاء صفحة موسوعة أو صفحة مدونة"
+
+#: backup.restore
+msgid "Backup & Restore"
+msgstr "النسخ الاحتياطي و الإسترجاع"
+
+#: default.dashboard
+msgid "Home Page"
+msgstr "الرئيسية"
+
+#: dashboard.preview
+msgid "Home page preview"
+msgstr "مراجعة الصفحة الرئيسية"
+
+#: space.admin
+msgid "Space admin"
+msgstr "إدارة المساحة"
+
+#: system.admin
+msgctxt "system.admin"
+msgid "System admin"
+msgstr "نظام الإدارة"
+
+#: system.admin.title
+msgctxt "system.admin.title"
+msgid "System admin"
+msgstr "نظام الإدارة"
+
+#: more.spaces
+msgid "More spaces"
+msgstr "المساحات"
+
+#: more.spaces.title
+msgid "Add more spaces to your dashboard"
+msgstr "إضافة مزيد من المساحات إلى البوابة"
+
+#: email
+msgid "Email"
+msgstr "الايميل"
+
+#: user.name
+msgid "User name"
+msgstr "اسم المستخدم"
+
+#: password
+msgid "Password"
+msgstr "كلمة السر"
+
+#: remember.me
+msgid "Remember me"
+msgstr "تذكرني"
+
+#: forget.password
+msgid "Forgot password"
+msgstr "نسيت كلمة السر"
+
+#: fail.update
+msgid "Failed on updating, please try again"
+msgstr "فشل في التحديث، يرجى المحاولة مرة أخرى"
+
+#: fail.upload
+msgid "Failed on uploading image, please try again."
+msgstr "فشل في تحميل الصورة، يرجى المحاولة مرة أخرى."
+
+#: portrait
+msgid "Portrait"
+msgstr "الصورة"
+
+#: user.profile
+msgid "User Profile"
+msgstr "ملف المستخدم"
+
+#: edit.profile
+msgid "Edit Profile"
+msgstr "تعديل ملف"
+
+#: edit.password
+msgid "Edit Password"
+msgstr "تعديل كلمة السر"
+
+#: edit.portrait
+msgid "Upload Portrait"
+msgstr "رفع صورة"
+
+#: spacekey
+msgctxt "spacekey"
+msgid "Space key"
+msgstr "مفتاح المساحة"
+
+#: user.offline.disable
+msgid "User offline is not available."
+msgstr "المستخدم غير متصل الان"
+
+#: user.password.error
+msgid "Wrong user name or password."
+msgstr "خطاء في اسم المستخدم او كلمة السر"
+
+#: wrong.captcha
+msgid "Wrong image verification code, please try again."
+msgstr "خطأ لم تدخل نفس رمز التحقق بالصورة، يرجى إعادة المحاولة."
+
+#: add.space.widget
+msgid "Add more spaces or widgets to your dashboard"
+msgstr "إضافة المزيد من المساحات أو القطع إلى البوابة"
+
+#: with.children
+msgid "with children"
+msgstr "مع فروع"
+
+#: invite.friends
+msgid "Invite friends"
+msgstr "دعوة إصدقاء"
+
+#: friends.email
+msgid "Friends email (Use comma to separate if multiple email)"
+msgstr " البريد الإلكتروني لأصدقائك (استخدم الفاصلة للفصل بين عناوين البريد الإلكتروني)"
+
+#: msg.to.friends
+msgid "Message to friends"
+msgstr "رسالة إلى الإصدقاء"
+
+#: invite.failed
+msgid ""
+"Sorry, System faced some problems while sending your invitation, please try "
+"again?"
+msgstr "عذرا، النظام واجه بعض المشاكل أثناء إرسال الدعوة، يرجى المحاولة مرة أخرى؟"
+
+#: invite.email.failed
+msgid "Your invitation email is in an incorrect format, please try again."
+msgstr "دعوة الايميل الخاص بك في شكل غير صحيح، يرجى المحاولة مرة أخرى."
+
+#: invite.success
+msgid "Your invitation is sent to following email addresses:"
+msgstr "تم إرسال دعواتك إلى عناوين الايميل التالية:"
+
+#: session.expired
+msgid "You session has expired, please login again."
+msgstr "فترة الدخول الخاصة بك قد انتهت صلاحيتها، يرجى تسجيل الدخول مرة أخرى."
+
+#: error.input.number.only
+msgid "Invalid input, only number is allowed."
+msgstr "إدخال غير صالح، يسمح بالإرقام فقط."
+
+#: error.input.letter.number.only
+msgid "Only letters and digit allowed"
+msgstr "فقط الحروف و الأرقام مسموح بها"
+
+#: confirm.close.msgborard
+msgid "Do you really want to close the message board?"
+msgstr "هل تريد حقا أن إغلاق نظام المراسلة؟"
+
+#: confirm.password
+msgid "Re-enter"
+msgstr "إعادة إدخال"
+
+#: login.name
+msgid "Login name"
+msgstr "إسم الدخول"
+
+#: not.matched
+msgid "Not matched"
+msgstr "غير متطابق"
+
+#: insert.smiley
+msgid "Insert smiley"
+msgstr "إدراج ابتسامات"
+
+#: insert.table
+msgid "Insert table"
+msgstr "ادخال جدول"
+
+#: merge.cells
+msgid "Merge cells"
+msgstr "دمج خلايا"
+
+#: insert.image
+msgid "Insert image"
+msgstr "ادخال صورة"
+
+#: insert.link
+msgid "Insert Page link or URL"
+msgstr "إدرج رابط الصفحة أو الرابط"
+
+#: link.url
+msgctxt "link.url"
+msgid "URL"
+msgstr "الرابط"
+
+#: rows
+msgid "Rows"
+msgstr "السطور"
+
+#: cols
+msgid "Cols"
+msgstr "الإعمدة"
+
+#: switch.editor.error
+msgid "Some errors occur during switching editor, please try again."
+msgstr "حدث خطاء أثناء تبديل المحرر، يرجى المحاولة مرة أخرى."
+
+#: rich.editor
+msgid "Rich Editor"
+msgstr "المحرر المرئي"
+
+#: markup.editor
+msgid "Markup Editor"
+msgstr "المحرر النصي"
+
+#: create.new.space
+msgid "Create new space"
+msgstr "إنشاء مساحة جديدة"
+
+#: message.board
+msgid "Message board"
+msgstr "نظام المراسلة"
+
+#: manual.draft
+msgid "Manually saved draft"
+msgstr "مسودة محفوظة يدوياً"
+
+#: auto.draft
+msgid "Automatically saved draft"
+msgstr "مسودة محفوظة تلقائياً"
+
+#: conflict.draft
+msgid "Conflict offline version"
+msgstr "نسخة غير متصلة متضاربة"
+
+#: delete.draft
+msgid "Delete this draft"
+msgstr "حذف هذه المسودة"
+
+#: add.group
+msgid "Add group"
+msgstr "إضافة مجموعة"
+
+#: group.name
+msgid "Group name"
+msgstr "اسم المجموعة"
+
+#: add.user
+msgid "Add user"
+msgstr "إضافة مستخدم"
+
+#: email.no.exist
+msgid "Email does not exist."
+msgstr "الايميل غير موجود"
+
+#: email.send.failed
+msgid "Email can not be sent and password reset failed. Please try later."
+msgstr "الايميل لا يمكن ارساله و عملية إعادة تعيين كلمة السر فشلت. يرجى المحاولة لاحقا."
+
+#: password.reset.success
+msgid "Your password is reset successfully. Please check your email inbox."
+msgstr "تم إعادة تعيين كلمة السر الخاصة بك بنجاح. يرجى التحقق من بريدك الالكتروني."
+
+#: sync.atts
+msgid "Sync attachments"
+msgstr "مزامنة المرفقات"
+
+#: sync.drafts
+msgid "Sync drafts"
+msgstr "مزامنة المسودات"
+
+#: sync.histories
+msgid "Sync histories"
+msgstr "مزامنة السجلات"
+
+#: sync.comments
+msgid "Sync comments"
+msgstr "مزامنة التعليقات"
+
+#: disconnect.offline
+msgid "Disconnect offline"
+msgstr "وضع غير متصل مفصول"
+
+#: sync.success
+msgid "Space success synchronized"
+msgstr "نحجت مزامنة المساحة"
+
+#: confirm.remove.offline.content
+msgid "Do you want to remove all offline content?"
+msgstr "هل تريد إزالة كافة المحتويات التي بدون اتصال؟"
+
+#: confirm.offline.space
+msgid "Do you want to send this space to your local system as offline space?"
+msgstr "هل تريد إرسال هذه المساحة للنظام المحلي كمساحة بدون اتصال؟"
+
+#: page.not.found
+msgid "Page not found"
+msgstr "الصفحة غير موجودة"
+
+#: draft.portlet.title
+msgid "My drafts"
+msgstr "مسوداتي"
+
+#: draft.portlet.desc
+msgid "My drafts list"
+msgstr "قائمة مسوداتي"
+
+#: comparing.view
+msgid "You are in version comparing result view."
+msgstr "انت في وضع مقارنة الفرق بين النسخ"
+
+#: loading.edit.panel.failed
+msgid "Loading edit panel failed, please try again."
+msgstr "تحميل لوحة التحرير فشل، يرجى المحاولة مرة أخرى."
+
+#: resume.draft
+msgid "resume draft"
+msgstr "استكمال مسودة"
+
+#: resume.auto.draft
+msgid "resume auto-saved draft"
+msgstr "استكمال مسودة محفوظة تلقائياً"
+
+#: confirm.exit.editing
+msgid ""
+"Your page is not saved. If you made changes without saving, they will be "
+"lost."
+msgstr "لم يتم حفظ صفحتك. إذا قمت بإجراء تغييرات بدون ضغط زر الحفظ لن يتم حفظها."
+
+#: save.error
+msgid "Saving page with errors, please try again."
+msgstr "حفظ الصفحة مع الأخطاء، يرجى المحاولة مرة أخرى."
+
+#: homepage.only
+msgid "Put to home page only"
+msgstr "وضع في الصفحة الرئيسية فقط"
+
+#: default.sidebar
+msgid "As default sidebar"
+msgstr "كقائمة جانبية افتراضية"
+
+#: current.only
+msgid "Current page only"
+msgstr "الصفحة الحالية فقط"
+
+#: stick.sidebar.editing
+msgid "Stick your editing to"
+msgstr "خص تعديلك إلى"
+
+#: sidebar.tip
+msgid ""
+"Tip: The default sidebar is displayed if the page doesn't have the specified"
+" one."
+msgstr "تنويه: يتم عرض القائمة الجانبية بشكل افتراضي إذا كانت الصفحة لا تملك قائمة محددة."
+
+#: choose.two
+msgid "You only can choose two items"
+msgstr "فقط تستطيع اختيار عنصرين"
+
+#: preview.disable.link
+msgid "This link can not be redirected in preview model."
+msgstr "هذا الرابط لا يعمل في وضع المعاينة."
+
+#: not.available.mode
+msgid "Not available in this mode"
+msgstr "غير متوفر في هذا الوضع"
+
+#: in.preview.mode
+msgid "You are in preview mode"
+msgstr "انت في وضع المعاينة"
+
+#: return.latest.version
+msgid "Return latest version."
+msgstr "العودة لأحدث نسخة."
+
+#: view.history
+msgid "You are viewing a history version. "
+msgstr "انت تشاهد سجل تغيرات النسخ"
+
+#: add.attachments
+msgid "Add more attachments"
+msgstr "إضافة مزيد من المرفقات"
+
+#: error.request
+msgid "Some errors happen during handling your request. Please try again."
+msgstr "بعض الأخطاء حدثت أثناء التعامل مع طلبك. حاول مرة اخرى."
+
+#: no.attachment
+msgid "No attachment"
+msgstr "لا يوجد مرفقات"
+
+#: confirm.remove.attachment
+msgid "Do you really want to remove this attachment?"
+msgstr "هل تريد حقاً إزالة هذا المرفق؟"
+
+#: bulk.upload
+msgid "Bulk upload"
+msgstr "رفع جماعي"
+
+#: captcha.required
+msgid "You must input same verified code with image"
+msgstr "ادخل نفس الكود في الصورة للمطابقة والتحقق"
+
+#: captcha.title
+msgid "Human validation"
+msgstr "التحقق البشري"
+
+#: whole.space
+msgid "Whole space"
+msgstr "كل المساحة"
+
+#: current.page
+msgid "Current page"
+msgstr "الصفحة الحالية"
+
+#: fail.export
+msgid "Export with errors, please try again."
+msgstr "تصدير مع الأخطاء، يرجى المحاولة مرة أخرى."
+
+#: restore.title
+msgid "Use this version as latest page"
+msgstr "استخدم هذه النسخة بمثابة أحدث نسخة للصفحة"
+
+#: diff.title
+msgid "Diff with latest version"
+msgstr "الفرق مع أحدث نسخة"
+
+#: return.title
+msgid "Return latest version"
+msgstr "العودة لإحدث نسخة"
+
+#: create.page.title
+msgid "Create new page"
+msgstr "إنشاء صفحة جديدة"
+
+#: edit.page.title
+msgid "Edit current page"
+msgstr "تعديل الصفحة الحالية"
+
+#: invite.title
+msgid "Invite your friends to join your space."
+msgstr "ادعو أصدقائك للانضمام إلى صفحة مساحتك."
+
+#: save.sidebar.title
+msgid "Save editing sidebar"
+msgstr "حفظ تعديل القائمة الجانبية"
+
+#: preview.sidebar.title
+msgid "Preview sidebar"
+msgstr "معاينة القائمة الجانبية"
+
+#: cancel.exit.title
+msgid "Cancel editing and exit"
+msgstr "الغاء التعديل و الخروج"
+
+#: publish.title
+msgid "Publish editing page"
+msgstr "نشر تعديل الصحفة"
+
+#: save.draft.exit.title
+msgid "Save draft and exit"
+msgstr "حفظ المسودة و الخروج"
+
+#: preview.title
+msgid "Preview current page"
+msgstr "معاينة الصفحة الحالية"
+
+#: force.publish
+msgid "Force publish"
+msgstr "أكد النشر"
+
+#: force.publish.title
+msgid "Force publish to override"
+msgstr "أكد النشر فوق الحالي"
+
+#: resume.title
+msgctxt "resume.title"
+msgid "Resume"
+msgstr "استكمال"
+
+#: resume.edit
+msgid "Resume edit"
+msgstr "استكمال التعديل"
+
+#: resume.edit.title
+msgid "Return editing page"
+msgstr "العودة لتعديل الصفحة"
+
+#: confirm.exit
+msgid "Do you want to exit without saving?"
+msgstr "هل تريد الخروج بدون حفظ؟"
+
+#: version.restore
+msgid "Version is restored successfully."
+msgstr "تم استعادة النسخة بنجاح."
+
+#: move.to
+msgid "Move to..."
+msgstr "انقل إلى"
+
+#: copy.to
+msgid "Copy to..."
+msgstr "انسخ إلى"
+
+#: trash.page
+msgid "Trash page"
+msgstr "صفحة المهملات"
+
+#: confirm.trash.page
+msgid ""
+"Do you want to move this page to trash? It can be restored only by this "
+"space administrator."
+msgstr "هل تريد نقل هذه الصفحة إلى المهملات؟ يمكن استعادتها عن طريق إدارة المساحة."
+
+#: page.restrict
+msgid "Page restrict"
+msgstr "تقيد الصفحة"
+
+#: function.title
+msgid "More functions"
+msgstr "مزيد من الوظائف"
+
+#: view.page.tree
+msgid "View pages tree"
+msgstr "مشاهدة شجرة الصفحات"
+
+#: view.comments
+msgid "View comments"
+msgstr "مشاهدة التعليقات"
+
+#: create.comments
+msgid "Create comments"
+msgstr "إنشاء التعليقات"
+
+#: refresh.tree
+msgid "Refresh failed, please try again"
+msgstr "التحديث فشل، يرجى المحاولة مرة أخرى"
+
+#: pretty.url
+msgid "PrettyURLs"
+msgstr "روابط الصفحة"
+
+#: copy.clip
+msgid "Copy to clipboard"
+msgstr "النسخ للذاكرة"
+
+#: tiny.url
+msgid "Tiny URL"
+msgstr "رابط مختصر"
+
+#: meaning.url
+msgid "Meaning URL"
+msgstr "رابط مقصود"
+
+#: meaning.url.not.available
+msgid "Not available - some unsupported characters in page title or space key"
+msgstr "غير ممكن استخدام الأحرف هذه في اسم مفتاح المساحة او العنوان"
+
+#: send.same.msg
+msgid "You can not send same message again."
+msgstr "لا يمكنك إرسال نفس الرسالة مرة أخرى."
+
+#: send.notify.success
+msgid "The message sent to system administrators."
+msgstr "الرسالة ارسلت إلى إدارين النظام."
+
+#: send.notify.failed
+msgid "The message sent failed, please try again."
+msgstr "إرسال الرسالة فشل، يرجى المحاولة مرة أخرى."
+
+#: choose.space.first
+msgid "Please choose target space first."
+msgstr "الرجاء اختيار المساحة المستهدفة اولاً."
+
+#: page.tree
+msgid "Page Tree"
+msgstr "شجرة الصفحة"
+
+#: goto.tagcloud
+msgid "View tag cloud"
+msgstr "مشاهدة دالة السحابة"
+
+#: goto.owner.page
+msgid "View owner page"
+msgstr "مشاهدة صفحة الناشر"
+
+#: authored.space
+msgid "Created Space"
+msgstr "مساحة منشأة"
+
+#: authored.page
+msgid "Created Page"
+msgstr "صفحة منشأة"
+
+#: confirm.delete.widget
+msgid "Are you sure to delete this widget permanently?"
+msgstr "هل متأكد انك تريد إزالة هذه القطعة بشكل نهائي؟"
+
+#: edit.widget
+msgid "Edit widget"
+msgstr "تعديل قطعة"
+
+#: space.uname
+msgctxt "space.uname"
+msgid "Space key"
+msgstr "مفتاح المساحة"
+
+#: page.title
+msgid "Page title"
+msgstr "عنوان الصفحة"
+
+#: keep.private
+msgid "Keep private"
+msgstr "ابقائها خاصة"
+
+#: page.linker
+msgid "Page linker"
+msgstr "ربط الصفحة"
+
+#: markup.render
+msgid "Markup render"
+msgstr "تقديم المحرر"
+
+#: load.widget.fail
+msgid "Unable to load widget information, please try again."
+msgstr "غير قادر على تحميل معلومات القطعة، يرجى المحاولة مرة أخرى."
+
+#: verfy.page.exist.fail
+msgid "Unable to verify if this page exists no not, please try again."
+msgstr "غير قادر على التحقق من حالة وجود هذه الصفحة او لا، يرجى المحاولة مرة أخرى."
+
+#: page.not.exist.fail
+msgid "The input page does not exist, please correct it first."
+msgstr "صفحة إدخال غير موجوده، يرجى تصحيح ذلك أولا."
+
+#: more.space.dialog.title
+msgid "Select space to Dashboard"
+msgstr "حدد المساحة الخاصة بالبوابة"
+
+#: search.space.widget
+msgid "Search spaces & widgets"
+msgstr "البحث في المساحات و القطع"
+
+#: input.keyword
+msgid "Write your filter, then hit Enter"
+msgstr "اكتب كلمات الفلتر ثم اضغط إدخال"
+
+#: create.widget
+msgid "Create your own widget"
+msgstr "إنشاء القطعة الخاصة بك"
+
+#: popular.spaces
+msgid "Popular spaces "
+msgstr "مساحات شعبية"
+
+#: search.result
+msgid "Search result"
+msgstr "نتيجة البحث"
+
+#: no.result
+msgid "No matched result"
+msgstr "لا توجد نتيجة مطابقة"
+
+#: redir.fail
+msgid "Sorry, some unexpected errors, redirect failed"
+msgstr "عذرا، حدث خطاء غير متوقع، فشلت عملية إعادة التوجيه"
+
+#: theme.update.fail
+msgid "Theme updated failed, please try again."
+msgstr "تحديث الغلاف فشل، يرجى المحاولة مرة أخرى."
+
+#: theme.update.success
+msgid "Theme updated."
+msgstr "تم تحديث الغلاف"
+
+#: edit.detail
+msgid "Edit detail"
+msgstr "تعديل التفاصيل"
+
+#: update.logo
+msgid "Update Logo"
+msgstr "تحديث الشعار"
+
+#: cancel.removed.space
+msgid "Cancel removed space"
+msgstr "الغاء مساحة محذوفة"
+
+#: remove.space
+msgid "Remove space"
+msgstr "حذف مساحة"
+
+#: confirm.remove.space
+msgid "Do you really want to delete this space?"
+msgstr "هل حقا تريد حذف هذا المساحة؟"
+
+#: author.only
+msgid "Author only"
+msgstr "الناشر فقط"
+
+#: all.contributors
+msgid "All contributors"
+msgstr "كل المساهمين"
+
+#: space.administraors
+msgid "Space administrators"
+msgstr "إدارين المساحة"
+
+#: send.to
+msgid "Send to "
+msgstr "إرسل إلى"
+
+#: every.post
+msgid "Every post"
+msgstr "كل مشاركة"
+
+#: daily.summary
+msgid "Daily summary"
+msgstr "ملخص يومي"
+
+#: no.theme
+msgid "No theme available"
+msgstr "لا يوجد غلاف متوفر"
+
+#: confirm.remove.page
+msgid "Do you want to delete this page permanently?"
+msgstr "هل ترغب في حذف هذه الصفحة نهائيا؟"
+
+#: no.trash.page
+msgid "No page in trash bin."
+msgstr "لا يوجد صفحة في المهملات"
+
+#: delete.perm
+msgid "Page is permanently deleted."
+msgstr "الصحفة حذفت بشكل نهائي"
+
+#: click.remove
+msgid "Click to remove"
+msgstr "اضغط للحذف"
+
+#: refresh.image
+msgid "Refresh image"
+msgstr "تحديث الصورة"
+
+#: your.feedback
+msgid "Your feedback"
+msgstr "انطباعك"
+
+#: feedback.success
+msgid "Your feedback is sent to us, Thanks!"
+msgstr "تم إرسال ملاحظاتك لنا، شكراً!"
+
+#: help.pop.bulk.upload
+msgid "Bored uploading one after the other? Then zip the files and upload."
+msgstr "تشعر بالملل في رفع الملفات تلو الآخر؟ اذاً اضغط الملفات وارفعها سوياً."
+
+#: help.pop.private.space
+msgid ""
+"Private space is absolutely not visible for others unless the space owner "
+"manually assigns reading permission. The non-private spaces can be listed on"
+" search results."
+msgstr "المساحات الخاصة غير مرئية للآخرين ما لم يكن صاحب الماسحة سمح بذلك. المساحات الاخرى يمكن ظهورها ضمن نتائج البحث."
+
+#: help.pop.general
+msgid "For more help, press F1"
+msgstr "لمزيد من المساعدة، اضغط F1"
+
+#: created.by
+msgid "Created by"
+msgstr "إنشئت بواسطة"
+
+#: return.default
+msgid ""
+"Do you want to return to default content? This will overwrite your current "
+"content."
+msgstr "هل تريد العودة إلى المحتوى الافتراضي؟ هذا الأمر سوف يكتب فوق المحتوى الحالي."
+
+#: confirm.publish.dashboard
+msgid ""
+"Do you confirm to publish? This takes effect immediately on the current "
+"dashboard."
+msgstr "هل تؤكد أمر النشر؟ التغيرات سوف تظهر فوراً على البوابة الحالية."
+
+#: confirm.cancel
+msgid "Do you confirm to discard you current editing?"
+msgstr "هل تأكد الغاء التعديل الحالي؟"
+
+#: err.space.not.exist
+msgid "Space does not exist"
+msgstr "المساحة غير موجودة"
+
+#: err.space.save
+msgid "Space saved failed. Please try again."
+msgstr "فشلت عملية حفظ المساحة حاول مرة أخرى"
+
+#: err.dup.space.name
+msgid "Space name is already used, please try others."
+msgstr "اسم المساحة مستخدم فعلياً، يرجى تجربة اسم اخر."
+
+#: err.dup.space.unixname
+msgid "Space key is already used, please try others."
+msgstr "اسم مفتاح المساحة مستخدم فعلياً، يرجى تجربة اسم اخر."
+
+#: err.remove.space
+msgid "Remove space failed."
+msgstr "فشل حذف المساحة"
+
+#: err.save.page
+msgid "save page error"
+msgstr "خطاء في حفظ الصفحة"
+
+#: err.homepage.remove
+msgid "Home page can not be removed."
+msgstr "الصفحة الرئيسية لا يمكن إزالتها."
+
+#: err.session.expired
+msgid "You session may be expired, please login first."
+msgstr "قد تكون فترة زمن الدخول انتهت، يرجى الدخول باسمك من جديد."
+
+#: err.load.page
+msgid "Unable to load page. Try later."
+msgstr "غير قادر على تحميل الصفحة. حاول لاحقا."
+
+#: err.copy.page
+msgid "Copy page with errors."
+msgstr "انسخ الصفحة مع الأخطاء"
+
+#: err.move.page
+msgid "Move page with errors."
+msgstr "انقل الصفحة مع الأخطاء"
+
+#: err.page.not.found
+msgid "Page not found. It can not be removed."
+msgstr "الصفحة غير موجودة. لا يمكن إزالتها."
+
+#: err.homepage.remove.failed
+msgid "Home page removed failed."
+msgstr "فشل حذف الصفحة الرئيسية."
+
+#: err.same.title
+msgid ""
+"Same page title already exist in this space. Please rename page title and "
+"save."
+msgstr "عنوان الصفحة نفسها موجودة بالفعل في هذه المساحة. الرجاء إعادة تسمية عنوان الصفحة وحفظها."
+
+#: err.remove.page
+msgid "Removed page failed. Please try later."
+msgstr "فشلت إزالة الصفحة. يرجى المحاولة لاحقا."
+
+#: err.save.timeout
+msgid "Saving page has timeout error. Please try later."
+msgstr "خطاء استغرق حفظ الصفحة وقت طويل حاول لاحقاً"
+
+#: err.restore.page
+msgid "Failed restore page."
+msgstr "فشلت عملية استعادة الصفحة"
+
+#: err.user.exist
+msgid "Login name or email is already used by another user."
+msgstr "اسم المستخدم أو البريد الإلكتروني مستخدم من قبل مستخدم آخر."
+
+#: err.role.name.conflict
+msgid "Group name is already used by other group, please try others."
+msgstr "اسم المجموعة مستخدم بالفعل في مجموعة أخرى، حاول تجربة اسم اخر."
+
+#: err.remove.user
+msgid "Unable to remove user."
+msgstr "غير قادر على حذف المستخدم"
+
+#: err.signup.disable
+msgid "User signup is disabled by system administrator."
+msgstr "تم تعطيل التسجيل بالموقع من قبل إدارين النظام."
+
+#: err.over.license
+msgid "User count is over license limitation, please upgrade the license."
+msgstr "عدد المستخدمين أكثر من سعة الترخيص، الرجاء ترقية الترخيص."
+
+#: err.get.attachment.meta
+msgid "Failed update attachment meta information. Please try later."
+msgstr "فشل في تحديث ملعومات وصف المرفقات الرجاء المحاولة لاحقاً"
+
+#: err.remove.attachment
+msgid "Failed remove this attachment. Please try later."
+msgstr "فشل في إزالة هذا المرفق يرجى المحاولة لاحقاً."
+
+#: err.orig.page.not.found
+msgid "Original page does not found. It may be deleted by other users."
+msgstr "الصفحة الأصلية غير موجودة قد تكون حذفت من قبل مستخدمين آخرين."
+
+#: err.version.compare
+msgid "Version comparing failed."
+msgstr "فشلت عملية مقارنة النسخ"
+
+#: err.post.comment
+msgid "Comment can not be posted by some errors. Please try later."
+msgstr "التعليق لا يمكن نشره بسبب بعض الأخطاء يرجى المحاولة لاحقاً."
+
+#: err.get.comment
+msgid "Unable to get page comments. Please try later."
+msgstr "تعذر الحصول على تعليقات الصفحة يرجى المحاولة لاحقاً."
+
+#: err.search
+msgid "Search failed with error(s). Please try later."
+msgstr "فشل البحث مع  حدوث (خطأ). يرجى المحاولة لاحقاً."
+
+#: err.upload
+msgid "Unable to complete uploading. Please try later."
+msgstr "غير قادر على استكمال الرفع. يرجى المحاولة لاحقاً."
+
+#: err.quota.exhaust
+msgid "You space attachment quota is exhausted and uploading is forbidden."
+msgstr "تم تجاوز سعة تخزين مساحتك و تم تعطيل خاصية الرفع لها"
+
+#: err.save.system
+msgid "Unable to save system information. Please try later."
+msgstr "غير قادر على حفظ معلومات النظام. يرجى المحاولة لاحقاً."
+
+#: err.read.rss
+msgid "Reading space RSS feed failed, try later."
+msgstr "فشلت قراءة تغذية المساحة، حاول في وقت لاحق."
+
+#: err.not.friend
+msgid "You are not friend with this space yet."
+msgstr "أنت لست صديق مع هذه المساحة حتى الان."
+
+#: err.friend.wait.approve
+msgid "Your friendship request is waiting for approval."
+msgstr "طلب صداقتكم ينتظر الموافقة."
+
+#: err.friend.reject
+msgid "Sorry, your friendship request is rejected."
+msgstr "عذراً، تم رفض طلب صداقتك."
+
+#: err.no.perm.on.message
+msgid "Sorry, you do not have enough permission to read this message."
+msgstr "عذراً، ليس لديك الصلاحيات الكافية لقراءة هذه الرسالة."
+
+#: err.message.exist
+msgid "Sorry, message does not exist."
+msgstr "عذراً، الرسالة غير موجودة."
+
+#: err.invite.fail
+msgid ""
+"Sorry, your invitation failed with unexpected errors, please try again."
+msgstr "عذراً، دعوتك فشلت حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى."
+
+#: err.history.restore
+msgid "Sorry, history restoration failed, please try again."
+msgstr "عذراً، فشلت عملية استعادة سجل التغيرات يرجى المحاولة مرة أخرى."
+
+#: err.history.dup.title
+msgid ""
+"There are same title pages existing for this version, history can not be "
+"restored."
+msgstr "هناك صفحات تحمل نفس العنوان لهذه النسخة، سجل التغيرات لا يمكن استرجاعه."
+
+#: err.restore.history.timeout
+msgid "Restore history has timed out. Please try again."
+msgstr "انتهت المهلة لاستعادة سجل التغيرات. حاول مرة اخرى."
+
+#: err.get.history
+msgid "Unable to get this version history page. Please try later."
+msgstr "تعذر الحصول على سجل التغيرات لهذه النسخة. يرجى المحاولة لاحقاً."
+
+#: err.no.perm.on.space
+msgid "You don't have read permission on this space."
+msgstr "ليس لديك صلاحيات قراءة في هذه المساحة."
+
+#: err.unsupport.offline
+msgid "Unsupported offline widget."
+msgstr "قطعة غير متصلة غير مدعومة"
+
+#: err.role.prefix.not.allow
+msgid "This prefix is not allowed in group name, please try others. "
+msgstr "هذه البادئه غير مسموح بها في اسم المجموعة، يرجى تجربة شيء اخر."
+
+#: err.fail.download
+msgid "Failed download resource"
+msgstr "فشل في تنزيل المصادر"
+
+#: err.init.widget
+msgid ""
+"Unable to initialize this widget. This may be caused if it is already "
+"disabled or deleted."
+msgstr "غير قادر على تهيئة هذه القطعة. قد يكون السبب تم تعطيل القطعة أو حذفها."
+
+#: err.portal.load
+msgid "Portal loading failed, please refresh page to retry."
+msgstr "فشل في تحميل البوابة، الرجاء تحديث الصفحة لإعادة المحاولة."
+
+#: err.phase.render.no.allow
+msgid "No view permission on included content"
+msgstr "لا يوجد صلاحيات مشاهدة ضمن المحتوى"
+
+#: err.phase.render.no.page
+msgid "Included page does not exist "
+msgstr "الصفحة المدرجة غير موجودة"
+
+#: err.phase.render.no.phase
+msgid "Included phase does not exist"
+msgstr "العبارة المدرجة غير موجودة"
+
+#: err.phase.render.failed
+msgid "Include macro loading failed."
+msgstr "فشل في تحميل المكرو المدرج"
+
+#: unknown.error
+msgid "Unknown errors"
+msgstr "أخطاء غير معروفة"
+
+#. #-- {0} and (1} is messageWidget parameter - don't put it into
+#. ParamsMessage.properties
+#: err.newer.version
+msgid "a saved version is newer than yours, do you want to {0} or {1}?"
+msgstr "يوجد نسخة محفوظة أحدث من نسختك، هل تريد {0} أو {1}؟"
+
+#: open.new.window
+msgid "Open in new window"
+msgstr "افتح في نافذة جديدة"
+
+#: online.help
+msgid "Online help"
+msgstr "مساعدة مباشرة"
+
+#: your.email
+msgid "Your email"
+msgstr "ايميلك"
+
+#: search.groups
+msgid "Search groups"
+msgstr "بحث المجموعات"
+
+#: search.users
+msgid "Search users"
+msgstr "بحث المستخدمين"
+
+#: cell.spacing
+msgid "Cell spacing"
+msgstr "هوامش الخلية"
+
+#: bk.color
+msgid "Background color"
+msgstr "لون الخلفية"
+
+#: border.color
+msgid "Border color"
+msgstr "لون الحدود"
+
+#: has.caption
+msgid "Has caption"
+msgstr "يوجد بها شرح"
+
+#: first.row.title
+msgid "First row as title"
+msgstr "الصف الأول كما العنوان"
+
+#: border.size
+msgid "Border size"
+msgstr "حجم الحدود"
+
+#: palette
+msgid "Palette"
+msgstr "اللوحة"
+
+#: border
+msgid "Border"
+msgstr "الحدود"
+
+#: current.space
+msgid "Current space"
+msgstr "المساحة الحالية"
+
+#: http.prefix
+msgid "http://"
+msgstr "http://"
+
+#: error.invalid.url
+msgid "Invalid URL format"
+msgstr "صيغة رابط غير صحيحة"
+
+#: error.invalid.url.or.page
+msgid "Please input valid URL or page title"
+msgstr "الرجاء إدخال رابط صالح أو عنوان الصفحة"
+
+#: image
+msgid "Image"
+msgstr "صورة"
+
+#: attach.url
+msgid "Attached file name or URL"
+msgstr "اسم الملف المرفق أو الرابط"
+
+#: tag.on.space
+msgid "Tag on space"
+msgstr "دالة في المساحة"
+
+#: tag.on.page
+msgid "Tag on page"
+msgstr "دالة في الصفحة"
+
+#: err.empty.title
+msgid "Title can not be empty"
+msgstr "العنوان لا يمكن أن يكون فارغ"
+
+#: required
+msgid "Required"
+msgstr "مطلوب"
+
+#: confirm
+msgid "Confirm"
+msgstr "تأكيد"
+
+#: alert
+msgid "Alert"
+msgstr "تنبيه"
+
+#: goto.space
+msgid "Go to space "
+msgstr "اذهب للمساحة"
+
+#: reset
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#: space.list
+msgid "Space list"
+msgstr "قائمة المساحة"
+
+#: modified.on
+msgid "Modified on"
+msgstr "عدل في"
+
+#: contributed.versions
+msgid "Contributed versions"
+msgstr "نسخ المساهمين"
+
+#: created.date
+msgid "Created date"
+msgstr "تاريخ الإنشاء"
+
+#: initial
+msgid "initial"
+msgstr "مبدئي"
+
+#: full.name
+msgid "Full name"
+msgstr "الاسم الكامل"
+
+#: user.status.hint
+msgid ""
+"Your current status. It is automatically saved when this dialog is closed."
+msgstr "سيتم حفظ الوضع الحالي تلقائياً عند اغلاق هذا الاطار."
+
+#: must_words
+msgid "Must contain all words"
+msgstr "يجب أن يحتوي على كل الكلمات"
+
+#: any_words
+msgid "Contain any of words"
+msgstr "يحتوي على كلمات"
+
+#: exact_words
+msgid "Exact match whole filter"
+msgstr "فلتر التطابق التام"
+
+#: all_spaces
+msgid "All spaces"
+msgstr "كل المساحات"
+
+#: type
+msgid "Type"
+msgstr "النوع"
+
+#: filter
+msgid "Filter"
+msgstr "فلتر"
+
+#: all
+msgid "All"
+msgstr "الكل"
+
+#: from_space
+msgid "From space"
+msgstr "من المساحة"
+
+#: sortby
+msgid "Sort by"
+msgstr "مرتب حسب"
+
+#: favorite
+msgid "Favorite"
+msgstr "المفضل"
+
+#: watch
+msgid "Watch"
+msgstr "مراقبة"
+
+#: attach.quota
+msgid "Attachment quota"
+msgstr "حجم المرفق"
+
+#: none.upper
+msgid "None"
+msgstr "لا شيء"
+
+#: unknown
+msgid "Unknown"
+msgstr "غير معروف"
+
+#: unlimited
+msgid "Unlimited"
+msgstr "غير محدود"
+
+#: space.tagcolud.title
+msgid "Tags on spaces "
+msgstr "الدلالات في المساحات"
+
+#: page.tagcolud.title
+msgid "Tags on pages"
+msgstr "الدلالات في الصفحات"
+
+#: recent.update.pages
+msgid "Recent updated pages"
+msgstr "الصفحات التي تم تحديثها مؤخرا"
+
+#: optional
+msgid "Optional"
+msgstr "اختياري"
+
+#: insert
+msgid "Insert"
+msgstr "إدراج"
+
+#: macro
+msgid "Macro"
+msgstr "ماكرو"
+
+#: download.attachment
+msgid "Download the attachment"
+msgstr "تنزيل المرفق"
+
+#: view.page
+msgid "View page"
+msgstr "مشاهدة الصفحة"
+
+#: err.widget.not.found
+msgid "Widget not available now. It maybe removed. "
+msgstr "القطعة غير متوفرة ربما قد حذفت"
+
+#: err.multiple.portal.in.dashboard
+msgid ""
+"There are multiple portal in your Dashboard. Please go to Dashboard and add "
+"this widget in one given portal."
+msgstr "هناك بوابات متعددة في صفحة بوابتك الرئيسية. يرجى الذهاب إلى البوابة وإضافة هذه القطعة في البوابة المعنية."
+
+#: err.no.allow.widget.to.anonymous
+msgid "Anonymous doesn't allow to add widget from here. Please login first."
+msgstr "لا يسمح لغير المسجلين في إضافة القطع من هنا. الرجاء الدخول أولاً."
+
+#: add.to.dashboard
+msgid "Add to dashboard"
+msgstr "إضافة إلى البوابة"
+
+#: attach.hint
+msgid "Optional,e.g., *.doc,*.xls"
+msgstr "اختياري، * .doc، و *. XLS"
+
+#: gallery.hint
+msgid "Optional,e.g., *.png,*.gif"
+msgstr "اختياري، *.png.*,gif"
+
+#: levels
+msgid "Levels"
+msgstr "مستويات"
+
+#: numbers
+msgid "Numbers"
+msgstr "أرقام"
+
+#: bullets
+msgid "Bullets"
+msgstr "النقاط"
+
+#: toc.levels.exceed.scope
+msgid "Level must between 1 and 6"
+msgstr "المستوى يجب بين 1 و 6"
+
+#: sharing.all.spaces
+msgid "Sharing across all spaces"
+msgstr "مشاركة عبر جميع المساحات"
+
+#: page.templates
+msgid "Page templates"
+msgstr "قوالب الصفحات"
+
+#: confirm.delete.templ
+msgid "Do you confirm to delete this template?"
+msgstr "هل تأكد حذف هذا القالب؟"
+
+#: yes
+msgid "Yes"
+msgstr "نعم"
+
+#: no
+msgid "No"
+msgstr "لا"
+
+#: create.template
+msgid "Create template"
+msgstr "إنشاء قالب"
+
+#: err.no.perm.view.templates
+msgid "No view permission on this space templates"
+msgstr "لا يوجد صلاحيات مشاهدة على قوالب هذه المساحة"
+
+#: shared
+msgid "Shared"
+msgstr "مشترك"
+
+#: creator
+msgid "Creator"
+msgstr "الناشر"
+
+#: templates
+msgid "Templates"
+msgstr "القوالب"
+
+#: replace.content.by.templ
+msgid "Do you want to replace the current content by this template?"
+msgstr "هل تريد استبدال المحتوى الحالي بهذا القالب؟"
+
+#: err.load.templates
+msgid "Load this template failed, please try again."
+msgstr "تعذر تحميل هذا القالب، يرجى المحاولة مرة أخرى."
+
+#: select.template
+msgid "Select template"
+msgstr "اختر القالب"
+
+#: from
+msgid "From"
+msgstr "من"
+
+#: hide
+msgid "Hide"
+msgstr "إخفاء"
+
+#: show
+msgid "Show"
+msgstr "إظهار"
+
+#: err.hide.perm.comment
+msgid "You don't have permission to hide or show this comment."
+msgstr "ليس لديك صلاحيات لإخفاء أو إظهار هذا التعليق."
+
+#: err.hide.comment
+msgid "Hide/Show this comment failed."
+msgstr "فشلت عملية إخفاء/إظهار هذا التعليق."
+
+#: modified.by
+msgid "Modified by"
+msgstr "عدل بواسطة"
+
+#: search.space.user
+msgid "Search users or spaces"
+msgstr "بحث المستخدمين او المساحات"
+
+#: tweet.all.desc
+msgid "All users"
+msgstr "كل المستخدمين"
+
+#: choose
+msgid "Choose"
+msgstr "اختار"
+
+#: title.send.msg.to.user
+msgid "Send message to this user"
+msgstr "إرسال رسالة إلى هذا المستخدم"
+
+#: title.send.msg.to.space
+msgid "Send message to the contributors of this space"
+msgstr "إرسال رسالة إلى المساهمين في هذه المساحة"
+
+#: by
+msgid "by"
+msgstr "بواسطة"
+
+#: on
+msgid "on"
+msgstr "في"
+
+#: just.now
+msgid "just now"
+msgstr "الان فقط"
+
+#: back.to.space.security
+msgid "Back to space security"
+msgstr "العودة إلى صفحة أمن المساحة"
+
+#: new.page.default.title
+msgid "New page"
+msgstr "صفحة جديدة"
+
+#: as.table
+msgid "As table"
+msgstr "كجدول"
+
+#: as.grid
+msgid "As grid layout"
+msgstr "كمخطط شبكي"
+
+#: no.template
+msgid "No template available"
+msgstr "لا يوجد قالب متوفر"
+
+#: no.perm.upload
+msgid "No permission to upload"
+msgstr "لا صلاحيات للرفع"
+
+#: err.failed.plugin.service
+msgid "Service failed."
+msgstr "فشلت الخدمة."
+
+#: err.failed.load.plugin
+msgid "This service module can not be loaded."
+msgstr "خدمة هذه الوحدة لا يمكن تحميلها"
+
+#: ext.cal.edit.event
+msgid "Edit Event"
+msgstr "تعديل حدث"
+
+#: ext.cal.view.event
+msgid "View Event"
+msgstr "مشاهدة حدث"
+
+#: ext.cal.new.event
+msgid "New Event"
+msgstr "حدث جديد"
+
+#: get.blogs
+msgid "Get blogs list"
+msgstr "الحصول على قائمة البلوق"
+
+#: post.to.linked.blog
+msgid "Post to linked blog"
+msgstr "اضف إلى مدونة مرتبطة"
+
+#: url
+msgctxt "url"
+msgid "URL"
+msgstr "رابط"
+
+#: linked.blog
+msgid "Linked blog"
+msgstr "مدونة مرتبطة"
+
+#: help.pop.link.blog
+msgid ""
+"A bidirectional space with your blog.  Any new page is synchronized to the "
+"blog. The new post in the blog is saved to this space. Managing your blog in"
+" wiki style.  "
+msgstr "المساحة ثنائية الاتجاه مع مدونتك. أي صفحة جديدة في المساحة سيتم مزامنتها مع المدونة. المشاركات الجديدة في المدونة سوف تحفظ في هذه المساحة. إدارة مدونتك باسلوب - ويكي - الموسوعة."
+
+#: excerpt
+msgid "Excerpt"
+msgstr "مقتطفات"
+
+#: categories
+msgid "Categories"
+msgstr "التصانيف"
+
+#: err.need.blog.selected
+msgid "Please select a blog you want to link."
+msgstr "يرجى تحديد المدونة التي تريد الربط معها."
+
+#: private.space
+msgid "Private space"
+msgstr "مساحة خاصة"
+
+#: logo
+msgid "Logo"
+msgstr "الشعار"
+
+#: confirm.disconnect.blog
+msgid "Do you want to disconnect this space from the blog?"
+msgstr "هل تريد فصل هذه المساحة من المدونة؟"
+
+#: current.blog
+msgid "Current blog"
+msgstr "المدونة الحالية"
+
+#: edit.blog
+msgid "Edit linked blog"
+msgstr "تعديل مدونة مرتبطة"
+
+#: must.select.blogtype
+msgid "Please select a blog type."
+msgstr "الرجاء اختيار نوع المدونة."
+
+#: link.more.blogs
+msgid "Link to more blogs"
+msgstr "اربط مع مزيد من المدونات"
+
+#: find.people
+msgid "Find people"
+msgstr "ايجاد الناس"
+
+#: send.message
+msgid "Send message"
+msgstr "إرسال رسالة"
+
+#: message
+msgid "Message"
+msgstr "الرسالة"
+
+#: pin.to.top
+msgid "Pin to top"
+msgstr "تثبيت بالأعلى"
+
+#: remove.pin
+msgid "Remove the pin"
+msgstr "الغاء التثبيت"
+
+#: blog.url
+msgid "Blog Address"
+msgstr "عنوان المدونة"
+
+#: admin.name
+msgid "Admin name"
+msgstr "اسم الإداري"
+
+#: quick.note
+msgid "Quick note"
+msgstr "نبذة مختصرة"
+
+#: quick.note.default.msg
+msgid "Click here to edit your personal quick note."
+msgstr "اضغط هنا لتعديل النبذة المختصرة بك"
+
+#: activity.log
+msgid "Recently update"
+msgstr "حدث مؤخراً"
+
+#: follow
+msgid "Follow"
+msgstr "إتبع"
+
+#: unfollow
+msgid "Unfollow"
+msgstr "الغاء المتابعة"
+
+#: following
+msgid "Following"
+msgstr "يتابع"
+
+#: followers
+msgid "Followers"
+msgstr "متابعين"
+
+#: activity
+msgid "Activity"
+msgstr "نشاط"
+
+#: confirm.delete.message
+msgid "Do you want to delete this message?"
+msgstr "هل تريد حذف هذه الرسالة؟"
+
+#: more
+msgid "More"
+msgstr "أكثر"
+
+#: less
+msgid "Less"
+msgstr "أقل"
+
+#: quick.send.tip
+msgid "Ctrl+Enter to send"
+msgstr "اضغط Ctrl + Enter للإرسال"
+
+#: linked
+msgid "Linked"
+msgstr "مرتبط"
+
+#: skins
+msgid "Skins"
+msgstr "الشكل"
+
+#: themes
+msgid "Themes"
+msgstr "الغلاف"
+
+#: file.name
+msgid "File name"
+msgstr "اسم الملف"
+
+#: author
+msgid "Author"
+msgstr "الناشر"
+
+#: size
+msgid "Size"
+msgstr "الحجم"
+
+#: space.contribution
+msgid "Space contribution"
+msgstr "مساهمة المساحة"
+
+#: page.contribution
+msgid "Page contribution"
+msgstr "مساهمة الصفحة"
+
+#: activities
+msgid "Activities"
+msgstr "أنشطة"
+
+#: network
+msgid "Network"
+msgstr "شبكة"
+
+#: what
+msgid "What"
+msgstr "ماذا"
+
+#: when
+msgid "When"
+msgstr "متى"
+
+#: where
+msgid "Where"
+msgstr "اين"
+
+#: all.day.event
+msgid "All day event"
+msgstr "كل أحداث اليوم"
+
+#: signup.now
+msgid "Sign up now"
+msgstr "التسجيل الان"
+
+#: login.now
+msgid "Login now"
+msgstr "الدخول الان"
+
+#: msg.to.admin
+msgid "Message to system administrator"
+msgstr "رسالة إلى إداري النظام"
+
+#: space.uname.invalid.chars
+msgid "Less than 25 characters. No spaces; Only letters, numbers and hyphens."
+msgstr "أقل من 25 حرفاً. بدون مسافات فقط حروف و أرقام و شرطات."
+
+#: space.uname.invalid.start
+msgid "Hyphens can not be first or last character."
+msgstr "علامة الشرطة - لا يمكن وضعها في أول حرف أو الأخير"
+
+#: login.name.invalid.start
+msgid "Hyphens, dots or underline can not be first or last character."
+msgstr "النقاط أو الخط تحت السطر أو علامة الشرطة - لا يمكن وضعهم في أول حرف أو الأخير."
+
+#: shell
+msgid "Shell"
+msgstr "الشيل"
+
+#: link.to.shell
+msgid "Link to shell"
+msgstr "رابط للشيل"
+
+#: link
+msgid "Link"
+msgstr "رابط"
+
+#: do.later
+msgid "Do later"
+msgstr "افعل لاحقاً"
+
+#: shell.link.failed
+msgid ""
+"<h2>Sorry, an error occurs when linking to the Shell.</h2> <p>However, you "
+"can try this later from space admin panel.</p>"
+msgstr "<H2> عذرا، حدث خطأ عند الربط إلى الشيل. </ H2> <P> ومع ذلك، يمكنك محاولة ذلك لاحقا من لوحة إدارة المساحة. </ P>"
+
+#: shell.url
+msgid "Shell URL"
+msgstr "رابط الشيل"
+
+#: email.it
+msgid "Email it"
+msgstr "ارسله بالايميل"
+
+#: shell.url.not.available
+msgid "Shell service is not enabled"
+msgstr "خدمة الشيل غير مفعله"

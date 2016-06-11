@@ -1,0 +1,1954 @@
+# 
+# Translators:
+# Arab User <arabuser@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: GeniusWiki\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-26 12:32+0000\n"
+"PO-Revision-Date: 2016-06-10 09:32+0000\n"
+"Last-Translator: Arab User <arabuser@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/edgenius/GeniusWiki/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Translate Toolkit 1.9.0\n"
+
+#. # ---------- General info  ---------------
+#: app.name
+msgid "GeniusWiki"
+msgstr "الموسوعة الذكية"
+
+#: metadata.description
+msgid "Diversify your website | GeniusWiki"
+msgstr "الموسوعة الذكية | تنوع موقعك "
+
+#. #!!! This can not be changed
+#: metadata.keyword
+msgid ""
+"GeniusWiki, wiki, blog, blogger, knowledge management, business wiki, "
+"business collaboration, wiki software, content management, document "
+"management, web2.0, Edgenius"
+msgstr "الموسوعة الذكية،ويكي،بلوق،مدون،وإدارة المعرفة،ويكي الأعمال،التعاون،المشاركة،برامج الويكي،إدارة المحتوى،إدارة الوثائق،المقالات،الصفحات،الويب2.0"
+
+#. # ---------- Widgets info  ---------------
+#: watch.list.title
+msgid "My watchlist"
+msgstr "قائمة مراقبتي"
+
+#: watch.list.desc
+msgid "My watchlist pages"
+msgstr "صفحات قائمة مراقبتي"
+
+#: message.board.title
+msgctxt "message.board.title"
+msgid "Message board"
+msgstr "نظام المراسلة"
+
+#: message.board.desc
+msgctxt "message.board.desc"
+msgid "Message board"
+msgstr "نظام المراسلة"
+
+#: favorite.list.title
+msgid "My favorite"
+msgstr "مفضلتي"
+
+#: favorite.list.desc
+msgid "My favorite pages"
+msgstr "صفحات مفضلتي"
+
+#: draft.list.title
+msgid "My drafts"
+msgstr "مسوداتي"
+
+#: draft.list.desc
+msgid "My drafts list"
+msgstr "قائمة مسوداتي"
+
+#. # ---------- Render error: will show on renderred HTML page ---------------
+#: render.image.not.found
+msgid "File {0} not found in attachment list"
+msgstr "الملف {0} غير موجود في قائمة المرفقات"
+
+#: anonymous.user.name
+msgid "anonymous user"
+msgstr "مستخدم مجهول"
+
+#: invite.msg
+msgid "GeniusWiki is a very good wiki and blog website. Please give it a try."
+msgstr "الموسوعة الذكية هي موسوعة ويكي و مدونة يجب عليك تجربتها"
+
+#. # ---------- Page Title ---------------
+#: page.title.errorpage
+msgid "Error Page"
+msgstr "خطأ في الصفحة"
+
+#: page.title.403
+msgid "Access Denied"
+msgstr "تم رفض الوصول"
+
+#: page.title.404
+msgid "Page Not Found"
+msgstr "الصفحة غير موجودة"
+
+#: page.message.404
+msgid ""
+"The page your requested was not found. <br><br><a href=\"{0}\">Return "
+"Home</a>."
+msgstr "الصفحة المطلوبة غير موجودة. <BR> <BR> <a href=\"{0}\"> العودة إلى الرئيسية </a>."
+
+#: page.message.403
+msgid ""
+"Your current role does not allow you to view this page. Please contact your "
+"system administrator if you believe you should have access. Return <a "
+"href=\"{0}\">Home</a>."
+msgstr "ليس لديك صلاحيات لمشاهدة هذه الصفحة. الرجاء الاتصال إدارين النظام إذا كنت تعتقد أنه يجب أن يكون لك وصول لهذه الصفحة. العودة إلى <a href=\"{0}\">الرئيسية</a>."
+
+#: page.message.error
+msgid "An error has occurred. Please try again. Reason for error: {0}"
+msgstr "حدث خطأ. حاول مرة اخرى. سبب الخطأ: {0}"
+
+#. # ---- customised page title -------------
+#: page.title.tagcloud
+msgid "Tag Cloud on space {0}"
+msgstr "دالة السحابة في مساحة {0}"
+
+#: page.title.space.tagcloud
+msgid "Tag clouds on spaces"
+msgstr "دالة السحاب في المساحات"
+
+#: page.title.userprofile
+msgid "User profile - {0}  "
+msgstr "ملف المستخدم - {0}"
+
+#: page.title.search.result
+msgid "Search on - {0}"
+msgstr "البحث في - {0}"
+
+#: page.title.space.friends
+msgid "{0} friends"
+msgstr "{0} أصدقاء"
+
+#: page.title.space.group.users
+msgid "Users of Group {0} "
+msgstr "مستخدمين المجموعة {0}"
+
+#: page.title.message.board
+msgctxt "page.title.message.board"
+msgid "Message board"
+msgstr "نظام المراسلة"
+
+#: page.title.space.admin
+msgid "Space admin of {0}"
+msgstr "إداري المساحة {0}"
+
+#: page.title.notify.sysadmin
+msgid "Send a message to system administrators"
+msgstr "ارسل رسالة الى إدارين النظام"
+
+#. # --- default message on new space -------
+#: wiki.home.page.title
+msgid "Home of {0}"
+msgstr "صفحة {0}"
+
+#: wiki.home.welcome
+msgid ""
+"This is your WIKI space home page. Using \"Edit\" button to edit this page, "
+"or \"Create\" button to create child page. For more help, press \"F1\"."
+msgstr "هذه الصفحة الرئيسية لمساحتك. استخدم زر \"تعديل\" لتعديل هذه الصفحة، أو زر \"إنشاء\" لإنشاء صفحة فرعية ضمن المساحة. لمزيد من المساعدة، اضغط على \"F1\"."
+
+#. #!!! This can not be change
+#: blog.home.page.content
+msgid ""
+"{blog:count=10}{page-"
+"attribute:attachment=no|tag=no|creator=no|modifier=no|comment=no|history=no|edit=no|under_tab_bar=no}"
+msgstr "{blog:count=10}{page-attribute:attachment=no|tag=no|creator=no|modifier=no|comment=no|history=no|edit=no|under_tab_bar=no}"
+
+#: blog.home.welcome
+msgid ""
+"This is your Blog space home page. Using \"Create\" button to create your "
+"post. For more help, press \"F1\"."
+msgstr "هذه الصفحة الرئيسية لمساحة مدونتك. استخدم زر \"إنشاء\" لإنشاء و نشر مشاركتك. لمزيد من المساعدة، اضغط على \"F1\"."
+
+#: wiki.page.not.found.content
+msgid "Page not found, do you want to [create it > {0}]?"
+msgstr "الصفحة غير موجودة، هل تريد [إنشائها> {0}]؟"
+
+#: wiki.page.not.found.content.readonly
+msgid "Page not found."
+msgstr "الصفحة غير موجودة."
+
+#: wiki.homepage.not.found.title
+msgid "Home page"
+msgstr "الرئيسية"
+
+#. # --- JSP -------
+#: yes
+msgid "Yes"
+msgstr "نعم"
+
+#: no
+msgid "No"
+msgstr "لا"
+
+#: upload
+msgid "Upload"
+msgstr "رفع"
+
+#: cancel
+msgid "Cancel"
+msgstr "الغاء"
+
+#: change
+msgid "Change"
+msgstr "تغير"
+
+#: detail
+msgid "Detail"
+msgstr "تفاصيل"
+
+#: url
+msgid "URL"
+msgstr "رابط"
+
+#: authentication
+msgid "Authentication"
+msgstr "إعتماد"
+
+#: password
+msgid "Password"
+msgstr "كلمة السر"
+
+#: hours
+msgid "Hours"
+msgstr "ساعات"
+
+#: minutes
+msgid "Minutes"
+msgstr "دقائق"
+
+#: logo
+msgid "LOGO"
+msgstr "الشعار"
+
+#: logout
+msgid "Logout"
+msgstr "خروج"
+
+#: backup
+msgid "Backup"
+msgstr "نسخ احتياطي"
+
+#: size
+msgid "Size"
+msgstr "الحجم"
+
+#: download
+msgid "Download"
+msgstr "تنزيل"
+
+#: restore
+msgid "Restore"
+msgstr "استرجاع"
+
+#: name
+msgid "Name"
+msgstr "الإسم"
+
+#: description
+msgid "Description"
+msgstr "الوصف"
+
+#: info
+msgid "Info"
+msgstr "معلومات"
+
+#: title
+msgid "Title"
+msgstr "العنوان"
+
+#: tags
+msgid "Tags"
+msgstr "دلالات"
+
+#: functions
+msgid "Functions"
+msgstr "الوظائف"
+
+#: pages
+msgid "Pages"
+msgstr "الصفحات"
+
+#: portrait
+msgid "Portrait"
+msgstr "الصورة"
+
+#: statistic
+msgid "Statistic"
+msgstr "الإحصائيات"
+
+#: disable
+msgid "Disable"
+msgstr "تعطيل"
+
+#: enable
+msgid "Enable"
+msgstr "تفعيل"
+
+#: edit
+msgid "Edit"
+msgstr "تعديل"
+
+#: submit
+msgid "Submit"
+msgstr "إرسال"
+
+#: retry
+msgid "Retry"
+msgstr "إعادة المحاولة"
+
+#: database
+msgid "Database"
+msgstr "قاعدة البيانات"
+
+#: host
+msgid "Host"
+msgstr "المضيف"
+
+#: confirm
+msgid "Confirm"
+msgstr "تأكيد"
+
+#: upgrade
+msgid "Upgrade"
+msgstr "ترقية"
+
+#: login
+msgid "Login"
+msgstr "دخول"
+
+#: offline
+msgid "Offline"
+msgstr "غير متصل"
+
+#: dashboard
+msgid "Dashboard"
+msgstr "البوابة"
+
+#: friends
+msgid "Friends"
+msgstr "الإصدقاء"
+
+#: undefined
+msgid "Undefined"
+msgstr "غير محدد"
+
+#: update
+msgid "Update"
+msgstr "تحديث"
+
+#: weekly
+msgid "Weekly"
+msgstr "أسبوعي"
+
+#: monthly
+msgid "Monthly"
+msgstr "شهري"
+
+#: daily
+msgid "Daily"
+msgstr "يومي"
+
+#: hour
+msgid "Hour"
+msgstr "ساعة"
+
+#: minute
+msgid "Minute"
+msgstr "دقيقة"
+
+#: date
+msgid "Date"
+msgstr "تاريخ"
+
+#: done
+msgid "Done"
+msgstr "نفذ"
+
+#: mon
+msgid "MON"
+msgstr "أثنين"
+
+#: Monday
+msgid "Monday"
+msgstr "الأثنين"
+
+#: tue
+msgid "TUE"
+msgstr "ثلاثاء"
+
+#: Tuesday
+msgid "Tuesday"
+msgstr "الثلاثاء"
+
+#: wed
+msgid "WED"
+msgstr "أربعاء"
+
+#: Wednesday
+msgid "Wednesday"
+msgstr "الأربعاء"
+
+#: thu
+msgid "THU"
+msgstr "خميس"
+
+#: Thursday
+msgid "Thursday"
+msgstr "الخميس"
+
+#: fri
+msgid "FRI"
+msgstr "جمعة"
+
+#: Friday
+msgid "Friday"
+msgstr "الجمعة"
+
+#: sat
+msgid "SAT"
+msgstr "سبت"
+
+#: Saturday
+msgid "Saturday"
+msgstr "السبت"
+
+#: sun
+msgid "SUN"
+msgstr "أحد"
+
+#: Sunday
+msgid "Sunday"
+msgstr "الأحد"
+
+#: users
+msgid "Users"
+msgstr "المستخدمين"
+
+#: comment
+msgid "Comment"
+msgstr "تعليق"
+
+#. #-- lower case first letter
+#: none
+msgid "none"
+msgstr "لا شيء"
+
+#: or
+msgid "or"
+msgstr "أو"
+
+#: none.upper
+msgid "None"
+msgstr "لا شيء"
+
+#: backup.schedule
+msgid "Backup schedule"
+msgstr "جدول النسخ الاحتياطي"
+
+#: tag.cloud
+msgid "Tag Cloud"
+msgstr "دالة السحابة"
+
+#: user.profile
+msgid "User Profile"
+msgstr "ملف المستخدم"
+
+#: search.result
+msgid "Search Result"
+msgstr "نتائج البحث"
+
+#: group.users
+msgid "Group users"
+msgstr "مستخدمين المجموعة"
+
+#: space.admin
+msgid "Space Admin"
+msgstr "إداري المجموعة"
+
+#: send.msg.to.admin
+msgid "Send a message to system admin"
+msgstr "ارسل رسالة الى مسؤولين النظام"
+
+#: message.board
+msgctxt "message.board"
+msgid "Message board"
+msgstr "البوابة"
+
+#: space.uname
+msgid "Space key"
+msgstr "مفتاح المساحة"
+
+#: create.user
+msgid "Create user"
+msgstr "إنشاء مستخدم"
+
+#: create.space
+msgid "Create space"
+msgstr "إنشاء مساحة"
+
+#: user.name
+msgid "User name"
+msgstr "إسم المستخدم"
+
+#: full.name
+msgid "Full name"
+msgstr "الإسم الكامل"
+
+#: not.found
+msgid "Not found"
+msgstr "غير موجود"
+
+#: email
+msgid "Email"
+msgstr "الإيميل"
+
+#: registered.date
+msgid "Registered time"
+msgstr "وقت التسجيل"
+
+#: total.users
+msgid "Total users ... {0}"
+msgstr "إجمالي المستخدمين ... {0}"
+
+#: total.roles
+msgid "Total groups ... {0}"
+msgstr "إجمالي المجموعات ... {0}"
+
+#: total.spaces
+msgid "Total spaces ... {0}"
+msgstr "إجمالي المساحات ... {0}"
+
+#: confirm.leave.to.profile
+msgid "Do you want to leave this page and go to user profile page?"
+msgstr "هل تريد مغادرة هذه الصفحة والذهاب إلى صفحة ملف المستخدم؟"
+
+#: space.quota.integer
+msgid "Space quota must be an integer."
+msgstr "يجب ان يكون حجم المساحة رقم عددي صحيح"
+
+#: space.remove.delay.integer
+msgid "Space remove delay time must be an integer."
+msgstr "يجب ان يكون الزمن المتبقي لحذف المساحة رقم عددي صحيح"
+
+#: offline.sync.integer
+msgid "Offline sync frequency must be an integer."
+msgstr "يجب أن يكون معدل تكرار تزامن عدم الاتصال عددا صحيحا"
+
+#: logo.desc
+msgid ""
+"Please resize LOGO to proper size before uploading. For example, the default"
+" logo size is 310x60."
+msgstr "يرجى تغيير الشعار إلى الحجم المناسب قبل رفعه. على سبيل المثال، حجم الشعار الافتراضي هو 310x60."
+
+#: system.title
+msgid "Slogan"
+msgstr "الشعار"
+
+#: system.title.desc
+msgid ""
+"The site's motto, tag line, or catchphrase. It will be displayed alongside "
+"the title of the site. "
+msgstr "شعار الموقع، وما يتعلق به سيتم عرضه جنبا إلى جنب مع عنوان الموقع."
+
+#: email.smtp.host
+msgid "Email SMTP host"
+msgstr "مضيف SMTP البريد الإلكتروني"
+
+#: email.desc
+msgid ""
+"Email SMTP server or JNDI information. Email is sent when users register, "
+"favorite pages updated, friends invited, etc."
+msgstr "خادم SMTP البريد الإلكتروني أو المعلومات JNDI. يتم إرسال البريد الإلكتروني عندما يقوم المستخدم بالتسجيل، الصفحات المفضلة المحدثة والأصدقاء المدعوين، الخ"
+
+#: out.email
+msgid "Outgoing Email address"
+msgstr "عنوان ايميل الصادر"
+
+#: out.email.desc
+msgid ""
+"System sends out email when new users sign up, for change notifications, "
+"etc.  This is the \"From\" address in these e-mails.  Normally, you won't "
+"need to monitor this address."
+msgstr "يرسل النظام من اخطارات بالايميل عندما يسجل مستخدمين جدد أو اخطارات التغيرات، وما إلى ذلك وهذا \"من\" عنوان احد الايميلات. في العادة فإنك لن تحتاج إلى مراقبة هذا العنوان."
+
+#: in.email
+msgid "Incoming Email address"
+msgstr "عنوان البريد الإلكتروني الوارد"
+
+#: cc.sys.admin
+msgid "CC system administrators"
+msgstr "CC إدارين النظام"
+
+#: in.email.desc
+msgid ""
+"This e-mail receives feedback (by feedback macro), or messages to system "
+"administrators etc. Normally, system administrators must monitor this mail. "
+"If CC system administrators option is checked, all system administrators "
+"will receive a copy of messages."
+msgstr "هذا البريد الإلكتروني يتلقى ردود الفعل (عن طريق مكرو الراجعة)، أو الرسائل إلى إدارين النظام وما إلى ذلك في العادة يجب على إدارين النظام مراقبة هذا البريد. إذا اخترت نظام سي سي فسوف يرسل النظام نسخ لكافة إدارين النظام."
+
+#: space.quota
+msgid "Space attachment quota"
+msgstr "حجم مرفقات المساحة"
+
+#: update.exist.quota
+msgid "Update existing spaces quota"
+msgstr "تحديث سعة تخزين المساحات القائمة"
+
+#: quota.desc
+msgid ""
+"The maximum size of attachments in a space. If you select Update existing "
+"spaces quota, all existing space attachment quota are also adjusted to the "
+"indicated size.  Otherwise, only new spaces are impacted."
+msgstr "الحد الأقصى لحجم المرفقات في المساحة. إذا قمت باختيار تحديث حجم التخزين للمساحات الموجودة، سوف يتم تحديث حجم التخزين لكافة المساحات القائمة.  عدا ذلك، فقط المساحات الجديدة سوف تخضع للزيادة."
+
+#: space.remove.delay
+msgid "Space remove delay"
+msgstr "تأخير إزالة المساحة"
+
+#: space.remove.delay.desc
+msgid ""
+"This is helpful to prevent malicious deletion of spaces. Only after the "
+"indicated delay will the space be permanently deleted. During this period, a"
+" notification e-mail will be sent to all space administrations.  If the "
+"value is 0, spaces are deleted immediately."
+msgstr "هذا مفيد لمنع التطبيقات الخبيثة من حذف المساحات. فقط بعد الوقت الاضافي المحدد لتاخير الحذف سوف يتم حذف المساحة بشكل نهائي. خلال هذه الفترة، سيتم إرسال إخطار بالبريد الإلكتروني لجميع إدارين المساحة إذا كانت القيمة 0، يتم حذف المساحة على الفور."
+
+#: offline.sync.freq
+msgid "Offline Sync frequency"
+msgstr "تردد مزامنة عدم الإتصال"
+
+#: offline.sync.desc
+msgid ""
+"Frequency that your system will check for updated pages, comments, etc. for "
+"offline downloading."
+msgstr "التردد الزمني الذي سوف يقوم النظام خلاله في التحقق من الصفحات المحدثة، والتعليقات، وغيرها من أجل التنزيل غير المتصل - اوف لاين."
+
+#: allow.public
+msgid "Allow public registration"
+msgstr "السماح بالتسجيل العام"
+
+#: allow.public.desc
+msgid ""
+"If toggled, then public visitors can sign up to the system. Otherwise, new "
+"users can be created only by a system administrator."
+msgstr "إذا مفعل، الزوار يمكنهم التسجيل في الموقع. عدا ذلك، المستخدمين الجدد لا يمكنهم التسجيل إلا من قبل إدارين النظام."
+
+#: allow.se
+msgid "Allow public search engine index"
+msgstr "السماح لفهرست محرك البحث العام"
+
+#: allow.se.desc
+msgid ""
+"If you want to allow public search engines, such as Google, Yahoo etc. to "
+"index your pages, please turn on this option."
+msgstr "إذا كنت تريد السماح لمحركات البحث العامة مثل جوجل وياهو وغيرها لإرشفة صفحات الموقع، يرجى تفعيل هذا الخيار."
+
+#: rebuid.index
+msgid "Rebuild search index"
+msgstr "إعادة بناء فهرس محرك البحث"
+
+#: rebuid.index.desc
+msgid ""
+"This action will rebuild search index from database. Please note, it may "
+"take minutes depending on your current data volume."
+msgstr "يؤدي هذا الإجراء إلى إعادة بناء فهرس البحث من قاعدة البيانات. يرجى الإنتباه، قد يستغرق ذلك عدة دقائق اعتماداً على حجم البيانات الحالي."
+
+#: clean.cache
+msgid "Clean system cache"
+msgstr "إزالة ذاكرة تخزين كاش النظام"
+
+#. # the is "\" of line is connect of line
+#: clean.cache.desc
+msgid ""
+"System uses lots cache to improve system performance. Clean cache may slow "
+"down performance a while.  Don't suggest to use this action except when you "
+"believe system does not work well. Such as page tree does not display the "
+"latest new pages etc. In this case, please use \"Print cache\" function "
+"first, then submit a bug with log file to GeniusWiki."
+msgstr "يستخدم النظام الكثير من الذاكرة المخبأة الكاش لتحسين أداء النظام. تنظيف ذاكرة الكاش قد تبطئ أداء النظام لبعض الوقت. لا أقترح استخدام هذا الإجراء إلا إذا كنت تعتقد أن النظام لا يعمل بشكل جيد. مثل شجرة الصفحة لا تعرض أحدث الصفحات الجديدة وما إلى ذلك وفي هذه الحالة، يرجى استخدام \"مخبأ الطباعة\"  أولاً، ثم تقديم العطل مع ملف السجل الموسوعة الذكية."
+
+#: backup.now
+msgid "Backup now"
+msgstr "النسخ الاحتياطي الان"
+
+#: restore.now
+msgid "Restore now"
+msgstr "استرجاع الان"
+
+#: file.name
+msgid "File name"
+msgstr "إسم الملف"
+
+#: last.modify.date
+msgid "Last modified date"
+msgstr "تاريخ آخر تعديل"
+
+#: create.group
+msgid "Create group"
+msgstr "إنشاء مجموعة"
+
+#: last.modify.page
+msgid "Last update page"
+msgstr "صفحة اخر تحديث"
+
+#: goto.space
+msgid "go to space"
+msgstr "الذهاب إلى المساحة"
+
+#: goto.space.admin
+msgid "go to space admin page"
+msgstr "الذهاب إلى صفحة إدارة المساحة"
+
+#: remove.warn
+msgid "This space will be removed in {0} hours"
+msgstr "سيتم إزالة هذه المساحة في {0} ساعة"
+
+#: created.by
+msgid "Created by"
+msgstr "إنشئت بواسطة"
+
+#: created.on
+msgid "Created on"
+msgstr "إنشئت في"
+
+#: page.as.author
+msgid "How many pages created ... {0}"
+msgstr "كم عدد الصفحات التي تم إنشاؤها ... {0}"
+
+#: page.as.modifier
+msgid "How many pages modified ... {0}"
+msgstr "كم عدد الصفحات المعدلة ... {0}"
+
+#: space.as.author
+msgid "How many spaces created ... {0}"
+msgstr "كم عدد المساحات التي تم إنشاؤها ... {0}"
+
+#: comment.as.author
+msgid "How many comment created ... {0}"
+msgstr "كم عدد التعليقات المنشورة ... {0}"
+
+#: joined.group
+msgid "Joined groups ({0})"
+msgstr "مجموعات منضمه ({0})"
+
+#: goto.profile
+msgid "go to profile"
+msgstr "الذهاب للملف"
+
+#: upload.file
+msgid "Upload file"
+msgstr "رفع ملف"
+
+#: widget.display.model
+msgid "Widget display model"
+msgstr "نموذج عرض القطعة"
+
+#: sort.by.modify.date
+msgid "Display page titles sorted by modified date"
+msgstr "عرض عناوين الصفحات مرتبة حسب تاريخ التعديل"
+
+#: sort.by.create.date
+msgid "Display page titles sorted by created date"
+msgstr "عرض عناوين الصفحات مرتبة حسب تاريخ الإنشاء"
+
+#: display.homepage
+msgid "Display home page content"
+msgstr "عرض محتوى الصفحة الرئيسية"
+
+#: widget.display.desc
+msgid ""
+"Spaces are displayed on dashboard as a drag-and-drop widgets. You can choose"
+" what and how content is displayed. <br> IMPORTANT: First 2 options impact "
+"your RSS feed sorted method, i.e., RSS is also sorted by created date if you"
+" choose the widget is sorted by created date."
+msgstr "يتم عرض المساحات على صحفة البوابة الرئيسية بواسطة السحب والإفلات على شكل قطع. يمكنك اختيار ماتريد عرضه وكيف يعرض. <BR> هام: أول 2 اختيارين تؤثر في طريقة فرز التغذية الاخبارية RSS وترتيبها، أيضاً يتم فرز RSS حسب تاريخ الإنشاء إذا اخترت ان يتم فرز القطعة بتاريخ الانشاء."
+
+#: comment.to
+msgid "Comment notification to"
+msgstr "الاخطار عن التعليقات إلى"
+
+#: to.creators
+msgid "Email to page creators"
+msgstr "إرسل ايميل لصاحب الصفحة"
+
+#: to.contributors
+msgid "Email to all contributors "
+msgstr "ارسل ايميل لكل المساهمين"
+
+#: to.admins
+msgid "Email to space administrators"
+msgstr "ارسل ايميل لإدارين المساحة"
+
+#: comment.to.desc
+msgid "If page receives a new comment, who will receive email notification."
+msgstr "إذا تلقت الصفحة تعليق جديد، من الذي سوف يتلقى اخطار الايميل."
+
+#: comment.feq
+msgid "Comment notification frequency"
+msgstr "تردد زمن الاخطار عن التعليق"
+
+#: per.post
+msgid "Per post"
+msgstr "بالمشاركة"
+
+#: max.per.day
+msgid "max sending per day"
+msgstr "الحد الاقصى للارسال باليوم"
+
+#: daily.summary
+msgid "Daily summary"
+msgstr "ملخص يومي"
+
+#: comment.feq.desc
+msgid ""
+"If page receives a new comment, how often to send out email notification."
+msgstr "إذا تلقت الصفحة تعليق جديد، كم مره غالباً تريد إرسال إخطار بالبريد الإلكتروني."
+
+#: system.admin
+msgid "System Admin"
+msgstr "إدارة النظام"
+
+#: step.1
+msgid "Step 1/6: Set data root directory"
+msgstr "خطوة 1/6: تعيين مجلد جذر البيانات"
+
+#: step.1.tip
+msgid ""
+"Tips: GeniusWiki need a directory to save configuration file, attachment, "
+"RSS, indexing and theme etc. For example, in windows, you may set "
+"\"c:\\mydata\\geniuswiki\" or in Linux, set \"/var/data/geniuswiki\". We "
+"recommend you put this directory outside your webapp directory for backup "
+"sake."
+msgstr "نصائح: الموسوعة الذكية تحتاج إلى دليل لحفظ ملف التكوين، المرفق، التغذية الاخبارية، الفهرسة وموضوع الخ على سبيل المثال، في ويندوز، يمكنك تعيين \"ج: \\ بياناتي \\ الموسوعة الذكية\" أو في لينكس، تعيين \"/ فار / البيانات / الموسوعة الذكية\" . ننصحك وضع هذا الدليل خارج دليل تطبيق الويب الخاص بك من أجل النسخ الاحتياطي."
+
+#: step.2
+msgid "Step 2/6: Choose your license"
+msgstr "خطوة 2/6: اختر الترخيص الخاص بك"
+
+#: step.2.tip
+msgid ""
+"You can continue to use community license that has no limitation on use. "
+"Please go to <a href=\"http://www.geniuswiki.com\">our website</a> to apply "
+"a commercial license if you need the commercial support."
+msgstr "يمكنك الاستمرار في استخدام رخصة المجتمع التي لا يوجد عليها قيود استخدام الرجاء الانتقال إلى <a href=\"http://www.geniuswiki.com\"> موقعنا </a> لتطبيق الرخصة التجارية إذا كنت في حاجة إلى الدعم التجاري."
+
+#: step.3
+msgid "Step 3/6: MQ Server information"
+msgstr "خطوة 3/6: معلومات خادم سيرفر MQ "
+
+#: step.3.tip
+msgid ""
+"Tips: GeniusWiki is rely on MQ system to creating index, sending email or "
+"creating RSS etc. You may setup an external MQ server or just use GeniusWiki"
+" embedded MQ server. Please don't change default setting except when you "
+"know what you are doing. <br>If You choose embedded MQ server, you must "
+"confirm the port is not occupied by other programs.<br>If You choose "
+"external MQ server, the external MQ server must start-up before your web "
+"server start."
+msgstr "نصائح: الموسوعة الذكية تعتمد على نظام خادم سيرفر MQ لإرشفة الصفحات، وإرسال البريد الإلكتروني و خلق تغذية اس اس ار الاخبارية الخ يجوز لك إعداد خادم MQ خارجي أو مجرد استخدام خادم MQ  الموسوعة الذكية المضمن معها. يرجى عدم تغيير الإعداد الافتراضي إلا إذا كنت تعرف ما تقوم به. <BR> إذا اخترت الخادم MQ جزءا لا يتجزأ، يجب عليك التأكد ان المنفذ غير مستخدم من قبل برامج أخرى. <BR> إذا اخترت الخادم MQ الخارجي، يجب أن تبدأ تشغيل خادم MQ الخارجي قبل بداية خادم الويب الخاص بك."
+
+#: step.4
+msgid "Step 4/6: Create database and user"
+msgstr "خطوة 4/6: إنشاء قاعدة البيانات والمستخدم"
+
+#: step.4.tip
+msgid ""
+"Tips: If you choose MySQL database, this step can help you create database "
+"and user. For other databases, please ask your DBA to create them. <br> "
+"MySQL and PostgreSQL database driver is already included. For other "
+"databases, please copy driver JAR file to your web server library directory."
+" For example, Tomcat's /common/lib/ directory. Restart is required."
+msgstr "نصائح: إذا اخترت قاعدة بيانات MySQL، يمكن هذه الخطوة تساعدك على إنشاء قاعدة البيانات والمستخدم. لقواعد بيانات أخرى، اطلب من مزود الخدمة لديك إنشاء تلك القواعد. يتم تضمين <BR> تأكد ان MySQL و PostgreSQL موجودين بالفعل . لقواعد البيانات الأخرى، يرجى نسخ ملف برنامج التشغيل JAR إلى مجلد جذر الويب في السيرفر الخاص بك. على سبيل المثال، في مجلد Tomcat's /common/lib/. ثم إعادة التشغيل مطلوبة."
+
+#: step.5
+msgid "Step 5/6: Connect database and create tables"
+msgstr "الخطوة 5/6: ربط قاعدة البيانات وإنشاء الجداول"
+
+#: step.5.tip
+msgid ""
+"Tips: You need tell GeniusWiki how to connect database. Please leave "
+"database schema blank if you want to use default schema. Normally <a "
+"href=\"javascript:;\" onclick=\"downloadScript()\"><font "
+"color=\"blue\"><b><u>this SQL script</u></b></font></a> will be executed in "
+"this step. Please tick off \"Do not create tables\" option if you want to "
+"only set up connection but create tables and initial data yourself. <br> "
+"<span style=\"font-weight:bold\">This step may take a few minutes to "
+"complete if you choose creating tables, please wait in patience.</span>"
+msgstr "نصائح: أنت في حاجة لاخبار الموسوعة الذكية كيفية الاتصال في قاعدة البيانات. يرجى ترك مخطط السكيما فارغاً إذا كنت تريد استخدام مخطط افتراضي. عادة<a href=\"javascript:;\" onclick=\"downloadScript()\"><font color=\"blue\"><b> <U> نصي SQL هذا سكربت</ U> </ B> </ FONT> </A> سيتم تنفيذ هذه الخطوة. يرجى وضع علامة قبالة الخيار \"لا إنشاء الجداول\" إذا كنت ترغب فقط في إنشاء اتصال ولكن تخلق جداول البيانات بنفسك. <br> <span style=\"font-weight:bold\">. هذه الخطوة قد يستغرق بضع دقائق لإكمال إذا اخترت إنشاء الجداول، يرجى الانتظار في صبر </ SPAN>"
+
+#: step.6
+msgid "Step 6/6: Create administrator account"
+msgstr "خطوة 6/6: إنشاء حساب الإداري المسؤول"
+
+#: step.6.tip
+msgid ""
+"Tips: Administrator is super user in your system, please take care of your "
+"password. <br> <span style=\"font-weight:bold\"> Please wait in patient "
+"after submit as it may take a few minutes when system is reloaded.</span> "
+msgstr "نصائح: الإداري المسؤول هو مستخدم سوبر في النظام الخاص بك، يرجى الحرص على كلمة السر الخاصة بك.  <br> <span style=\"font-weight:bold\"> الرجاء كن صبوراً في الانتظار بعد طلب الإرسال قد يستغرق الأمر بضع دقائق حتى يتم إعادة النظام. </ SPAN>"
+
+#: username.not.blank
+msgid "User name can not be blank."
+msgstr "اسم المستخدم لا يمكن أن يكون فارغ"
+
+#: password.not.blank
+msgid "Password can not be blank."
+msgstr "كلمة السر لايمكن أن تكون فارغة"
+
+#: email.not.blank
+msgid "Email can not be blank."
+msgstr "الايميل لا يمكن أن يكون فارغ"
+
+#: fullname.not.blank
+msgid "Full name can not be blank."
+msgstr "الاسم لا يمكن أن يكون فارغ"
+
+#: password.same
+msgid "Password must be same."
+msgstr "كلمة السر يجب تكون نفسها"
+
+#: skip.admin.confirm
+msgid ""
+"Do you really want to skip this step? You may not have any super user to "
+"control this system."
+msgstr "هل تريد حقا تخطي هذه الخطوة؟ قد لا تحتاج لأي مستخدم سوبر للسيطرة على هذا النظام."
+
+#: re.password
+msgid "Re-type password"
+msgstr "إعادة كتابة كلمة السر"
+
+#: fullname
+msgid "Full name "
+msgstr "الاسم الكامل"
+
+#: ignore.step
+msgid "ignore error and go to next step"
+msgstr "تجاهل الخطأ وانتقل إلى الخطوة التالية"
+
+#: skip.step
+msgid "skip to next step"
+msgstr "الانتقال للخطوة التالية"
+
+#: host.not.blank
+msgid "Host can not be blank."
+msgstr "المضيف لا يمكن أن يكون فارغ"
+
+#: db.not.blank
+msgid "Database name can not be blank."
+msgstr "اسم قاعدة بيانات لا يمكن أن يكون فارغ"
+
+#: root.not.blank
+msgid "Root user name can not be blank."
+msgstr "أسم مستخدم الجذر - root - لا يمكن أن يكون فارغ"
+
+#: confirm.delete.db
+msgctxt "confirm.delete.db"
+msgid ""
+"This will delete all existed tables in database, do you confirm to do this?"
+msgstr "سيؤدي هذا إلى حذف جميع الجداول الموجودة في قاعدة البيانات، هل انت متأكد أنك تريد فعل هذا؟"
+
+#. #-- around desc2, there are href link; Before desc4, there is br
+#: mysql.desc1
+msgid ""
+"You need provide a user who has \"Database Create\" permission. For example,"
+" in MYSQL, this user is normally known as \"root\". This step also try to "
+"create a new user and grant all necessary permissions. Refer to"
+msgstr "تحتاج توفير مستخدم لديه صلاحيات \"إنشاء قاعدة بيانات\". على سبيل المثال، في MYSQL، هذا المستخدم يعرف عادة باسم الجذر \"root\". هذه الخطوة أيضا تساعد في محاولة إنشاء مستخدم جديد ومنح كافة الأذونات والصلاحيات اللازمة له. إرجع إلى"
+
+#: mysql.desc2
+msgid "this SQL script"
+msgstr "هذا سكربت SQL نصي "
+
+#: mysql.desc3
+msgid "for detail "
+msgstr "لمزيد من التفاصيل"
+
+#: mysql.desc4
+msgid ""
+"For your safety, system won't save any \"root\" information except this "
+"setup process."
+msgstr "حفاظاً على الأمان، النظام لن يخزن اي معلومات عن الجذر \"root\" باستثناء عملية الإعداد في هذه الخطوة."
+
+#: db.name
+msgid "DB name "
+msgstr "اسم قاعدة البيانات"
+
+#: db.schema
+msgid "DB schema"
+msgstr "اسم الاطار السكيما"
+
+#: root.username
+msgid "Root user name"
+msgstr "إسم مستخدم الجذر Root"
+
+#: root.password
+msgid "Root password"
+msgstr "كلمة سر الجذر Root"
+
+#: recommended.url
+msgid "Recommended URL"
+msgstr "رابط موصى به"
+
+#: license.not.blank
+msgid "License can not be blank."
+msgstr "حقل الترخيص لا يمكن أن يكون فارغ"
+
+#: free.license
+msgid "Free community license"
+msgstr "ترخيص عام مجاني"
+
+#: input.license
+msgid "Input my commercial license"
+msgstr "ادخال ترخيصي التجاري"
+
+#: mq.not.blank
+msgid "MQ Server URL can not be blank."
+msgstr "رابط خادم سيرفر MQ لا يمكن أن يكون فارغ"
+
+#: embed.mq
+msgid "Use embedded ActiveMQ server"
+msgstr "استخدام خادم سيرفر ActiveMQ جزء لا يتجزأ من"
+
+#: mq.url
+msgid "ActiveMQ server URL"
+msgstr "رابط خادم سيرفر ActiveMQ"
+
+#: confirm.skip.step
+msgid "Do you really want to skip this step?"
+msgstr "هل تريد حقاً تخطي هذه الخطوة؟"
+
+#: dataroot.not.blank
+msgid "Data directory can not be blank"
+msgstr "مجلد البيانات لا يمكن أن يكون فارغ"
+
+#: data.root
+msgid "Data root directory"
+msgstr "مجلد الجذر الرئيسي"
+
+#: datasource.not.blank
+msgid "Datasource can not be blank"
+msgstr "مصدر البيانات لا يمكن أن يكون فارغ"
+
+#: confirm.delete.tables
+msgctxt "confirm.delete.tables"
+msgid ""
+"This will delete all existed tables in database, do you confirm to do this?"
+msgstr "هذا سوف يحذف كل الجداول الحالية في قاعدة البيانات, هل حقاً تريد ذلك؟"
+
+#: connect.type
+msgid "Connection type"
+msgstr "نوع الاتصال"
+
+#: no.delete.tables
+msgid "Do not create tables"
+msgstr "بدون إنشاء الجداول"
+
+#: jndi.name
+msgid "JDNI Name"
+msgstr "اسم JNDI"
+
+#: invalid.license
+msgid "Invalid license"
+msgstr "ترخيص غير صالح"
+
+#: invalid.license.reason
+msgid ""
+"GeniusWiki cannot start successfully. This may be caused by the following "
+"reasons:"
+msgstr "لا يمكن بدء تشغيل الموسوعة الذكية بنجاح. قد يكون ذلك للأسباب التالية:"
+
+#: invalid.license.reason.1
+msgid ""
+"The users exceeded the license limited. Please contact Edgenius to upgrade "
+"license."
+msgstr "تجاوز عدد المستخدمين الترخيص المحدد يرجى الاتصال بالدعم الفني لرفع مستوى الترخيص."
+
+#: invalid.license.reason.2
+msgid ""
+"You installed a new version but the license does not support his version."
+msgstr "قمت بتثبيت نسخة جديدة ولكن الترخيص لا يدعم هذه النسخة."
+
+#: invalid.license.action
+msgid ""
+"Please go to <a href=\"http://www.edgenius.com/pricing\">our website and "
+"update your license</a>."
+msgstr "الرجاء الانتقال إلى <a href=\"http://www.edgenius.com/pricing\"> موقعنا على الانترنت وتحديث الترخيص الخاص بك </A>."
+
+#: confirm.skip.to.done
+msgid ""
+"This may make your system work abnormally except when you know what you are "
+"doing! "
+msgstr "هذا قد يجعل النظام الخاص بك يعمل بشكل غير طبيعي إلا إذا كنت تعرف ما تقوم به!"
+
+#: upgrade.error.1
+msgid "Upgrade verification with errors"
+msgstr "إجازة الترقية مع الأخطاء"
+
+#: upgrade.error.1.desc
+msgid ""
+"We detect following errors while upgrading. We recommend you to go through "
+"all setup steps to be able to help you fix these error(You won't lost your "
+"original data)."
+msgstr "اكتشفنا الأخطاء التالية أثناء الترقية. ونحن نوصي أن تذهب خلال جميع خطوات إعداد التنصيب لتكون لمعرفة السبب حتى تصلح هذه الأخطاء (أنت لن تفقد البيانات الأصلية)."
+
+#: upgrade.to.next
+msgid "Yes, take me to others setup steps"
+msgstr "نعم, انقلني إلى خطوات التنصيب الأخرى"
+
+#: upgrade.to.done
+msgid "No, I know what I am doing, please complete installation."
+msgstr "لا، أنا أعرف ما أقوم به، يرجى إكمال التثبيت."
+
+#: upgrade.desc
+msgid ""
+"The running version is {0}, but the existed version \"{1}\" is found in root"
+" directory \"{2}\". Do you want to do upgrade rather than a fresh "
+"installation?"
+msgstr "النسخة الحالية هي {0}، ولكن النسخة الموجودة \"{1}\" وجدت في مجلد الجذر \"{2}\". هل تريد الترقية بدلا من تثبيت جديد؟"
+
+#: upgrade.go
+msgid "Yes, please upgrade"
+msgstr "نعم، الرجاء الترقية"
+
+#: upgrade.from.start
+msgid "No, I want to go through all the setup steps"
+msgstr "لا، أريد إعداد جميع خطوات التنصيب كاملة"
+
+#: setup.welcome.title
+msgid "Welcome to {0} setup wizard"
+msgstr "أهلاً بك في {0} معالج إعداد التنصيب"
+
+#: setup.desc
+msgid ""
+"Please follow the next 6 steps to complete the setup. If you are doing "
+"upgrade,\tonly first step is mandatory."
+msgstr "يرجى اتباع الخطوات 6 المقبلة لاستكمال إعداد التنصيب. إذا كنت تريد الترقية، فقط الخطوة الاولى هي المطلوبة منك."
+
+#: next.step
+msgid "Next step"
+msgstr "الخطوة التالية"
+
+#: setup.step.1
+msgid "Create data root directory"
+msgstr "إنشاء مجلد بيانات الجذر الرئيسي"
+
+#: setup.step.2
+msgid "Choose license"
+msgstr "اختيار الترخيص"
+
+#: setup.step.3
+msgid "Setup ActiveMQ server"
+msgstr "إعداد تنصيب خادم سيرفر ActiveMQ"
+
+#: setup.step.4
+msgid "Create database"
+msgstr "إنشاء قاعدة بيانات"
+
+#: setup.step.5
+msgid "Create tables"
+msgstr "إنشاء الجداول"
+
+#: setup.step.6
+msgid "Setup administrator user"
+msgstr "تنصيب مسؤول النظام"
+
+#: error.restore
+msgid "Restore failed with unexpected errors."
+msgstr "فشلت عملية الاستعادة مع أخطاء غير متوقعة."
+
+#: restore.success
+msgid "System restore successes."
+msgstr "تم استعادة النظام بنجاح"
+
+#: restore.failed
+msgid "System restore failed."
+msgstr "فشلت عملية استعادة النظام"
+
+#: choose.file.first
+msgid "Please choose a file first"
+msgstr "الرجاء اختيار ملف اولاً"
+
+#: restore.file.no.exist
+msgid "Restore file not found, please refresh page and try again."
+msgstr "لم يتم العثور على ملف الاستعادة، يرجى تحديث الصفحة والمحاولة مرة أخرى."
+
+#: backup.file.no.exist
+msgid "Backup file not found, please refresh page and try again."
+msgstr "ملف النسخة الاحتياطية غير موجود، يرجى تحديث الصفحة وحاول مرة أخرى."
+
+#: backup.failed
+msgid "Backup failed with unexpected errors."
+msgstr "فشلت عملية النسخ الاحتياطي مع أخطاء غير متوقعة."
+
+#: backup.success
+msgid "Backup successes. The backup file name is {0}."
+msgstr "نجحت عملية النسخ الاحتياطي. اسم ملف النسخ الاحتياطي هو {0}."
+
+#: schedule.failed
+msgid "Schedule setup failed, please try again."
+msgstr "فشل جدول إعداد التنصيب، يرجى المحاولة مرة أخرى."
+
+#: edit.schedule
+msgid "Edit backup schedule"
+msgstr "تعديل جدول النسخ الاحتياطي"
+
+#: valid.hour
+msgid "Hour must between 0 to 23"
+msgstr "الساعة يجب ان تكون مابين 0 إلى 23"
+
+#: valid.minute
+msgid "Minute must between 0 to 59"
+msgstr "الدقائق يجب ان تكون مابين 0 إلى 59"
+
+#: valid.dayofmonth
+msgid "Day of Month must between 0 to 31"
+msgstr "الإيام يجب ان تكون مابين 0 إلى 31"
+
+#: readonly.link
+msgid "Page not found and no permission to create."
+msgstr "الصفحة غير موجودة وليس هناك إذن لإنشائها."
+
+#: indexing.started
+msgid ""
+"Rebuild searching index process started. It may take few minutes to complete"
+" and depends on the volume of your system."
+msgstr "عملية إعادة بناء فهرس البحث قد بدأت. قد يستغرق ذلك بضع دقائق لإكمالها يعتمد هذا على حجم النظام لديك."
+
+#: indexing.failed
+msgid "Rebuild searching index failed, please try later."
+msgstr "فشل إعادة بناء فهرس البحث، يرجى المحاولة لاحقا."
+
+#: cache.printed
+msgid "Please find your latest log files now and submit the issue."
+msgstr "ابحث عن أحدث ملفات سجل النظام الان و إرسل هذه المسالة"
+
+#: cache.cleaned
+msgid "Cache is cleaned."
+msgstr "تم تنظيف ذاكر التخزين الكاش"
+
+#: not.available
+msgid "N/A"
+msgstr "غير متوفر"
+
+#: add.user.to.role
+msgid "Add user to group"
+msgstr "إضافة مستخدم إلى مجموعة"
+
+#: user.create.success
+msgid "User is created successfully."
+msgstr "تم إنشاء المستخدم بنجاح."
+
+#: group.create.success
+msgid "Group is created successfully."
+msgstr "تم إنشاء المجموعة بنجاح."
+
+#: space.create.success
+msgid "Space is created successfully."
+msgstr "تم إنشاء المساحة بنجاح."
+
+#: confirm.remove.user.from.role
+msgid "Do you want to remove this user from the current group?"
+msgstr "هل تريد إزالة هذا المستخدم من المجموعة الحالية؟"
+
+#: admin.role.must.one.user
+msgid "System administrator group must have at least one user."
+msgstr "يجب أن تضم مجموعة إدارين النظام مستخدم واحد على الأقل."
+
+#: private.space
+msgid "Private space"
+msgstr "مساحة خاصة"
+
+#: attach.quota
+msgid "Attachment quota"
+msgstr "حجم المرفقات"
+
+#: unknown
+msgid "Unknown"
+msgstr "غير معروف"
+
+#: unlimited
+msgid "Unlimited"
+msgstr "غير محدود"
+
+#: space.quota.data
+msgid "{0} available in {1}"
+msgstr "{0} متاح في {1}"
+
+#: license.information
+msgid "License information"
+msgstr "معلومات الترخيص"
+
+#: license.owner
+msgid "License owner"
+msgstr "مالك الترخيص"
+
+#: license.expired.date
+msgid "License expired date"
+msgstr "تاريخ انتهاء صلاحية الترخيص"
+
+#: maximum.users
+msgid "Maximum users"
+msgstr "الحد الأقصى للمستخدمين"
+
+#: save
+msgid "Save"
+msgstr "حفظ"
+
+#: status
+msgid "Status"
+msgstr "الحالة"
+
+#: valid
+msgid "Valid"
+msgstr "صالح"
+
+#: invalid.license.reason.3
+msgid "License is expired."
+msgstr "انتهت صلاحية الترخيص."
+
+#: sent.msg.title
+msgid "User sent a message to you"
+msgstr "المستخدم إرسل رسالة لك"
+
+#: sent.by
+msgid "sent by"
+msgstr "إرسل بواسطة"
+
+#: change.quota
+msgid "Change quote"
+msgstr "غير سعة الحجم"
+
+#: zero.unlimited
+msgid "Unlimited if set to 0"
+msgstr "غير محدود إذا وضع صفر 0"
+
+#: restore.confirm
+msgid ""
+"Very important: your current data will be overwritten by the restore data. "
+"Do you confirm to continue? "
+msgstr "هام جدا: سيتم الكتابة فوق البيانات الحالية في حالة استعادة البيانات. هل ترغب في الاستمرار؟"
+
+#: toc
+msgid "Table of Contents"
+msgstr "جدول المحتويات"
+
+#: no.header.for.toc
+msgid "No heading found"
+msgstr "لا يوجد عنوان"
+
+#: template.list
+msgid "Template list"
+msgstr "قائمة القوالب"
+
+#: create.template
+msgid "Create template"
+msgstr "إنشاء قالب"
+
+#: edit.template
+msgid "Edit template"
+msgstr "تعديل قالب"
+
+#: comment.body.hidden
+msgid "This comment is hidden."
+msgstr "هذا التعليق مخفي."
+
+#: widget.show.portrait
+msgid "Show portrait"
+msgstr "عرض الصورة"
+
+#: widget.show.portrait.desc
+msgid "Display the page author's portrait."
+msgstr "عرض صورة صاحب الصفحة."
+
+#: new.message.notify.mail.subject
+msgid "You received a message"
+msgstr "لقد تلقيت رسالة"
+
+#: driver.type
+msgid "Driver type"
+msgstr "نوع القرص"
+
+#: friendship.rejected
+msgid "The friendship is rejected."
+msgstr "طلب الصداقة رفض"
+
+#: friendship.accepted
+msgid "The friendship is accepted."
+msgstr "طلف الصداقة تم قبوله"
+
+#: friendship.processed
+msgid "The friendship is already processed or does not exist."
+msgstr "طلب الصداقة اما نفذ بالفعل أو غير موجود."
+
+#: friendship.no.permission
+msgid "You don't have permission to view this page."
+msgstr "ليس لديك صلاحية لمشاهدة هذه الصفحة."
+
+#: wait.patient
+msgid "Wait in patient, system is reloading."
+msgstr "كن صبوراً في الانتظار، يتم إعادة تحميل النظام."
+
+#: err.invalid.blog.info
+msgid ""
+"Unable to connect the blog, do you input correct URL, user or password?"
+msgstr "غير قادر على الاتصال في البلوق، هل إدخلت الرابط الصحيح، اسم المستخدم أو كلمة السر الصحيحة؟"
+
+#: backup.confirm
+msgid "Do you want to backup now?"
+msgstr "هل تريد النسخ الاحتياطي الآن؟"
+
+#: update.failed
+msgid "Update failed."
+msgstr "التحديث فشل"
+
+#: filter
+msgid "Filter"
+msgstr "فلتر"
+
+#: delete
+msgid "Delete"
+msgstr "حذف"
+
+#: delete.confirm
+msgid "Do you want to delete this file?"
+msgstr "هل تريد حذف هذا الملف؟"
+
+#: version.check
+msgid "New version check"
+msgstr "فحص إصدار جديد"
+
+#: version.check.desc
+msgid ""
+"Allow system automatically check latest version. A message sends to system "
+"administrator if the new version is found."
+msgstr "اسمح للنظام في التحقق من نزول اخر الإصدارات تلقائيا. سوف ترسل رسالة إلى إداري النظام إذا تم العثور على نسخة جديدة للنظام."
+
+#: invite.accepted.to.sender
+msgid ""
+"Your invitation to {0}({1}) is accepted. He/she has read permission on your "
+"space. You can assign more permission from Space Admin -> Permission."
+msgstr "دعوتك إلى {0} ({1}) تم قبولها. المستخدم قد قرأ إذن الصلاحيات على المساحة الخاصة بك. يمكنك اعطاء المزيد من الصلاحيات من خلال صفحة إدارة المساحة."
+
+#: invitation
+msgid "Invitation"
+msgstr "رسالة دعوة"
+
+#: invite.space.not.exist
+msgid "Space {0} doesn't exist for this invitation."
+msgstr "المساحة {0} غير موجودة لهذه الدعوة."
+
+#: invite.not.exist
+msgid "Invitation doesn't exist."
+msgstr "الدعوة غير موجودة"
+
+#: invite.accept.anonymous
+msgid ""
+"Your friend {0} invited you join his/her space {1} in {2}. You will get "
+"initial space read permission once you accept this invitation. Please ask "
+"space administrator for further permission. Please note, this invitation "
+"will be expired in 72 hours."
+msgstr "صديقك {0} دعاك للانضمام له / لها ضمن مساحته {1} في {2}. سوف تحصل على الصلاحيات اللازمة في حالة قبول هذه الدعوة. الرجاء اطلب من صاحب المساحة مزيد من الصلاحيات اذا احتجت لها. ملاحظة، ستنتهي صلاحية هذه الدعوة خلال 72 ساعة."
+
+#: invite.accept.loginuser
+msgid ""
+"Hi {3},<p> Your friend {0} invited you join his/her space {1} in {2}. You "
+"will get initial space read permission once you accept this invitation. "
+"Please ask space administrator for further permission. Please note, this "
+"invitation will be expired in 72 hours.</p>"
+msgstr "مرحباً {3}، <P> صديقك {0} دعاك الانضمام له / لها في مساحته {1} في {2}. سوف تحصل على الصلاحيات اللازمة بمجرد قبول هذه الدعوة. الرجاء اطلب من صاحب المساحة مزيد من الصلاحيات اذا احتجت لها. ملاحظة، ستنتهي صلاحية هذه الدعوة خلال 72 ساعة. </ P>"
+
+#: invite.accepted.or.email.invalid
+msgid ""
+"Hi {0},<p>Did you already accepted this invitation? This invitation doesn''t"
+" match your current login email address {1}. You don''t accept this "
+"invitation, please</p>  "
+msgstr "مرحباً {0}، <P> هل قبلت بالفعل هذه الدعوة؟ هذه الدعوة لا تتطابق مع عنوان بريدك الإلكتروني الحالي {1}. في حالة الخطاء يرجى عدم قبول هذه الدعوة </ P>"
+
+#: invite.accepted
+msgid ""
+"Hi {0},<p>Welcome to {1}. You can <a href=\"{2}\">click here</a> to enter "
+"your friend space.</p>"
+msgstr "مرحباً {0} <P> مرحباً بك في {1}. يمكنك <a href=\"{2}\"> الضغط هنا </a> للدخول إلى مساحة صديقك. </ P>"
+
+#: invite.unexpect.error
+msgid ""
+"Sorry, we get some unexpected errors. Please try again or contact system "
+"administrator."
+msgstr "آسف، حصلنا على بعض الأخطاء غير المتوقعة. يرجى المحاولة مرة أخرى أو اتصل إداري النظام."
+
+#: yes.overwrite
+msgid "Yes,overwrite"
+msgstr "نعم, اكتب فوقه"
+
+#: quicknote.title
+msgid "Quick note"
+msgstr "نبذة مختصرة"
+
+#: quicknote.desc
+msgid "Personal quick note"
+msgstr "نبذة شخصية"
+
+#: widget.activies.title
+msgid "Recently update"
+msgstr "تحدث مؤخراً"
+
+#: widget.activies.desc
+msgid "Recently update activities."
+msgstr "اخر التحديثات"
+
+#: activity.page.create
+msgid "Created page {0} {1}."
+msgstr "إنشئت بواسطة {0} {1}."
+
+#: activity.page.update
+msgid "Updated page {0} {1}."
+msgstr "صفحة محدثة {0} {1}."
+
+#: activity.page.restore
+msgid "Restored page {0} {1} from trash bin."
+msgstr "الصفحة المستعادة {0} {1} من سلة المهملات."
+
+#: activity.page.delete
+msgid "Put page {0} {1} to trash bin."
+msgstr "ارسل الصفحة {0} {1} إلى سلة المهملات."
+
+#: activity.page.permanent_delete
+msgid "Deleted page {0} permanently {1}."
+msgstr "حذف الصفحة {0} نهائياً {1}."
+
+#: activity.page.revert
+msgid "Reverts page {0} from history version {1} {2}."
+msgstr "استعادة الصفحة {0} من نسخة {1} {2}."
+
+#: activity.page.move
+msgid "Moved page {0} to {1} in space {2}."
+msgstr "نقلت الصفحة {0} إلى {1} في مساحة {2}."
+
+#: activity.page.copy
+msgid "Copied page {0} to {1} in space {2}."
+msgstr "نسخت الصفحة {0} إلى {1} في مساحة {2}."
+
+#: activity.comment.create
+msgid "Posts comment on page {0} {1}."
+msgstr "التعليقات في صفحة {0} {1}."
+
+#: activity.comment.update
+msgid "Updates comment on page {0} {1}."
+msgstr "تحديث التعليق على الصفحة {0} {1}."
+
+#: activity.attachment.create
+msgid "Uploads attachment {0} to page {1} {2}."
+msgstr "رفع مرفق {0} إلى الصفحة {1} {2}."
+
+#: activity.attachment.delete
+msgid "Deletes attachment {0} from page {1} {2}."
+msgstr "حذف مرفق {0} من الصفحة {1} {2}."
+
+#: activity.space.create
+msgid "Creates new space {0} {1}."
+msgstr "إنشاء مساحة جديدة {0} {1}."
+
+#: activity.space.permanent_delete
+msgid "Deleted space {0} permanently {1}."
+msgstr "حذف مساحة {0} نهائياً {1}."
+
+#: activity.space.delete
+msgid "Set space {0} removing mark {1}."
+msgstr "تعيين المساحة {0} إزالة علامة {1}."
+
+#: activity.space.restore
+msgid "Restored space {0} {1}."
+msgstr "مساحة مستعادة {0} {1}."
+
+#: activity.user.create
+msgid "Sign-up {0}."
+msgstr "التسجيل {0}."
+
+#: activity.user.update
+msgid "Updates status to \"{0}\" {1}."
+msgstr "حالة تحديثات الـ\"{0}\" {1}."
+
+#: activity.user.follow
+msgid "{0} follows {1} {2}."
+msgstr "{0} يتابعون {1} {2}."
+
+#: activity.user.unfollow
+msgid "{0} stops following {1} {2}."
+msgstr "{0} توقف عن متابعة {1} {2}."
+
+#: activity.system.version_ping
+msgid "GeniusWiki has new version {0} available."
+msgstr "الموسوعة الذكية لديها إصدار جديد {0} متوفر"
+
+#: activity.system.rebuild_index
+msgid "System index was rebuilt successfully {0}."
+msgstr "أعيد بناء فهرس النظام بنجاح {0}."
+
+#: activity.system.redeploy_shell
+msgid "All non-private spaces are deployed to Shell website {0}."
+msgstr "كل المساحات العامة سوف تنشر إلى موقع الشيل {0}."
+
+#: at.time
+msgid "at {0}"
+msgstr "في {0}"
+
+#: on.time
+msgid "on {0}"
+msgstr "في {0}"
+
+#: today
+msgid "today"
+msgstr "اليوم"
+
+#: less.a.minute.ago
+msgid "less a minute ago"
+msgstr "اقل من دقيقة مضت"
+
+#: minute.ago
+msgid "{0} minute ago"
+msgstr "{0} دقيقة مضت"
+
+#: minutes.ago
+msgid "{0} minutes ago"
+msgstr "{0} دقيقة مضت"
+
+#: hour.ago
+msgid "{0} hour ago"
+msgstr "{0} ساعة مضت"
+
+#: hours.ago
+msgid "{0} hours ago"
+msgstr "{0} ساعة مضت"
+
+#. #hh:mm yesterday
+#: yesterday.ago
+msgid "{0} yesterday"
+msgstr "{0} أمس"
+
+#. #hh:mm 2 days ago
+#: days.ago
+msgid "{0} {1} days ago"
+msgstr "{0} {1} يوم مضى"
+
+#: connection.type
+msgid "Connection Type"
+msgstr "نوع الاتصال"
+
+#: port
+msgid "Port"
+msgstr "المنفذ"
+
+#: authentication.required
+msgid "Authentication required"
+msgstr "يستلزم التوثيق"
+
+#: smtp.port.integer
+msgid "SMTP port must be an integer."
+msgstr "منفذ SMTP يجب ان يكون رقم صحيح."
+
+#: smtp.jndi.required
+msgid "SMTP JNDI name is required."
+msgstr "اسم SMTP JNDI مطلوب."
+
+#: smtp.host.required
+msgid "SMTP host name is required."
+msgstr "اسم المضيف SMTP مطلوب."
+
+#: base.url
+msgid "Base URL"
+msgstr "الرابط الإساسي"
+
+#: base.url.desc
+msgid ""
+"Many resources is related to this application base URL, such as system level"
+" LOGO, attachment URL and RSS etc. Normally it looks like "
+"http://localhost:8080, http://www.yourdomain.com, or "
+"http://www.yourdomain.com/geniuswiki etc."
+msgstr "العديد من المصادر مرتبطة مباشرة بهذا الرابط الإساسي ، مثل الشعار، رابط المرفقات و رابط التغذية الاخبارية RSS وما إلى ذلك, عادة يبدو الرابط مثل http://localhost:8080, http://www.yourdomain.com, or http://www.yourdomain.com/geniuswiki الخ."
+
+#: setup.lower.appversion.title
+msgid "Warning: Application version is lower than existing data"
+msgstr "تحذير: إصدار التطبيق أقل من إصدار البيانات الموجودة"
+
+#: setup.lower.appversion.desc
+msgid ""
+"The application version that you are installing is {0} lower than your "
+"existing date version {1}.  Downgrade is not allowed. Please download latest"
+" version from <a "
+"href=\"http://www.edgenius.com\">http://www.edgenius.com</a> and try again."
+msgstr "إصدار التطبيق الذي تقوم بتثبيته هو {0} أقدم من تاريخ الإصدار الخاص بك {1}. الترقية لإصدار اقدم غير متاحة. يرجى تنزيل أحدث نسخة من <a href=\"http://www.edgenius.com\"> http://www.edgenius.com </A> وحاول مرة أخرى."
+
+#: log.dir
+msgid "Find your log files from this directory:<p> {0} </p>"
+msgstr "يمكنك العثور على ملفات السجل الخاص بك في المجلد: <P> {0} </ P>"
+
+#: submit.log
+msgid "Dump logs for bug report"
+msgstr "استخراج السجلات لتقارير الاخطاء"
+
+#: submit.log.desc
+msgid ""
+"If your system doesn't run well, click this link that will dump some "
+"information to log files, then submit your issue with latest log files to <a"
+" href=\"mailto:support@edgenius.com\">support@edgenius.com</a>."
+msgstr "إذا كان النظام لا يعمل بشكل جيد، اضغط على هذا الرابط الذي سوف يفرغ بعض المعلومات إلى ملفات السجل، ثم قدم مشكلتك مع أحدث ملفات السجل إلى <a href=\"mailto:support@edgenius.com\">support@edgenius.com</a>."
+
+#: step.4.needdb
+msgid ""
+"Please ensure the database and user are already created before next step."
+msgstr "يرجى التأكد من إنشاء قاعدة البيانات والمستخدم بالفعل قبل الخطوة التالية."
+
+#: print.author.info
+msgid "Create by {0} on {1} - Last updated by {2} on {3}"
+msgstr "نشر بواسطة {0} في {1} - اخر تحديث بواسطة {2} في {3}"
+
+#: theme.file.no.exist
+msgid "Theme file doesn't exist. "
+msgstr "ملف الغلاف غير موجود"
+
+#: skin.file.no.exist
+msgid "Skin file doesn't exist. "
+msgstr "ملف الشكل غير موجود"
+
+#: actions
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: apply
+msgid "Apply"
+msgstr "إعتمد"
+
+#: applied
+msgid "Applied"
+msgstr "معتمد"
+
+#: deployed
+msgid "Deployed"
+msgstr "نشر"
+
+#: upload.skin
+msgid "Upload Skin"
+msgstr "رفع شكل"
+
+#: upload.theme
+msgid "Upload Theme"
+msgstr "رفع غلاف"
+
+#: version
+msgid "Version"
+msgstr "النسخة"
+
+#: author
+msgid "Author"
+msgstr "الناشر"
+
+#: disabled
+msgid "Disabled"
+msgstr "معطل"
+
+#: enabled
+msgid "Enabled"
+msgstr "مفعل"
+
+#: delete.theme.confirm
+msgid ""
+"Are you sure to delete this theme? The spaces are using this theme may be "
+"messed up."
+msgstr "هل أنت متأكد من حذف هذا الغلاف؟ المساحات التي تستخدم هذا الغلاف قد تتعرض للضرر."
+
+#: delete.skin.confirm
+msgid "Are you sure to delete this skin?"
+msgstr "هل أنت متأكد من حذف هذا الشكل؟"
+
+#: press.help
+msgid "Press F1 for Help!"
+msgstr "اضغط F1 للمساعدة!"
+
+#: msg.to.admin
+msgid "Message to administrators"
+msgstr "رسالة للإدارين"
+
+#: power.by
+msgid "Power by"
+msgstr "بواسطة"
+
+#: change.lang
+msgid "Change language"
+msgstr "تغير اللغة"
+
+#: lang.en.au
+msgid "Australia English"
+msgstr "الإنجليزية استراليا"
+
+#: lang.zh.cn
+msgid "Simplified Chinese"
+msgstr "الصينية البسيطة"
+
+#: lang.tr.tr
+msgid "Turkish"
+msgstr "التركية"
+
+#: detect.locale
+msgid "Detect locale from request"
+msgstr "التعرف على اللغة حسب الطلب"
+
+#: detect.locale.desc
+msgid ""
+"If this option is on, system will detect country and language according to "
+"user request. It will display user's language if its translation is "
+"available."
+msgstr "إذا كان هذا الخيار مفعل، النظام سوف يكشف عن لغة وبلد المستخدم وفقاً لطلب المستخدم. سيعرض لغة المستخدم إذا ترجمتها متوفرة."
+
+#: undo.remove
+msgid "Undo remove"
+msgstr "الغاء الحذف"
+
+#: remove
+msgid "Remove"
+msgstr "حذف"
+
+#: sysadmin.to.home
+msgid "Do you want to leave this page and go to space home page?"
+msgstr "هل تريد مغادرة هذه الصفحة والذهاب إلى صفحة المساحة الرئيسية؟"
+
+#: sysadmin.to.spaceadmin
+msgid "Do you want to leave this page and go to space admin?"
+msgstr "هل تريد مغادرة هذه الصفحة والذهاب إلى إدارة المساحة؟"
+
+#: change.lang.desc
+msgid ""
+"Change system default language. You need to manually refresh browser to see "
+"final result."
+msgstr "تغير لغة النظام الافتراضية. تحتاج إلى تحديث المتصفح يدويا لرؤية تغير اللغة."
+
+#: contact
+msgid "Contact"
+msgstr "الإتصال"
+
+#: social
+msgid "Social"
+msgstr "الوسائط"
+
+#: phone
+msgid "Phone"
+msgstr "الهاتف"
+
+#: website
+msgid "Website"
+msgstr "الموقع"
+
+#: im
+msgid "IM"
+msgstr "البلد"
+
+#: no.perm.download
+msgid "Sorry, you don't have the permission to download this file."
+msgstr "عذراً, ليس لديك صلاحية لتنزيل هذا الملف."
+
+#: no.file.download
+msgid "Sorry, we can not find the file by given file ID."
+msgstr "عذرا، لا يمكن العثور على الملف عن طريق اسم ملف معين."
+
+#. #webservice.disabled=Webservice is disabled, please contact administrator.
+#: system.services
+msgid "System services"
+msgstr "خدمة النظام"
+
+#: soap.service
+msgid "SOAP web service"
+msgstr "SOAP خدمة الويب"
+
+#: rest.service
+msgid "REST web service"
+msgstr "اعادة تشغيل خدمة الويب"
+
+#: shell.service
+msgid "Shell service"
+msgstr "خدمة الشيل"
+
+#: service.desc
+msgid ""
+"SOAP or REST web service is able to let third party programs to invoke "
+"system functions, such as creating a space, retrieving pages etc. Shell "
+"Service is special function in GeniusWiki that is able to clone a space to "
+"an independent read-only website. Shell function requires REST services "
+"enabled."
+msgstr "SOAP أو خدمة إعادة الويب قادرة على السماح لبرامج من اطراف ثالثة ان تستدعي وظائف النظام، مثل إنشاء مساحة واسترجاع الصفحات الخ. خدمة الشيل وظيفة خاصة في الموسوعة الذكية قادرة على استنساخ المساحة لمواقع خارجية اخرى بصلاحية القراءة فقط. تشغيل الشيل يتطلب تفعيل خدمة إعادة الويب."
+
+#: redeploy.shell
+msgid "Redeploy the shell"
+msgstr "إعادة نشر الشيل"
+
+#: redeploy.shell.desc
+msgid ""
+"Deploy all spaces to shell clone website again. Only the spaces and pages "
+"that are visible to public user will be deployed. This request may take "
+"minutes to complete depending on your current data volume.<br>Please note, "
+"Shell service option must be enabled in General setting page. "
+msgstr "نشر جميع المساحات لموقع شبيه الشيل لاستنساخها مرة أخرى. فقط سيتم نشر المساحات والصفحات التي تكون مرئية للمستخدم العام. قد يستغرق هذا الأمر دقائق لإكماله اعتماداً على حجم البيانات الحالي. <BR> ملاحظة، يجب تفعيل خيار خدمة الشيل في صفحة الإعدادات العامة."
+
+#: redeploy.shell.invoked
+msgid ""
+"System is deploying spaces to shell, however this may take minutes to "
+"complete depending on your current data volume."
+msgstr "النظام ينشر المساحات إلى الشيل، قد يستغرق هذا دقائق لإكماله اعتماداً على حجم البيانات الحالي."
+
+#: last.updated.by
+msgid "Last updated by"
+msgstr "اخر تحديث بواسطة"
+
+#: enable.shell
+msgid "Enable Shell"
+msgstr "تفعيل الشيل"
+
+#: disable.shell
+msgid "Disable Shell"
+msgstr "تعطيل الشيل"
+
+#: change.shell.theme
+msgid "Change Shell theme"
+msgstr "تغير شكل الشيل"
+
+#: header.linked.shell
+msgid "Linked Shell"
+msgstr "ربط الشيل"
+
+#: shell.desc
+msgid ""
+"Shell is a read-only mirror website from this space. It is better way to "
+"share the content because Shell has diversified themes and better SEO "
+"optimization."
+msgstr "الشيل هو موقع مرآة للقراءة فقط من هذه المساحة. أفضل طريقة لمشاركة المحتوى عبر الشيل حيث يسمح في تغير الشكل و الغلاف وتحسين الواجهة."
+
+#: space.disable.shell.confirm
+msgid ""
+"Do you want to disable space Shell function? This will also remove all "
+"existed pages in Shell."
+msgstr "هل تريد تعطيل وظيفة الشيل في المساحة؟ سيؤدي هذا إلى إزالة أيضا كل الصفحات الموجودة في الشيل."
+
+#: space.enable.shell.confirm
+msgid "Do you want to enable space Shell function?"
+msgstr "هل تريد تفعيل وظيفة الشيل في المساحة؟"
+
+#: space.deploy.shell.confirm
+msgid "Do you want to deploy all pages in this space to Shell again?"
+msgstr "هل ترغب في نشر كافة الصفحات في هذه المساحة الى الشيل مرة أخرى؟"
+
+#: reset
+msgid "Reset"
+msgstr "إعادة تعيين"
