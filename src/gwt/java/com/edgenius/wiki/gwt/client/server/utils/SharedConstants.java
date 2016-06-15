@@ -302,7 +302,7 @@ public class SharedConstants {
 	//if open a page, the default tab will be shown.  if -1, then all tabs are hidden. Otherwise, choose one of above first 3 value
 	public static final int TAB_TYPE_DEFAULT_VISIBLE = TAB_TYPE_COMMENT;
 	
-	public static final String[] IMAGE_FILTERS = new String[]{".bmp",".jpg",".jpeg",".png",".gif"};
+	public static final String[] IMAGE_FILTERS = new String[]{".bmp",".jpg",".jpeg",".png",".gif",".svg"};
 	
 	//these values use in ADV_SOURCE_TYPES
 	public static final int ADV_SEARCH_KEYWORD_ANY = 0; //default 

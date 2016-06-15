@@ -46,7 +46,7 @@ public class InstallFilter extends OncePerRequestFilter {
 		
 		if(!Installation.DONE || Version.LICENSE_STATUS > 0){
 			String uri = request.getRequestURI();
-			if(!uri.endsWith(".js") && !uri.endsWith(".css") && !uri.endsWith(".gif") && !uri.endsWith(".png") && !uri.endsWith(".jpg")){
+			if(!uri.endsWith(".js") && !uri.endsWith(".css") && !uri.endsWith(".gif") && !uri.endsWith(".png") && !uri.endsWith(".jpg") && !uri.endsWith(".svg")){
 				request.getRequestDispatcher("/install").forward(request, response);
 			}else{
 				request.getRequestDispatcher(request.getServletPath()).forward(request, response);

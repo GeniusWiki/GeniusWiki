@@ -73,7 +73,7 @@ public class DBFilterSecurityMetadataSource implements FilterInvocationSecurityM
 		//for performance reason: skip resource checking
 		if(url != null && (url.endsWith(".png") || url.endsWith(".gif") || url.endsWith(".jpg")  
 				|| url.endsWith(".js") || url.endsWith(".css") || url.endsWith(".rpc") || url.endsWith(".rpcs")
-				|| url.endsWith(".html") || url.endsWith(".htm")))
+				|| url.endsWith(".html") || url.endsWith(".htm") || url.endsWith(".svg")))
 			return null;
 		
 		if (convertUrlToLowercaseBeforeComparison) {

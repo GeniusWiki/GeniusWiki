@@ -17,6 +17,7 @@
   	<inherits name="com.google.gwt.i18n.I18N"/>
 	<extend-property name="locale" values="zh_CN"/>
 	<extend-property name="locale" values="tr_TR"/>
+	<extend-property name="locale" values="ar_AR"/>
  	@TOKEN.GWT.DEBUG.PROPERTIES.E@
  	
  	@TOKEN.GWT.MINI.DEBUG.PROPERTIES.S@
@@ -29,6 +30,7 @@
 	<inherits name="com.google.gwt.i18n.I18N"/>
 	<extend-property name="locale" values="zh_CN"/>
 	<extend-property name="locale" values="tr_TR"/>
+	<extend-property name="locale" values="ar_AR"/>
  	@TOKEN.GWT.DEPLOY.ONLY.E@
  	
 <!--  	 		 remove some offline_code here(0726) -->

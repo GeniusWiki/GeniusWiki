@@ -2,7 +2,7 @@ package com.edgenius.wiki.gwt.client.i18n;
 
 /**
  * Interface to represent the messages contained in resource bundle:
- * 	/home/dapengni/xdev/git/GeniusWiki/build/gwt/resources/com/edgenius/wiki/gwt/client/i18n/ParamsMessages.properties'.
+ * 	/Users/dapeng/xdev/source/GeniusWiki/build/gwt/resources/com/edgenius/wiki/gwt/client/i18n/ParamsMessages.properties'.
  */
 public interface ParamsMessages extends com.google.gwt.i18n.client.Messages {
   

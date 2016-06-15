@@ -2,7 +2,7 @@ package com.edgenius.wiki.gwt.client.i18n;
 
 /**
  * Interface to represent the constants contained in resource bundle:
- * 	'/home/dapengni/xdev/git/GeniusWiki/build/gwt/resources/com/edgenius/wiki/gwt/client/i18n/Messages.properties'.
+ * 	'/Users/dapeng/xdev/source/GeniusWiki/build/gwt/resources/com/edgenius/wiki/gwt/client/i18n/Messages.properties'.
  */
 public interface Messages extends com.google.gwt.i18n.client.Constants {
   

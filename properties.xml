@@ -26,12 +26,12 @@
 	<property name="app.name" value="GeniusWiki" />
 	<property name="app.name.lowcase" value="geniuswiki" />
 
-	<property name="app.version" value="3.25" />
-	<property name="pack.version" value="133" />
+	<property name="app.version" value="3.26" />
+	<property name="pack.version" value="134" />
 	
 	<property name="site.version" value="${pack.version}" />
 	
-	<property name="copyright.year" value="2007-2015" />
+	<property name="copyright.year" value="2007-2016" />
 	<!-- !!!!!!!!!!! This field is hardcode in Constants.TABLE_PREFIX  please update accordingly !!!!!! -->
 	<property name="table.prefix" value="EDG_" />
 	
