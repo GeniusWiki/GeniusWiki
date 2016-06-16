@@ -454,8 +454,8 @@
 								<c:when test="${sysLang=='tr_tr'}">
 									<img src="${ctxPath}/static/images/flags/tr.svg" title="<fmt:message key='lang.tr.tr'/>" width="30px" height="20px">
 								</c:when>
-								<c:when test="${sysLang=='ar_ar'}">
-									<img src="${ctxPath}/static/images/flags/sa.svg" title="<fmt:message key='lang.ar'/>" width="30px" height="20px">
+								<c:when test="${sysLang=='ar_sa'}">
+									<img src="${ctxPath}/static/images/flags/sa.svg" title="<fmt:message key='lang.ar.sa'/>" width="30px" height="20px">
 								</c:when>
 								<c:otherwise>
 									<img src="${ctxPath}/static/images/flags/au.svg" title="<fmt:message key='lang.en.au'/>" width="30px" height="20px">

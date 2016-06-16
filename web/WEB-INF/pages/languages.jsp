@@ -4,5 +4,5 @@
 	<img src="${ctxPath}/static/images/flags/cn.svg" id="lang_zh_cn" title="<fmt:message key='lang.zh.cn'/>" width="30px" height="20px"></a>
 <a href="javascript:changeLanguage('tr_TR');" style="text-decoration: none;border-bottom: none;">
 	<img src="${ctxPath}/static/images/flags/tr.svg" id="lang_tr_tr" title="<fmt:message key='lang.tr.tr'/>" width="30px" height="20px"></a>
-<a href="javascript:changeLanguage('ar_AR');" style="text-decoration: none;border-bottom: none;">
-	<img src="${ctxPath}/static/images/flags/sa.svg" id="lang_ar_ar" title="<fmt:message key='lang.ar.ar'/>" width="30px" height="20px"></a>
+<a href="javascript:changeLanguage('ar_SA');" style="text-decoration: none;border-bottom: none;">
+	<img src="${ctxPath}/static/images/flags/sa.svg" id="lang_ar_sa" title="<fmt:message key='lang.ar.sa'/>" width="30px" height="20px"></a>
