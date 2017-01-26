@@ -35,9 +35,11 @@ ant package
 h2. Docker
 Switch to folder ./docker and build `docker-build.sh` to create docker image. After success build, run `docker-compose up -d`.  Open http://localhost:8080 in your browser. 
 
-In setup step, first step is using default option, simply click 'OK'. In 2nd step, replace `127.0.0.1:61616` with `activemq.docker.geniuswiki:61616` for activemq address. In 3rd step, choose `MySQL` database and replace '127.0.0.1:3306' with `mysql.docker.geniuswiki`. 
+In setup step, 
+* In 2nd step is using default data root option, simply click 'OK'. 
+* In 3rd step, replace `127.0.0.1:61616` with `activemq.docker.geniuswiki:61616` for activemq address. **Must TURN OFF** `Use embedded ActiveMQ server` option.
+* In 4th step, choose `MySQL` database, fill the host with `mysql.docker.geniuswiki`, root user name is `root`, root password is `password`, user name/password/retype password is any value you prefered for your database login.
 
 All data, include database, log, upload data is saved into ./docker/data directly.
 
-Note, a potential issue to stop geniuswiki success rebooting after the setup, just stop docker `docker-compose stop` then start again.
 

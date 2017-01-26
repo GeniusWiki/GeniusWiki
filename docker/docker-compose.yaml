@@ -22,12 +22,11 @@ services:
             - ./data/mysql:/var/lib/mysql
 
     activemq:
-        image: webcenter/activemq:latest
+        image: rmohr/activemq:latest
         container_name: activemq.docker.geniuswiki
         environment:
-            ACTIVEMQ_MIN_MEMORY: "256"
-            ACTIVEMQ_MAX_MEMORY: "1024"
+            ACTIVEMQ_DATA: "/var/lib/activemq/data"
         ports:
             - "61616:61616"
         volumes:
-            - ./data/activemq:/var/lib/activemq
+            - ./data/activemq/data:/var/lib/activemq/data

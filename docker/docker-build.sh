@@ -7,7 +7,7 @@ cd ../
 ant ivy.retrieve
 ant package
 
-cp dist/geniuswiki.war ../docker/geniuswiki
+cp dist/geniuswiki.war docker/geniuswiki
 
 cd docker/geniuswiki
 docker build -t edgenius/geniuswiki:latest .
