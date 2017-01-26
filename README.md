@@ -1,7 +1,9 @@
 ## General information
 
 Website: http://www.geniuswiki.com
+
 Github home page: https://github.com/GeniusWiki/GeniusWiki
+
 License: GNU General Public License version 2
 
 ##  What is GeniusWiki
@@ -29,8 +31,10 @@ More detail for build, installation and development,  please visit our document 
 
 ##  Build
 
+```
 ant ivy.retrieve
 ant package
+```
 
 ## Docker
 
