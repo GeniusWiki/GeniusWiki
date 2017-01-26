@@ -48,4 +48,4 @@ In setup step,
 All data, include database, log, uploads files are saved into ./docker/data directly. If you want to refresh install geniuswiki, just simply delete all files and folders under ./docker/data.
 
 
-
+Note, if you cannot success build geniuswiki in `docker-build.sh`, download latest release from github and copy geniuswiki.war to ./docker/geniuswiki/ folder, then comment ant command in docker-compose.yaml and try again.
