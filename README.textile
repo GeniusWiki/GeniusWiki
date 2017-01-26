@@ -41,6 +41,7 @@ In setup step,
 * In 3rd step, replace `127.0.0.1:61616` with `activemq.docker.geniuswiki:61616` for activemq address. **Must TURN OFF** `Use embedded ActiveMQ server` option.
 * In 4th step, choose `MySQL` database, fill the host with `mysql.docker.geniuswiki`, root user name is `root`, root password is `password`, user name/password/retype password is any value you prefered for your database login.
 
-All data, include database, log, upload data is saved into ./docker/data directly.
+All data, include database, log, uploads files are saved into ./docker/data directly. If you want to refresh install geniuswiki, just simply delete all files and folders under ./docker/data.
+
 
 
