@@ -1,0 +1,33 @@
+version: '2.0'
+
+services:
+    geniuswiki:
+        image: edgenius/geniuswiki
+        container_name: geniuswiki.docker.geniuswiki
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./data/geniuswiki:/var/lib/geniuswiki
+            - ./data/log/geniuswiki:/var/log/geniuswiki
+            - ./data/tmp/geniuswiki/tomcat:/tmp/tomcat-tmp        
+
+    mysql:
+        image: mysql:8
+        container_name: mysql.docker.geniuswiki
+        environment:
+            MYSQL_ROOT_PASSWORD: "password"
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+
+    activemq:
+        image: webcenter/activemq:latest
+        container_name: activemq.docker.geniuswiki
+        environment:
+            ACTIVEMQ_MIN_MEMORY: "256"
+            ACTIVEMQ_MAX_MEMORY: "1024"
+        ports:
+            - "61616:61616"
+        volumes:
+            - ./data/activemq:/var/lib/activemq

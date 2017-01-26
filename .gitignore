@@ -18,3 +18,4 @@ src/license/
 src/highlight/
 tomcat/
 .idea/
+docker/data/
