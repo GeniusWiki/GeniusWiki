@@ -33,6 +33,7 @@ ant ivy.retrieve
 ant package
 
 h2. Docker
+
 Switch to folder ./docker and build `docker-build.sh` to create docker image. After success build, run `docker-compose up -d`.  Open http://localhost:8080 in your browser. 
 
 In setup step, 
