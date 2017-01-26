@@ -1,10 +1,10 @@
-h2. General information
+## General information
 
-Website:  "http://www.geniuswiki.com":http://www.geniuswiki.com
+Website: http://www.geniuswiki.com
 Github home page: https://github.com/GeniusWiki/GeniusWiki
 License: GNU General Public License version 2
 
-h2. What is GeniusWiki
+##  What is GeniusWiki
 
 GeniusWiki is a free open source enterprise level wiki software. It is a web system that is able to create, share and collect knowledge, ideas and files etc. It is the better way to set up your organization Intranet or create a public website. It runs for geniuswiki.com and hosts thousands users and spaces in last 4 years that never fail users expectations. 
 
@@ -24,15 +24,15 @@ Here are some highlight features:
 * Many fancy functions, watch/favorite list, comment, page tree, draft auto saving, revision, and DND dashboard etc.
 
 More detail for build, installation and development,  please visit our document wiki space:
-"GeniusWiki Document Center":http://www.geniuswiki.com/page/GeniusWiki+document/GeniusWiki+document 
+[GeniusWiki Document Center](http://www.geniuswiki.com/page/GeniusWiki+document/GeniusWiki+document)
 
 
-h2. Build
+##  Build
 
 ant ivy.retrieve
 ant package
 
-h2. Docker
+## Docker
 
 Switch to folder ./docker and build `docker-build.sh` to create docker image. After success build, run `docker-compose up -d`.  Open http://localhost:8080 in your browser. 
 
