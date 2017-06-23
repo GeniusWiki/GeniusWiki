@@ -49,3 +49,6 @@ All data, include database, log, uploads files are saved into ./docker/data dire
 
 
 Note, if you cannot success build geniuswiki in `docker-build.sh`, download [latest release from github](https://github.com/GeniusWiki/GeniusWiki/releases) and copy geniuswiki.war to ./docker/geniuswiki/ folder, then comment ant command in docker-compose.yaml and try again.
+
+
+Sponsor by [PlatoForms](https://www.platoforms.com). PlatoForms is an online form builder to help customers converting their PDF as a common web form. 
